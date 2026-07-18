@@ -1,0 +1,1 @@
+workflow/hr/FILOZOFIJA.md

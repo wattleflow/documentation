@@ -1,0 +1,13 @@
+
+.github
+.vscode
+build
+dist
+Makefile
+__pycache__/
+*.pyc
+*/hr/*
+*/en/*
+CLAUDE.md
+POLICY.md
+GIT-ASSISTANCE.md
