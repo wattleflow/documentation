@@ -21,7 +21,7 @@ reference flows that scale.
 | **Python Compatibility** | [![Python versions](https://img.shields.io/pypi/pyversions/wattleflow-processors.svg)](https://pypi.org/project/wattleflow-processors/)|
 | **Dependencies**         | [wattleflow-core](https://www.github.com/wattleflow/core.git), [wattleflow-workflow](https://www.github.com/wattleflow/workflow.git), [wattleflow-oscal](https://www.github.com/wattleflow/oscal.git) |
 | **Size**                 | nimble                                                                  |
-| **Documentation**        | [Wattleflow **Core** Documentation](https://github.com/wattleflow/documentation.git) |
+| **Documentation**        | [Wattleflow **Documentation**](https://github.com/wattleflow/documentation.git) |
 
 
 # WattleFlow Processors

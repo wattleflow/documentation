@@ -1,0 +1,62 @@
+@startuml state_machine-class
+' @pragma layout smetana
+' StateMachine class diagram
+' Vidi docs/concrete/state_machine.md
+
+skinparam class {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+    ArrowColor #333333
+}
+
+package "wattleflow.core.behavioral" {
+    interface IStateMachine {
+        + name : str
+        + state : State
+        + can(action: Action) : bool
+        + apply(action: Action) : None
+    }
+}
+
+package "wattleflow.concrete.state_machine" {
+    class "StateMachine<State, Action>" as SM {
+        - _state : State
+        - _transitions : Mapping[(State, Action), State]
+        --
+        + __init__(transitions, initial, name=None)
+        + state : State <<property>>
+        + can(action) : bool
+        + apply(action) : None
+        + __repr__() : str
+    }
+
+    note right of SM
+      Generic[State, Action]
+      State i Action ograničeni
+      na Enum (TypeVar bound).
+      Tablica tranzicija je
+      Mapping[(State, Action) → State].
+    end note
+}
+
+package "wattleflow.concrete (korisnici)" {
+    class GenericConnection
+    class GenericDriver
+    class GenericProcessor
+    class "GenericBlackboard\n(blackboards/small,large)" as BB
+}
+
+IStateMachine <|.. SM
+
+GenericConnection *-- SM : "_fsm"
+GenericDriver *-- SM : "_fsm"
+GenericProcessor *-- SM : "_fsm"
+BB *-- SM : "_fsm"
+
+note bottom of GenericConnection
+  Komponenta drži _fsm kao
+  privatnu kompoziciju.
+  StateMachine se ne nasljeđuje.
+end note
+
+@enduml

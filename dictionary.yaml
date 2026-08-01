@@ -1,0 +1,1083 @@
+# Wattleflow rjecnik — strojno citljivi izvor istine.
+# Nosi DVA kontrolirana vokabulara: diskurs (entries + acronyms) i kod
+# (blok `code:` na dnu, preseljen iz ukinutog naming_registry.yaml).
+# Treci registar kontroliranog vokabulara su reference -> literatura.md.
+# RJECNIK.md je GENERIRANI PRIKAZ ovog registra (pravilo pentade: prikaz nije
+# izvor istine). CSV/JSON pogledi izvode se po potrebi.
+#
+# Shema poravnata sa SKOS-om (W3C) radi buduceg RDF eksporta:
+#   term_hr -> skos:prefLabel@hr, term_en -> skos:prefLabel@en,
+#   aliases -> skos:altLabel, definition -> skos:definition,
+#   related -> skos:related, status: zastarjelo -> owl:deprecated,
+#   scope_note -> skos:scopeNote (razrjesenje viseznacnosti).
+#
+# Upravljanje: natuknica se dodaje/mijenja/deprecira iskljucivo kroz DR.
+
+registry: wattleflow-rjecnik
+registry_version: "0.2.0"   # 0.2.0: apsorbiran vokabular koda (blok `code:`)
+languages: [hr, en]
+source_of_truth: true
+generated_views:
+  - path: documentation/DICTIONARY.md
+    note: "ljudski citljiv prikaz; generira se ili verificira prema ovom registru"
+
+governance:
+  change_mechanism: DR
+  statuses: [usvojen, privremeno, zastarjelo]
+  entry_criteria:
+    - nosiv za doktrinu
+    - viseznacan u literaturi
+    - koristen u najmanje dva doktrinarna dokumenta
+  precedence: >
+    U sukobu znacenja ovaj registar nadglasava kolokvijalnu upotrebu u svim
+    doktrinarnim dokumentima; sukob s PHILOSOPHY.,md ili METHODOLOGY.md je
+    greska koja se razrjesava DR-om.
+  feeds_hypothesis: H2
+  h2_signal: >
+    Broj razrijesenih viseznacnosti naspram broja nerazrijesenih upotreba u
+    dokumentima (pretraga po forbidden_usages uzorcima).
+
+related_registries:
+  - path: documentation/literatura.md
+    domain: reference (kljucevi 1-52)
+# naming_registry.yaml je UKINUT 2026-07-28; sadrzaj mu je blok `code:` nize.
+# Povijesne reference na tu putanju citati kao `dictionary.yaml#code`.
+
+ontological_statuses: [cin, stanje, znak, artefakt, svojstvo, pravilo, pojava, alat]
+layers: [filozofija, policy, princip, metoda, arhitektura, zahtjevi, sve]
+categories:
+  - ontoloska-kategorija   # Dio I
+  - epistemologija-mjerenje # Dio II
+  - artefakt-alat          # Dio III
+  - akronim                # Dio IV
+  - viseznacnost           # Dio V (scope_note obavezan)
+
+entries:
+
+  # ------------------------------------------------------------------ Dio I
+  - id: odluka
+    term_hr: Odluka
+    term_en: decision
+    category: ontoloska-kategorija
+    ontological_status: cin
+    layer: sve
+    definition: >
+      Evidentiran cin prijelaza: mijenja jedno ili vise stanja (politiku,
+      arhitekturu, kriterij); nosi autora, kontekst, razmotrene alternative,
+      cijenu i temelje. Nepromjenjiva; kasnija odluka je nadomjesta
+      (supersedes), nikad ne prepisuje.
+    references: [44, 45]
+    related: [zapis-odluke, politika, arhitektura]
+    status: usvojen
+
+  - id: zapis-odluke
+    term_hr: Zapis odluke
+    term_en: decision record
+    aliases: [DR]
+    category: ontoloska-kategorija
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Artefakt koji serijalizira odluku; trenutna pod-metoda evidencije
+      (METHODOLOGY 8.1). Nosi polje sloj koje odluku smjesta u kaskadu.
+      Naslijedeni naziv ADR zadrzava se samo u povijesnim referencama.
+    references: [44, 46]
+    related: [odluka, kaskada]
+    status: usvojen
+
+  - id: politika
+    term_hr: Politika
+    term_en: policy
+    category: ontoloska-kategorija
+    ontological_status: stanje
+    layer: policy
+    definition: >
+      Normativno stanje na snazi: sto mora vrijediti. Deonticka je (moze se
+      prekrsiti, pa se provodi); donosi je, mijenja i ukida odluka. Svaka
+      politika deklarira provedbeni mehanizam i evaluacijski signal —
+      politika bez oba vodi se kao aspiracija. Kvalifikator obavezan
+      (razvojna, sigurnosna, politika imenovanja).
+    references: [22]
+    standards: [OMG SBVR]
+    related: [odluka, kriterij-metoda]
+    status: usvojen
+
+  - id: arhitektura
+    term_hr: Arhitektura
+    term_en: architecture
+    category: ontoloska-kategorija
+    ontological_status: stanje
+    layer: arhitektura
+    definition: >
+      Tehnicko stanje: temeljna svojstva i struktura sustava u njegovu
+      okruzenju (granice, odgovornosti, ovisnosti, ugovori). Nije skup
+      odluka (one su geneza i opravdanje) i nije dijagram (on je prikaz).
+    references: [1, 2]
+    standards: [ISO/IEC/IEEE 42010]
+    related: [opis-arhitekture, prikaz, odluka]
+    status: usvojen
+
+  - id: opis-arhitekture
+    term_hr: Opis arhitekture
+    term_en: architecture description
+    category: ontoloska-kategorija
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Artefakt koji arhitekturu dokumentira; sadrzi poglede, gledista i
+      obrazlozenja. Razlikovati od arhitekture same (stanja).
+    standards: [ISO/IEC/IEEE 42010]
+    related: [arhitektura, prikaz]
+    status: usvojen
+
+  - id: kriterij-metoda
+    term_hr: Kriterij / metoda
+    term_en: criterion / method
+    category: ontoloska-kategorija
+    ontological_status: stanje
+    layer: metoda
+    definition: >
+      Mjerno stanje: cime se provjerava konformnost ili kvaliteta (registar,
+      protokol, alat s verzijom). Verzionira se odvojeno od predmeta
+      mjerenja; promjena kriterija mijenja nalaz bez promjene predmeta.
+    references: [22]
+    related: [konformna-mjera, trojka-reproducibilnosti]
+    status: usvojen
+
+  - id: prikaz
+    term_hr: Prikaz / pogled
+    term_en: view
+    category: ontoloska-kategorija
+    ontological_status: znak
+    layer: metoda
+    definition: >
+      Projekcija nekog stanja za odredenu publiku, po deklariranom gledistu
+      (ISO 42010 viewpoint). Generira se iz izvora istine ili se prema njemu
+      verificira; nikad nije izvor istine. Zastarijeva — drift prikaza od
+      stanja ista je klasa problema kao drift dokumentacije.
+    references: [38, 51]
+    standards: [ISO/IEC/IEEE 42010]
+    related: [arhitektura, opis-arhitekture]
+    status: usvojen
+
+  - id: filozofija
+    term_hr: Filozofija
+    term_en: philosophy (doctrinal apex)
+    category: ontoloska-kategorija
+    ontological_status: stanje
+    layer: filozofija
+    definition: >
+      Najvisa instanca kaskade: epistemoloski diskurs koji odreduje sto
+      vrijedi kao znanje i kako se revidira; kisobran nad politikama,
+      principima i metodama.
+    related: [doktrina, kaskada]
+    status: usvojen
+
+  - id: doktrina
+    term_hr: Doktrina
+    term_en: doctrine
+    category: ontoloska-kategorija
+    ontological_status: stanje
+    layer: filozofija
+    definition: >
+      Obvezujuci, dokumentirani dio filozofije i njezinih izvedenica; ono
+      cega se ostala dokumentacija mora pridrzavati.
+    related: [filozofija, kaskada]
+    status: usvojen
+
+  - id: princip
+    term_hr: Princip
+    term_en: principle
+    category: ontoloska-kategorija
+    ontological_status: stanje
+    layer: princip
+    definition: >
+      Priznato inzenjersko ili znanstveno nacelo usvojeno kao osnova
+      prosudbe (Parnas, SOLID, DRY, Occam...); bira se pod politikama,
+      opravdava metode.
+    references: [1, 2, 29]
+    related: [kaskada, politika]
+    status: usvojen
+
+  - id: kaskada
+    term_hr: Kaskada (subordinacija slojeva)
+    term_en: cascade (layer subordination)
+    category: ontoloska-kategorija
+    ontological_status: pravilo
+    layer: sve
+    definition: >
+      Pravilo da nizi sloj (metoda) ne nadjacava visi (princip, politika,
+      filozofija); prijelaz medu stanjima ide iskljucivo kroz odluku (DR).
+    related: [odluka, filozofija]
+    status: usvojen
+
+  # ----------------------------------------------------------------- Dio II
+  - id: hipoteza
+    term_hr: Hipoteza
+    term_en: hypothesis
+    category: epistemologija-mjerenje
+    ontological_status: artefakt
+    layer: filozofija
+    definition: >
+      Opovrgljiv oblik doktrinarne tvrdnje: tvrdnja + mjera + sto bi je
+      oborilo. Doktrinarna tvrdnja bez hipoteze deklarira se kao
+      konceptualna. Aktivne: H1 (drift), H2 (semanticka entropija), H3
+      (valjanost instrumenta), H4-DQI (prediktivnost kvalitete).
+    related: [svjedocanstvo, valjanost-mjere]
+    status: usvojen
+
+  - id: svjedocanstvo
+    term_hr: Svjedocanstvo
+    term_en: evidence
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: sve
+    definition: >
+      Dokazni status tvrdnje ili odluke: empirijski nalaz, mjerenje,
+      incident, standard ili eksplicitna deklaracija aspiracije. Odsutnost
+      prigovora nije svjedocanstvo.
+    related: [temelji, hipoteza]
+    status: usvojen
+
+  - id: temelji
+    term_hr: Temelji
+    term_en: grounding
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: sve
+    definition: >
+      Opravdavajuci lanac odluke: informacije -> istrazivanje/konzultacije
+      -> analiza -> zakljucak -> preporuka. Polje DR zapisa, komplementarno
+      Svjedocanstvu (Temelji prethode odluci; Svjedocanstvo je prati i
+      slijedi).
+    related: [svjedocanstvo, zapis-odluke]
+    status: usvojen
+
+  - id: mjera-stanja
+    term_hr: Mjera stanja
+    term_en: state measure
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: metoda
+    definition: >
+      Opisuje zatecenu strukturu artefakta; artefakt je dovoljan izvor
+      podataka.
+    references: [11]
+    related: [mjera-odluke]
+    status: usvojen
+
+  - id: mjera-odluke
+    term_hr: Mjera odluke
+    term_en: decision measure
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: metoda
+    definition: >
+      Procjenjuje isplativost izbora pod neizvjesnoscu; trazi razdiobu nad
+      buducim stanjima svijeta.
+    references: [6]
+    related: [mjera-stanja, volatilnost]
+    status: usvojen
+
+  - id: konformna-mjera
+    term_hr: Konformna mjera
+    term_en: conformance measure
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: metoda
+    definition: >
+      Mjera relativna na deklarirani kriterij: kaze "uskladeno s ovim
+      skupom", ne "dobro po sebi"; promijeni kriterij — promijeni se broj.
+      Suprotnost: deskriptivna mjera.
+    related: [kriterij-metoda, konformnost-vs-kvaliteta]
+    status: usvojen
+
+  - id: valjanost-mjere
+    term_hr: Valjanost mjere
+    term_en: measure validity
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: metoda
+    definition: >
+      Status po protokolu V1-V6 (reprezentacijski uvjet, tip skale,
+      sadrzajna pokrivenost, prediktivna valjanost, osjetljivost, erozija).
+      Mjera bez statusa je tvrdnja na autoritet formule.
+    references: [15, 16, 19, 22, 35]
+    related: [erozija-mjere, vektorski-nalaz]
+    status: usvojen
+
+  - id: erozija-mjere
+    term_hr: Erozija mjere (Goodhart/Campbell)
+    term_en: measure erosion
+    category: epistemologija-mjerenje
+    ontological_status: pojava
+    layer: metoda
+    definition: >
+      Pokazatelj koristen za upravljanje prestaje mjeriti ono sto je mjerio;
+      zato je zadana uporaba mjere dijagnosticka, a upravljacka (gate)
+      eksplicitno ogranicena.
+    references: [22]
+    related: [valjanost-mjere, politika]
+    status: usvojen
+
+  - id: vektorski-nalaz
+    term_hr: Vektorski nalaz
+    term_en: vector finding
+    category: epistemologija-mjerenje
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Rezultat po dimenzijama bez skalarne ukupne ocjene; obavezan gdje su
+      dimenzije nesumjerljive ili skale nominalne/ordinalne.
+    references: [16, 35]
+    related: [c-snimka, konformna-mjera]
+    status: usvojen
+
+  - id: trojka-reproducibilnosti
+    term_hr: Trojka reproducibilnosti
+    term_en: reproducibility triple
+    category: epistemologija-mjerenje
+    ontological_status: pravilo
+    layer: metoda
+    definition: >
+      (verzija alata, verzija kriterija, verzija platforme); nalaz bez
+      trojke nije reproducibilan.
+    related: [c-snimka, kriterij-metoda]
+    status: usvojen
+
+  - id: c-snimka
+    term_hr: C-snimka
+    term_en: conformance snapshot
+    category: epistemologija-mjerenje
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Arhivirani zeleni vektor konformnosti s trojkom, datumom i popisom
+      deklariranih iznimaka; C0 je prva zelena konformnost jezgre.
+    related: [vektorski-nalaz, trojka-reproducibilnosti]
+    status: usvojen
+
+  - id: semanticka-entropija
+    term_hr: Semanticka entropija
+    term_en: semantic entropy
+    category: epistemologija-mjerenje
+    ontological_status: pojava
+    layer: sve
+    definition: >
+      Viseznacnost znakova sustava (isti znak, vise uloga; ista uloga, vise
+      znakova); smanjuje se kontroliranim vokabularom. Nulta tocka: jedan
+      TypeVar T s cetiri semantike.
+    references: [36, 38]
+    related: [rjecnik-registar]
+    status: usvojen
+
+  - id: slijepa-pjega
+    term_hr: Slijepa pjega
+    term_en: blind spot
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: metoda
+    definition: >
+      Deklarirano nemjereno: ono sto instrument ili proces po konstrukciji
+      ne vidi (izuzeti modul, strateski protivnik, latencija signala).
+      Deklarira se, nikad ne presucuje.
+    references: [32]
+    related: [valjanost-mjere]
+    status: usvojen
+
+  # ---------------------------------------------------------------- Dio III
+  - id: fr-nfr
+    term_hr: FR / NFR
+    term_en: functional / non-functional requirement
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: zahtjevi
+    definition: >
+      Funkcionalni / nefunkcionalni zahtjev (METHODOLOGY 5). NFR je primaran
+      (iz ciljeva i nacela; prethodi odlukama kao kriterij) ili izveden
+      (generiran odlukom).
+    standards: [ISO/IEC/IEEE 29148, ISO/IEC 25010]
+    related: [politika, odluka]
+    status: usvojen
+
+  - id: registar-imenovanja
+    term_hr: Registar imenovanja
+    term_en: naming registry
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Strojno citljivi kontrolirani vokabular koda: domene, opseg, obitelji
+      baza, uloge TypeVarova, akronimi identifikatora; TARGET vokabular cija
+      odstupanja lint prijavljuje. Od 2026-07-28 zivi kao blok `code:` ovog
+      registra; zasebna datoteka naming_registry.yaml je ukinuta.
+    related: [wem-lint, rjecnik-registar]
+    status: usvojen
+
+  - id: rjecnik-registar
+    term_hr: Rjecnik (ovaj registar)
+    term_en: doctrine glossary registry
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Kontrolirani rjecnik diskursa; semioticki stabilizator ljudskog jezika
+      doktrine, kao sto je registar imenovanja stabilizator koda. Izvor
+      istine je rjecnik.yaml; RJECNIK.md je generirani prikaz.
+    references: [38, 51]
+    related: [registar-imenovanja, semanticka-entropija]
+    status: usvojen
+
+  - id: wem-lint
+    term_hr: wem_lint
+    term_en: wem_lint
+    category: artefakt-alat
+    ontological_status: alat
+    layer: metoda
+    definition: >
+      Alat konformnosti u dva izdanja (core: sloj sucelja; workflow:
+      registar); vektorski izlaz, verzionirani kriterij, izgraden na
+      frameworku koji provjerava (samoreferentnost).
+    related: [vektorski-nalaz, c-snimka, registar-imenovanja]
+    status: usvojen
+
+  - id: dqi
+    term_hr: DQI
+    term_en: data quality index
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Deklarirani zbirni indeks kvalitete podataka nad vektorom dimenzija
+      (ISO 25012 / 8000-8); konforman, ne deskriptivan; primaran je vektor.
+    standards: [ISO/IEC 25012, ISO 8000-8, ISO 8000-61]
+    related: [vektorski-nalaz, valjanost-mjere]
+    status: usvojen
+
+  - id: wattleflow-core
+    term_hr: Wattleflow Core
+    term_en: Wattleflow Core
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: arhitektura
+    definition: >
+      Distribucija sucelja dizajn-paterna: cisti ugovori, bez politika,
+      stdlib-only.
+    related: [wattleflow-workflow]
+    status: usvojen
+
+  - id: wattleflow-workflow
+    term_hr: Wattleflow Workflow
+    term_en: Wattleflow Workflow
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: arhitektura
+    definition: >
+      Zero-trust rjesenje za podatkovne tokove gradeno na Coreu; nosi
+      konkretne politike (concrete/ sloj).
+    related: [wattleflow-core, zero-trust]
+    status: usvojen
+
+  - id: wem
+    term_hr: WEM
+    term_en: Wattleflow Engineering Methodology
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Wattleflow inzenjerska metodologija (Svezak I = METHODOLOGY.md).
+    related: [filozofija]
+    status: usvojen
+
+  # ----------------------------------------------------------------- Dio IV
+  - id: akronimi
+    term_hr: Akronimi (tablica)
+    term_en: acronyms
+    category: akronim
+    ontological_status: artefakt
+    layer: sve
+    definition: >
+      Skupna natuknica; pojedinacni akronimi u polju acronyms nize.
+    status: usvojen
+
+  # ------------------------------------------------------------------ Dio V
+  - id: viseznacnost-adr
+    term_hr: ADR (razrijesena viseznacnost)
+    term_en: ADR (disambiguated)
+    category: viseznacnost
+    ontological_status: znak
+    layer: metoda
+    definition: >
+      Naslijedeni naziv koji sazima dvije kategorije (arhitektura = stanje;
+      odluka = cin) i sugerira da je svaka evidentirana odluka arhitektonska
+      — sto vlastiti korpus opovrgava.
+    scope_note: >
+      Ovdje: DR (zapis odluke) s poljem sloj; "arhitektonska odluka" je DR
+      cijeg je sloja arhitektura. Identifikacija "arhitektura jest skup
+      odluka" [45] odbacuje se: odluke su geneza i opravdanje arhitekture,
+      ne arhitektura sama.
+    references: [45]
+    forbidden_usages: ["ADR kao naziv novih zapisa"]
+    related: [zapis-odluke, arhitektura, odluka]
+    status: usvojen
+
+  - id: viseznacnost-arhitektura
+    term_hr: Arhitektura vs opis vs dijagram
+    term_en: architecture vs description vs diagram
+    category: viseznacnost
+    ontological_status: znak
+    layer: sve
+    definition: >
+      Tri kategorije: stanje / artefakt / znak (ISO 42010).
+    scope_note: >
+      Recenica "arhitektura je zastarjela" najcesce znaci "prikaz je
+      zastario"; te se tvrdnje ne smiju mijesati.
+    related: [arhitektura, opis-arhitekture, prikaz]
+    status: usvojen
+
+  - id: viseznacnost-politika
+    term_hr: Politika (policy vs politics)
+    term_en: policy vs politics
+    category: viseznacnost
+    ontological_status: znak
+    layer: policy
+    definition: >
+      Ovdje uvijek policy (normativno stanje s provedbom i evaluacijom),
+      nikad politics.
+    scope_note: Kvalifikator obavezan (razvojna, sigurnosna, imenovanja).
+    related: [politika]
+    status: usvojen
+
+  - id: viseznacnost-mjera
+    term_hr: Mjera vs metrika vs indeks
+    term_en: measure vs metric vs index
+    category: viseznacnost
+    ontological_status: znak
+    layer: metoda
+    definition: >
+      Mjera je homomorfizam iz empirijskog u numericki sustav [15]; metrika
+      se koristi samo kolokvijalno (bez tvrdnje o reprezentacijskom uvjetu);
+      indeks je deklarirana agregacija (npr. DQI) — konforman, ne mjerni
+      rezultat po sebi.
+    scope_note: >
+      U doktrinarnim tekstovima "metrika" se izbjegava osim u citatima i
+      ustaljenim slozenicama (npr. "operativne metrike"); gdje se tvrdi
+      mjerenje, koristi se "mjera" uz status valjanosti.
+    references: [15]
+    related: [valjanost-mjere, dqi]
+    status: usvojen
+
+  - id: volatilnost
+    term_hr: Volatilnost
+    term_en: volatility
+    category: viseznacnost
+    ontological_status: pojava
+    layer: metoda
+    definition: >
+      Pokriva tri razlicita fenomena; tvrdnje o volatilnosti moraju
+      imenovati fenomen.
+    scope_note: >
+      (1) stohasticka (zahtjevi, egzogena); (2) strukturna (tehnologija,
+      koncentracija dobavljaca); (3) strateska (protivnik koji bira potez
+      nakon arhitektonske odluke [32]).
+    references: [6, 32]
+    related: [mjera-odluke, slijepa-pjega]
+    status: usvojen
+
+  - id: viseznacnost-iteracija
+    term_hr: Iteracija
+    term_en: iteration
+    category: viseznacnost
+    ontological_status: znak
+    layer: sve
+    definition: >
+      Ponavljanje ciklusa pod kaskadom s revizijom kroz DR; ne implicira
+      agilni proces.
+    scope_note: >
+      Povratna petlja je znanstveni instrument (PDSA nad teorijom [47][48]),
+      ne procesna ideologija.
+    references: [40, 41, 47, 48]
+    related: [kaskada]
+    status: usvojen
+
+  - id: zero-trust
+    term_hr: Zero-trust
+    term_en: zero trust
+    category: viseznacnost
+    ontological_status: stanje
+    layer: policy
+    definition: >
+      Imenovana sigurnosna politika (policy sloj).
+    scope_note: >
+      Epistemicka jezgra iz koje slijedi ("povjerenje se dokazuje") pripada
+      filozofiji; zero-trust se ne koristi kao naziv filozofijske razine.
+    related: [politika, filozofija]
+    status: usvojen
+
+  - id: viseznacnost-modul
+    term_hr: Modul
+    term_en: module
+    category: viseznacnost
+    ontological_status: znak
+    layer: arhitektura
+    definition: >
+      U Parnasovu smislu: granica oko odluke koja se moze promijeniti [1].
+    scope_note: >
+      Ne "datoteka" ni "paket"; gdje se misli na Python modul, reci "Python
+      modul".
+    references: [1]
+    related: [arhitektura]
+    status: usvojen
+
+  - id: konformnost-vs-kvaliteta
+    term_hr: Konformnost vs kvaliteta
+    term_en: conformance vs quality
+    category: viseznacnost
+    ontological_status: znak
+    layer: metoda
+    definition: >
+      Konformnost je uskladenost s deklariranim kriterijem (moze se postici
+      i losim kriterijem); kvaliteta trazi valjanost kriterija (V1-V6).
+    scope_note: Zeleni vektor dokazuje konformnost, ne kvalitetu.
+    related: [konformna-mjera, valjanost-mjere, c-snimka]
+    status: usvojen
+
+# --------------------------------------------------------------- akronimi
+acronyms:
+  - {id: ABS,  expansion: "abstractness (wem_lint dimenzija)", note: "vektor konformnosti"}
+  - {id: ADR,  expansion: "architecture decision record", note: "naslijedeno; v. viseznacnost-adr", status: zastarjelo}
+  - {id: ARI,  expansion: "adjusted Rand index", references: [21]}
+  - {id: AST,  expansion: "abstract syntax tree"}
+  - {id: CIA,  expansion: "confidentiality, integrity, availability", note: "tri razlicita grafa prijetnje"}
+  - {id: DQI,  expansion: "data quality index"}
+  - {id: DR,   expansion: "decision record (zapis odluke)"}
+  - {id: EOL,  expansion: "end of life", note: "politika verzija (DR-013)"}
+  - {id: FR,   expansion: "functional requirement"}
+  - {id: HDR,  expansion: "header (wem_lint dimenzija)"}
+  - {id: IMP,  expansion: "imports (wem_lint dimenzija)"}
+  - {id: LSP,  expansion: "Liskov substitution principle"}
+  - {id: MDL,  expansion: "minimum description length", references: [13]}
+  - {id: MRO,  expansion: "method resolution order (Python C3)"}
+  - {id: NCD,  expansion: "normalized compression distance", references: [14]}
+  - {id: NFR,  expansion: "non-functional requirement"}
+  - {id: NMI,  expansion: "normalized mutual information", references: [20]}
+  - {id: ORG,  expansion: "kategorija organizacijskih NFR-ova (NFR-ORG-NN)"}
+  - {id: PDSA, expansion: "plan-do-study-act (Shewhart/Deming)", references: [47, 48]}
+  - {id: SBOM, expansion: "software bill of materials", note: "SPDX/CycloneDX; NFR-ORG-06"}
+  - {id: SBVR, expansion: "Semantics of Business Vocabulary and Rules (OMG)"}
+  - {id: SFX,  expansion: "side effects (wem_lint dimenzija)"}
+  - {id: STA,  expansion: "state (wem_lint dimenzija)"}
+  - {id: TYP,  expansion: "type variables (wem_lint dimenzija)"}
+  - {id: WEM,  expansion: "Wattleflow Engineering Methodology"}
+  - {id: FAC,  expansion: "facade (wem_lint dimenzija)"}
+  - {id: EXC,  expansion: "exclusions (wem_lint dimenzija)"}
+
+acronym_identifier_casing:
+  status: neodluceno
+  decision_pending: DR-WFL-004
+  note: "lint upozorava (WARNING, waiver declared), ne kaznjava, dok odluka ne padne"
+
+# --------------------------------------------------------------------- kod
+# Kontrolirani vokabular IDENTIFIKATORA KODA. Preseljen iz
+# tools/naming_registry.yaml (koji je ukinut) — jedan izvor istine za oba
+# vokabulara. Cita ga tools/wem_lint.py preko simbolickog linka
+# tools/dictionary.yaml.
+#
+# PAZNJA — `acronyms` (vrh datoteke) i `code.identifier_acronyms` NISU isti
+# vokabular i ne smiju se spojiti:
+#   acronyms                 kratice DOKTRINE (DQI, NFR, PDSA, SBVR); nose
+#                            expansion i reference; citaju ih ljudi
+#   code.identifier_acronyms tokeni u IDENTIFIKATORIMA (JSON, URI, SQL, OSCAL);
+#                            nose samo pravilo pisanja; cita ih lint
+# Presjek im je prazan (mjereno 2026-07-28) i mora ostati prazan. Spajanje bi
+# ucinilo da jedan znak nosi dvije uloge — tocno ona semanticka entropija koju
+# ovaj registar postoji da smanji (v. natuknicu semanticka-entropija).
+#
+# Verzioniranje: `registry_version` na vrhu verzionira RJECNIK (diskurs),
+# `code.criterion_version` verzionira KRITERIJ KODA. Odvojeni su namjerno —
+# izmjena natuknice ne smije obezvrijediti C-snimke konformnosti koda, ni
+# obrnuto (trojka-reproducibilnosti).
+code:
+  criterion_version: "0.7.0"
+
+  # Verzionira povrsinu ispisa (MESSAGES, CATALOGUE) odvojeno od kriterija:
+  # ispravak teksta ili prijevoda podize ovaj broj i ostavlja nalaze usporedivima,
+  # dok criterion_version mice samo promjena pravila, domene ili opsega. Nije dio
+  # trojke (D-10) — prikaz ne mijenja presudu — ali se pise u svaku snimku.
+  # Povijest: kriterij 0.5.0 i 0.6.0 bile su cisto prezentacijske migracije.
+  presentation_version: "0.1.0"
+
+  # Zadani jezik ispisa alata. UK English je zadan i fallback (§3.2);
+  # `--lang` ga nadjačava po pokretanju. Prikaz, ne kriterij (D-13).
+  report_language: en
+
+  # Katalog vrsta nalaza. `code`/`ref` su jezicno neutralni; `title`/`why`/`fix`
+  # su pod kljucem jezika, `en` je fallback.
+  CATALOGUE:
+    "import-cycle":
+      code: "K1"
+      ref: "NFR-ORG-01 §3"
+      en:
+        title: "import loop — two modules import each other"
+        why:
+          - "Two modules import each other (directly or through a chain)."
+          - "That is a loop: Python cannot load them cleanly, and every change"
+          - "to one drags the other with it."
+        fix:
+          - "Fix: break the loop — move the shared piece somewhere both sides"
+          - "may import (a lower layer), so the arrows point one way only."
+      hr:
+        title: "petlja uvoza — dva modula uvoze jedan drugoga"
+        why:
+          - "Dva modula uvoze jedan drugoga (izravno ili kroz lanac). To je"
+          - "petlja: Python ih ne može čisto učitati, a svaka izmjena jednoga"
+          - "povlači drugi."
+        fix:
+          - "Popravak: prekini petlju — premjesti zajednički dio u sloj koji"
+          - "obje strane smiju uvoziti, da strelice idu samo u jednom smjeru."
+    "wrong-direction-import":
+      code: "K2"
+      ref: "NFR-ORG-01 §3"
+      en:
+        title: "foundation imports an upper layer (wrong direction)"
+        why:
+          - "`helpers/` is the foundation of the building — everyone may use it."
+          - "So it must not import from upper layers (`concrete/`, …), or the"
+          - "foundation ends up depending on a floor that stands on top of it:"
+          - "every change up there shakes the foundation, and in the worst case"
+          - "you get an import loop."
+        fix:
+          - "Fix: move the imported symbol down to a layer helpers may use,"
+          - "or use a stdlib replacement inside helpers."
+      hr:
+        title: "temelj uvozi gornji sloj (pogrešan smjer)"
+        why:
+          - "`helpers/` je temelj zgrade — svi ga smiju koristiti. Zato ne smije"
+          - "uvoziti iz gornjih slojeva (`concrete/`, …), inače temelj ovisi o"
+          - "katu koji stoji na njemu: svaka izmjena gore trese temelj, a u"
+          - "najgorem slučaju nastaje petlja uvoza."
+        fix:
+          - "Popravak: spusti uvezeni simbol u sloj koji helpers smije koristiti,"
+          - "ili upotrijebi stdlib zamjenu unutar helpersa."
+    "misfiled-leaf":
+      code: "K3"
+      ref: "NFR-ORG-01 §3"
+      en:
+        title: "import target is foundation material, but labelled as a domain"
+        why:
+          - "The imported package imports nothing from wattleflow itself — it is"
+          - "a pure leaf (foundation material). The registry, however, lists it"
+          - "as a domain (upper layer). The import is fine; the label is wrong."
+        fix:
+          - "Fix: update the registry — remove the package from `domains` so the"
+          - "tool treats it as foundation."
+      hr:
+        title: "cilj uvoza je temeljni materijal, a registar ga vodi kao domenu"
+        why:
+          - "Uvezeni paket ne uvozi ništa iz wattleflowa — čisti je list"
+          - "(temeljni materijal). Registar ga ipak vodi kao domenu (gornji sloj)."
+          - "Uvoz je u redu; oznaka je pogrešna."
+        fix:
+          - "Popravak: ažuriraj registar — makni paket iz `domains` da ga alat"
+          - "tretira kao temelj."
+    "out-of-scope-module":
+      code: "K5"
+      ref: "dictionary.yaml: slijepa-pjega"
+      en:
+        title: "module not measured — outside clean-core scope"
+        why:
+          - "This module imports a third-party library, so it belongs to another"
+          - "distribution (wattleflow-processors / examples) and every rule skipped"
+          - "it. Nothing here was checked — clean is not the same as unmeasured."
+          - "Note: a real violation can hide behind this filter. helpers/config.py"
+          - "is skipped for `yaml`, yet it also imports concrete/ — an ORG-01 breach"
+          - "the instrument cannot see."
+        fix:
+          - "Not a defect to fix: a declared blind spot, listed so the vector never"
+          - "reads as full coverage. Measure it from the distribution that owns it."
+      hr:
+        title: "modul nije mjeren — izvan clean-core opsega"
+        why:
+          - "Modul uvozi third-party biblioteku pa pripada drugoj distribuciji"
+          - "(wattleflow-processors / examples) i svako ga je pravilo preskočilo."
+          - "Ovdje ništa nije provjereno — čisto nije isto što i nemjereno."
+          - "Napomena: iza ovog filtra može se skriti pravi prekršaj."
+        fix:
+          - "Nije kvar za popravak: deklarirana slijepa pjega, navedena da vektor"
+          - "nikad ne čita kao puna pokrivenost. Mjeri iz distribucije koja je vlasnik."
+    "declared-blind-spot":
+      code: "K6"
+      ref: "dictionary.yaml: slijepa-pjega"
+      en:
+        title: "registry declares this as unmeasured by construction"
+        why:
+          - "The registry's `blind_spots` list names what the instrument cannot"
+          - "see by design (not by accident). Declaring it is the requirement;"
+          - "silence would be the defect."
+        fix:
+          - "Nothing to do — carried into every report and every snapshot."
+      hr:
+        title: "registar ovo deklarira kao nemjereno po konstrukciji"
+        why:
+          - "`blind_spots` popis registra imenuje ono što instrument po dizajnu"
+          - "ne može vidjeti (ne slučajno). Deklaracija je zahtjev; šutnja bi"
+          - "bila kvar."
+        fix:
+          - "Nema što raditi — nosi se u svaki nalaz i svaku snimku."
+    "unimplemented-rule":
+      code: "K7"
+      ref: "POLICY §9"
+      en:
+        title: "registry declares a rule this tool cannot check"
+        why:
+          - "The criterion lists a rule with a severity and a waiver policy, but"
+          - "no code path can ever raise it. The declaration promises a verdict"
+          - "the instrument never gives, so a green vector overstates coverage."
+        fix:
+          - "Fix: implement the check, or retire the rule from the registry"
+          - "through a DR — a rule is a promise, not a comment."
+      hr:
+        title: "registar deklarira pravilo koje alat ne može provjeriti"
+        why:
+          - "Kriterij navodi pravilo sa severityjem i waiver politikom, ali ga"
+          - "nijedan put u kodu ne može dići. Deklaracija obećava presudu koju"
+          - "instrument nikad ne daje, pa zeleni vektor precjenjuje pokrivenost."
+        fix:
+          - "Popravak: implementiraj provjeru ili povuci pravilo iz registra"
+          - "kroz DR — pravilo je obećanje, ne komentar."
+    "undeclared-check":
+      code: "K8"
+      ref: "POLICY §9"
+      en:
+        title: "tool emits a check the registry never declared"
+        why:
+          - "This check produces findings, yet the criterion does not list it."
+          - "Its severity and waiver therefore live in the tool instead of the"
+          - "registry, outside the DR governance the criterion is meant to carry."
+        fix:
+          - "Fix: declare the check in the registry `rules` block through a DR,"
+          - "so its severity and waiver become a criterion fact."
+      hr:
+        title: "alat emitira provjeru koju registar nikad nije deklarirao"
+        why:
+          - "Provjera proizvodi nalaze, a kriterij je ne navodi. Njezin severity"
+          - "i waiver time žive u alatu umjesto u registru, izvan DR upravljanja"
+          - "koje kriterij treba nositi."
+        fix:
+          - "Popravak: deklariraj provjeru u `rules` bloku registra kroz DR, da"
+          - "joj severity i waiver postanu činjenica kriterija."
+    "single-consumer-helper":
+      code: "K4"
+      ref: "NFR-ORG-01 §1"
+      en:
+        title: "shared helper used by only one package"
+        why:
+          - "`helpers/` is the shared shelf: it should only hold things that at"
+          - "least TWO different packages use. A module with a single consumer"
+          - "belongs inside the package that uses it — closer to its user and"
+          - "easier to change."
+        fix:
+          - "Fix: move the module into its only consumer package, or leave it if"
+          - "a second consumer is coming soon."
+          - "(Inherited from before — does not fail the build.)"
+      hr:
+        title: "dijeljeni helper koristi samo jedan paket"
+        why:
+          - "`helpers/` je dijeljena polica: smije držati samo ono što koriste"
+          - "barem DVA različita paketa. Modul s jednim potrošačem pripada unutar"
+          - "paketa koji ga koristi — bliže korisniku i lakši za izmjenu."
+        fix:
+          - "Popravak: premjesti modul u njegov jedini potrošački paket, ili ga"
+          - "ostavi ako drugi potrošač uskoro dolazi."
+          - "(Zatečeno stanje — ne ruši build.)"
+
+  # Poruke ispisa alata, po jeziku. `en` je zadan i fallback: mora ostati
+  # potpun, jer nedostajuci kljuc degradira na engleski. Novi jezik se
+  # dodaje ovdje — alat ne drzi nijedan tekst.
+  MESSAGES:
+    en:
+      vector: "VECTOR"
+      reproducibility: "REPRODUCIBILITY"
+      no_findings: "(no findings)"
+      blind_spots_label: "blind spots"
+      other_findings: "--- other findings (no friendly entry yet) ---"
+      summary: "wem_lint: {errors} error(s), {warns} warning(s), {infos} info"
+      vector_note: "  note: conformance vector — no aggregate score is defined for these\n  checks; the scale is nominal, so counting is the only admissible\n  operation (METHODOLOGY §3b/§6.1). A green vector proves conformance\n  to the declared criterion, not quality (dictionary: konformnost-vs-kvaliteta)."
+      notes: "Notes: ORG-01 fan-in counts direct `wattleflow.helpers.<mod>` imports only; aggregate `from wattleflow.helpers import X` is not resolved, so fan-in is a lower bound (advisory). ORG-01 #2/#4 not yet automated. See NFR.md."
+      python_pin: "  WARNING    registry pins python {pin}, running {running} — the stdlib set tested is the\n             interpreter's, so ORG-01 scope is not reproducible against the pin"
+      graph_title: "=== NFR-ORG-01 — dependency graph (package level) ==="
+      graph_hint: "  ▶ = imports;  a leaf tier (no outgoing edges) is the allowed foundation"
+      graph_leaf: "leaf — imports nothing intra-project"
+      graph_external: "external — not analysed as a source"
+      legend: "Legend: "
+      tag_cycle: "mutual"
+      tag_layering: "one-way"
+      tag_leaf: "misfiled leaf"
+    hr:
+      vector: "VEKTOR"
+      reproducibility: "REPRODUCIBILNOST"
+      no_findings: "(nema nalaza)"
+      blind_spots_label: "slijepe pjege"
+      other_findings: "--- ostali nalazi (bez unosa u katalogu) ---"
+      summary: "wem_lint: {errors} greška/e, {warns} upozorenje/a, {infos} info"
+      vector_note: "  napomena: vektor konformnosti — ukupna ocjena za ove provjere nije\n  definirana; skala je nominalna pa je brojanje jedina dopuštena\n  operacija (METHODOLOGY §3b/§6.1). Zeleni vektor dokazuje usklađenost\n  s deklariranim kriterijem, ne kvalitetu (rječnik: konformnost-vs-kvaliteta)."
+      notes: "Napomene: ORG-01 fan-in broji samo izravne `wattleflow.helpers.<mod>` uvoze; agregatni `from wattleflow.helpers import X` se ne razrješava pa je fan-in donja granica (savjetodavno). ORG-01 #2/#4 nisu automatizirani. Vidi NFR.md."
+      python_pin: "  UPOZORENJE registar pina python {pin}, izvodi se {running} — skup stdliba\n             je interpreterov, pa opseg ORG-01 nije reproducibilan prema pinu"
+      graph_title: "=== NFR-ORG-01 — graf ovisnosti (razina paketa) ==="
+      graph_hint: "  ▶ = uvozi;  list bez izlaznih bridova je dopušten temelj"
+      graph_leaf: "list — ne uvozi ništa unutar projekta"
+      graph_external: "vanjski — ne analizira se kao izvor"
+      legend: "Legenda: "
+      tag_cycle: "uzajamno"
+      tag_layering: "jednosmjerno"
+      tag_leaf: "pogrešno smješten list"
+  python_reference: "3.11"          # definira skup "stdlib" za ORG-01;
+                                    # mora pratiti requires-python u pyproject.toml
+
+  blind_spots:                       # deklarirano nemjereno (§5, stupac 3)
+    - uvozi unutar shared_namespacea ne modeliraju se kao bridovi, pa su ciklusi i
+      slojevitost UNUTAR helpers/ nemjereni (helpers->domena acikličnost i fan-in
+      helpera JESU mjereni)
+    - strateški protivnik izvan dometa linta
+
+  rules:
+    - id: ORG-01a
+      nfr: NFR-ORG-01
+      check: clean_core_imports
+      severity: error
+      waiver: forbidden
+    - id: ORG-01b
+      nfr: NFR-ORG-01
+      check: domain_acyclicity
+      severity: error
+      waiver: dr_required
+    - id: ORG-02a
+      nfr: NFR-ORG-02
+      check: base_family_membership
+      severity: error
+      waiver: dr_required
+    - id: ORG-02b
+      nfr: NFR-ORG-02
+      check: prohibited_standalone
+      severity: error
+      waiver: forbidden
+    - id: ORG-02c
+      nfr: NFR-ORG-02
+      check: acronym_case
+      severity: warning
+      waiver: declared
+    - id: ORG-03a
+      nfr: NFR-ORG-03
+      check: typevar_role_vocabulary
+      severity: warning              # mehanizam tolerancije već postoji
+      waiver: declared
+
+  # --- NFR-ORG-01: domains ----------------------------------------------------- #
+  # Top-level functional packages under src/wattleflow. `helpers` is the shared
+  # namespace, NOT a domain — it must not appear here, or intra-helper imports get
+  # misreported as acyclicity breaks. `constants` is likewise absent: it imports
+  # nothing intra-project, so it is foundation material every layer may depend on
+  # (ORG-01 §3 misfiled-leaf, 2026-07-29).
+  domains:
+    - audit
+    - blackboards
+    - concrete
+    - decorators
+    - managers
+    - mappers
+    - orchestrators
+    - schedulers
+
+  shared_namespace: helpers
+
+  # --- Scope: clean-core filter ------------------------------------------------ #
+  # wattleflow-workflow is clean core: stdlib + the libraries below only (§7.1).
+  # A module importing anything outside (stdlib ∪ wattleflow ∪ core_libraries)
+  # belongs to another distribution (wattleflow-processors / examples) and is
+  # skipped by every rule. `exclude_paths` opts out modules by path glob for cases
+  # the import filter cannot catch.
+  scope:
+    core_libraries:
+      - typing_extensions   # typing backport, core-safe
+    exclude_paths: []
+
+  # --- NFR-ORG-02: framework base classes -------------------------------------- #
+  # The inheritance roots of the framework — every concrete name in the workflow
+  # package derives from one of these. Grouped by family: each family lists its
+  # core interface(s) (I*, from wattleflow.core) and its concrete base(s)
+  # (concrete/*). The lint treats a class as belonging to a family if it inherits
+  # one of the family's bases; pipeline detection reads `bases.pipeline`.
+  bases:
+    root:          [IWattleflow]
+    observer:      [IObservable, IObserver]
+    blackboard:    [IBlackboard, GenericBlackboard]
+    connection:    [ConnectionObserverInterface, GenericConnection]
+    document:      [IAdaptee, IAdapter, ITarget, Document, DocumentAdapter, DocumentFacade]
+    driver:        [IDriver, GenericDriver, LazyDriverProxy]
+    processor:     [IProcessor, GenericProcessor]
+    pipeline:      [IPipeline, GenericPipeline]
+    repository:    [IRepository, GenericRepository, RepositoryWithDriver]
+    strategy:      [IStrategy, Strategy, StrategyGenerate, StrategyCreate, StrategyRead, StrategyWrite]
+    workflow:      [GenericWorkflow]
+    orchestrator:  [IEventSource, IFacade, Orchestrator]
+    scheduler:     [IScheduler, IEventListener, Scheduler]
+    manager:       [ConnectionManager, DriverManager, ProcessorManager]
+    state_machine: [IStateMachine, StateMachine, GuardedStateMachine]
+    memento:       [IMemento, GenericMemento]
+    originator:    [IOriginator]
+    logger:        [ILogger, AuditLogger]
+    exception:     [AuditException]
+
+  # Bare generic role nouns prohibited as standalone class names (criterion 6).
+  prohibited_standalone:
+    - Manager
+    - Helper
+    - Utility
+    - Parser
+    - Piece
+
+  # Acronym TOKENS as they appear in code identifiers. Distinct from the
+  # top-level `acronyms` table (doctrine abbreviations) — see the note above.
+  identifier_acronyms:
+    - YAML
+    - JSON
+    - URI
+    - RDF
+    - HTML
+    - SQL
+    - FSM
+    - SFTP
+    - OSCAL
+
+  # --- NFR-ORG-03: TypeVar (generic parameter) role vocabulary ----------------- #
+  # A TypeVar names the SEMANTIC ROLE the type plays in the generic contract, not
+  # the mechanism (the fact that it is a type). Shares the `acronyms` block above.
+  type_vars:
+    # Canonical role nouns — the closed controlled vocabulary (criterion 1).
+    roles:
+      - Key
+      - Value
+      - Message
+      - Destination
+      - Context
+      - Result
+      - State
+      - Action
+      - Vertex
+      - Edge
+      - Input
+      - Output
+      - Element
+      - Adaptee       # Adapter-pattern role (document.py: Generic[Adaptee])
+      - Connection    # wrapped resource role (connection.py: Generic[Connection])
+    # Synonyms collapsed to a canonical role (criterion 6; lint flags + suggests).
+    synonyms:
+      Yielded: Output
+      Sent: Input
+      Return: Result
+      Returned: Result
+      Elem: Element
+    # Branded names awaiting a DR decision (rename to canonical vs keep) — WARN,
+    # not ERROR, until decided (analogous to the ORG-01 tolerance policy).
+    tolerated:
+      - WattleType

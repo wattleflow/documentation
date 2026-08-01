@@ -1,4 +1,3 @@
-
 .github
 .vscode
 build
@@ -8,6 +7,17 @@ __pycache__/
 *.pyc
 */hr/*
 */en/*
+*.bak
+*.md
+*.ipynb
+*.puml
+*.yaml
 CLAUDE.md
-POLICY.md
+processors/
 GIT-ASSISTANCE.md
+DOCTRINE.md
+DICTIONARY.md
+LITERATURE.md
+MANIFEST.in
+POSTULATE.md
+workflow/TODO.md
