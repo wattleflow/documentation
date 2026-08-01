@@ -1,26 +1,22 @@
-# Konsolidirana literatura (ključevi 1–57)
+# Consolidated literature (keys 1–57)
 
 | | |
 |---|---|
-| **Verzija** | Draft v0.3.1 |
-| **Nadređeni dokumenti** | `PHILOSOPHY.md`, `METHODOLOGY.md`, `DOCTRINE.md`, `POSTULATE.md` |
-| **Srodni artefakti** | ... |
-| **Upravljanje** | natuknica se dodaje, mijenja ili proglašava zastarjelom isključivo kroz zapis odluke (DR); v. §Održavanje |
+| **Version** | Draft v0.3.1 |
+| **Parent documents** | `PHILOSOPHY.md`, `METHODOLOGY.md`, `DOCTRINE.md`, `POSTULATE.md` |
+| **Related artefacts** | ... |
+| **Management** | entries are added, changed, or declared obsolete exclusively through a decision record (DR); see §Maintenance |
 
 
-Jedinstvena referentna tablica za rad, filozofiju (PHILOSOPHY.,md) i analizu.
-Ključevi 1–35: izvorna tablica rada (revizija: [11] zamijenjen radom iz 2006.
-koji uvodi propagation cost; [35] dodan za višekriterijsku optimizaciju).
-Ključevi 36–52: dopuna (povijest procesnih modela, ADR linija, informacijske
-znanosti).
+A single reference table for work, philosophy (PHILOSOPHY.md) and analysis.
+Keys 1–35: original work table (revision: [11] replaced by the 2006 paper that introduces propagation cost; [35] added for multicriteria optimisation).
+Keys 36–52: supplement (history of process models, ADR lineage, information science).
 
-Status: bez oznake = verificirano u ranijim prolazima; (k) = knjiga bez
-DOI-ja, prije predaje dodati ISBN izdanja koje se stvarno konzultira;
-(!) = provjeriti prije upotrebe u tekstu.
+Status: no marker = verified in previous passes; (k) = book without DOI; before submission, add the ISBN of the edition actually consulted; (!) = verify before use in the text.
 
 ---
 
-## 7. Literatura
+## 7. Literature
 
 1. Parnas, D. L. (1972). *On the Criteria To Be Used in Decomposing Systems into Modules*. Communications of the ACM, 15(12), 1053–1058. https://doi.org/10.1145/361598.361623
 2. Simon, H. A. (1962). *The Architecture of Complexity*. Proceedings of the American Philosophical Society, 106(6), 467–482. https://www.jstor.org/stable/985254
@@ -85,25 +81,25 @@ S. Oznaka vlastite tvrdnje autora.
 
 ---
 
-## Napomene
+## Notes
 
-1. [11] pokazuje na MacCormack, Rusnak & Baldwin 2006 (Management Science) —
-   rad koji uvodi propagation cost; mirroring-rad iz 2012.
-   (10.1016/j.respol.2012.04.011) nije u tablici jer se u tekstu ne koristi;
-   vraća se kao novi ključ ako uđe argument o podudarnosti organizacijske i
-   tehničke granice.
-2. [16] nosi Stevensa (tipovi skala); Pareto/višekriterijska analiza je [35].
-3. [37] (Wiener) i [30] (Ashby) dijele posao: Ashby — zakon nužne
-   raznolikosti; Wiener — povratna petlja i regulacija.
-4. [40] (Royce): tvrdnja o iterativnosti izvornika citira se uz tekst
-   izvornika (str. 2: jednosmjerni prolaz „risky and invites failure"), ne uz
-   sekundarne prikaze.
-5. Stavke (k): prije predaje dodati ISBN izdanja koje se stvarno konzultira
-   (pravilo iz Krantz slučaja — ISBN mora odgovarati izdanju).
-6. Stavke (!): ne koristiti u tekstu dok se ne verificiraju.
-7. Kandidati izvan tablice (spomenuti u raspravi, ulaze po potrebi s
-   verifikacijom): Kitchenham i dr. 1995 (10.1109/32.489070); Fenton & Bieman,
-   *Software Metrics* (3. izd.); Sweller, van Merriënboer & Paas 1998
-   (10.1023/A:1022193728205); Beer, *Brain of the Firm*; Boehm se koristi kao
+1. [11] points to MacCormack, Rusnak & Baldwin (2006, Management Science) —
+   the paper that introduces propagation cost; the mirror paper from 2012,
+   (10.1016/j.respol.2012.04.011), is not in the table because it is not used in the text;
+   it should be reintroduced as a new key if an argument about organisational and
+   technical boundary congruence is made.
+2. [16] carries Stevens (scale types); Pareto/multicriteria analysis is [35].
+3. [37] (Wiener) and [30] (Ashby) share the work: Ashby — the law of requisite
+   variety; Wiener — feedback and regulation.
+4. [40] (Royce): the claim about the source text’s iterativity should be cited with the
+   original text (p. 2: the one-way pass, “risky and invites failure”), not with secondary
+   summaries.
+5. Entries marked (k): before submission, add the ISBN of the edition actually consulted
+   (the rule from the Krantz case — the ISBN must match the edition).
+6. Entries marked (!): do not use in the text until they are verified.
+7. Candidates outside the table (mentioned in discussion, to be added only as needed with
+   verification): Kitchenham et al. 1995 (10.1109/32.489070); Fenton & Bieman,
+   *Software Metrics* (3rd ed.); Sweller, van Merriënboer & Paas 1998
+   (10.1023/A:1022193728205); Beer, *Brain of the Firm*; Boehm is used as
    [42]; Mills/Cleanroom; Ford, Parsons & Kua, *Building Evolutionary
-   Architectures* (fitness functions — srodnik Registar polja u ADR-u).
+   Architectures* (fitness functions — related to the ADR field registry).
