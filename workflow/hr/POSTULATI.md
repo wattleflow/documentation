@@ -203,23 +203,6 @@ dokumentacije.**
 *Primjena:* pentada; pravilo za dijagrame; rjecnik.yaml → RJECNIK.md smjer.
 *Status:* usvojeno pravilo doktrine.
 
-**P-21 [S] — Konkatenacija nije kompozicija: spajanje bez ugovora
-proizvodi cjelinu čija svojstva nitko nije dizajnirao.**
-*Podrijetlo:* usmena predaja (dijagnoza suvremenog IT-a kao
-„konkateniranog"); kompozicija
-ima algebru (ugovori na granicama jamče svojstva cjeline; konformno ∘
-konformno = konformno), konkatenacija je jukstapozicija bez jamstava.
-Teorijski oslonac: svojstva sustava žive u interakcijama (P-03), pa
-nedizajnirane interakcije znače nedizajnirana svojstva; gotovo-
-rastavljivost (P-12) objašnjava zašto konkatenacija kratkoročno radi, a
-latencija signala (P-18) zašto se cijena vidi kasno.
-*Primjena:* supply-chain analiza (P-17 je konkatenacija ovisnosti);
-registar + lint kao mehanizam pretvaranja konkatenacije u kompoziciju
-(granica dobiva ugovor i provjeru); semantička entropija kao semiotički
-oblik iste pojave (konkatenirani vokabulari).
-*Status:* konceptualna; put obrane: mjerljiva razlika sustava s
-provedenim ugovorima granica naspram bez njih (H1, H2 signali).
-
 ---
 
 ## Održavanje

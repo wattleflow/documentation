@@ -1,0 +1,401 @@
+# Wattleflow — kriterij konformnosti koda za distribuciju `wattleflow-processors`
+#
+# Ovo NIJE rječnik doktrine. Diskurs (natuknice, kratice, ontološki statusi) ima
+# jedan izvor istine — `documentation/dictionary.yaml` — i ovaj ga dokument ne
+# duplicira. Ovdje živi isključivo blok `code:`: kontrolirani vokabular
+# IDENTIFIKATORA KODA za jednu distribuciju.
+#
+# Zašto zaseban dokument (a ne novi ključ u dictionary.yaml):
+# `METHODOLOGY.md` §1 t.2 traži da je nalaz reproducibilan samo uz trojku
+# (alat, kriterij, platforma), a `DR-WFL-005` je već razdvojio `registry_version`
+# (diskurs) od `code.criterion_version` (kod) uz obrazloženje da „izmjena
+# natuknice ne smije obezvrijediti C-snimke konformnosti koda, ni obrnuto".
+# Isti argument vrijedi sloj niže: izmjena workflow vokabulara ne smije
+# obezvrijediti C-snimke processorsa. Jedan `criterion_version` nad tri
+# distribucije upravo bi to radio.
+#
+# STATUS: HIPOTEZA U TESTIRANJU (v. blok `hypothesis:`). Dokument postoji da bi
+# tvrdnja bila opovrgljiva, ne da bi bila usvojena. Smještaj datoteke i način
+# dosezanja iz `tools/` su otvorena odluka (O1) i mijenjaju se bez posljedica
+# na sadržaj.
+
+registry_version: "0.2.0"          # naslijeđeno iz dictionary.yaml — diskurs je dijeljen
+python_reference: "3.11"
+
+# --------------------------------------------------------------------- hipoteza
+# Doktrina mjerljivosti (`PHILOSOPHY.md`, sekcija Hipoteze) primijenjena na sam
+# ovaj dokument: doktrinarna tvrdnja bez opovrgljivog oblika koristi autoritet.
+hypothesis:
+  id: H5
+  status: u-testiranju
+  claim: >
+    Kriterij konformnosti po distribuciji mjeri ono što zajednički (clean-core)
+    kriterij nad istim stablom ne može vidjeti.
+  rationale: >
+    `wattleflow-processors` je po POLICY §7.4 izrijekom IZVAN zero-trust opsega —
+    third-party ovisnosti su mu razlog postojanja. Zajednički kriterij nosi
+    clean-core filter opsega, koji za processors odgovara na pitanje čiji je
+    odgovor unaprijed poznat („ne pripada čistoj jezgri"), pa ga po konstrukciji
+    ne mjeri.
+  measures:
+    - id: M1
+      name: pokrivenost
+      definition: udio modula u opsegu (mjereni / ukupno)
+      scale: omjerna
+      baseline_A: 0.525            # 74 / 141, mjereno 2026-07-29
+    - id: M2
+      name: nova informacija
+      definition: broj nalaza koje kriterij B otkriva a kriterij A ne
+      scale: apsolutna (brojanje; nominalna klasifikacija — bez skalarnog zbroja)
+      baseline_A: 0
+    - id: M3
+      name: lažni nalazi
+      definition: nalazi kriterija A koji su artefakt krivog registra, ne svojstvo koda
+      scale: apsolutna
+      baseline_A: 2                # ORG-01 misfiled-leaf nad `constants` — nije processors paket
+    - id: M4
+      name: gustoća nalaza
+      definition: (ERROR + WARNING) / broj mjerenih modula
+      scale: omjerna
+      baseline_A: 0.041            # 3 / 74
+  falsified_by:
+    - >
+      M1_B <= M1_A I M2_B = 0 — razdvajanje kriterija ne donosi ni pokrivenost ni
+      informaciju, pa Occamova britva nalaže jedan kriterij (opcija O1-A ili nikakav
+      zaseban).
+    - >
+      M1_B > M1_A ali M4_B < M4_A uz M2_B = 0 — porast pokrivenosti nije mjerenje nego
+      popustljivost: prošireni `scope.core_libraries` sakriva module umjesto da ih
+      izloži provjeri. Ovo je kontrola protiv namještanja instrumenta i mora se
+      izvijestiti čak i kad je nalaz nepovoljan.
+  feeds: H3                        # valjanost instrumenta — verzionirani kriterij
+  note: >
+    Kandidat za `PHILOSOPHY.md` sekciju Hipoteze pri usvajanju. Do tada tvrdnja
+    živi ovdje i nema normativnu snagu.
+
+# --------------------------------------------------------------------- akronimi
+# Preslikano iz dictionary.yaml — pisanje akronima u identifikatorima je otvorena
+# odluka i njezina strogost mora biti ista u svim distribucijama, inače isti kod
+# dobiva različitu ocjenu ovisno o tome tko ga mjeri.
+acronym_identifier_casing:
+  status: neodluceno
+  decision_pending: DR-WFL-004
+  note: "lint upozorava (WARNING, waiver declared), ne kaznjava, dok odluka ne padne"
+
+# --------------------------------------------------------------------------- kod
+code:
+  criterion_version: "0.1.0"       # novi kriterij; NE nastavlja workflow numeraciju
+  python_reference: "3.11"         # mora pratiti requires-python u pyproject.toml
+
+  provenance: >
+    Vokabular prenesen iz ukinutog `processors/tools/naming_registry.yaml`
+    (ADR-vođen). Prenesen VERBATIM — namjerno, jer je registar TARGET vokabular:
+    odstupanja zatečenog koda od njega su nalazi, ne razlog da se registar
+    prilagodi kodu. Tri izmjene OBLIKA (ne sadržaja) nametnula je wem_lint 1.4.0:
+      1. `acronyms:` -> `identifier_acronyms:` — alat od 1.4.0 izvodi `acronyms`
+         iz `identifier_acronyms`; zadržavanje starog ključa tiho bi ga prepisalo
+         praznom listom i provjera casinga bi prošla zeleno bez ijednog akronima
+      2. `pipeline_bases:` (ravna lista) -> `bases.pipeline` (po obiteljima)
+      3. novi obavezni blokovi: `criterion_version`, `blind_spots`, `rules`
+
+  blind_spots:                     # deklarirano nemjereno — nikad prešućeno
+    - shared_namespace (`helpers`) izuzet iz acikličnosti i lokalnosti
+    - strateški protivnik izvan dometa linta
+    - >
+      `mappers` je čist list (ne uvozi ništa iz wattleflowa) pa NIJE u `domains`;
+      ORG-01/02 su domenski opsežena pravila i stoga ga ne mjere
+    - >
+      `repositories/` ne sadrži nijednu `.py` datoteku — jedini član je
+      `__init__,py` (zarez umjesto točke). Paket je mrtav i nevidljiv svakom
+      alatu koji hoda po `*.py`; zabilježeno kao nalaz izvan dosega linta
+
+  rules:
+    - id: ORG-01a
+      nfr: NFR-ORG-01
+      check: clean_core_imports
+      severity: error
+      waiver: forbidden
+    - id: ORG-01b
+      nfr: NFR-ORG-01
+      check: domain_acyclicity
+      severity: error
+      waiver: dr_required
+    - id: ORG-02a
+      nfr: NFR-ORG-02
+      check: base_family_membership
+      severity: error
+      waiver: dr_required
+    - id: ORG-02b
+      nfr: NFR-ORG-02
+      check: prohibited_standalone
+      severity: error
+      waiver: forbidden
+    - id: ORG-02c
+      nfr: NFR-ORG-02
+      check: acronym_case
+      severity: warning
+      waiver: declared
+    - id: ORG-03a
+      nfr: NFR-ORG-03
+      check: typevar_role_vocabulary
+      severity: warning
+      waiver: declared
+
+  # --- NFR-ORG-01: domene ------------------------------------------------- #
+  # Top-level funkcionalni paketi VLASTITI distribuciji processors. Izostavljeni
+  # su, svaki s razlogom:
+  #   helpers      -> shared_namespace (ne domena; inače se intra-helper uvozi
+  #                   krivo prijavljuju kao lom acikličnosti)
+  #   mappers      -> čist list (ne uvozi ništa iz wattleflowa); domena-oznaka nad
+  #                   listom je upravo greška koju DR-WFL-005 ostavlja otvorenom
+  #                   za `constants` u workflow registru
+  #   repositories -> nema nijednu .py datoteku (v. blind_spots)
+  #   concrete/core/constants/decorators -> tuđe distribucije, dosegnute preko
+  #                   PEP 420 namespacea; nisu processors paketi
+  # `decorators` POSTOJI i u processors stablu (1 datoteka) — ali dijeli ime s
+  # workflow paketom, pa se ne deklarira kao processors domena dok se kolizija
+  # imena ne razriješi odlukom.
+  domains:
+    - blackboards
+    - connections
+    - documents
+    - drivers
+    - pipelines
+    - processors
+    - strategies
+
+  shared_namespace: helpers
+
+  # --- Opseg -------------------------------------------------------------- #
+  # OVDJE JE SUŠTINA HIPOTEZE.
+  #
+  # Zajednički (workflow) kriterij nosi clean-core filter: modul koji uvozi bilo
+  # što izvan (stdlib ∪ wattleflow ∪ core_libraries) ispada iz opsega jer pripada
+  # drugoj distribuciji. Za `wattleflow-processors` to pitanje nema informacijski
+  # sadržaj — POLICY §7.4 unaprijed odgovara da paket namjerno NIJE zero-trust i
+  # da su third-party ovisnosti njegov razlog postojanja.
+  #
+  # `core_libraries` je po konstrukciji per-registar popis („što ova distribucija
+  # smije uvoziti"), pa ga ovdje popunjavamo deklariranom third-party površinom
+  # processorsa. Mehanizam alata se NE mijenja — mijenja se samo činjenica o
+  # distribuciji koju kriterij nosi.
+  #
+  # Popis je IZMJEREN (AST sweep nad stablom 2026-07-29), ne prepisan iz
+  # pyproject.toml — namjerno: razilaženje deklariranih i stvarno uvezenih
+  # ovisnosti je nalaz koji tek treba izmjeriti (NFR-SEC-03), a ne pretpostavka
+  # koju kriterij smije unaprijed zagladiti.
+  scope:
+    core_libraries:
+      - typing_extensions
+      # --- izmjereno 2026-07-29: stvarno uvezene third-party ovisnosti --- #
+      - PIL
+      - anthropic
+      - azure
+      - boto3
+      - cryptography
+      - docx
+      - elasticsearch
+      - extract_msg
+      - fastavro
+      - fitz
+      - flair
+      - gliner
+      - google
+      - hvac
+      - jsonschema
+      - kafka
+      - numpy
+      - opensearchpy
+      - pandas
+      - paramiko
+      - pdfminer
+      - psycopg2
+      - pyarrow
+      - pypdf
+      - pysolr
+      - pyspark
+      - pytesseract
+      - rdflib
+      - requests
+      - requests_kerberos
+      - requests_ntlm
+      - spacy
+      - sqlalchemy
+      - stanza
+      - tika
+      - torch
+      - transformers
+      - websockets
+      - wordfreq
+      - yaml
+      - youtube_transcript_api
+      - yt_dlp
+    exclude_paths: []
+
+  # --- NFR-ORG-02: obitelji baznih klasa ---------------------------------- #
+  # Processors specijalizacije nasljeđuju baze iz `wattleflow-workflow`
+  # concrete/ sloja. Popis prati `dictionary.yaml` code.bases; obitelji koje
+  # processors ne koristi izostavljene su. Danas se troši samo `pipeline`
+  # (detekcija pipeline klasa u NomenclatureRule); ostatak je deklarativan dok
+  # `base_family_membership` ne bude implementiran.
+  bases:
+    root:        [IWattleflow, Wattleflow]
+    blackboard:  [IBlackboard, GenericBlackboard, LargeBlackboard, SmallBlackboard]
+    connection:  [ConnectionObserverInterface, GenericConnection]
+    document:    [IAdaptee, IAdapter, ITarget, Document, DocumentAdapter, DocumentFacade]
+    driver:      [IDriver, GenericDriver, LazyDriverProxy]
+    processor:   [IProcessor, GenericProcessor]
+    pipeline:    [IPipeline, GenericPipeline]
+    repository:  [IRepository, GenericRepository, RepositoryWithDriver]
+    strategy:    [IStrategy, Strategy, StrategyGenerate, StrategyCreate, StrategyRead, StrategyWrite]
+    exception:   [AuditException]
+
+  # --- NFR-ORG-02: gramatika imena pipeline klasa ------------------------- #
+  # Kanonski subjekt (vodeći facet) <-> paket koji ga sadrži, usporedba
+  # case-insensitive.
+  package_subject:
+    pdf: PDF
+    png: PNG
+    dataframe: DataFrame
+    text: Text
+    email: Email
+    message: Message
+
+  # Zatečena skraćena imena paketa koja čekaju preimenovanje u kanonski subjekt.
+  # Lint prijavljuje preimenovanje i za provjere koristi kanonsko ime.
+  package_aliases:
+    dframe: dataframe
+    txt: text
+    eml: email
+    msg: message
+
+  # Paketi koji grupiraju više subjekata (subject==package opušteno -> warning).
+  grouping_packages:
+    - cad
+    - convertors
+
+  # Paketi izuzeti iz provjere gramatike (strukturna iznimka, odgođena kroz DR).
+  exempt_packages:
+    - nlp
+    - rss
+    - xml
+    - quality
+
+  subjects:
+    - PDF
+    - PNG
+    - CSV
+    - DataFrame
+    - Text
+    - Email
+    - Message
+    - Markdown
+    - Step
+    - Dummy
+
+  operations:
+    - Extract
+    - Redact
+    - Clean
+    - Repair
+    - Translate
+    - Write
+
+  targets:
+    - Sheets
+    - Views
+    - Word
+
+  qualifiers:
+    - Macro
+    - StickyWords
+    - Spacy
+    - Stanza
+    - Flair
+    - Deberta
+    - Gliner
+    - En
+    - Hr
+
+  # Sinonimi sažeti na kanonsku operaciju (informativno; lint predlaže).
+  synonyms:
+    Redaction: Redact
+    Cleanup: Clean
+    Correction: Clean
+    Fix: Repair
+
+  # Gole generičke uloga-imenice zabranjene kao samostalna imena klasa.
+  prohibited_standalone:
+    - Manager
+    - Helper
+    - Utility
+    - Parser
+    - Piece
+    - Sheet
+    - Placement
+    # NFR-ORG-04 uloga-imenice sposobnosti — dopuštene samo kvalificirane.
+    - Router
+    - Resolver
+    - Generator
+    - Scanner
+
+  # Akronimski TOKENI kako se pojavljuju u identifikatorima koda. Različito od
+  # tablice `acronyms` u dictionary.yaml (kratice doktrine) — presjek mora
+  # ostati prazan (DR-WFL-005 pod-pravilo (a)).
+  identifier_acronyms:
+    - PDF
+    - PNG
+    - CSV
+    - HTML
+    - RDF
+    - CAD
+    - URI
+    - S3
+    - NER
+    - OCR
+
+  # --- NFR-ORG-03: vokabular uloga tipskih varijabli ---------------------- #
+  type_vars:
+    roles:
+      - Key
+      - Value
+      - Message
+      - Destination
+      - Context
+      - Result
+      - State
+      - Action
+      - Vertex
+      - Edge
+      - Input
+      - Output
+      - Element
+      - Adaptee       # uloga Adapter obrasca (workflow document.py)
+      - Connection    # uloga omotanog resursa (workflow connection.py)
+      - Content       # nosivi sadržaj dokumenta/signala (core transactional.py)
+      - Item          # radna stavka procesora (core transactional.py)
+      - Entity        # entitet praćen u unit-of-work (core transactional.py)
+      - Event         # emitirani/obrađeni događaj (core transactional.py)
+    synonyms:
+      Yielded: Output
+      Sent: Input
+      Return: Result
+      Returned: Result
+      Elem: Element
+    # Brendirana imena koja čekaju odluku (preimenovati vs zadržati) — WARN, ne
+    # ERROR, dok odluka ne padne (analogno politici tolerancije u NFR-ORG-01).
+    tolerated:
+      - WattleType
+
+# ----------------------------------------------------------------- otvoreno
+# Zabilježeno, namjerno neriješeno u v0.1.0 kriterija:
+#
+# 1. `png` ostaje u `package_subject`/`subjects` iako je `pipelines/png/` uklonjen
+#    (POLICY, D1 reorg 2026-07-06). Neiskorištena natuknica je bezopasna; uklanjanje
+#    je izmjena vokabulara i traži DR.
+# 2. Podpaketi `entity`, `mail`, `ocr` i modul `dummy.py` nemaju natuknicu u
+#    `package_subject` ni u `exempt_packages`. To NIJE propust ovog dokumenta nego
+#    očekivani nalaz: NFR-ORG-02 kriterij 3 kaže da neregistrirani token ruši build
+#    dok se vokabular ne proširi kroz DR. Registar je TARGET, kod mu se prilagođava.
+# 3. Kolizija imena `decorators` (postoji u processors I u workflow stablu) —
+#    razriješiti odlukom prije nego što uđe u `domains`.

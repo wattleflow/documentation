@@ -1,23 +1,27 @@
-.github
-.vscode
-build
-dist
-Makefile
+# Wattleflow documentation — LOCAL-ONLY repository.
+#
+# Everything that is content is tracked: the doctrinal texts, the registers,
+# the DR series and the policy layer all need a revisable change history,
+# because D-03 requires a register to change through a decision record and
+# D-11 forbids leaving that gap undeclared.
+#
+# Publication is a separate, deliberate act. Push to `origin` is disabled
+# (`git remote set-url --push origin DISABLED-local-only-repository`); the
+# Croatian texts stay on this machine until the UK English edition exists at
+# v1.0, and only that edition is meant to reach the public repository.
+#
+# Ignore build artefacts and tooling state only — never a document.
+
 __pycache__/
 *.pyc
-*/hr/*
-*/en/*
+build/
+dist/
+
+.github
+.vscode
+
+# Symlink to a shared Makefile outside this repository — a path, not content.
+Makefile
+
+# Editor backups.
 *.bak
-*.md
-*.ipynb
-*.puml
-*.yaml
-CLAUDE.md
-processors/
-GIT-ASSISTANCE.md
-DOCTRINE.md
-DICTIONARY.md
-LITERATURE.md
-MANIFEST.in
-POSTULATE.md
-workflow/TODO.md

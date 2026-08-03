@@ -1,0 +1,259 @@
+{
+  "$schema_note": "Analiza utjecaja, ne primijenjena izmjena. Prati isti predložak kao CHG zapisi jer se iz nje izvode; polje `status` razlikuje analizu od zahvata.",
+  "kind": "impact-analysis",
+  "id": "IMP-PRC-2026-07-29-01",
+  "date": "2026-07-29",
+  "title": "Utjecaj klase Wattleflow kao bazne i novih politika u workflow/concrete na distribuciju processors",
+  "status": "analizirano — NIJE primijenjeno",
+  "language": "hr",
+  "predecessor": "CHG-PRC-2026-07-29-01 (usklađivanje uvoza; ovaj zapis nastavlja na njega)",
+  "governance": {
+    "note": "Ovaj zapis samo MJERI i predlaže. Nijedna izmjena koda nije napravljena. Prijedlozi koji diraju sloj concrete/ ili core/ traže odluku po POLICY §2.5.",
+    "cascade_layer": "analiza (ulaz u odluku), ne metoda ni policy"
+  },
+  "upstream": {
+    "trigger": "core v0.0.0.46/47 pretvorio je IWattleflow.name u apstraktnu read-only property; workflow v0.0.0.87 uveo kanonske implementacije politika u concrete/",
+    "identity_contract": {
+      "what": "IWattleflow.name je `@property @abstractmethod`, __slots__ = ()",
+      "consequence": "svaki potomak BILO KOJEG I* sučelja mora razriješiti `name` ili je neinstancijabilan",
+      "discharged_by": [
+        "wattleflow.concrete.wattleflow.Wattleflow",
+        "wattleflow.concrete.singleton.Singleton",
+        "wattleflow.concrete.logger.AuditLogger (od v87 miješa Wattleflow)"
+      ],
+      "why": "DR-COR-002 — ime izvedeno iz konkretnog tipa je nepromjenjivo, pa __str__-bazirani revizijski zapisi nisu krivotvorivi"
+    },
+    "new_concrete_modules": [
+      {
+        "module": "concrete/wattleflow.py",
+        "class": "Wattleflow",
+        "new_in": "v0.0.0.87",
+        "role": "kanonski identitet (name/__str__/__repr__), bez stanja, __slots__ = ()",
+        "dr": "DR-COR-002"
+      },
+      {
+        "module": "concrete/singleton.py",
+        "class": "Singleton",
+        "new_in": "v0.0.0.87",
+        "role": "jedna instanca po konkretnom podrazredu; per-podrazred brava, init-once čuvar preko __init_subclass__",
+        "dr": "DR-COR-003"
+      },
+      {
+        "module": "concrete/iterator.py",
+        "class": "LazyIterator, LazyAsyncIterator",
+        "new_in": "v0.0.0.87",
+        "role": "lijena izgradnja iteratora pri prvom __next__, keširana",
+        "dr": "DR-COR-007"
+      },
+      {
+        "module": "concrete/observable.py",
+        "class": "ThreadSafeObservable",
+        "new_in": "v0.0.0.87",
+        "role": "RLock registracija, obavještavanje nad snimkom, iznimka promatrača se guši i logira",
+        "dr": "DR-COR-005"
+      },
+      {
+        "module": "concrete/state_machine.py",
+        "class": "StateMachine, GuardedStateMachine",
+        "new_in": "v0.0.0.66 — NIJE nova u v87",
+        "role": "konačni automat; naveden radi potpunosti jer je pogođen identitetskim ugovorom",
+        "dr": null
+      }
+    ],
+    "correction": "state_machine.py je pogrešno svrstan među novosti v87 — postoji od v0.0.0.66 (commit 791c897). Pogođena je, ali nije nova."
+  },
+  "measurement": {
+    "method": "runtime introspekcija (inspect.isabstract + __abstractmethods__) nad svim klasama u src/wattleflow čiji MRO doseže IWattleflow; 140/141 modula uvozivo",
+    "date": "2026-07-29",
+    "iwattleflow_descendants": {
+      "total": 156,
+      "instantiable": 135,
+      "abstract": 21
+    },
+    "findings": [
+      {
+        "id": "I1",
+        "severity": "visoka",
+        "title": "15 strategija je apstraktno ISKLJUČIVO zbog `name` — regresija otkrivena, ne stvorena",
+        "count": 15,
+        "classes": [
+          "strategies.cryptography.asymetric.StrategyRSAEncrypt256",
+          "strategies.cryptography.asymetric.StrategyRSADecrypt256",
+          "strategies.cryptography.asymetric.StrategyRSAEncrypt512",
+          "strategies.cryptography.asymetric.StrategyRSADecrypt512",
+          "strategies.cryptography.fernet.StrategyFernetEncrypt",
+          "strategies.cryptography.fernet.StrategyFernetDecrypt",
+          "strategies.cryptography.hashlib.StrategyMD5",
+          "strategies.cryptography.hashlib.StrategySha224",
+          "strategies.cryptography.hashlib.StrategySha256",
+          "strategies.cryptography.hashlib.StrategySha384",
+          "strategies.cryptography.hashlib.StrategySha512",
+          "strategies.helpers.files.StrategyFilename",
+          "strategies.helpers.files.StrategyFilterFiles",
+          "strategies.helpers.huggingface.StrategyCopyHuggingfaceModels",
+          "strategies.helpers.loader.StrategyClassLoader"
+        ],
+        "symptom": "TypeError: Can't instantiate abstract class StrategyMD5 with abstract method name",
+        "root_cause": "sve nasljeđuju `IStrategy` (sučelje iz core/) IZRAVNO, zaobilazeći `Strategy` iz concrete/. MRO im je [Klasa, IStrategy, IWattleflow, ABC, object] — nigdje implementacije `name`.",
+        "framing": "Ovo NIJE kvar koji je core v46 uveo. To je prekršaj POLICY §7.2 („Specijalizacije nasljeđuju iz concrete/, jednosmjerna ovisnost\") koji je postojao od početka, a apstraktni `name` ga je učinio SMRTONOSNIM umjesto tihim. Kriterij je izložio latentni prekršaj — to je upravo funkcija koju mu doktrina pripisuje.",
+        "contrast": "Klase koje su slijedile §7.2 (nasljeđuju GenericPipeline/GenericDriver/GenericProcessor/Strategy → AuditLogger → Wattleflow) nisu pogođene. Nijedna od 135 instancijabilnih ne treba izmjenu."
+      },
+      {
+        "id": "I2",
+        "severity": "srednja",
+        "title": "3 drivera ne ispunjavaju ugovor IDriver",
+        "count": 3,
+        "classes": [
+          "drivers.http_proxy.DriverHttpProxy",
+          "drivers.postgres.DriverPostgres",
+          "drivers.s3bucket.DriverS3"
+        ],
+        "missing": [
+          "close",
+          "metadata"
+        ],
+        "root_cause": "nepotpuna implementacija sučelja; nevezano uz identitetski ugovor",
+        "pre_existing": true,
+        "note": "Zatečeno, nije posljedica v46/v87. Navedeno jer ga isto mjerenje izlaže."
+      },
+      {
+        "id": "I3",
+        "severity": "informativno",
+        "title": "3 klase su legitimno apstraktne",
+        "classes": [
+          "strategies.cryptography.asymetric.StrategyBaseRSA",
+          "strategies.cryptography.fernet.StrategyFernetGeneric",
+          "strategies.documents.pdf.BaseWriteStrategy"
+        ],
+        "note": "Bazne klase; apstraktnost je namjera. StrategyBaseRSA i StrategyFernetGeneric ipak dijele uzrok I1 (`name` među nedostajućima) pa ih ista izmjena rješava."
+      },
+      {
+        "id": "I4",
+        "severity": "informativno — suprotno očekivanju",
+        "title": "Singleton, ThreadSafeObservable i LazyIterator nemaju NIJEDNOG kandidata za migraciju u processorsu",
+        "measured": {
+          "rucne_singleton_izvedbe": 0,
+          "rucni_observable": 0,
+          "rucni_iteratori": 0
+        },
+        "method": "grep nad src/wattleflow: `_instance`/`__new__`, `_observers`, `def __next__`/`def create_iterator`",
+        "interpretation": "Očekivan je bio velik utjecaj sve četiri nove klase. Mjerenje ga ne potvrđuje: utjecaj je u cijelosti koncentriran u identitetskom ugovoru (Wattleflow). Ostale tri su RASPOLOŽIVA POLITIKA za budući rad, ne teret migracije.",
+        "consequence_for_lint": "Za te tri pravilo nije migracijska lista nego ČUVAR REGRESIJE — spriječiti da netko ubuduće ručno napiše ono što concrete/ već nudi (DRY, Occam)."
+      }
+    ]
+  },
+  "blocking_upstream_defect": {
+    "id": "U1",
+    "severity": "kritična — blokira izvođenje",
+    "distribution": "wattleflow-workflow v0.0.0.87",
+    "title": "StateMachine je neinstancijabilan, čime je onemogućena konstrukcija SVAKE konekcije, drivera i procesora",
+    "already_known": true,
+    "declared_in": "documentation/workflow/changes/2026-07-28-core-v46-alignment.md §7 t.1",
+    "how_it_was_framed": "kao otvorena ODLUKA o imenovanju („klasa traži instance-scoped ime; preimenovati u `label`, ili zapisati iznimku\"), uz brojku „klase apstraktne na name: 37 → 2\"",
+    "what_this_analysis_adds": "Posljedica nije procijenjena. Preostale dvije klase nisu ostatak na listi za čišćenje — one su na konstrukcijskoj putanji triju središnjih baza frameworka.",
+    "mechanism": [
+      "state_machine.py:47 i :99 rade `self.name = name`, a `name` je od core v46 read-only property",
+      "__slots__ = ('_state','_transitions') — nema gdje spremiti ime ni da je property nestao",
+      "klasa ne miješa Wattleflow niti nasljeđuje AuditLogger, pa `name` ostaje apstraktan"
+    ],
+    "evidence": [
+      {
+        "probe": "StateMachine(TRANSITIONS, ConnectionState.CREATED)",
+        "result": "TypeError: Can't instantiate abstract class StateMachine with abstract method name"
+      },
+      {
+        "probe": "podrazred GenericConnection s popunjenim apstraktnim metodama",
+        "result": "TypeError: Can't instantiate abstract class StateMachine with abstract method name",
+        "site": "concrete/connection.py:195"
+      },
+      {
+        "probe": "podrazred GenericDriver s popunjenim apstraktnim metodama",
+        "result": "TypeError: ... StateMachine ...",
+        "site": "concrete/driver.py:114"
+      },
+      {
+        "probe": "podrazred GenericProcessor s popunjenim apstraktnim metodama",
+        "result": "TypeError: ... StateMachine ...",
+        "site": "concrete/processor.py:160"
+      }
+    ],
+    "consequence_for_processors": "Nijedna processors konekcija, driver ni procesor ne može se konstruirati dok se ovo ne riješi uzvodno. Popravci iz CHG-PRC-2026-07-29-01 vraćaju UVOZIVOST; IZVODIVOST ostaje blokirana uzvodno.",
+    "not_fixed_here_because": "dira drugu distribuciju i sloj concrete/ (POLICY §2.5 — traži odluku autora)",
+    "options": [
+      {
+        "option": "preimenovati instance-scoped ime u `label`",
+        "cost": "izmjena potpisa StateMachine i tri poziva; `__repr__` koristi label",
+        "aligns_with": "DR-COR-002 (ime je izvedeno iz tipa, ne postavljeno)"
+      },
+      {
+        "option": "class StateMachine(Wattleflow, IStateMachine, Generic[State, Action])",
+        "cost": "najmanja; ali `name` postaje 'StateMachine' za sve instance, pa se gubi razlikovanje ConnectionFSM/DriverFSM u repr-u",
+        "aligns_with": "DR-COR-002 doslovno"
+      },
+      {
+        "option": "oboje — Wattleflow za ugovor + `label` za instance-scoped oznaku",
+        "cost": "srednja",
+        "note": "razdvaja identitet (nepromjenjiv, revizijski) od oznake (opisna, promjenjiva) — dvije uloge, dva znaka"
+      }
+    ]
+  },
+  "proposed_changes": {
+    "note": "NIJE primijenjeno. Traži odluku prije provedbe.",
+    "items": [
+      {
+        "id": "P1",
+        "addresses": "I1",
+        "scope": "15 klasa u strategies/cryptography/ i strategies/helpers/",
+        "goal": "uskladiti s POLICY §7.2 — specijalizacija nasljeđuje iz concrete/, ne izravno iz core/",
+        "options": [
+          {
+            "id": "P1-a",
+            "label": "minimalno: class StrategyMD5(Wattleflow, IStrategy)",
+            "gets": "samo identitet",
+            "cost": "jedan uvoz + jedna baza po klasi; bez ikakvog runtime tereta",
+            "for": "Ovo je točno obrazac iz docstringa klase Wattleflow (`class GenericProcessor(Wattleflow, IProcessor[Item])`). Wattleflow ŽIVI u concrete/, pa §7.2 jest zadovoljen.",
+            "against": "strategije ostaju izvan revizijskog (audit) toka"
+          },
+          {
+            "id": "P1-b",
+            "label": "puno: class StrategyMD5(Strategy)",
+            "gets": "identitet + AuditLogger (revizijski zapis)",
+            "cost": "svaka hash-strategija dobiva logger instancu i konstruktorsku disciplinu AuditLoggera",
+            "for": "dosljedno s document/write strategijama koje već nasljeđuju Strategy; kriptografske operacije su upravo ono što revizijski trag treba bilježiti (SIEM, POLICY §6.2)",
+            "against": "teško za čistu funkciju poput StrategyMD5; mijenja potpis konstruktora"
+          }
+        ],
+        "recommendation": "P1-b za `cryptography/` (kripto operacije pripadaju revizijskom tragu), P1-a za `helpers/` (StrategyFilename je čista funkcija). Ali ovo je odluka o tome što se revidira — pripada autoru, ne alatu.",
+        "blocked_by": "U1 — dok StateMachine ne proradi, ispravnost izmjene ne može se verificirati konstrukcijom"
+      },
+      {
+        "id": "P2",
+        "addresses": "I2",
+        "scope": "3 drivera",
+        "goal": "implementirati close() i metadata() ili deklarirati iznimku",
+        "note": "nevezano uz v46/v87; zaseban zahvat"
+      }
+    ]
+  },
+  "instrument_gap": {
+    "note": "Središnji nalaz o valjanosti instrumenta (hipoteza H3): CIJELA klasa kvarova iz ovog zapisa nevidljiva je postojećem wem_lintu.",
+    "why": "workflow/processors izdanje je isključivo statičko (AST) i namjerno NE uvozi mjereno stablo — deklarirano svojstvo, ne propust. Ali `inspect.isabstract` se ne može aproksimirati AST-om kad baze žive u drugoj distribuciji.",
+    "asymmetry": "core izdanje wem_linta IMA runtime provjere apstraktnosti (METHODOLOGY §11: „core izdanje ... statička analiza AST-om + runtime provjere apstraktnosti introspekcijom\"). workflow/processors izdanje ih nema. Ta asimetrija je razlog zašto je U1 prošao.",
+    "statically_detectable": [
+      "I1 — baza je `IStrategy` umjesto `Strategy`; vidljivo iz AST-a i već postoji podatak u `bases:` bloku rječnika",
+      "U1 mehanizam — `self.name = ...` u klasi čiji MRO doseže IWattleflow"
+    ],
+    "runtime_only": [
+      "I1/U1 potvrda apstraktnosti",
+      "I3 razlikovanje namjerne od slučajne apstraktnosti"
+    ]
+  },
+  "reproducibility": {
+    "platform": "python 3.11.15 (Linux)",
+    "trees": {
+      "processors_head": "99eb694c20fd0b62b6aa9074e6c64f156f0976b6",
+      "core_head": "109e3ca5295d81f03c31cee3cc92fae47a2089cb",
+      "workflow_head": "f24a3fed6a756e82e2d5b59563da0812745668b6"
+    }
+  }
+}
