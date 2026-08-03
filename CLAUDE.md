@@ -454,18 +454,18 @@ Evidencija odluka je **obvezna funkcija** (D-14); DR format je zamjenjiva pod-me
 - **Kad je DR obvezan:** izmjena politike, ugovora, kriterija ili članka doktrine; proširenje
   kontroliranog vokabulara; promocija `[M]` metrike u gate; promjena matične distribucije
   modula.
-- **Poznata slijepa pjega (D-11) — verzijska kontrola doktrinarnih tekstova.** „Revizibilna
-  povijest" iz METHODOLOGY §8.1 nije provediva za sve artefakte. Stanje u
-  `documentation/.gitignore` (provjereno 2026-08-03, `git ls-files -s`):
-  - **tekst je u gitu:** `PHILOSOPHY.md`, `DOCTRINE.md`, `POSTULATE.md`, `LITERATURE.md`,
-    `dictionary.yaml`, cijela `workflow/dr/` serija, `workflow/analysis/`;
-  - **git čuva samo symlink, ne tekst** (`*/hr/*` je ignoriran): `NFR.md`, `METHODOLOGY.md`,
-    `FR.md`, `DICTIONARY.md` — dakle četiri registra nemaju povijest izmjena;
-  - **uopće nije praćen:** `CLAUDE.md` / `POLICY.md` — policy sloj sam.
-  - Uz to, core serija DR zapisa nije pod verzijskom kontrolom.
-
-  Posljedica: D-03 traži da se registri mijenjaju kroz DR, ali za gornje dvije skupine ne
-  postoji zapis *da je izmjena uopće nastala*. Deklarirano, ne riješeno.
+- **Verzijska kontrola doktrinarnih tekstova — riješeno 2026-08-03 (`documentation` v0.0.5).**
+  Do tada su četiri registra (`NFR.md`, `METHODOLOGY.md`, `FR.md`, `DICTIONARY.md`) bila u
+  gitu **samo kao symlink** (`mode 120000` — git je čuvao putanju, ne tekst, jer je
+  `.gitignore` ignorirao `*/hr/*`), a `CLAUDE.md`/`POLICY.md` nije bio praćen uopće. D-03 je
+  tražio izmjenu registra kroz DR, dok nije postojao zapis *da je izmjena nastala*. Sada je
+  cijeli sadržaj `documentation/` repozitorija praćen.
+- **`documentation` je lokalni repozitorij.** Push na `origin` je namjerno onemogućen
+  (`git remote set-url --push origin DISABLED-local-only-repository`); `fetch` radi. Hrvatski
+  tekstovi ostaju lokalni, a objavljuje se tek **UK English** izdanje na v1.0 (§3.2) — i to
+  kao zaseban, namjeran čin, ne kao nuspojava `git push`-a.
+- **Preostala slijepa pjega (D-11):** core serija DR zapisa i dalje nije pod verzijskom
+  kontrolom — deklarirano, ne riješeno.
 
 ---
 
@@ -745,13 +745,25 @@ snimku u `documentation/workflow/conformance/`.
   image_guard, generators, localmodels) — kandidati za seljenje (vezano uz „Razdvajanje
   specijalizacija"); `scope` filtar ih za sad isključuje iz opsega.
 
-## Verzijska kontrola dokumentacije (nalaz 2026-08-03)
+## Verzijska kontrola i objava dokumentacije (nalaz 2026-08-03)
 
-- [ ] **Četiri registra i policy sloj nemaju povijest izmjena** (§8, slijepa pjega).
-  `documentation/.gitignore` ignorira `*/hr/*` i `CLAUDE.md`, pa git za `NFR.md`,
-  `METHODOLOGY.md`, `FR.md` i `DICTIONARY.md` čuva samo symlink, a `CLAUDE.md`/`POLICY.md`
-  ne prati uopće. Odluka: pratiti `workflow/hr/**` i `CLAUDE.md`, ili svjesno zadržati
-  postojeće stanje kao deklariranu slijepu pjegu. Izmjena tiče se D-03 → kroz DR.
+Praćenje je riješeno (§8): `documentation` v0.0.5 prati cijeli sadržaj, push na `origin` je
+onemogućen. Preostaje ono što praćenje ne rješava:
+
+- [ ] **Hrvatski doktrinarni tekst je već javan na GitHubu.** `.gitignore` je štitio samo
+  `*/hr/*`, pa su `DOCTRINE.md`, `POSTULATE.md`, `dictionary.yaml`, cijela `workflow/dr/`
+  serija, `workflow/analysis/` i `core/DR.md` objavljeni na
+  `github.com/wattleflow/documentation` (grana `default`, do `v0.0.4`). Odluka: prihvatiti
+  zatečeno stanje, ili povući repozitorij / prepisati povijest prije v1.0.
+- [ ] **Put objave za UK English izdanje.** Kad `workflow/en/**` postoji, treba mehanizam koji
+  objavljuje **samo** njega — kurirana javna grana ili zaseban javni repozitorij. Do tada je
+  push namjerno zaključan, pa objava ne može nastati slučajno.
+- [ ] **`documentation/MANIFEST.in` je mrtav.** U tom repozitoriju nema `pyproject.toml` ni
+  `setup.py`, pa se ništa ne pakira; datoteka je uz to proturječna (`recursive-include workflow
+  *.md` pa `prune workflow`) i sugerira zaštitu koje nema. Obrisati ili opravdati.
+- [ ] **Neprefiksirane DR oznake u `workflow/hr/dr/`** — `DR-007-iterator.md`,
+  `DR-ORG-05-observable.md`. Sada su praćene, pa se vidi da krše §8 („Neprefiksirana oznaka
+  nije valjana"); dodati banner ili preimenovati.
 
 ## Otvorena pitanja za razgovor
 
