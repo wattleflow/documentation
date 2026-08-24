@@ -4,81 +4,55 @@
 
 Ovaj dokument je strojno čitljiv i ljudima pristupačan registar normi. Njegova
 uloga nije da opisuje istinu, nego da formalizira obvezujuće norme koje se
-provode i evaluiraju kroz odluke (DR), testove i revizije.
+provode i evaluiraju.
 
 > Norma je preskriptivni iskaz koji obvezuje: nije istinita ni lažna, nego je
-> na snazi ili nije. Njegovo kršenje mora biti nalaz.
+> na snazi ili nije. Njezino kršenje mora biti nalaz.
 
 Arhitektura referenciranja je doktrina (D) → postulati (P) → literatura [n].
-Opravdanje navodi P-oznake i/ili reference literature kada postulati ne postoje.
 Proza u [PHILOSOPHY.md](PHILOSOPHY.md) i [METHODOLOGY.md](METHODOLOGY.md)
 citira norme D-oznakama i obrazlaže ih; normativni teret nosi ovaj registar.
 
-Upravljanje je jednostavno: svaki članak se dodaje, mijenja, suspendira ili
-ukida isključivo kroz DR.
+**Status: registar je na početku životnog ciklusa i namjerno je malen.** Primat
+u dokumentiranju ima sloj zahtjeva ([`01-HLRQ/`](01-HLRQ/0-HLRQ-EN.md),
+[`02-FRQ/`](02-FRQ/0-FRQ-EN.md), [`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md)), jer je kod
+zreliji od svojeg zapisa. Doktrina se dopunjuje kad taj sloj bude konsolidiran.
+
+**Kriterij ulaska (v0.2).** Članak stoji u registru samo ako ima **stvaran
+provedbeni mehanizam** i **stvaran evaluacijski signal** — mehanizam koji se
+izvodi i signal koji netko čita. Norma bez oba je aspiracija (D-05) i ne vodi se
+ovdje. Osam članaka iz v0.1 palo je na tom testu; popis je u §Povučeni članci.
 
 ## Meta-informacije
 
 ```yaml
 registry: wattleflow-doktrina
-registry_version: "0.1.0"
+registry_version: "0.2.0"   # 0.1.0: kodifikacija zatecenih normi
+                            # 0.2.0: povuceni clanci bez mehanizma i signala
 source_of_truth: true
-statuses: [na-snazi, suspendirana, ukinuta]
-slojevi: [filozofija, policy, princip, metoda]
-enactment: >
-  v0.1 je kodifikacija zatečenih normi iz PHILOSOPHY.md v0.4.1 i
-  METHODOLOGY.md v0.3.1 — ne uvodi nove obveze. Članak koji ne navodi izvor
-  donesen je ovom kodifikacijom.
+statuses: [na-snazi, povucena]
+slojevi: [filozofija, metoda]
+entry_criteria:
+  - provedbeni mehanizam koji se izvodi
+  - evaluacijski signal koji se cita
+  - clanak se citira izvan ovog registra
 blind_spot: >
-  Formalno donošenje registra nema DR zapis ni u jednoj seriji (D-11).
-  Dok ga nema, registar je zatečena norma, ne dokazano donesena.
+  Registar nema DR zapis ni u jednoj seriji. Do njega su clanci zatecena norma,
+  ne dokazano donesena. Revizija DR serija je odgodena namjerno.
 ```
 
 ## Članci doktrine
-
-### D-01 — Model odlučivanja
-
-- Sloj: filozofija
-- Status: na-snazi
-- Izvor: kodifikacija v0.1
-
-**Iskaz**
-
-Model odlučivanja je deklariran i verzioniran. Trenutno: jedan autor, vezan
-istim epistemičkim standardom kao svaka odluka (Temelji, Svjedočanstvo —
-autoritet autora nije opravdanje). Prijelaz na konsenzusni model zajednice
-provodi se dokumentiranom revizijom ovog članka (DR), ne prešutno.
-
-**Opravdanje**
-
-- Postulati: P-02
-- Literatura: 56, 57
-- Bilješka: Evolucijski put ima dokumentirane presedane koji se tada usvajaju
-  kao pod-metode: PEP 13 (BDFL → upravljačko vijeće, proveden kroz dokumentiranu
-  odluku core developera, prosinac 2018.) [57] i IETF rough consensus (konsenzus
-  kao odsustvo neadresiranih prigovora, ne preglasavanje — RFC 7282) [56],
-  srodan standardu svjedočanstva.
-
-**Provedba**
-
-DR proces; polje Temelji obvezno i za autorove odluke.
-
-**Evaluacija**
-
-Udio DR-ova s popunjenim Temeljima; obvezna revizija članka pri prvom vanjskom
-suradniku.
 
 ### D-02 — Kaskada slojeva
 
 - Sloj: filozofija
 - Status: na-snazi
-- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
-Niži sloj ne nadjačava viši: politika se ne uvodi mimo filozofije, princip mimo
-politike, metoda mimo principa. Svako odstupanje je izvod iz višeg sloja ili
-dokumentirana revizija tog sloja.
+Niži sloj ne nadjačava viši: politika se ne uvodi mimo filozofije, metoda mimo
+politike. Svako odstupanje je izvod iz višeg sloja ili dokumentirana revizija
+tog sloja.
 
 **Opravdanje**
 
@@ -87,24 +61,25 @@ dokumentirana revizija tog sloja.
 
 **Provedba**
 
-DR proces; revizija dokumenata pri sintezama (Bilješke o sintezi).
+Pregled pri izmjeni doktrinarnog teksta; razilaženje se ne rješava u tekstu nego
+prijavljuje kao nalaz u [`workflow/TODO.md`](workflow/TODO.md).
 
 **Evaluacija**
 
-Nalaz: metoda koja propisuje neodlučeno (presedan: akronimsko lint pravilo,
-suspendirano do `DR-WFL-004`).
+Metoda koja propisuje neodlučeno = nalaz. Presedan: akronimsko lint pravilo stoji
+na `WARNING` s deklariranim waiverom dok je `DR-WFL-004` otvoren, umjesto da
+provede jednu stranu.
 
 ### D-03 — Promjena kroz DR
 
 - Sloj: filozofija
 - Status: na-snazi
-- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
-Prijelaz stanja (donošenje, izmjena, ukidanje politike, ugovora, kriterija ili
-članka doktrine) ide isključivo kroz zapis odluke (DR); prešutna akrecija nije
-legalan put promjene.
+Prijelaz stanja (donošenje, izmjena ili ukidanje politike, ugovora, kriterija ili
+članka doktrine) ide kroz zapis odluke (DR); prešutna akrecija nije legalan put
+promjene.
 
 **Opravdanje**
 
@@ -113,48 +88,26 @@ legalan put promjene.
 
 **Provedba**
 
-DR proces; registri odbijaju izmjene bez DR reference (Održavanje sekcije).
+Serije `DR-COR`, `DR-WFL`, `DR-PRC` s indeksima; zapisi u registrima zahtjeva
+nose polje *Odluka* koje imenuje pripadni DR.
 
 **Evaluacija**
 
-Broj izmjena registara bez DR reference (cilj: nula).
+Izmjena registra bez DR reference = nalaz. **Nije automatizirano** — otvoreni
+nalazi se vode u [`workflow/TODO.md`](workflow/TODO.md) (npr. razlamanje registara
+2026-08-24 provedeno je bez zapisa).
 
-### D-04 — Iteracija pod kaskadom
-
-- Sloj: filozofija
-- Status: na-snazi
-- Izvor: kodifikacija v0.1
-
-**Iskaz**
-
-Iteracija (uključujući arhitektura ↔ implementacija) dopuštena je isključivo pod
-kaskadom: implementacijsko iskustvo revidira više slojeve samo kroz DR.
-Povratna petlja vrti se nad teorijom (hipoteza → mjerenje → zaključak), ne nad
-popisom posla.
-
-**Opravdanje**
-
-- Postulati: P-01, P-15
-- Literatura: 47, 48
-
-**Provedba**
-
-DR proces; motivacijska petlja [PHILOSOPHY.md](PHILOSOPHY.md).
-
-**Evaluacija**
-
-Arhitektonske promjene bez pripadnog DR-a = nalaz (H1 srodno).
-
-### D-05 — Tvrdnje bez svjedočanstva
+### D-05 — Tvrdnja bez svjedočanstva je aspiracija
 
 - Sloj: filozofija
 - Status: na-snazi
-- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
 Tvrdnja bez svjedočanstva vodi se kao aspiracija i tako se označava; odsutnost
-prigovora nije svjedočanstvo. Osobna preferencija i autoritet nisu opravdanje.
+prigovora nije svjedočanstvo. Politika koja ne deklarira provedbeni mehanizam i
+evaluacijski signal jednako je aspiracija. Osobna preferencija i autoritet nisu
+opravdanje.
 
 **Opravdanje**
 
@@ -162,41 +115,17 @@ prigovora nije svjedočanstvo. Osobna preferencija i autoritet nisu opravdanje.
 
 **Provedba**
 
-Polja Svjedočanstvo/Temelji u DR; oznaka aspiracije u registrima.
+Polje *Svjedočanstvo* u DR predlošku; oznaka „aspiracija" u policyju i registrima
+— danas je nose `POLICY.md` §6.2 (SIEM) i §6.4 (observability).
 
 **Evaluacija**
 
-Udio odluka i članaka s deklariranim statusom dokaza.
-
-### D-06 — Opovrgljivost tvrdnje
-
-- Sloj: filozofija
-- Status: na-snazi
-- Izvor: kodifikacija v0.1
-
-**Iskaz**
-
-Nosiva doktrinarna tvrdnja ima opovrgljiv oblik (hipotezu: mjera + što bi je
-oborilo) ili eksplicitnu deklaraciju da je konceptualna.
-
-**Opravdanje**
-
-- Postulati: P-02
-- Bilješka: operacionalizacija kritičkog razmišljanja na samu doktrinu
-
-**Provedba**
-
-Sekcija Hipoteze u [PHILOSOPHY.md](PHILOSOPHY.md); pravilo ulaska novih tvrdnji.
-
-**Evaluacija**
-
-Tvrdnje bez hipoteze i bez deklaracije = nalaz.
+Tvrdnja navedena kao stanje, bez svjedočanstva = nalaz.
 
 ### D-07 — Povjerenje se dokazuje
 
 - Sloj: filozofija
 - Status: na-snazi
-- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -211,44 +140,19 @@ svaka politika.
 
 **Provedba**
 
-Policy sloj (`NFR-SEC-01/02/03`, nasljednici povučenog `NFR-ORG-06`); clean-core
-i granice povjerenja u registru.
+[`NFR-SEC-01/02/03`](03-NFRQ/0-NFRQ-EN.md) (nasljednici povučenog `NFR-ORG-06`);
+`POLICY.md` §7; lint pravila `clean_core_imports` (**ERROR**) i
+`distribution_manifest` (`WARNING`).
 
 **Evaluacija**
 
-Ovisnosti bez deklariranog čvora povjerenja = nalaz.
-
-### D-08 — Mjera i valjanost
-
-- Sloj: metoda
-- Status: na-snazi
-- Izvor: kodifikacija v0.1
-
-**Iskaz**
-
-Mjera ne ulazi u metodologiju bez statusa po protokolu valjanosti V1–V6;
-minimalno su obvezni tip skale i dopuštene agregacije (V2), sadržajna
-pokrivenost (V3) i granica dijagnostičko/upravljačko (V6). Do prolaska V1 i V4
-mjera se iskazuje kao konformna, ne deskriptivna.
-
-**Opravdanje**
-
-- Postulati: P-09
-- Literatura: 15, 16, 17, 18, 19
-
-**Provedba**
-
-[METHODOLOGY.md](METHODOLOGY.md) §5.1; redak Valjanost mjere u anatomiji.
-
-**Evaluacija**
-
-Mjere u upotrebi bez statusa = nalaz; H4-DQI kao prvi test.
+Modul čiji import-closure izlazi iz tiera vlastite distribucije ruši build.
 
 ### D-09 — Vektorska konformnost
 
 - Sloj: metoda
 - Status: na-snazi
-- Izvor: `DR-COR-014` (**predložen**, ne prihvaćen — vidi Bilješku)
+- Izvor: kodifikacija zatečene prakse; `DR-COR-014` je **predložen**, ne prihvaćen
 
 **Iskaz**
 
@@ -263,49 +167,52 @@ indeksi su isključivo dijagnostički.
 
 **Provedba**
 
-wem_lint (vektorski izlaz po konstrukciji); DQI (vektor primaran).
+`wem_lint` po konstrukciji daje vektor — C-snimka nosi polje `vector`, a nigdje
+ukupnu ocjenu.
 
 **Evaluacija**
 
-Pokušaj uvođenja skalara ili gatea na indeksu = nalaz; H3 signal.
+Pokušaj uvođenja skalara ili gatea na indeksu = nalaz.
 
 ### D-10 — Reproducibilnost nalaza
 
 - Sloj: metoda
 - Status: na-snazi
-- Izvor: `DR-COR-014` (**predložen**, ne prihvaćen — vidi Bilješku)
+- Izvor: kodifikacija zatečene prakse; `DR-COR-014` je **predložen**, ne prihvaćen
 
 **Iskaz**
 
-Nalaz je reproducibilan samo uz trojku (verzija alata, verzija kriterija,
-verzija platforme); zelene konformnosti arhiviraju se kao C-snimke s trojkom,
-datumom i popisom deklariranih iznimaka.
+Nalaz je reproducibilan samo uz trojku (verzija alata, verzija kriterija, verzija
+platforme), uz mjereno stablo i pokrenuta pravila. Zelena konformnost arhivira se
+kao C-snimka; run s greškama kao finding-vektor, nikad kao C-snimka.
 
 **Opravdanje**
 
 - Postulati: P-10
 - Literatura: 22
-- Bilješka: empirijska nulta točka: vektori 0.2.0 i 0.3.0 nad istim kodom;
-  ABS-03 incident
+- Bilješka: empirijska nulta točka — vektori dviju verzija kriterija nad istim
+  kodom; incident tihe korozije instrumenta
 
 **Provedba**
 
-wem_lint changelog konvencija; `documentation/workflow/conformance/`.
+[`workflow/conformance/`](workflow/conformance/): svaka snimka nosi
+`reproducibility_triple` (`tool`, `criterion`, `platform`) te `source` i
+`rules_selected`.
 
 **Evaluacija**
 
-Nalaz bez trojke = nereproducibilan = nalaz; H3.
+Nalaz bez trojke se ne prihvaća kao nalaz.
 
 ### D-11 — Deklariranje slijepe pjege
 
 - Sloj: metoda
 - Status: na-snazi
-- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
-Slijepe točke instrumenta i procesa deklariraju se, nikad ne presućuju;
-izuzeća su vidljiva u svakom nalazu, a njihov nestanak bez DR-a je nalaz.
+Slijepe točke instrumenta i procesa deklariraju se, nikad ne prešućuju; izuzeća
+su vidljiva u svakom nalazu, a njihov tihi nestanak je nalaz. Nemjereno se ne
+smije čitati kao čisto.
 
 **Opravdanje**
 
@@ -314,24 +221,25 @@ izuzeća su vidljiva u svakom nalazu, a njihov nestanak bez DR-a je nalaz.
 
 **Provedba**
 
-EXC-01 i STA-03 mehanizmi u wem_lint; blind_spots sekcije registara.
+Blok `blind_spots` u svakoj C-snimci; sekcije „deklarirana slijepa pjega" u
+registrima zahtjeva i u `workflow/TODO.md`.
 
 **Evaluacija**
 
-Tiho nestala deklarirana iznimka = nalaz.
+Deklaracija koja nestane bez zapisa = nalaz. Usporedba deklaracija između dviju
+snimki **nije automatizirana** — i to je deklarirana slijepa pjega.
 
 ### D-12 — Kontrolirani vokabulari
 
 - Sloj: metoda
 - Status: na-snazi
-- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
 Kontrolirani vokabulari obvezuju u svojim domenama: identifikatori koda
 (`tools/dictionary.json`), pojmovi diskursa (`dictionary.yaml`), reference
 (`LITERATURE.md`, append-only), tvrdnje (`POSTULATE.md`), norme (ovaj registar).
-Sukob značenja razrješava se DR-om, ne prešutnim izborom u tekstu.
+Sukob značenja razrješava DR, ne prešutan izbor u tekstu.
 
 **Opravdanje**
 
@@ -340,24 +248,25 @@ Sukob značenja razrješava se DR-om, ne prešutnim izborom u tekstu.
 
 **Provedba**
 
-Pet registara s Održavanje sekcijama; lint (kod, `DR-WFL-020`); H2 signal
-(diskurs).
+Lint čita `tools/dictionary.json` kao kriterij koda (`DR-WFL-020`); ostala četiri
+registra nose sekciju *Održavanje*.
 
 **Evaluacija**
 
-Trend povreda vokabulara po verziji (H2).
+Dva primjerka istog registra = nalaz. Presedan: `workflow/hr/LITERATURA.md` je
+ključevima 56/57 dodjeljivao druge radove nego korijenski registar i povučen je
+2026-08-24, zajedno s `workflow/hr/POSTULATI.md`.
 
 ### D-13 — Prikaz nije izvor istine
 
 - Sloj: metoda
 - Status: na-snazi
-- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
-Prikaz (dijagram, pogled, generirani dokument) nikad nije izvor istine:
+Prikaz (dijagram, pogled, indeks, generirani dokument) nikad nije izvor istine:
 generira se iz izvora ili se prema njemu verificira, s deklariranim gledištem i
-publikom.
+publikom. Brojevi nalaza se ne navode u prozi nego se referira snimka.
 
 **Opravdanje**
 
@@ -366,142 +275,53 @@ publikom.
 
 **Provedba**
 
-`dictionary.yaml` → `DICTIONARY.md` smjer; budući generirani prikazi doktrine.
+Smjer `dictionary.yaml` → `DICTIONARY.md`; indeksi registara nose oznaku, iskaz i
+poveznicu, a ne prepričavaju detalj.
 
 **Evaluacija**
 
-Ručno održavana kopija izvora = nalaz (presedan: tablica literature u
-filozofiji, uklonjena).
-
-### D-14 — Evidencija odluka
-
-- Sloj: filozofija
-- Status: na-snazi
-- Izvor: kodifikacija v0.1. Nazivlje `DR` umjesto `ADR` (2026-07-28) nose
-  `dictionary.yaml → viseznacnost-adr` i oba DR indeksa, bez zasebnog zapisa
-  (§Bilješke t.3).
-
-**Iskaz**
-
-Evidencija odluka je obvezna funkcija (sljedivost, alternative, cijena,
-Temelji, Svjedočanstvo, revizibilna povijest uključujući povučene odluke);
-format zapisa (DR) je zamjenjiva pod-metoda i revidira se dokazima.
-
-**Opravdanje**
-
-- Postulati: P-14, P-16
-- Literatura: 44, 45, 46
-
-**Provedba**
-
-DR predložak; [METHODOLOGY.md](METHODOLOGY.md) §7.1 (funkcijski kriteriji
-nasljednika).
-
-**Evaluacija**
-
-Odluke bez zapisa = nalaz; kandidat nasljednik: graf odluka (RDF/PROV-O).
-
-### D-15 — Politika na snazi
-
-- Sloj: policy
-- Status: na-snazi
-- Izvor: kodifikacija v0.1
-
-**Iskaz**
-
-Politika na snazi deklarira provedbeni mehanizam i evaluacijski signal;
-politika bez oba vodi se kao aspiracija. Politika se donosi opravdavajućim
-lancem (informacije → analiza → zaključak → preporuka → odluka) i evaluira u
-petlji.
-
-**Opravdanje**
-
-- Postulati: P-01, P-10
-- Literatura: 22
-- Bilješka: presedan potpunog ciklusa: politika verzija Pythona (`DR-COR-013`)
-
-**Provedba**
-
-DR polja Temelji + Registar; provedba kroz kriterije/alate.
-
-**Evaluacija**
-
-Politike bez evaluacijskog signala = aspiracije (popis se održava).
-
-### D-16 — Dokumentacija kao sustav publika
-
-- Sloj: princip
-- Status: na-snazi
-- Izvor: kodifikacija v0.1
-
-**Iskaz**
-
-Dokumentacija je sustav s više publika; svaka publika ima svoj artefakt, a
-jedan format za sve publike nije legalan cilj.
-
-**Opravdanje**
-
-- Postulati: P-05, P-07, P-16
-- Literatura: 30, 39, 53
-
-**Provedba**
-
-Matrica publika × artefakt (kandidat); postojeća podjela registara i svezaka.
-
-**Evaluacija**
-
-Publika bez artefakta = deklarirana rupa, ne presućena.
-
-### D-17 — Standard kao pod-metoda
-
-- Sloj: princip
-- Status: na-snazi
-- Izvor: kodifikacija v0.1
-
-**Iskaz**
-
-Standard se usvaja kao pod-metoda kroz epistemičku prosudbu i bilježi se;
-usvajanje po inerciji nije legalno. Granice se spajaju kompozicijom (ugovor +
-provjera na granici), ne konkatenacijom.
-
-**Opravdanje**
-
-- Postulati: P-21, P-03, P-17
-- Bilješka: Occam/DRY za pod-metode; registar + lint kao mehanizam kompozicije
-
-**Provedba**
-
-[METHODOLOGY.md](METHODOLOGY.md) §7 tablica pod-metoda; clean-core filtar;
-obitelji baza u registru.
-
-**Evaluacija**
-
-Ovisnost ili standard bez zapisa prosudbe = nalaz.
+Ručno održavana kopija izvora = nalaz. Presedani: tablica literature u filozofiji
+i brojke lint nalaza u registru zahtjeva — oboje uklonjeno.
 
 ---
 
+## Povučeni članci (v0.1 → v0.2, 2026-08-24)
+
+Brojevi se **ne recikliraju**. Povlačenje nije presuda o istinitosti tvrdnje nego
+o tome da tvrdnja ne zadovoljava kriterij ulaska iz §Meta-informacije; gdje
+sadržaj i dalje živi, naveden je nositelj.
+
+| Bivši | Naslov | Razlog povlačenja | Gdje sadržaj živi |
+|---|---|---|---|
+| `D-01` | Model odlučivanja | Provedba je bila polje *Temelji*, kojeg u DR predlošku nema; evaluacija („udio DR-ova s popunjenim Temeljima") stoga nemjerljiva. Iskaz je uz to opis stanja, ne norma. | — |
+| `D-04` | Iteracija pod kaskadom | Iskaz je konjunkcija `D-02` i `D-03`; vlastitog mehanizma nema. | `D-02`, `D-03` |
+| `D-06` | Opovrgljivost tvrdnje | Provedba je bila sekcija *Hipoteze* u `PHILOSOPHY.md`; `H4-DQI` u nju nikad nije upisan, pa mehanizam ne stoji. | `PHILOSOPHY.md` §Hypotheses (praksa, ne norma) |
+| `D-08` | Mjera i valjanost | Protokol `V1–V6` je metoda, ne norma; evaluacija se pozivala na `H4-DQI`, kandidata izvan registra. | `METHODOLOGY.md` §5.1, `NFR-DEF-02` |
+| `D-14` | Evidencija odluka | Ista norma već stoji na metodološkom i policy sloju; ovdje je bila treći primjerak (kršenje `D-13`). Revizija DR forme je odgođena. | `METHODOLOGY.md` §7.1, `POLICY.md` §8 |
+| `D-15` | Politika na snazi | Nosivi dio („bez mehanizma i signala = aspiracija") sada je klauzula u `D-05`; ostatak je duplikat. | `D-05` |
+| `D-16` | Dokumentacija kao sustav publika | Provedba je bila „matrica publika × artefakt (kandidat)" — artefakt ne postoji. | `PHILOSOPHY.md` (kao teza) |
+| `D-17` | Standard kao pod-metoda | Tablica pod-metoda je metodološki artefakt; evaluacija („standard bez zapisa prosudbe = nalaz") nema mjesta na kojem bi se zapis vodio. | `METHODOLOGY.md` §7 |
+
+**Ispravljeno usput:** `D-11` je kao mehanizam navodio `EXC-01` i `STA-03` u
+`wem_lint`; tih oznaka u alatu nema — stvarni nositelj je blok `blind_spots` u
+C-snimci.
+
 ## Bilješke i deklarirane slijepe pjege (D-11)
 
-1. **Registar nije formalno donesen.** Kodifikacija v0.1 nema DR zapis ni u jednoj
-   seriji. Do njega članci vrijede kao zatečena norma; to je deklaracija, ne
-   svjedočanstvo (D-05).
-2. **`D-09` i `D-10` stoje na predloženoj odluci.** `DR-COR-014` (verzioniranje
-   kriterija i C-snimke) je u core indeksu **predložen**, a oba članka vodi kao
-   *na snazi*. Norma na snazi izvedena iz neprihvaćene odluke je nalaz pod D-02;
-   razrješava se prihvaćanjem `DR-COR-014` ili prekvalifikacijom članaka.
-3. **`D-14` nema zapis o nazivlju.** Prelazak `ADR` → `DR` (2026-07-28) proveden je
-   kroz `dictionary.yaml → viseznacnost-adr` i oba DR indeksa, bez zasebne odluke.
-4. **Polje *Temelji* nije u predlošku DR-a.** `D-01`, `D-05` i `D-15` traže ga kao
-   provedbeni mehanizam, a predložak (`Status / Kontekst / Odluka / Ugovor / Cijena /
-   Svjedočanstvo / Registar`) ga ne nosi. Norma bez mjesta u obrascu nema provedbu (D-15):
-   uskladiti predložak ili preimenovati zahtjev — kroz DR.
-5. **Oznake su prefiksirane od 2026-08-24.** Raniji tekst je nosio neprefiksirane
-   oznake (`DR-013/014/015/016/018`) iz vremena prije podjele na serije; prevedene
-   su u `DR-COR-013`, `DR-COR-014`, `DR-WFL-004` odnosno u kodifikaciju. Neprefiksirana
-   oznaka nije valjana (`CLAUDE.md` §8).
+1. **Registar nema DR zapis.** Ni kodifikacija v0.1 ni ovo povlačenje nemaju
+   zapis. Do njega registar vrijedi kao zatečena norma — deklaracija, ne
+   svjedočanstvo (D-05). Revizija DR serija **namjerno je odgođena** dok se sloj
+   zahtjeva ne konsolidira.
+2. **`D-09` i `D-10` stoje na praksi, ne na prihvaćenoj odluci.** `DR-COR-014` je
+   u core indeksu *predložen*. Praksa je dokaziva (C-snimke postoje i nose
+   trojku), pa članci ostaju — ali izvor je označen kao takav.
+3. **Oznake su prefiksirane od 2026-08-24.** Raniji tekst nosio je neprefiksirane
+   oznake (`DR-013/014/015/016/018`) iz vremena prije podjele na serije;
+   neprefiksirana oznaka nije valjana (`POLICY.md` §8).
 
 ## Održavanje
 
-Članak se dodaje, mijenja, suspendira ili ukida isključivo kroz DR (D-03). Izmjena
-bez DR reference je nalaz. Proza u `PHILOSOPHY.md` i `METHODOLOGY.md` citira norme
-D-oznakama; normativni teret nosi ovaj registar i nigdje se ne prepisuje (D-13).
+Članak se dodaje, mijenja ili povlači kroz DR (D-03); do otvaranja zapisa izmjena
+se vodi kao nalaz. Novi članak ulazi tek uz mehanizam i signal — dok ih nema,
+tvrdnja pripada `PHILOSOPHY.md` ili `METHODOLOGY.md`, ne ovamo. Normativni teret
+nosi ovaj registar i nigdje se ne prepisuje (D-13).
