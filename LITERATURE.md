@@ -1,22 +1,27 @@
-# Consolidated literature (keys 1–57)
+# Consolidated literature (keys 1–64)
 
 | | |
 |---|---|
 | **Version** | Draft v0.3.1 |
 | **Parent documents** | `PHILOSOPHY.md`, `METHODOLOGY.md`, `DOCTRINE.md`, `POSTULATE.md` |
-| **Related artefacts** | ... |
+| **Related artefacts** | [`POSTULATE.md`](POSTULATE.md) (the claims), [`dictionary.yaml`](dictionary.yaml) (the terms), [`workflow/Analiza.md`](workflow/Analiza.md) (the paper that uses the table) |
 | **Management** | entries are added, changed, or declared obsolete exclusively through a decision record (DR); see §Maintenance |
 
 
-A single reference table for work, philosophy (PHILOSOPHY.md) and analysis.
+The single reference table for the paper, the philosophy ([`PHILOSOPHY.md`](PHILOSOPHY.md)) and the analysis. **This is the only copy** — the former `workflow/hr/LITERATURA.md` was withdrawn on 2026-08-24 because it assigned different works to keys 56–57 (D-12).
+
 Keys 1–35: original work table (revision: [11] replaced by the 2006 paper that introduces propagation cost; [35] added for multicriteria optimisation).
-Keys 36–52: supplement (history of process models, ADR lineage, information science).
+Keys 36–52: supplement (history of process models, DR lineage, information science).
+Keys 53–59: doctrinal layer (Naur, governance precedents, the normative ISO standards).
+Keys 60–64: audit and privacy (NIST SP 800-53, ISO/IEC 27002 / 29100 / 15408-2, *Privacy Act 1988*).
+
+**Append-only.** A new key goes only at the end of the table: inserting one would renumber citations across every document.
 
 Status: no marker = verified in previous passes; (k) = book without DOI; before submission, add the ISBN of the edition actually consulted; (!) = verify before use in the text.
 
 ---
 
-## 7. Literature
+## Literature
 
 1. Parnas, D. L. (1972). *On the Criteria To Be Used in Decomposing Systems into Modules*. Communications of the ACM, 15(12), 1053–1058. https://doi.org/10.1145/361598.361623
 2. Simon, H. A. (1962). *The Architecture of Complexity*. Proceedings of the American Philosophical Society, 106(6), 467–482. https://www.jstor.org/stable/985254
@@ -77,6 +82,11 @@ Status: no marker = verified in previous passes; (k) = book without DOI; before 
 57. Python Steering Council. *PEP 13 — Python Language Governance*. https://peps.python.org/pep-0013/ (živi dokument; datum pristupa dodati)
 58. ISO/IEC/IEEE 29148:2018. *Systems and software engineering — Life cycle processes — Requirements engineering*. ISO/IEEE.
 59. ISO/IEC 25010:2011. *Systems and software engineering — Systems and software quality models*. ISO.
+60. NIST (2020). *SP 800-53 Rev. 5 — Security and Privacy Controls for Information Systems and Organizations*. NIST. https://doi.org/10.6028/NIST.SP.800-53r5 — obitelj AU; `AU-3` (sadržaj audit zapisa, šest elemenata), `AU-3(1)`, `AU-3(3)` (ograničenje PII elemenata), `AU-9`, `AU-12`. Tekst `AU-3` provjeren 2026-08-13 preko zrcala csf.tools; sravniti s izvornikom prije objave.
+61. ISO/IEC 27002:2022. *Information security, cybersecurity and privacy protection — Information security controls*. ISO. — §8.15 *Logging*, §8.11 *Data masking*, §8.12 *Data leakage prevention*. (!) klauzule potvrđene sekundarnim izvorima; norma je plaćena
+62. ISO/IEC 29100:2011. *Information technology — Security techniques — Privacy framework*. ISO. — 11 načela; ovdje nose *collection limitation* i *data minimization*. (!) potvrđeno sekundarnim izvorima
+63. ISO/IEC 15408-2. *Evaluation criteria for IT security — Part 2: Security functional components*. ISO. — klasa **FAU** (FAU_GEN, FAU_SAR, FAU_SEL, FAU_STG). (!) kandidat; nije nosivo ni za jedan kriterij
+64. *Privacy Act 1988* (Cth), Schedule 1 — Australian Privacy Principles; **APP 3** (prikupljanje), **APP 11** (sigurnost osobnih informacija). https://www.legislation.gov.au/C2004A03712/latest
 S. Oznaka vlastite tvrdnje autora.
 
 ---

@@ -88,8 +88,8 @@ code:
   python_reference: "3.11"         # mora pratiti requires-python u pyproject.toml
 
   provenance: >
-    Vokabular prenesen iz ukinutog `processors/tools/naming_registry.yaml`
-    (ADR-vođen). Prenesen VERBATIM — namjerno, jer je registar TARGET vokabular:
+    Vokabular prenesen iz ukinutog `processors/tools/naming_registry.yaml`.
+    Prenesen VERBATIM — namjerno, jer je registar TARGET vokabular:
     odstupanja zatečenog koda od njega su nalazi, ne razlog da se registar
     prilagodi kodu. Tri izmjene OBLIKA (ne sadržaja) nametnula je wem_lint 1.4.0:
       1. `acronyms:` -> `identifier_acronyms:` — alat od 1.4.0 izvodi `acronyms`

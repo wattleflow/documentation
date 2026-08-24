@@ -27,9 +27,11 @@ statuses: [na-snazi, suspendirana, ukinuta]
 slojevi: [filozofija, policy, princip, metoda]
 enactment: >
   v0.1 je kodifikacija zatečenih normi iz PHILOSOPHY.md v0.4.1 i
-  METHODOLOGY.md v0.3.1 — ne uvodi nove obveze. Formalno donošenje cijelog
-  registra: DR-018 (kandidat). Pojedini članci navode raniji DR gdje je
-  norma već bila donesena zasebno.
+  METHODOLOGY.md v0.3.1 — ne uvodi nove obveze. Članak koji ne navodi izvor
+  donesen je ovom kodifikacijom.
+blind_spot: >
+  Formalno donošenje registra nema DR zapis ni u jednoj seriji (D-11).
+  Dok ga nema, registar je zatečena norma, ne dokazano donesena.
 ```
 
 ## Članci doktrine
@@ -38,7 +40,7 @@ enactment: >
 
 - Sloj: filozofija
 - Status: na-snazi
-- Izvor: DR-018 (kandidat)
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -70,7 +72,7 @@ suradniku.
 
 - Sloj: filozofija
 - Status: na-snazi
-- Izvor: DR-018 (kandidat)
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -90,13 +92,13 @@ DR proces; revizija dokumenata pri sintezama (Bilješke o sintezi).
 **Evaluacija**
 
 Nalaz: metoda koja propisuje neodlučeno (presedan: akronimsko lint pravilo,
-suspendirano do DR-015).
+suspendirano do `DR-WFL-004`).
 
 ### D-03 — Promjena kroz DR
 
 - Sloj: filozofija
 - Status: na-snazi
-- Izvor: DR-018 (kandidat)
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -121,7 +123,7 @@ Broj izmjena registara bez DR reference (cilj: nula).
 
 - Sloj: filozofija
 - Status: na-snazi
-- Izvor: DR-018 (kandidat)
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -147,7 +149,7 @@ Arhitektonske promjene bez pripadnog DR-a = nalaz (H1 srodno).
 
 - Sloj: filozofija
 - Status: na-snazi
-- Izvor: DR-018 (kandidat)
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -170,7 +172,7 @@ Udio odluka i članaka s deklariranim statusom dokaza.
 
 - Sloj: filozofija
 - Status: na-snazi
-- Izvor: DR-018 (kandidat)
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -194,7 +196,7 @@ Tvrdnje bez hipoteze i bez deklaracije = nalaz.
 
 - Sloj: filozofija
 - Status: na-snazi
-- Izvor: DR-018 (kandidat)
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -209,7 +211,8 @@ svaka politika.
 
 **Provedba**
 
-Policy sloj (NFR-ORG-06 i srodni); clean-core i granice povjerenja u registru.
+Policy sloj (`NFR-SEC-01/02/03`, nasljednici povučenog `NFR-ORG-06`); clean-core
+i granice povjerenja u registru.
 
 **Evaluacija**
 
@@ -219,7 +222,7 @@ Ovisnosti bez deklariranog čvora povjerenja = nalaz.
 
 - Sloj: metoda
 - Status: na-snazi
-- Izvor: DR-018 (kandidat)
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -235,7 +238,7 @@ mjera se iskazuje kao konformna, ne deskriptivna.
 
 **Provedba**
 
-[METHODOLOGY.md](METHODOLOGY.md) §3.1/§6.1; redak Valjanost mjere u anatomiji.
+[METHODOLOGY.md](METHODOLOGY.md) §5.1; redak Valjanost mjere u anatomiji.
 
 **Evaluacija**
 
@@ -245,7 +248,7 @@ Mjere u upotrebi bez statusa = nalaz; H4-DQI kao prvi test.
 
 - Sloj: metoda
 - Status: na-snazi
-- Izvor: DR-014; DR-018 (kodifikacija)
+- Izvor: `DR-COR-014` (**predložen**, ne prihvaćen — vidi Bilješku)
 
 **Iskaz**
 
@@ -270,7 +273,7 @@ Pokušaj uvođenja skalara ili gatea na indeksu = nalaz; H3 signal.
 
 - Sloj: metoda
 - Status: na-snazi
-- Izvor: DR-014
+- Izvor: `DR-COR-014` (**predložen**, ne prihvaćen — vidi Bilješku)
 
 **Iskaz**
 
@@ -287,7 +290,7 @@ datumom i popisom deklariranih iznimaka.
 
 **Provedba**
 
-wem_lint changelog konvencija; docs/conformance/.
+wem_lint changelog konvencija; `documentation/workflow/conformance/`.
 
 **Evaluacija**
 
@@ -297,7 +300,7 @@ Nalaz bez trojke = nereproducibilan = nalaz; H3.
 
 - Sloj: metoda
 - Status: na-snazi
-- Izvor: DR-018 (kandidat)
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -321,14 +324,14 @@ Tiho nestala deklarirana iznimka = nalaz.
 
 - Sloj: metoda
 - Status: na-snazi
-- Izvor: DR-018 (kandidat)
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
 Kontrolirani vokabulari obvezuju u svojim domenama: identifikatori koda
-(naming_registry), pojmovi diskursa (rječnik), reference (literatura,
-append-only), tvrdnje (postulati), norme (doktrina). Sukob značenja razrješava
-se DR-om, ne prešutnim izborom u tekstu.
+(`tools/dictionary.json`), pojmovi diskursa (`dictionary.yaml`), reference
+(`LITERATURE.md`, append-only), tvrdnje (`POSTULATE.md`), norme (ovaj registar).
+Sukob značenja razrješava se DR-om, ne prešutnim izborom u tekstu.
 
 **Opravdanje**
 
@@ -337,7 +340,8 @@ se DR-om, ne prešutnim izborom u tekstu.
 
 **Provedba**
 
-Pet registara s Održavanje sekcijama; lint (kod); H2 signal (diskurs).
+Pet registara s Održavanje sekcijama; lint (kod, `DR-WFL-020`); H2 signal
+(diskurs).
 
 **Evaluacija**
 
@@ -347,7 +351,7 @@ Trend povreda vokabulara po verziji (H2).
 
 - Sloj: metoda
 - Status: na-snazi
-- Izvor: DR-018 (kandidat)
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -362,7 +366,7 @@ publikom.
 
 **Provedba**
 
-Rječnik.yaml → RJECNIK.md smjer; budući generirani prikazi doktrine.
+`dictionary.yaml` → `DICTIONARY.md` smjer; budući generirani prikazi doktrine.
 
 **Evaluacija**
 
@@ -373,7 +377,7 @@ filozofiji, uklonjena).
 
 - Sloj: filozofija
 - Status: na-snazi
-- Izvor: DR-016 (nazivlje); DR-018 (kodifikacija funkcije)
+- Izvor: kodifikacija v0.1; nazivlje `DR` umjesto `ADR` nosi `dictionary.yaml → viseznacnost-adr` i oba DR indeksa (2026-07-28), bez zasebnog zapisa
 
 **Iskaz**
 
@@ -388,7 +392,7 @@ format zapisa (DR) je zamjenjiva pod-metoda i revidira se dokazima.
 
 **Provedba**
 
-DR predložak; [METHODOLOGY.md](METHODOLOGY.md) §8.1 (funkcijski kriteriji
+DR predložak; [METHODOLOGY.md](METHODOLOGY.md) §7.1 (funkcijski kriteriji
 nasljednika).
 
 **Evaluacija**
@@ -399,7 +403,7 @@ Odluke bez zapisa = nalaz; kandidat nasljednik: graf odluka (RDF/PROV-O).
 
 - Sloj: policy
 - Status: na-snazi
-- Izvor: DR-013 (presedan); DR-018 (kodifikacija)
+- Izvor: kodifikacija v0.1; presedan `DR-COR-013`
 
 **Iskaz**
 
@@ -426,7 +430,7 @@ Politike bez evaluacijskog signala = aspiracije (popis se održava).
 
 - Sloj: princip
 - Status: na-snazi
-- Izvor: DR-018 (kandidat)
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -450,7 +454,7 @@ Publika bez artefakta = deklarirana rupa, ne presućena.
 
 - Sloj: princip
 - Status: na-snazi
-- Izvor: DR-018 (kandidat)
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -465,9 +469,37 @@ provjera na granici), ne konkatenacijom.
 
 **Provedba**
 
-[METHODOLOGY.md](METHODOLOGY.md) §8 tablica pod-metoda; clean-core filtar;
+[METHODOLOGY.md](METHODOLOGY.md) §7 tablica pod-metoda; clean-core filtar;
 obitelji baza u registru.
 
 **Evaluacija**
 
 Ovisnost ili standard bez zapisa prosudbe = nalaz.
+
+---
+
+## Bilješke i deklarirane slijepe pjege (D-11)
+
+1. **Registar nije formalno donesen.** Kodifikacija v0.1 nema DR zapis ni u jednoj
+   seriji. Do njega članci vrijede kao zatečena norma; to je deklaracija, ne
+   svjedočanstvo (D-05).
+2. **`D-09` i `D-10` stoje na predloženoj odluci.** `DR-COR-014` (verzioniranje
+   kriterija i C-snimke) je u core indeksu **predložen**, a oba članka vodi kao
+   *na snazi*. Norma na snazi izvedena iz neprihvaćene odluke je nalaz pod D-02;
+   razrješava se prihvaćanjem `DR-COR-014` ili prekvalifikacijom članaka.
+3. **`D-14` nema zapis o nazivlju.** Prelazak `ADR` → `DR` (2026-07-28) proveden je
+   kroz `dictionary.yaml → viseznacnost-adr` i oba DR indeksa, bez zasebne odluke.
+4. **Polje *Temelji* nije u predlošku DR-a.** `D-01`, `D-05` i `D-15` traže ga kao
+   provedbeni mehanizam, a predložak (`Status / Kontekst / Odluka / Ugovor / Cijena /
+   Svjedočanstvo / Registar`) ga ne nosi. Norma bez mjesta u obrascu nema provedbu (D-15):
+   uskladiti predložak ili preimenovati zahtjev — kroz DR.
+5. **Oznake su prefiksirane od 2026-08-24.** Raniji tekst je nosio neprefiksirane
+   oznake (`DR-013/014/015/016/018`) iz vremena prije podjele na serije; prevedene
+   su u `DR-COR-013`, `DR-COR-014`, `DR-WFL-004` odnosno u kodifikaciju. Neprefiksirana
+   oznaka nije valjana (`CLAUDE.md` §8).
+
+## Održavanje
+
+Članak se dodaje, mijenja, suspendira ili ukida isključivo kroz DR (D-03). Izmjena
+bez DR reference je nalaz. Proza u `PHILOSOPHY.md` i `METHODOLOGY.md` citira norme
+D-oznakama; normativni teret nosi ovaj registar i nigdje se ne prepisuje (D-13).

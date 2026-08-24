@@ -1,7 +1,8 @@
 # Wattleflow rjecnik — strojno citljivi izvor istine.
-# Nosi DVA kontrolirana vokabulara: diskurs (entries + acronyms) i kod
-# (blok `code:` na dnu, preseljen iz ukinutog naming_registry.yaml).
-# Treci registar kontroliranog vokabulara su reference -> literatura.md.
+# Nosi JEDAN kontrolirani vokabular: diskurs (entries + acronyms). Vokabular
+# koda zivi u kriteriju po distribuciji (`tools/dictionary.json`), v. biljesku
+# na dnu (DR-WFL-020).
+# Treci registar kontroliranog vokabulara su reference -> LITERATURE.md.
 # RJECNIK.md je GENERIRANI PRIKAZ ovog registra (pravilo pentade: prikaz nije
 # izvor istine). CSV/JSON pogledi izvode se po potrebi.
 #
@@ -14,7 +15,10 @@
 # Upravljanje: natuknica se dodaje/mijenja/deprecira iskljucivo kroz DR.
 
 registry: wattleflow-rjecnik
-registry_version: "0.2.0"   # 0.2.0: apsorbiran vokabular koda (blok `code:`)
+registry_version: "0.3.0"   # 0.2.0: apsorbiran vokabular koda (blok `code:`)
+                            # 0.2.1: kategorija OSCAL (DR-WFL-013)
+                            # 0.3.0: blok `code:` uklonjen — kriterij koda je
+                            #        tools/dictionary.json (DR-WFL-020)
 languages: [hr, en]
 source_of_truth: true
 generated_views:
@@ -30,7 +34,7 @@ governance:
     - koristen u najmanje dva doktrinarna dokumenta
   precedence: >
     U sukobu znacenja ovaj registar nadglasava kolokvijalnu upotrebu u svim
-    doktrinarnim dokumentima; sukob s PHILOSOPHY.,md ili METHODOLOGY.md je
+    doktrinarnim dokumentima; sukob s PHILOSOPHY.md ili METHODOLOGY.md je
     greska koja se razrjesava DR-om.
   feeds_hypothesis: H2
   h2_signal: >
@@ -38,10 +42,14 @@ governance:
     dokumentima (pretraga po forbidden_usages uzorcima).
 
 related_registries:
-  - path: documentation/literatura.md
-    domain: reference (kljucevi 1-52)
-# naming_registry.yaml je UKINUT 2026-07-28; sadrzaj mu je blok `code:` nize.
-# Povijesne reference na tu putanju citati kao `dictionary.yaml#code`.
+  - path: documentation/LITERATURE.md
+    domain: reference (kljucevi 1-64, append-only)
+  - path: documentation/POSTULATE.md
+    domain: tvrdnje (P-01..P-21)
+  - path: documentation/DOCTRINE.md
+    domain: norme (D-01..D-17)
+# naming_registry.yaml je UKINUT 2026-07-28; njegov sadrzaj je od tada kriterij
+# koda, a od 2026-08-24 zivi samo u `tools/dictionary.json` (DR-WFL-020).
 
 ontological_statuses: [cin, stanje, znak, artefakt, svojstvo, pravilo, pojava, alat]
 layers: [filozofija, policy, princip, metoda, arhitektura, zahtjevi, sve]
@@ -501,9 +509,9 @@ entries:
     status: usvojen
 
   # ------------------------------------------------------------------ Dio V
-  - id: viseznacnost-adr
-    term_hr: ADR (razrijesena viseznacnost)
-    term_en: ADR (disambiguated)
+  - id: viseznacnost-dr
+    term_hr: DR (razrijesena viseznacnost)
+    term_en: DR (disambiguated)
     category: viseznacnost
     ontological_status: znak
     layer: metoda
@@ -651,7 +659,7 @@ acronyms:
   - {id: CIA,  expansion: "confidentiality, integrity, availability", note: "tri razlicita grafa prijetnje"}
   - {id: DQI,  expansion: "data quality index"}
   - {id: DR,   expansion: "decision record (zapis odluke)"}
-  - {id: EOL,  expansion: "end of life", note: "politika verzija (DR-013)"}
+  - {id: EOL,  expansion: "end of life", note: "politika verzija (DR-COR-013)"}
   - {id: FR,   expansion: "functional requirement"}
   - {id: HDR,  expansion: "header (wem_lint dimenzija)"}
   - {id: IMP,  expansion: "imports (wem_lint dimenzija)"}
@@ -662,8 +670,9 @@ acronyms:
   - {id: NFR,  expansion: "non-functional requirement"}
   - {id: NMI,  expansion: "normalized mutual information", references: [20]}
   - {id: ORG,  expansion: "kategorija organizacijskih NFR-ova (NFR-ORG-NN)"}
+  - {id: OSCAL, expansion: "Open Security Controls Assessment Language (NIST)", note: "ujedno kategorija zahtjeva za OSCAL sloj u wattleflow-processors (FR-OSCAL-NN.M); DR-WFL-013"}
   - {id: PDSA, expansion: "plan-do-study-act (Shewhart/Deming)", references: [47, 48]}
-  - {id: SBOM, expansion: "software bill of materials", note: "SPDX/CycloneDX; NFR-ORG-06"}
+  - {id: SBOM, expansion: "software bill of materials", note: "SPDX/CycloneDX; NFR-SEC-03"}
   - {id: SBVR, expansion: "Semantics of Business Vocabulary and Rules (OMG)"}
   - {id: SFX,  expansion: "side effects (wem_lint dimenzija)"}
   - {id: STA,  expansion: "state (wem_lint dimenzija)"}
@@ -677,407 +686,17 @@ acronym_identifier_casing:
   decision_pending: DR-WFL-004
   note: "lint upozorava (WARNING, waiver declared), ne kaznjava, dok odluka ne padne"
 
-# --------------------------------------------------------------------- kod
-# Kontrolirani vokabular IDENTIFIKATORA KODA. Preseljen iz
-# tools/naming_registry.yaml (koji je ukinut) — jedan izvor istine za oba
-# vokabulara. Cita ga tools/wem_lint.py preko simbolickog linka
-# tools/dictionary.yaml.
+# Vokabular KODA nije ovdje. Kriterij koji cita tools/wem_lint.py zivi po
+# distribuciji, u JSON obliku (`tools/dictionary.json` + prezentacija
+# `tools/messages.json`), jer je lint stdlib-only pa YAML ne moze parsirati.
+# Blok `code:` bio je od kriterija 0.8.0 zastarjela kopija i uklonjen je
+# 2026-08-24 (DR-WFL-020). Povijesne reference na `naming_registry.yaml` i na
+# `dictionary.yaml#code` citati kao `tools/dictionary.json`.
 #
-# PAZNJA — `acronyms` (vrh datoteke) i `code.identifier_acronyms` NISU isti
-# vokabular i ne smiju se spojiti:
-#   acronyms                 kratice DOKTRINE (DQI, NFR, PDSA, SBVR); nose
-#                            expansion i reference; citaju ih ljudi
-#   code.identifier_acronyms tokeni u IDENTIFIKATORIMA (JSON, URI, SQL, OSCAL);
-#                            nose samo pravilo pisanja; cita ih lint
-# Presjek im je prazan (mjereno 2026-07-28) i mora ostati prazan. Spajanje bi
-# ucinilo da jedan znak nosi dvije uloge — tocno ona semanticka entropija koju
-# ovaj registar postoji da smanji (v. natuknicu semanticka-entropija).
-#
-# Verzioniranje: `registry_version` na vrhu verzionira RJECNIK (diskurs),
-# `code.criterion_version` verzionira KRITERIJ KODA. Odvojeni su namjerno —
-# izmjena natuknice ne smije obezvrijediti C-snimke konformnosti koda, ni
-# obrnuto (trojka-reproducibilnosti).
-code:
-  criterion_version: "0.7.0"
-
-  # Verzionira povrsinu ispisa (MESSAGES, CATALOGUE) odvojeno od kriterija:
-  # ispravak teksta ili prijevoda podize ovaj broj i ostavlja nalaze usporedivima,
-  # dok criterion_version mice samo promjena pravila, domene ili opsega. Nije dio
-  # trojke (D-10) — prikaz ne mijenja presudu — ali se pise u svaku snimku.
-  # Povijest: kriterij 0.5.0 i 0.6.0 bile su cisto prezentacijske migracije.
-  presentation_version: "0.1.0"
-
-  # Zadani jezik ispisa alata. UK English je zadan i fallback (§3.2);
-  # `--lang` ga nadjačava po pokretanju. Prikaz, ne kriterij (D-13).
-  report_language: en
-
-  # Katalog vrsta nalaza. `code`/`ref` su jezicno neutralni; `title`/`why`/`fix`
-  # su pod kljucem jezika, `en` je fallback.
-  CATALOGUE:
-    "import-cycle":
-      code: "K1"
-      ref: "NFR-ORG-01 §3"
-      en:
-        title: "import loop — two modules import each other"
-        why:
-          - "Two modules import each other (directly or through a chain)."
-          - "That is a loop: Python cannot load them cleanly, and every change"
-          - "to one drags the other with it."
-        fix:
-          - "Fix: break the loop — move the shared piece somewhere both sides"
-          - "may import (a lower layer), so the arrows point one way only."
-      hr:
-        title: "petlja uvoza — dva modula uvoze jedan drugoga"
-        why:
-          - "Dva modula uvoze jedan drugoga (izravno ili kroz lanac). To je"
-          - "petlja: Python ih ne može čisto učitati, a svaka izmjena jednoga"
-          - "povlači drugi."
-        fix:
-          - "Popravak: prekini petlju — premjesti zajednički dio u sloj koji"
-          - "obje strane smiju uvoziti, da strelice idu samo u jednom smjeru."
-    "wrong-direction-import":
-      code: "K2"
-      ref: "NFR-ORG-01 §3"
-      en:
-        title: "foundation imports an upper layer (wrong direction)"
-        why:
-          - "`helpers/` is the foundation of the building — everyone may use it."
-          - "So it must not import from upper layers (`concrete/`, …), or the"
-          - "foundation ends up depending on a floor that stands on top of it:"
-          - "every change up there shakes the foundation, and in the worst case"
-          - "you get an import loop."
-        fix:
-          - "Fix: move the imported symbol down to a layer helpers may use,"
-          - "or use a stdlib replacement inside helpers."
-      hr:
-        title: "temelj uvozi gornji sloj (pogrešan smjer)"
-        why:
-          - "`helpers/` je temelj zgrade — svi ga smiju koristiti. Zato ne smije"
-          - "uvoziti iz gornjih slojeva (`concrete/`, …), inače temelj ovisi o"
-          - "katu koji stoji na njemu: svaka izmjena gore trese temelj, a u"
-          - "najgorem slučaju nastaje petlja uvoza."
-        fix:
-          - "Popravak: spusti uvezeni simbol u sloj koji helpers smije koristiti,"
-          - "ili upotrijebi stdlib zamjenu unutar helpersa."
-    "misfiled-leaf":
-      code: "K3"
-      ref: "NFR-ORG-01 §3"
-      en:
-        title: "import target is foundation material, but labelled as a domain"
-        why:
-          - "The imported package imports nothing from wattleflow itself — it is"
-          - "a pure leaf (foundation material). The registry, however, lists it"
-          - "as a domain (upper layer). The import is fine; the label is wrong."
-        fix:
-          - "Fix: update the registry — remove the package from `domains` so the"
-          - "tool treats it as foundation."
-      hr:
-        title: "cilj uvoza je temeljni materijal, a registar ga vodi kao domenu"
-        why:
-          - "Uvezeni paket ne uvozi ništa iz wattleflowa — čisti je list"
-          - "(temeljni materijal). Registar ga ipak vodi kao domenu (gornji sloj)."
-          - "Uvoz je u redu; oznaka je pogrešna."
-        fix:
-          - "Popravak: ažuriraj registar — makni paket iz `domains` da ga alat"
-          - "tretira kao temelj."
-    "out-of-scope-module":
-      code: "K5"
-      ref: "dictionary.yaml: slijepa-pjega"
-      en:
-        title: "module not measured — outside clean-core scope"
-        why:
-          - "This module imports a third-party library, so it belongs to another"
-          - "distribution (wattleflow-processors / examples) and every rule skipped"
-          - "it. Nothing here was checked — clean is not the same as unmeasured."
-          - "Note: a real violation can hide behind this filter. helpers/config.py"
-          - "is skipped for `yaml`, yet it also imports concrete/ — an ORG-01 breach"
-          - "the instrument cannot see."
-        fix:
-          - "Not a defect to fix: a declared blind spot, listed so the vector never"
-          - "reads as full coverage. Measure it from the distribution that owns it."
-      hr:
-        title: "modul nije mjeren — izvan clean-core opsega"
-        why:
-          - "Modul uvozi third-party biblioteku pa pripada drugoj distribuciji"
-          - "(wattleflow-processors / examples) i svako ga je pravilo preskočilo."
-          - "Ovdje ništa nije provjereno — čisto nije isto što i nemjereno."
-          - "Napomena: iza ovog filtra može se skriti pravi prekršaj."
-        fix:
-          - "Nije kvar za popravak: deklarirana slijepa pjega, navedena da vektor"
-          - "nikad ne čita kao puna pokrivenost. Mjeri iz distribucije koja je vlasnik."
-    "declared-blind-spot":
-      code: "K6"
-      ref: "dictionary.yaml: slijepa-pjega"
-      en:
-        title: "registry declares this as unmeasured by construction"
-        why:
-          - "The registry's `blind_spots` list names what the instrument cannot"
-          - "see by design (not by accident). Declaring it is the requirement;"
-          - "silence would be the defect."
-        fix:
-          - "Nothing to do — carried into every report and every snapshot."
-      hr:
-        title: "registar ovo deklarira kao nemjereno po konstrukciji"
-        why:
-          - "`blind_spots` popis registra imenuje ono što instrument po dizajnu"
-          - "ne može vidjeti (ne slučajno). Deklaracija je zahtjev; šutnja bi"
-          - "bila kvar."
-        fix:
-          - "Nema što raditi — nosi se u svaki nalaz i svaku snimku."
-    "unimplemented-rule":
-      code: "K7"
-      ref: "POLICY §9"
-      en:
-        title: "registry declares a rule this tool cannot check"
-        why:
-          - "The criterion lists a rule with a severity and a waiver policy, but"
-          - "no code path can ever raise it. The declaration promises a verdict"
-          - "the instrument never gives, so a green vector overstates coverage."
-        fix:
-          - "Fix: implement the check, or retire the rule from the registry"
-          - "through a DR — a rule is a promise, not a comment."
-      hr:
-        title: "registar deklarira pravilo koje alat ne može provjeriti"
-        why:
-          - "Kriterij navodi pravilo sa severityjem i waiver politikom, ali ga"
-          - "nijedan put u kodu ne može dići. Deklaracija obećava presudu koju"
-          - "instrument nikad ne daje, pa zeleni vektor precjenjuje pokrivenost."
-        fix:
-          - "Popravak: implementiraj provjeru ili povuci pravilo iz registra"
-          - "kroz DR — pravilo je obećanje, ne komentar."
-    "undeclared-check":
-      code: "K8"
-      ref: "POLICY §9"
-      en:
-        title: "tool emits a check the registry never declared"
-        why:
-          - "This check produces findings, yet the criterion does not list it."
-          - "Its severity and waiver therefore live in the tool instead of the"
-          - "registry, outside the DR governance the criterion is meant to carry."
-        fix:
-          - "Fix: declare the check in the registry `rules` block through a DR,"
-          - "so its severity and waiver become a criterion fact."
-      hr:
-        title: "alat emitira provjeru koju registar nikad nije deklarirao"
-        why:
-          - "Provjera proizvodi nalaze, a kriterij je ne navodi. Njezin severity"
-          - "i waiver time žive u alatu umjesto u registru, izvan DR upravljanja"
-          - "koje kriterij treba nositi."
-        fix:
-          - "Popravak: deklariraj provjeru u `rules` bloku registra kroz DR, da"
-          - "joj severity i waiver postanu činjenica kriterija."
-    "single-consumer-helper":
-      code: "K4"
-      ref: "NFR-ORG-01 §1"
-      en:
-        title: "shared helper used by only one package"
-        why:
-          - "`helpers/` is the shared shelf: it should only hold things that at"
-          - "least TWO different packages use. A module with a single consumer"
-          - "belongs inside the package that uses it — closer to its user and"
-          - "easier to change."
-        fix:
-          - "Fix: move the module into its only consumer package, or leave it if"
-          - "a second consumer is coming soon."
-          - "(Inherited from before — does not fail the build.)"
-      hr:
-        title: "dijeljeni helper koristi samo jedan paket"
-        why:
-          - "`helpers/` je dijeljena polica: smije držati samo ono što koriste"
-          - "barem DVA različita paketa. Modul s jednim potrošačem pripada unutar"
-          - "paketa koji ga koristi — bliže korisniku i lakši za izmjenu."
-        fix:
-          - "Popravak: premjesti modul u njegov jedini potrošački paket, ili ga"
-          - "ostavi ako drugi potrošač uskoro dolazi."
-          - "(Zatečeno stanje — ne ruši build.)"
-
-  # Poruke ispisa alata, po jeziku. `en` je zadan i fallback: mora ostati
-  # potpun, jer nedostajuci kljuc degradira na engleski. Novi jezik se
-  # dodaje ovdje — alat ne drzi nijedan tekst.
-  MESSAGES:
-    en:
-      vector: "VECTOR"
-      reproducibility: "REPRODUCIBILITY"
-      no_findings: "(no findings)"
-      blind_spots_label: "blind spots"
-      other_findings: "--- other findings (no friendly entry yet) ---"
-      summary: "wem_lint: {errors} error(s), {warns} warning(s), {infos} info"
-      vector_note: "  note: conformance vector — no aggregate score is defined for these\n  checks; the scale is nominal, so counting is the only admissible\n  operation (METHODOLOGY §3b/§6.1). A green vector proves conformance\n  to the declared criterion, not quality (dictionary: konformnost-vs-kvaliteta)."
-      notes: "Notes: ORG-01 fan-in counts direct `wattleflow.helpers.<mod>` imports only; aggregate `from wattleflow.helpers import X` is not resolved, so fan-in is a lower bound (advisory). ORG-01 #2/#4 not yet automated. See NFR.md."
-      python_pin: "  WARNING    registry pins python {pin}, running {running} — the stdlib set tested is the\n             interpreter's, so ORG-01 scope is not reproducible against the pin"
-      graph_title: "=== NFR-ORG-01 — dependency graph (package level) ==="
-      graph_hint: "  ▶ = imports;  a leaf tier (no outgoing edges) is the allowed foundation"
-      graph_leaf: "leaf — imports nothing intra-project"
-      graph_external: "external — not analysed as a source"
-      legend: "Legend: "
-      tag_cycle: "mutual"
-      tag_layering: "one-way"
-      tag_leaf: "misfiled leaf"
-    hr:
-      vector: "VEKTOR"
-      reproducibility: "REPRODUCIBILNOST"
-      no_findings: "(nema nalaza)"
-      blind_spots_label: "slijepe pjege"
-      other_findings: "--- ostali nalazi (bez unosa u katalogu) ---"
-      summary: "wem_lint: {errors} greška/e, {warns} upozorenje/a, {infos} info"
-      vector_note: "  napomena: vektor konformnosti — ukupna ocjena za ove provjere nije\n  definirana; skala je nominalna pa je brojanje jedina dopuštena\n  operacija (METHODOLOGY §3b/§6.1). Zeleni vektor dokazuje usklađenost\n  s deklariranim kriterijem, ne kvalitetu (rječnik: konformnost-vs-kvaliteta)."
-      notes: "Napomene: ORG-01 fan-in broji samo izravne `wattleflow.helpers.<mod>` uvoze; agregatni `from wattleflow.helpers import X` se ne razrješava pa je fan-in donja granica (savjetodavno). ORG-01 #2/#4 nisu automatizirani. Vidi NFR.md."
-      python_pin: "  UPOZORENJE registar pina python {pin}, izvodi se {running} — skup stdliba\n             je interpreterov, pa opseg ORG-01 nije reproducibilan prema pinu"
-      graph_title: "=== NFR-ORG-01 — graf ovisnosti (razina paketa) ==="
-      graph_hint: "  ▶ = uvozi;  list bez izlaznih bridova je dopušten temelj"
-      graph_leaf: "list — ne uvozi ništa unutar projekta"
-      graph_external: "vanjski — ne analizira se kao izvor"
-      legend: "Legenda: "
-      tag_cycle: "uzajamno"
-      tag_layering: "jednosmjerno"
-      tag_leaf: "pogrešno smješten list"
-  python_reference: "3.11"          # definira skup "stdlib" za ORG-01;
-                                    # mora pratiti requires-python u pyproject.toml
-
-  blind_spots:                       # deklarirano nemjereno (§5, stupac 3)
-    - uvozi unutar shared_namespacea ne modeliraju se kao bridovi, pa su ciklusi i
-      slojevitost UNUTAR helpers/ nemjereni (helpers->domena acikličnost i fan-in
-      helpera JESU mjereni)
-    - strateški protivnik izvan dometa linta
-
-  rules:
-    - id: ORG-01a
-      nfr: NFR-ORG-01
-      check: clean_core_imports
-      severity: error
-      waiver: forbidden
-    - id: ORG-01b
-      nfr: NFR-ORG-01
-      check: domain_acyclicity
-      severity: error
-      waiver: dr_required
-    - id: ORG-02a
-      nfr: NFR-ORG-02
-      check: base_family_membership
-      severity: error
-      waiver: dr_required
-    - id: ORG-02b
-      nfr: NFR-ORG-02
-      check: prohibited_standalone
-      severity: error
-      waiver: forbidden
-    - id: ORG-02c
-      nfr: NFR-ORG-02
-      check: acronym_case
-      severity: warning
-      waiver: declared
-    - id: ORG-03a
-      nfr: NFR-ORG-03
-      check: typevar_role_vocabulary
-      severity: warning              # mehanizam tolerancije već postoji
-      waiver: declared
-
-  # --- NFR-ORG-01: domains ----------------------------------------------------- #
-  # Top-level functional packages under src/wattleflow. `helpers` is the shared
-  # namespace, NOT a domain — it must not appear here, or intra-helper imports get
-  # misreported as acyclicity breaks. `constants` is likewise absent: it imports
-  # nothing intra-project, so it is foundation material every layer may depend on
-  # (ORG-01 §3 misfiled-leaf, 2026-07-29).
-  domains:
-    - audit
-    - blackboards
-    - concrete
-    - decorators
-    - managers
-    - mappers
-    - orchestrators
-    - schedulers
-
-  shared_namespace: helpers
-
-  # --- Scope: clean-core filter ------------------------------------------------ #
-  # wattleflow-workflow is clean core: stdlib + the libraries below only (§7.1).
-  # A module importing anything outside (stdlib ∪ wattleflow ∪ core_libraries)
-  # belongs to another distribution (wattleflow-processors / examples) and is
-  # skipped by every rule. `exclude_paths` opts out modules by path glob for cases
-  # the import filter cannot catch.
-  scope:
-    core_libraries:
-      - typing_extensions   # typing backport, core-safe
-    exclude_paths: []
-
-  # --- NFR-ORG-02: framework base classes -------------------------------------- #
-  # The inheritance roots of the framework — every concrete name in the workflow
-  # package derives from one of these. Grouped by family: each family lists its
-  # core interface(s) (I*, from wattleflow.core) and its concrete base(s)
-  # (concrete/*). The lint treats a class as belonging to a family if it inherits
-  # one of the family's bases; pipeline detection reads `bases.pipeline`.
-  bases:
-    root:          [IWattleflow]
-    observer:      [IObservable, IObserver]
-    blackboard:    [IBlackboard, GenericBlackboard]
-    connection:    [ConnectionObserverInterface, GenericConnection]
-    document:      [IAdaptee, IAdapter, ITarget, Document, DocumentAdapter, DocumentFacade]
-    driver:        [IDriver, GenericDriver, LazyDriverProxy]
-    processor:     [IProcessor, GenericProcessor]
-    pipeline:      [IPipeline, GenericPipeline]
-    repository:    [IRepository, GenericRepository, RepositoryWithDriver]
-    strategy:      [IStrategy, Strategy, StrategyGenerate, StrategyCreate, StrategyRead, StrategyWrite]
-    workflow:      [GenericWorkflow]
-    orchestrator:  [IEventSource, IFacade, Orchestrator]
-    scheduler:     [IScheduler, IEventListener, Scheduler]
-    manager:       [ConnectionManager, DriverManager, ProcessorManager]
-    state_machine: [IStateMachine, StateMachine, GuardedStateMachine]
-    memento:       [IMemento, GenericMemento]
-    originator:    [IOriginator]
-    logger:        [ILogger, AuditLogger]
-    exception:     [AuditException]
-
-  # Bare generic role nouns prohibited as standalone class names (criterion 6).
-  prohibited_standalone:
-    - Manager
-    - Helper
-    - Utility
-    - Parser
-    - Piece
-
-  # Acronym TOKENS as they appear in code identifiers. Distinct from the
-  # top-level `acronyms` table (doctrine abbreviations) — see the note above.
-  identifier_acronyms:
-    - YAML
-    - JSON
-    - URI
-    - RDF
-    - HTML
-    - SQL
-    - FSM
-    - SFTP
-    - OSCAL
-
-  # --- NFR-ORG-03: TypeVar (generic parameter) role vocabulary ----------------- #
-  # A TypeVar names the SEMANTIC ROLE the type plays in the generic contract, not
-  # the mechanism (the fact that it is a type). Shares the `acronyms` block above.
-  type_vars:
-    # Canonical role nouns — the closed controlled vocabulary (criterion 1).
-    roles:
-      - Key
-      - Value
-      - Message
-      - Destination
-      - Context
-      - Result
-      - State
-      - Action
-      - Vertex
-      - Edge
-      - Input
-      - Output
-      - Element
-      - Adaptee       # Adapter-pattern role (document.py: Generic[Adaptee])
-      - Connection    # wrapped resource role (connection.py: Generic[Connection])
-    # Synonyms collapsed to a canonical role (criterion 6; lint flags + suggests).
-    synonyms:
-      Yielded: Output
-      Sent: Input
-      Return: Result
-      Returned: Result
-      Elem: Element
-    # Branded names awaiting a DR decision (rename to canonical vs keep) — WARN,
-    # not ERROR, until decided (analogous to the ORG-01 tolerance policy).
-    tolerated:
-      - WattleType
+# PAZNJA — `acronyms` (vrh datoteke) i `identifier_acronyms` u kriteriju koda
+# NISU isti vokabular i ne smiju se spojiti:
+#   acronyms              kratice DOKTRINE (DQI, NFR, PDSA, SBVR); nose
+#                         expansion i reference; citaju ih ljudi
+#   identifier_acronyms   tokeni u IDENTIFIKATORIMA (JSON, URI, SQL, OSCAL);
+#                         nose samo pravilo pisanja; cita ih lint
+# Presjek im je prazan (mjereno 2026-07-28) i mora ostati prazan.
