@@ -3,22 +3,31 @@
 Obvezujuće upute i standardi za rad na projektima `wattleflow` (core), `workflow`,
 `processors`, `cad`. Vrijedi za sve sesije s Claude Code agentom.
 
-**Položaj u kaskadi (D-02).** Ovo je **policy sloj**: filozofija → *policy* → princip →
-metoda. Nadređeni dokumenti su [PHILOSOPHY.md](PHILOSOPHY.md) (kišobran) i
-[DOCTRINE.md](DOCTRINE.md) (registar normi `D-01…D-17`); operacionalizacija je
-[METHODOLOGY.md](METHODOLOGY.md); provedivi zahtjevi su u [`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md),
-[`02-FRQ/`](02-FRQ/0-FRQ-EN.md) i [`01-HLRQ/`](01-HLRQ/0-HLRQ-EN.md). `POLICY.md` je isti dokument (symlink) — doktrinarni tekstovi ga zovu
-`POLICY.md`, repozitoriji `CLAUDE.md`. **Postoji jedan primjerak, ovaj**: kodni repozitoriji
-ga symlinkaju (`processors/CLAUDE.md → ../documentation/CLAUDE.md`, od 2026-08-23). Zatečena
-kopija u `wattleflow-processors` povučena je i arhivirana kao
+**Položaj u kaskadi (D-02).** Ovo je **policy sloj**: filozofija → *policy* → metoda.
+Nadređeni su [PHILOSOPHY.md](PHILOSOPHY.md) (kišobran) i [DOCTRINE.md](DOCTRINE.md) (registar
+normi); operacionalizacija je [METHODOLOGY.md](METHODOLOGY.md).
+
+**Primat ima sloj zahtjeva.** Kod je zreliji od svojeg zapisa, pa su
+[`01-HLRQ/`](01-HLRQ/0-HLRQ-EN.md), [`02-FRQ/`](02-FRQ/0-FRQ-EN.md) i
+[`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md) trenutno **glavni predmet rada**: oni su stvarna
+dokumentacija sustava i njih se dopunjuje prvo. `DOCTRINE.md`, `PHILOSOPHY.md` i revizija DR
+serija svjesno su odgođeni — ne zato što ne vrijede, nego zato što se dopunjuju tek kad sloj
+zahtjeva bude konsolidiran. Ovaj dokument u međuvremenu ostaje na snazi i mijenja se samo tamo
+gdje ga izmjena koda ili registra zahtjeva učini netočnim.
+
+**Jedan primjerak.** `POLICY.md` je isti dokument (symlink) — doktrinarni tekstovi ga zovu
+`POLICY.md`, repozitoriji `CLAUDE.md`; kodni repozitoriji ga symlinkaju
+(`processors/CLAUDE.md → ../documentation/CLAUDE.md`, od 2026-08-23). Zatečena kopija u
+`wattleflow-processors` povučena je i arhivirana kao
 [`processors/CLAUDE-superseded-2026-08-23.md`](processors/CLAUDE-superseded-2026-08-23.md).
 
 **Pravila upravljanja ovim dokumentom:**
 
-- Izmjena policyja ide **kroz zapis odluke (DR)**, ne prešutnim uređivanjem (D-03).
-- Niži sloj ne nadjačava viši: gdje se ovaj dokument razilazi s `DOCTRINE.md` ili
-  s NFR registrom, prednost ima viši sloj/registar, a razilaženje je **nalaz** koji se
-  prijavljuje, ne rješava u tekstu (D-02, D-12).
+- Izmjena policyja ide **kroz zapis odluke (DR)**, ne prešutnim uređivanjem (D-03). Dok je
+  revizija DR serija odgođena, izmjena bez zapisa vodi se kao nalaz u `workflow/TODO.md`.
+- Niži sloj ne nadjačava viši: gdje se ovaj dokument razilazi s `DOCTRINE.md` ili s registrom
+  zahtjeva, prednost ima viši sloj/registar, a razilaženje je **nalaz** koji se prijavljuje,
+  ne rješava u tekstu (D-02).
 - Tvrdnja bez svjedočanstva vodi se kao **aspiracija** i tako se označava (D-05).
 
 ---
@@ -49,11 +58,11 @@ sloj pripada distribuciji koju određuje §7.1):
 
 **Domenska ontologija** (Workflow, Processor, Pipeline, Driver, Repository, Blackboard,
 Strategy, Connection, Document, Memento) je autoritativna: to su rezervirani primitivi i
-ne izmišljaju se novi bez DR-a (METHODOLOGY §4, NFR-ORG-04).
+ne izmišljaju se novi bez DR-a (`METHODOLOGY.md` §4, `NFR-ORG-04`).
 
-**Publika dokumentacije:** dokumentacija je **sustav s više publika** (D-16) — arhitekt,
-implementator, tester, sigurnosni analitičar, integrator, poslovni korisnik, revizor.
-Jedan format za sve publike nije legalan cilj; publika bez artefakta deklarira se kao rupa.
+**Publika dokumentacije:** arhitekt, implementator, tester, sigurnosni analitičar, integrator,
+poslovni korisnik, revizor. Jedan format za sve publike nije cilj; publika bez artefakta
+deklarira se kao rupa, ne prešućuje (D-11).
 
 ---
 
@@ -182,7 +191,7 @@ Doktrinarni sloj je u korijenu, zahtjevi i zapisi u numeriranim kategorijama:
 documentation/
 ├── PHILOSOPHY.md              kišobran (v0.4.2, EN): kaskada, hipoteze H1–H3
 ├── METHODOLOGY.md             Svezak I — Temelji (v0.3.2, HR)
-├── DOCTRINE.md                registar normi D-01…D-17 (HR)
+├── DOCTRINE.md                registar normi (HR) — namjerno malen, dopunjuje se kasnije
 ├── POSTULATE.md               registar postulata P-01…P-21 (HR)
 ├── LITERATURE.md              konsolidirane reference, ključevi 1–64 (append-only)
 ├── DICTIONARY.md   → workflow/hr/RIJECNIK.md   generirani prikaz rječnika (symlink)
@@ -279,34 +288,55 @@ dijagrami. Dijagram je **pogled** s deklariranim gledištem i publikom (D-13, IS
 
 ### 3.6 Zahtjevi
 
-- **FR** ([`02-FRQ/`](02-FRQ/0-FRQ-EN.md), `FR-<KATEGORIJA>-NN`, ISO/IEC/IEEE 29148): što sustav radi.
-- **HLRQ** (`HLRQ-<NN>`): zahtjev visoke razine — narativ, poslovna pravila `BR-nn` i opseg za
-  skupinu FR-ova ([`01-HLRQ/`](01-HLRQ/0-HLRQ-EN.md)). Razred je **u uporabi, ali nije u
-  registru** — uvođenje traži DR (D-12).
-- **NFR** ([`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md), `NFR-<KATEGORIJA>-NN`, sidreno na ISO/IEC 25010): koliko dobro radi.
-- Svaki zahtjev nosi kriterije prihvaćanja, metodu verifikacije i sljedivost prema gore.
+Sloj zahtjeva je **trenutni predmet rada** (vidi zaglavlje). Tri razreda, tri direktorija,
+jedan zapis po zahtjevu; indeks nosi oznaku, iskaz i poveznicu, a ne prepričava detalj (D-13).
+
+| Razred | Mjesto | Oznaka | Odgovara na | Sidro |
+|---|---|---|---|---|
+| **HLRQ** | [`01-HLRQ/`](01-HLRQ/0-HLRQ-EN.md) | `HLRQ-NN` | *zašto* — narativ, poslovna pravila `BR-nn`, opseg skupine FR-ova | — |
+| **FR** | [`02-FRQ/`](02-FRQ/0-FRQ-EN.md) | `FR-<KATEGORIJA>-NN` | *što* sustav radi | ISO/IEC/IEEE 29148 |
+| **NFR** | [`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md) | `NFR-<KATEGORIJA>-NN` | *koliko dobro* radi | ISO/IEC 25010 |
+
+- Svaki zapis nosi **iskaz, kriterije prihvaćanja, metodu verifikacije, opravdanje i sljedivost
+  prema gore**; sljedivost je graf, ne lanac (`METHODOLOGY.md` §6).
+- Zahtjev je **primaran** (iz načela i ciljeva; prethodi odlukama i ograničava ih) ili
+  **izveden** (nastaje iz odluke).
+- HLRQ ne opisuje korake — korake nose njegova djeca FR-ovi, koja citiraju ista pravila.
 - Mjerni kriteriji nose oznaku **`[M]`** i podliježu povelji `NFR-DEF-02` (tip skale,
   dijagnostička uporaba, tranzitivno zatvorenje, promocija u gate samo kroz DR).
+- Zajedničke definicije (domena, helper, kanonski subjekt) žive u **jednom** registru,
+  `NFR-DEF-01`; ostalo ga referira (D-12).
+- **Status se mijenja kroz DR, ne prešutno** (D-03). Većina zapisa danas stoji na *prijedlog*.
+
+> **Vokabular oznaka nije zatvoren.** Razred `HLRQ` te kategorije `AUD`, `CON` i `DRV` nisu u
+> vokabularu registra — do DR-a su te oznake **provizorne** (D-12). Jedina potvrđena kategorija
+> izvan `ORG` je `OSCAL` (`DR-WFL-013`). Opseg i statusi se čitaju iz indeksa, ne odavde.
 
 ---
 
 ## 4. Redoslijed rada
 
-1. `CLAUDE.md` / policy sloj
-2. Doktrinarni okvir: `PHILOSOPHY`, `METHODOLOGY`, `DOCTRINE`, `POSTULATE`, `LITERATURE`,
-   rječnik
-3. Registri zahtjeva: `03-NFRQ/`, `02-FRQ/`, `01-HLRQ/`
-4. Dokumentacija `src/wattleflow/concrete/` (radna osnova) i `core/` (sloj sučelja)
-5. Iterativno proširivanje uz funkcionalnost frameworka
+Doktrinarni okvir (`PHILOSOPHY`, `METHODOLOGY`, `DOCTRINE`, `POSTULATE`, `LITERATURE`, rječnik)
+i ovaj policy **postoje i vrijede**; dalje se dopunjuju tek kad sloj zahtjeva bude
+konsolidiran. Aktivni redoslijed je:
 
-Dokle se stiglo vodi `workflow/TODO.md`, ne ovaj popis. Faze se ne preskaču. Optimizacije i refaktori u `core/` ne predlažu se bez pitanja korisniku.
+1. **Registri zahtjeva** — `01-HLRQ/`, `02-FRQ/`, `03-NFRQ/`: dokumentirati zatečeni kod
+   obrnutim inženjerstvom, po jedan zapis, uz iskren status
+2. Dokumentacija `src/wattleflow/concrete/` (radna osnova) i `core/` (sloj sučelja)
+3. Iterativno proširivanje uz funkcionalnost frameworka
+4. **Odgođeno, namjerno:** dopuna `DOCTRINE.md`, analiza i usklađenje `PHILOSOPHY.md` /
+   `FILOZOFIJA.md`, revizija DR serija
+
+Dokle se stiglo vodi `workflow/TODO.md`, ne ovaj popis. Optimizacije i refaktori u `core/` ne
+predlažu se bez pitanja korisniku.
 
 **Neriješene odluke (ne pretpostavljati):**
 
 - **Test framework i CI** — nije odabran; do tada „strojno provjerljivo" znači lint na zahtjev
-- **`DR-WFL-004`** — casing akronima u identifikatorima (otvoren; pravilo suspendirano na WARNING)
-- **Predložak DR-a** — polje *Temelji* nije u predlošku; vidi `DOCTRINE.md` §Bilješke t.4
-- **Model odlučivanja** — jedan autor (D-01); prijelaz na konsenzus ide kroz DR
+- **`DR-WFL-004`** — casing akronima u identifikatorima (otvoren; pravilo je na `WARNING`)
+- **Obrazac imena u `02-FRQ/`** — datoteke su `FRQ-*`, zahtjev je `FR-*`; koji je obrazac norma
+  nije odlučeno
+- **Jezik registra zahtjeva** — `03-NFRQ/` postoji samo na engleskom, protivno §3.2
 
 ---
 
@@ -357,7 +387,7 @@ njezinu OSCAL ovisnost i mjesto enforcementa.
 ### 6.2 SIEM audit
 
 Prosljeđivanje audit informacija vanjskim sustavima (kontrola, monitoring, dijagnostika).
-> **Status: aspiracija (D-05, D-15).** Nema namjenskog podsustava; postoji samo asinkroni
+> **Status: aspiracija (D-05).** Nema namjenskog podsustava; postoji samo asinkroni
 > handler i točka pretplate u `logger` obitelji temeljnog sloja — dakle mjesto na koje bi se
 > prosljeđivanje priključilo, ne i samo prosljeđivanje. Politika bez provedbenog mehanizma i
 > evaluacijskog signala vodi se kao aspiracija, ne kao politika na snazi.
@@ -450,7 +480,9 @@ instalacija povlači opcionalne third-party ovisnosti; korisnik je odgovoran za 
 
 ## 8. Zapisi odluka (DR)
 
-Evidencija odluka je **obvezna funkcija** (D-14); DR format je zamjenjiva pod-metoda.
+Evidencija odluka je obvezna funkcija; DR format je zamjenjiva pod-metoda
+(`METHODOLOGY.md` §7.1). **Revizija DR serija je odgođena** dok se sloj zahtjeva ne
+konsolidira (§4); do tada vrijedi zatečeni predložak i zatečene serije.
 
 - **Predložak:** Status / Kontekst / Odluka / Ugovor / Cijena / Svjedočanstvo / Registar
   (+ Povijest gdje se odluka mijenjala). *Svjedočanstvo* razdvaja dokazano od aspiracije;
@@ -518,8 +550,9 @@ opisuje metoda, a *čime* — dokument pripadnog alata.
 | `src/wattleflow/core/` (core repo) | autoritativna sučelja i dizajn patterni (serija `DR-COR`) |
 | `src/wattleflow/concrete/` | generičke implementacije — radna osnova frameworka |
 | `pyproject.toml`, `MANIFEST.in` | metapodaci i pakiranje (`DR-WFL-006`) |
-| `documentation/` | doktrinarni okvir i registri (§3.1) |
-| `documentation/workflow/dr/` | zapisi odluka + indeks |
+| `documentation/01-HLRQ/`, `02-FRQ/`, `03-NFRQ/` | registri zahtjeva — **trenutni predmet rada** (§3.6) |
+| `documentation/` | doktrinarni okvir i stablo (§3.1) |
+| `documentation/workflow/dr/`, `workflow/core/dr/`, `04-DR/` | zapisi odluka + indeksi |
 | `documentation/workflow/conformance/` | C-snimke konformnosti |
 | `tools/wem_lint.py`, `tools/dictionary.json` | provedba NFR-ORG-01/02/03/07, SEC-03 i vokabular koda |
 | `tools/messages.json` | prezentacija nalaza (en/hr), versionirana odvojeno od kriterija |

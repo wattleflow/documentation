@@ -38,7 +38,7 @@ built to last and grow.
 | Layer | Artefact |
 |---|---|
 | Philosophy (umbrella) | [PHILOSOPHY.md](PHILOSOPHY.md) |
-| Norms (registry `D-01…D-17`) | [DOCTRINE.md](DOCTRINE.md) |
+| Norms (registry, 9 articles) | [DOCTRINE.md](DOCTRINE.md) |
 | Claims (registry `P-01…P-21`) | [POSTULATE.md](POSTULATE.md) |
 | References (append-only, keys 1–64) | [LITERATURE.md](LITERATURE.md) |
 | Method (Volume I) | [METHODOLOGY.md](METHODOLOGY.md) · [`05-METHOD/`](05-METHOD/dqi.md) |

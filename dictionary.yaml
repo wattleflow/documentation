@@ -47,7 +47,7 @@ related_registries:
   - path: documentation/POSTULATE.md
     domain: tvrdnje (P-01..P-21)
   - path: documentation/DOCTRINE.md
-    domain: norme (D-01..D-17)
+    domain: norme (D-02, D-03, D-05, D-07, D-09..D-13)
 # naming_registry.yaml je UKINUT 2026-07-28; njegov sadrzaj je od tada kriterij
 # koda, a od 2026-08-24 zivi samo u `tools/dictionary.json` (DR-WFL-020).
 

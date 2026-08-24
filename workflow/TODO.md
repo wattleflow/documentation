@@ -96,8 +96,12 @@ Ostaje:
   na snazi izvedena iz neprihvaćene odluke je nalaz pod D-02 (`DOCTRINE` §Bilješke t.2).
   Prihvatiti `DR-COR-014` ili prekvalificirati članke.
 - [ ] **Kodifikacija doktrine nema DR zapis.** Bivše `DR-018 (kandidat)` bilo je izvor gotovo
-  svakom članku; zapis nikad nije otvoren. Deklarirano u `DOCTRINE` §Bilješke t.1 — otvoriti
-  zapis ili zadržati status zatečene norme svjesno.
+  svakom članku; zapis nikad nije otvoren. Isto vrijedi za povlačenje osam članaka
+  2026-08-24 (v0.1 → v0.2). Deklarirano u `DOCTRINE` §Bilješke t.1; otvara se kad dođe red na
+  reviziju DR serija.
+- [ ] **Dopuna doktrine čeka konsolidaciju sloja zahtjeva.** Registar je namjerno malen
+  (9 članaka); novi ulazi tek uz mehanizam i signal. Kandidati koji su pali na tom testu vode
+  se u tablici *Povučeni članci* — ne brišu se iz vidokruga, čekaju nositelja.
 - [ ] **`FILOZOFIJA.md` (416 linija, HR) i `PHILOSOPHY.md` (271, EN) su se razišli.** Nije
   prijevod nego dvije verzije istog teksta; §3.2 kaže da HR vlada. Odlučiti koja je izvor pa
   drugu svesti na prikaz ili stub — isti postupak kao za `LITERATURA`/`POSTULATI`.
