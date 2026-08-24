@@ -30,10 +30,10 @@ u sučeljima ispala je i mora se nadomjestiti u `concrete/` sloju workflowa.
 | `IComponent/IComposite/IDecorator/IFlyweight` nad `T` | nad `Element` / `Extrinsic` | |
 
 Nadomjesne implementacije stigle su kao četiri nove datoteke u `concrete/`:
-[`wattleflow.py`](src/wattleflow/concrete/wattleflow.py),
-[`singleton.py`](src/wattleflow/concrete/singleton.py),
-[`iterator.py`](src/wattleflow/concrete/iterator.py),
-[`observable.py`](src/wattleflow/concrete/observable.py).
+[`wattleflow.py`](../../../workflow/src/wattleflow/concrete/base.py),
+[`singleton.py`](../../../workflow/src/wattleflow/concrete/singleton.py),
+[`iterator.py`](../../../workflow/src/wattleflow/concrete/iterator.py),
+[`observable.py`](../../../workflow/src/wattleflow/concrete/observable.py).
 
 ---
 
@@ -41,20 +41,20 @@ Nadomjesne implementacije stigle su kao četiri nove datoteke u `concrete/`:
 
 ### 2.1 `wattleflow.concrete` puca na importu paketa
 
-[src/wattleflow/concrete/workflow.py:137](src/wattleflow/concrete/workflow.py#L137) instancira `AuditLogger`
+[src/wattleflow/concrete/workflow.py:137](../../../workflow/src/wattleflow/concrete/workflow.py#L137) instancira `AuditLogger`
 na razini modula:
 
 ```
 TypeError: Can't instantiate abstract class AuditLogger with abstract method name
 ```
 
-Poziv ide preko [src/wattleflow/concrete/__init__.py:37](src/wattleflow/concrete/__init__.py#L37),
+Poziv ide preko [src/wattleflow/concrete/__init__.py:37](../../../workflow/src/wattleflow/concrete/__init__.py#L37),
 pa je **cijeli `concrete` paket neuvozan**. Sve ostalo je zamaskirano iza ovoga.
 
 ### 2.2 `from wattleflow.core import T`
 
-[blackboard.py:24](src/wattleflow/concrete/blackboard.py#L24) i
-[document.py:25](src/wattleflow/concrete/document.py#L25). `T` više ne postoji.
+[blackboard.py:24](../../../workflow/src/wattleflow/concrete/blackboard.py#L24) i
+[document.py:25](../../../workflow/src/wattleflow/concrete/document.py#L25). `T` više ne postoji.
 Zamjena role-imenom (`Content` za document, `Item`/`Element` za blackboard) ujedno je i ORG-03 usklađenje.
 
 ### 2.3 Nijedna konkretna klasa ne nasljeđuje `Wattleflow` → sve su apstraktne
@@ -90,7 +90,7 @@ Wattleflow            abstract=[]  ✔
 
 ### 2.5 Nove datoteke nisu izložene
 
-[src/wattleflow/concrete/__init__.py](src/wattleflow/concrete/__init__.py) ne importa niti exporta
+[src/wattleflow/concrete/__init__.py](../../../workflow/src/wattleflow/concrete/__init__.py) ne importa niti exporta
 `Wattleflow`, `Singleton`, `LazyIterator`, `LazyAsyncIterator`, `ThreadSafeObservable`.
 
 ---
@@ -101,14 +101,14 @@ Tijelo apstraktnog `name` je `...`, pa **`self.name` vraća `None`** umjesto da 
 
 | Mjesto | Efekt |
 |---|---|
-| [connection.py:132-133](src/wattleflow/concrete/connection.py#L132) | `self._observers[observer.name]` → svi observeri pod ključem `None`; **registrira se samo jedan** |
-| [connection.py:145](src/wattleflow/concrete/connection.py#L145), [document.py:198](src/wattleflow/concrete/document.py#L198), [manager.py:88](src/wattleflow/concrete/manager.py#L88), [logger.py:173](src/wattleflow/concrete/logger.py#L173) | audit zapisi oblika `None:uuid` — **falsificiran audit trail**, izravno protiv DR-002 obrazloženja |
-| [helpers.py:263](src/wattleflow/concrete/helpers.py#L263) | poruka `Mandatory: None.foo` |
+| [connection.py:132-133](../../../workflow/src/wattleflow/concrete/connection.py#L132) | `self._observers[observer.name]` → svi observeri pod ključem `None`; **registrira se samo jedan** |
+| [connection.py:145](../../../workflow/src/wattleflow/concrete/connection.py#L145), [document.py:198](../../../workflow/src/wattleflow/concrete/document.py#L198), [manager.py:88](../../../workflow/src/wattleflow/concrete/manager.py#L88), `concrete/logger.py:173` (modul u međuvremenu ukinut) | audit zapisi oblika `None:uuid` — **falsificiran audit trail**, izravno protiv DR-002 obrazloženja |
+| [helpers.py:263](../../../workflow/src/wattleflow/concrete/helpers.py#L263) | poruka `Mandatory: None.foo` |
 
 ### Pisanje u read-only property → `AttributeError`
 
-- [state_machine.py:47](src/wattleflow/concrete/state_machine.py#L47) — `self.name = name`
-- [state_machine.py:99](src/wattleflow/concrete/state_machine.py#L99) — `self.name = getattr(inner, "name", ...)`
+- [state_machine.py:47](../../../workflow/src/wattleflow/concrete/state_machine.py#L47) — `self.name = name`
+- [state_machine.py:99](../../../workflow/src/wattleflow/concrete/state_machine.py#L99) — `self.name = getattr(inner, "name", ...)`
 
 Ovo je **odluka, ne samo popravak**: `StateMachine` traži instance-scoped ime, a DR-002 propisuje
 ime izvedeno iz tipa i neizmjenjivo.
@@ -119,12 +119,12 @@ ime izvedeno iz tipa i neizmjenjivo.
 
 | Mjesto | Problem |
 |---|---|
-| [document.py:214-221](src/wattleflow/concrete/document.py#L214) | `DocumentAdapter` zove `IAdapter.__init__(self, adaptee=adaptee)` — više ne postoji → `TypeError`; `self._adaptee` nikad nije postavljen; `adaptee` property neimplementiran |
-| [scheduler.py:51](src/wattleflow/concrete/scheduler.py#L51) | `IScheduler.__init__(self, *args, **kwargs)` → `object.__init__` odbija argumente |
-| [scheduler.py:30](src/wattleflow/concrete/scheduler.py#L30) | **`Scheduler` je izgubio singleton semantiku**; guard `if not hasattr(self, "_initialised")` je mrtav kod. Core docstring propisuje `class Scheduler(Wattleflow, IScheduler[Event], Singleton)` |
-| [orchestrator.py:61](src/wattleflow/concrete/orchestrator.py#L61) | `IEventSource` je sada `Generic[Event]` — treba parametrizirati |
-| [system.py:73](src/wattleflow/helpers/system.py#L73) | `IWattleflow.__init__(self)` radi, ali `ClassLoader` ostaje apstraktan |
-| [document.py:53](src/wattleflow/concrete/document.py#L53) | `Document(IAdaptee, ...)` — **ne nasljeđuje `IDocument`**; usto je `identifier` ispao iz core ugovora, a `Document` ga i dalje nudi |
+| [document.py:214-221](../../../workflow/src/wattleflow/concrete/document.py#L214) | `DocumentAdapter` zove `IAdapter.__init__(self, adaptee=adaptee)` — više ne postoji → `TypeError`; `self._adaptee` nikad nije postavljen; `adaptee` property neimplementiran |
+| [scheduler.py:51](../../../workflow/src/wattleflow/concrete/scheduler.py#L51) | `IScheduler.__init__(self, *args, **kwargs)` → `object.__init__` odbija argumente |
+| [scheduler.py:30](../../../workflow/src/wattleflow/concrete/scheduler.py#L30) | **`Scheduler` je izgubio singleton semantiku**; guard `if not hasattr(self, "_initialised")` je mrtav kod. Core docstring propisuje `class Scheduler(Wattleflow, IScheduler[Event], Singleton)` |
+| [orchestrator.py:61](../../../workflow/src/wattleflow/concrete/orchestrator.py#L61) | `IEventSource` je sada `Generic[Event]` — treba parametrizirati |
+| [system.py:73](../../../workflow/src/wattleflow/helpers/system.py#L73) | `IWattleflow.__init__(self)` radi, ali `ClassLoader` ostaje apstraktan |
+| [document.py:53](../../../workflow/src/wattleflow/concrete/document.py#L53) | `Document(IAdaptee, ...)` — **ne nasljeđuje `IDocument`**; usto je `identifier` ispao iz core ugovora, a `Document` ga i dalje nudi |
 
 ---
 
@@ -147,7 +147,7 @@ Puca kad se `wattleflow.helpers.config` uveze **prvi**. Istovremeno je **NFR-ORG
 
 ## 6. Packaging — release blocker za v0.0.0.86
 
-[MANIFEST.in](MANIFEST.in) je izgubio sve `recursive-include src/wattleflow/… *.py` retke.
+[MANIFEST.in](../../../workflow/MANIFEST.in) je izgubio sve `recursive-include src/wattleflow/… *.py` retke.
 Provjereno stvarnim buildom:
 
 ```
@@ -192,7 +192,7 @@ TypeError: Can't instantiate abstract class DependencyLocalityRule with abstract
 
 - `NomenclatureRule`, `DependencyLocalityRule`, `TypeVarRule`, `WemLint`, `RuleFactory`,
   `ImportGraphBuilder` — svi apstraktni na `name`
-- [PyFileIterator:186](tools/wem_lint.py#L186) nasljeđuje `IIterator[Path]` koji više nema `__next__`
+- [PyFileIterator:186](../../../workflow/tools/wem_lint.py#L186) nasljeđuje `IIterator[Path]` koji više nema `__next__`
   → treba `LazyIterator`
 
 Core je isti problem riješio lokalnim `WemComponent(IWattleflow)` mixinom, uz eksplicitno obrazloženje
@@ -211,7 +211,7 @@ da core tools **ne smiju** ovisiti o workflow distribuciji. Workflow lint smije 
 2. **Deklarirane slijepe točke.** `exclude_modules` → `R-CORE-EXC-01 INFO`.
    Workflow registry ima `blind_spots:` kao slobodan tekst; treba ga učiniti strojno emitiranim.
 3. **Vektorski izlaz bez agregatnog skora**, s eksplicitnom napomenom na nominalnu skalu
-   (izravno iz [ANALIZA.md](tools/ANALIZA.md) §3.4).
+   (izravno iz [ANALIZA.md](../Analiza.md) §3.4).
 4. **Verzioniranje kriterija.** `registry_version` + politika „promjena semantike pravila = minor".
    Workflow registry ima `registry_version: "0.2.0"` ali nema politiku.
 

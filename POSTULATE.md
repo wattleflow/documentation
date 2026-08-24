@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Verzija** | Draft v0.1 |
-| **Nadređeni dokumenti** | `PHILOSOPHY.,md` (v0.4), `METHODOLOGY.md` (v0.3) |
-| **Srodni registri** | `documentation/LITERATURE.md` (gdje piše), `documentation/dictionary.json` (što pojam znači) — ovaj registar bilježi **tvrdnje same** |
+| **Nadređeni dokumenti** | [`PHILOSOPHY.md`](PHILOSOPHY.md) (v0.4.1), [`METHODOLOGY.md`](METHODOLOGY.md) (v0.3.1) |
+| **Srodni registri** | [`LITERATURE.md`](LITERATURE.md) (gdje piše), [`dictionary.yaml`](dictionary.yaml) (što pojam znači) — ovaj registar bilježi **tvrdnje same** |
 | **Upravljanje** | postulat se dodaje, mijenja ili proglašava zastarjelim kroz DR; svaki nosi ključ reference ili oznaku [S] (vlastita tvrdnja koja se brani) |
 
 ## Svrha
@@ -17,6 +17,11 @@ raspravama i izgubi rodoslovlje, i da se tuđa misao neopaženo pretvori u
 „opće mjesto" bez atribucije.
 
 Format natuknice: **P-NN — Iskaz** / *Podrijetlo* / *Primjena* / `[ključ]`.
+
+`Analiza.md` u primjenama označava istraživački rad
+[`workflow/Analiza.md`](workflow/Analiza.md) — bibliografsku podlogu `[M]` i SEC
+zahtjeva. **Ovo je jedini primjerak registra**; zatečena kopija
+`workflow/hr/POSTULATI.md` (do P-20) povučena je 2026-08-24 (D-12).
 
 ---
 
@@ -47,7 +52,7 @@ analiza rastavlja, sinteza objašnjava.**
 sustav pojmova [49]; pionirska OR tradicija (prvi udžbenik operacijskih
 istraživanja: Churchman, Ackoff & Arnoff, 1957) [54].
 *Primjena:* argument publike dokumentacije (iz hrpe pojedinačnih zapisa ne
-može se izvesti integracijsko svojstvo); § 5 rada — particije i njihova
+može se izvesti integracijsko svojstvo); `Analiza.md` §5 — particije i njihova
 neslaganja kao interakcijska svojstva.
 `[49][54]`
 
@@ -66,7 +71,7 @@ regulira.**
 *Podrijetlo:* Ashby, kibernetika [30]; regulacija i povratna veza kao opći
 mehanizam: Wiener [37].
 *Primjena:* jedan dokumentacijski format za sedam publika krši zakon po
-definiciji (FILOZOFIJA, „Arhitektura kao obrazovni artefakt"); dimenzije
+definiciji (`PHILOSOPHY.md`, „Arhitektura kao obrazovni artefakt"); dimenzije
 vektorskog nalaza kao raznolikost instrumenta.
 `[30][37]`
 
@@ -76,7 +81,7 @@ vektorskog nalaza kao raznolikost instrumenta.
 kanalom može prenijeti, neovisno o značenju poruke.**
 *Podrijetlo:* Shannon 1948 [36].
 *Primjena:* granica formalizma — Shannon mjeri prijenos, ne značenje; zato
-semantika treba vlastite instrumente (P-07, P-08) i zato §3.3 rada
+semantika treba vlastite instrumente (P-07, P-08) i zato `Analiza.md` §3.3
 (nesumjerljivost) stoji.
 `[36]`
 
@@ -134,7 +139,7 @@ umjesto big-banga.
 **P-13 — Esencijalna složenost se ne uklanja, nego premješta; alat koji
 tvrdi da ju je uklonio mjeri njezino premještanje.**
 *Podrijetlo:* Brooks 1987 [29]; kibernetički oblik istog uvida: Ashby [30].
-*Primjena:* granice onoga što lint i indeksi smiju tvrditi (§3.2 rada);
+*Primjena:* granice onoga što lint i indeksi smiju tvrditi (`Analiza.md` §3.2);
 stupac „što alat ne može mjeriti".
 `[29][30]`
 
@@ -175,15 +180,15 @@ postulat citira.
 
 **P-17 [S] — Modularnost uvodi rizik istim potezom kojim daje korist:
 granica koja skriva odluku skriva i podrijetlo.**
-*Podrijetlo:* vlastita inverzija Parnasa (središnja teza rada, § 2).
+*Podrijetlo:* vlastita inverzija Parnasa (središnja teza, `Analiza.md` §2).
 *Primjena:* supply-chain analiza; particija povjerenja naspram
 arhitektonske particije.
-*Status:* hipoteza rada; brani se mjerenjima iz § 4–5.
+*Status:* hipoteza; brani se mjerenjima iz `Analiza.md` §4–5.
 
 **P-18 [S] — Povratna petlja testira samo ono što promatra unutar svoje
 latencije: signali s latencijom duljom od ciklusa strukturno su nevidljivi
 procesu, i to je specifikacija slijepe pjege, ne vrijednosni sud.**
-*Podrijetlo:* vlastita formulacija (zadatak 10), izgrađena na P-01 i P-10.
+*Podrijetlo:* vlastita formulacija, izgrađena na P-01 i P-10.
 *Primjena:* argument o sigurnosnim posljedicama procesa; opravdanje alata
 koji mjere ono što petlja ne vidi.
 *Status:* konceptualna; kandidat za operacionalizaciju (latencija klasa
@@ -200,7 +205,8 @@ kriterija.**
 ili se prema njemu verificira; drift prikaza ista je klasa kvara kao drift
 dokumentacije.**
 *Podrijetlo:* vlastita primjena semiotike (P-08) i ISO 42010 distinkcija.
-*Primjena:* pentada; pravilo za dijagrame; rjecnik.yaml → RJECNIK.md smjer.
+*Primjena:* pet kontroliranih vokabulara (D-12); pravilo za dijagrame;
+`dictionary.yaml` → `DICTIONARY.md` smjer.
 *Status:* usvojeno pravilo doktrine.
 
 **P-21 [S] — Konkatenacija nije kompozicija: spajanje bez ugovora
@@ -231,5 +237,6 @@ provedenim ugovorima granica naspram bez njih (H1, H2 signali).
    i put obrane; [S] bez puta obrane ne ulazi.
 3. Sukob postulata razrješava se eksplicitno (novi DR), nikad prešutnim
    biranjem u tekstu.
-4. Registar hrani PHILOSOPHY.,md (Znanstveni temelji), METHODOLOGY.md (§6)
-   i § 5 rada; ti dokumenti citiraju P-oznake gdje tvrdnju koriste.
+4. Registar hrani `PHILOSOPHY.md` (Znanstveni temelji), `METHODOLOGY.md` §5
+   (Znanstveni temelji) i `Analiza.md` §5; ti dokumenti citiraju P-oznake gdje
+   tvrdnju koriste.

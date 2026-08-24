@@ -2,13 +2,13 @@
 
 | | |
 |---|---|
-| **Status** | **Aktivan** (Prihvaćeno 2026-07-09, uz manje izmjene) — podložno reviziji do v1.0; predlaže **NFR-ORG-06** |
+| **Status** | **Aktivan** (Prihvaćeno 2026-07-09, uz manje izmjene) — podložno reviziji do v1.0; predlaže **`NFR-SEC-03`** |
 | **Datum** | 2026-07-09 |
 | **Verzija** | 2 (2026-07-28) — v1: 2026-07-09 |
 | **Realizira** | §7 Zero-trust (packaging), NFR-ORG-01 (Dependency Locality) preko granice distribucije |
-| **Predlaže** | NFR-ORG-06 (Distribution Locality & Supply-chain Validation) |
+| **Predlaže** | `NFR-SEC-03` — lokalnost distribucije i supply-chain (zapisan 2026-07-09 kao `NFR-ORG-06`, povučen i dekomponiran 2026-07-22) |
 | **Kontekst rada** | Prijelaz s monolitnog razvoja na više distribucija (`wattleflow`, `wattleflow-workflow`, `wattleflow-processors`, `wattleflow-cad`); povod: `helpers/converters/` (python-docx/PyMuPDF) gitignoran u workflow stablu |
-| **Sljedivost** | `PHILOSOPHY.md` (Zero-trust, Samoopisivost) · `METHODOLOGY.md` §5, §9 · `CLAUDE.md` §7, §2.6/§2.7 · `NFR.md` NFR-ORG-01 |
+| **Sljedivost** | `PHILOSOPHY.md` (Zero-trust, Samoopisivost) · `METHODOLOGY.md` §5, §9 · `CLAUDE.md` §7, §2.6/§2.7 · `03-NFRQ/` NFR-ORG-01 |
 
 ---
 
@@ -110,7 +110,7 @@ registar (izbjegava drift; Occam/DRY). Ključno ograničenje otkriveno u praksi:
 digest-scan (`FileDigest`) pokriva self-integritet i usput detektira namespace-sjenčanje
 (dvostruko vlasništvo, §4) — točno klasa buga koju standardni alati ne vide. „Distribucijski
 digest" (hash `RECORD`-a / SBOM korijen) stabilan je samo za izgrađene artefakte. Formalizirano
-kao **NFR-ORG-06 kriterij 5**. (Primjer epistemičkog rasta iz `PHILOSOPHY.,md` „Doktrina".)
+kao **NFR-ORG-06 kriterij 5**. (Primjer epistemičkog rasta iz `PHILOSOPHY.md` „Doktrina".)
 
 ### 2.5 Raspetljavanje zamršenih helpera (ports/adapters)
 
@@ -157,7 +157,7 @@ umjesto curiti ovisnost u core. Odluka je **per-helper** (ADR-vrijedna), ne meha
 
 ## 5. Status i otvorena pitanja
 
-- **NFR-ORG-06** (predložen ovim DR-om, **upisan u `NFR.md` 2026-07-09**; kriterij 5
+- **NFR-ORG-06** (predložen ovim DR-om, **upisan u `03-NFRQ/` 2026-07-09**; kriterij 5
   self-integritet preko `RECORD`-a dodan 2026-07-12): manifest postoji; closure ⊆ tier;
   nema dvostrukog vlasništva; SBOM prisutan po distribuciji; self-integritet preko `RECORD`-a
   (izgrađeno) / `wem_lint` digest-scan (dev). Verifikacija: `wem_lint` gate (a) + SBOM validator (b).

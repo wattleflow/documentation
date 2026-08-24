@@ -106,3 +106,9 @@ nepromjenjiva, zapis se revidira (`dictionary.yaml`: `odluka` / `zapis-odluke`).
 | v | datum | izmjena |
 |---|---|---|
 | 1 | 2026-07-28 | prvi zapis |
+
+> **Izmijenjeno (2026-08-24).** `DR-WFL-020` vraća vokabular koda iz bloka `code:` u
+> vlastiti kriterij po distribuciji (`tools/dictionary.json`); blok je uklonjen iz
+> `dictionary.yaml`. Argument protiv **dvaju izvora istine** ostaje na snazi i vodi
+> upravo na taj ishod: kopija koju lint ne čita zastarjela je do kriterija 0.8.0.
+> Ukidanje `naming_registry.yaml` (t.2) ostaje netaknuto.

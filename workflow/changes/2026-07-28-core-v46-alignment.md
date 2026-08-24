@@ -19,8 +19,8 @@ funkcionalnost koja je živjela u sučeljima ispala je i morala se nadomjestiti 
 
 Jedna izmjena nosi gotovo sve posljedice: `IWattleflow` je iz **konkretne** klase
 s `__init__`-om koji postavlja `self.name` postao **ABC s apstraktnim read-only
-`name`** ([DR-COR-001](../../../core/documentation/DR-COR-001.md),
-[DR-COR-002](../../../core/documentation/DR-COR-002.md)).
+`name`** ([DR-COR-001](../core/dr/DR-COR-001.md),
+[DR-COR-002](../core/dr/DR-COR-002.md)).
 
 ## 2. Mjereni učinak
 
@@ -115,7 +115,7 @@ projekta čiji artefakt mijenja**; odluka donesena u coreu koja *posljedično* m
 workflow ostaje `DR-COR`.
 
 Indeksi: [DR-WFL-INDEX.md](../dr/DR-WFL-INDEX.md),
-[DR-INDEX.md](../../../core/documentation/DR-INDEX.md).
+[DR-INDEX.md](../core/dr/DR-INDEX.md).
 
 Pretraga je zatekla **tri paralelne sheme u tri repozitorija**. Autoritativna je bila
 core serija (`DR-001…014` + indeks); ostalo su stariji nacrti istih odluka (v. §7 t.8).
@@ -136,9 +136,9 @@ core serija (`DR-001…014` + indeks); ostalo su stariji nacrti istih odluka (v.
 Oznaka je ostala samo na dva mjesta, oboje namjerno:
 
 * **migracijske tablice** (`bilo → sada`) — bez stare oznake tablica prestaje biti mapa;
-* **`PHILOSOPHY.,md`** — *„naslijeđeni paket `ADR-001…014` vodi se kao `DR-COR-001…014`"*.
+* **`PHILOSOPHY.md`** — *„naslijeđeni paket `ADR-001…014` vodi se kao `DR-COR-001…014`"*.
 
-Generičku **proznu** riječ „ADR" nisam dirao: `METHODOLOGIA.md` §412 izrijekom kaže da
+Generičku **proznu** riječ „ADR" nisam dirao: `METHODOLOGY.md` §412 izrijekom kaže da
 starije formulacije taj naziv namjerno zadržavaju jer opisuju stare verzije, a rječnik
 zabranjuje samo `ADR kao naziv novih zapisa`.
 
@@ -213,5 +213,5 @@ Povijest je i dalje **ručno vođena** — v. §7 t.7.
 
 FR/NFR: novi zahtjev za konformnost korijenskom ugovoru identiteta (37 klasa ga nije
 implementiralo, a nijedan postojeći NFR to ne pokriva). Oznaka nije dodijeljena —
-`NFR-ORG-06` je proturječan: `NFR.md` ga nema, `METHODOLOGY` §11 i `dictionary.yaml`
+`NFR-ORG-06` je proturječan: `03-NFRQ/` ga nema, `METHODOLOGY` §11 i `dictionary.yaml`
 ga spominju. Uskladiti prije dodjele.

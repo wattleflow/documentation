@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| **Status** | Djelomično provedeno (2026-08-22) — mehanizam radi, `BR-OSCAL-11` **proveden** kroz tri komponentne baze ([`FR-OSCAL-14.13`](../02-FRQ/FR-OSCAL-14.13-component-bases.md)); vrata su `strict=False` i **inertna** dok se ne odluči tko predaje politiku (§7 t.2) |
+| **Status** | Djelomično provedeno (2026-08-22) — mehanizam radi, `BR-OSCAL-11` **proveden** kroz tri komponentne baze ([`FR-OSCAL-14.13`](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md)); vrata su `strict=False` i **inertna** dok se ne odluči tko predaje politiku (§7 t.2) |
 | **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti |
 | **Razred** | Zahtjev visoke razine — nosi narativ i poslovna pravila; ne opisuje korake |
 | **Distribucija** | `wattleflow-processors` — OSCAL nije zaseban paket (provjereno 2026-08-22); uvozno zatvorenje sloja je `stdlib ∪ wattleflow`, bez third-party ovisnosti |
@@ -72,19 +72,19 @@ provedba pripada sloju koji komponente i gradi.
 
 | oznaka | predmet | dokument |
 |---|---|---|
-| `FR-OSCAL-14.1` | `Catalog` — agregat kontrola | [14.1](../02-FRQ/FR-OSCAL-14.1-catalog.md) ✅ |
-| `FR-OSCAL-14.2` | `Control` — jedinica po kojoj se sudi | [14.2](../02-FRQ/FR-OSCAL-14.2-control.md) ✅ |
-| `FR-OSCAL-14.3` | `Group` — hijerarhija kataloga | [14.3](../02-FRQ/FR-OSCAL-14.3-group.md) ✅ |
-| `FR-OSCAL-14.4` | `Profile` i selektori — baseline | [14.4](../02-FRQ/FR-OSCAL-14.4-profile.md) ✅ |
-| `FR-OSCAL-14.5` | vrijednosni objekti | [14.5](../02-FRQ/FR-OSCAL-14.5-value-objects.md) ✅ |
-| `FR-OSCAL-14.6` | baze modela i njihovi ugovori | [14.6](../02-FRQ/FR-OSCAL-14.6-bases.md) ✅ |
-| `FR-OSCAL-14.7` | učitavanje — granica prema disku | [14.7](../02-FRQ/FR-OSCAL-14.7-loaders.md) ✅ |
-| `FR-OSCAL-14.8` | registar — ravni indeks kontrola | [14.8](../02-FRQ/FR-OSCAL-14.8-registry.md) ✅ |
-| `FR-OSCAL-14.9` | razrješavanje profila u katalog | [14.9](../02-FRQ/FR-OSCAL-14.9-resolver.md) ✅ |
-| `FR-OSCAL-14.10` | crosswalk — prijevod taksonomije | [14.10](../02-FRQ/FR-OSCAL-14.10-crosswalk.md) ⚠ mapiranja bez sign-offa |
-| `FR-OSCAL-14.11` | gate `declared ⊆ baseline` | [14.11](../02-FRQ/FR-OSCAL-14.11-policy.md) ✅ |
-| `FR-OSCAL-14.12` | javna površina i vendorirani artefakti | [14.12](../02-FRQ/FR-OSCAL-14.12-package-surface.md) ⚠ verzija ima tri izvora |
-| `FR-OSCAL-14.13` | komponentne baze pod vratima (`wattleflow-processors`) | [14.13](../02-FRQ/FR-OSCAL-14.13-component-bases.md) ✅ |
+| `FR-OSCAL-14.1` | `Catalog` — agregat kontrola | [14.1](../02-FRQ/FRQ-OSCAL-14.1-catalog.md) ✅ |
+| `FR-OSCAL-14.2` | `Control` — jedinica po kojoj se sudi | [14.2](../02-FRQ/FRQ-OSCAL-14.2-control.md) ✅ |
+| `FR-OSCAL-14.3` | `Group` — hijerarhija kataloga | [14.3](../02-FRQ/FRQ-OSCAL-14.3-group.md) ✅ |
+| `FR-OSCAL-14.4` | `Profile` i selektori — baseline | [14.4](../02-FRQ/FRQ-OSCAL-14.4-profile.md) ✅ |
+| `FR-OSCAL-14.5` | vrijednosni objekti | [14.5](../02-FRQ/FRQ-OSCAL-14.5-value-objects.md) ✅ |
+| `FR-OSCAL-14.6` | baze modela i njihovi ugovori | [14.6](../02-FRQ/FRQ-OSCAL-14.6-bases.md) ✅ |
+| `FR-OSCAL-14.7` | učitavanje — granica prema disku | [14.7](../02-FRQ/FRQ-OSCAL-14.7-loaders.md) ✅ |
+| `FR-OSCAL-14.8` | registar — ravni indeks kontrola | [14.8](../02-FRQ/FRQ-OSCAL-14.8-registry.md) ✅ |
+| `FR-OSCAL-14.9` | razrješavanje profila u katalog | [14.9](../02-FRQ/FRQ-OSCAL-14.9-resolver.md) ✅ |
+| `FR-OSCAL-14.10` | crosswalk — prijevod taksonomije | [14.10](../02-FRQ/FRQ-OSCAL-14.10-crosswalk.md) ⚠ mapiranja bez sign-offa |
+| `FR-OSCAL-14.11` | gate `declared ⊆ baseline` | [14.11](../02-FRQ/FRQ-OSCAL-14.11-policy.md) ✅ |
+| `FR-OSCAL-14.12` | javna površina i vendorirani artefakti | [14.12](../02-FRQ/FRQ-OSCAL-14.12-package-surface.md) ⚠ verzija ima tri izvora |
+| `FR-OSCAL-14.13` | komponentne baze pod vratima (`wattleflow-processors`) | [14.13](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md) ✅ |
 
 **Izvan opsega, kandidati:** `component-definition` (deklaracija komponente kao OSCAL dokument, a
 ne kao ClassVar), `assessment-results` (rezultat provjere kao OSCAL dokument), katalozi izvan ASD
@@ -144,7 +144,7 @@ Odluke koje ovaj dokument ne donosi; svaka traži DR (D-03).
    zatečenim okruženjima; do tada `wattleflow.connections` se uvozi, ali razrješavanje imena
    (`__getattr__`) puca bez instalirane OSCAL distribucije.
 2. **`BR-OSCAL-11` je proveden, `BR-OSCAL-03` još nije.** Vrata nosi tri komponentne baze
-   ([`FR-OSCAL-14.13`](../02-FRQ/FR-OSCAL-14.13-component-bases.md)), a svih 15 komponenti koje
+   ([`FR-OSCAL-14.13`](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md)), a svih 15 komponenti koje
    deklariraju `OSCAL_CONTROLS` (12 konekcija — kafka nosi dvije — 2 drivera, 1 procesor) ih
    nasljeđuje, uz `strict=False`. Posljedica koju treba držati na oku: dok nitko ne predaje
    `oscal_policy=`, provjera se preskače — vrata su postavljena, ali ne provode ništa. Sa `strict=True` iste bi komponente pale pri prvom prijelazu, jer
@@ -162,7 +162,7 @@ Odluke koje ovaj dokument ne donosi; svaka traži DR (D-03).
    je i ostaje odbijena — vidi ograničenje uvoza ispod.
 
    ~~Nedostatak: propust se ne vidi ničim.~~ **Riješeno** —
-   [`FR-OSCAL-14.13`](../02-FRQ/FR-OSCAL-14.13-component-bases.md): tri baze u `wattleflow-processors`
+   [`FR-OSCAL-14.13`](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md): tri baze u `wattleflow-processors`
    (`OSCALConnection`, `OSCALDriver`, `OSCALProcessor`) nose dekorater, a konkretne klase ih
    nasljeđuju. Vrata su time svojstvo hijerarhije, a ne pamćenja; dekorater po klasi ostaje
    dostupan za slučaj izvan te tri uloge. Uz to, dekorater sada provjerava **prije** konstrukcije

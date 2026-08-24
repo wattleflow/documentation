@@ -2,13 +2,13 @@
 
 | | |
 |---|---|
-| **Status** | Prihvaćeno (implementirano) — predlaže **NFR-ORG-04** (Draft, čeka ratifikaciju u `NFR.md`) |
+| **Status** | Prihvaćeno (implementirano) — predlaže **NFR-ORG-04** (Draft, čeka ratifikaciju u `03-NFRQ/`) |
 | **Datum** | 2026-07-02 |
 | **Verzija** | 2 (2026-07-28) — v1: 2026-07-02 |
 | **Realizira** | NFR-ORG-01 (Dependency Locality), NFR-ORG-02 (Class Nomenclature) |
 | **Predlaže** | NFR-ORG-04 (Cross-cutting sposobnost = helper, ne domenski primitiv) |
 | **Kontekst rada** | `wattleflow-processors` — `EntityFileDocumentProcessor`, primjer `03_pii_complex_workflow` |
-| **Sljedivost** | `PHILOSOPHY.md` (Ontologija, Samoopisivost) · `METHODOLOGY.md` §5, §9 · `NFR.md` NFR-ORG-01/02 |
+| **Sljedivost** | `PHILOSOPHY.md` (Ontologija, Samoopisivost) · `METHODOLOGY.md` §5, §9 · `03-NFRQ/` NFR-ORG-01/02 |
 
 ---
 
@@ -121,7 +121,7 @@ je uklonjen.
 
 ## 5. Status i otvorena pitanja
 
-- **NFR-ORG-04** (predložen ovim DR-om): *„Cross-cutting sposobnost (routing, adresiranje) modelira se kao pozivljiva helper-sposobnost, ne kao domenski `Strategy` primitiv; smješta se po sposobnosti (NFR-ORG-01 t.4)."* — čeka unos u `NFR.md` + `tools/naming_registry.yaml` (dodati helper role-nouns po potrebi).
+- **NFR-ORG-04** (predložen ovim DR-om): *„Cross-cutting sposobnost (routing, adresiranje) modelira se kao pozivljiva helper-sposobnost, ne kao domenski `Strategy` primitiv; smješta se po sposobnosti (NFR-ORG-01 t.4)."* — čeka unos u `03-NFRQ/` + `tools/naming_registry.yaml` (dodati helper role-nouns po potrebi).
 - **Promocija u globalni `helpers/`** je već učinjena (modul je stdlib-only, sidren zajedničkim `route` vokabularom); revidirati per-class fan-in kad se pojavi drugi domenski potrošač.
 - **Matcher vs stvarni podaci:** klasifikacija je nad **imenom**; labela bira `regex`/`match`(glob)/`format{label}`. Prilagoditi stvarnoj konvenciji (npr. glob `2026-05*.pdf`).
 

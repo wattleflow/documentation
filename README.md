@@ -21,29 +21,37 @@ built to last and grow.
 
 
 ## Contents (volumes)
+
 | Volume | Title | Location |
 |---|---|---|
-| I | Foundations | [PHILOSOPHY](PHILOSOPHY.md), [DOCTRINE.md](DOCTRINE.md), [METHODOLOGY](METHODOLOGY.md), [POSTULATE.md](POSTULATE.md) |
+| I | Foundations | [PHILOSOPHY](PHILOSOPHY.md) · [DOCTRINE](DOCTRINE.md) · [METHODOLOGY](METHODOLOGY.md) · [POSTULATE](POSTULATE.md) · [LITERATURE](LITERATURE.md) |
 | II | Architectural Principles | *(planned)* |
-| III | Decision Records | core, oscal, processors, workflow *(active; name migration in progress, DR-016)* |
+| III | Decision Records | [`workflow/dr/`](workflow/dr/DR-WFL-INDEX.md) (WFL) · [`workflow/core/dr/`](workflow/core/dr/DR-INDEX.md) (COR) · [`04-DR/`](04-DR/) (PRC) *(active)* |
 | IV | System Design | *(planned)* |
-| V | Development Standards | FR.md, NFR.md *(in progress)* |
+| V | Development Standards | [`01-HLRQ/`](01-HLRQ/0-HLRQ-EN.md) · [`02-FRQ/`](02-FRQ/0-FRQ-EN.md) · [`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md) *(in progress)* |
 | VI | Quality Assurance | *(planned)* |
 | VII | AI-Assisted Software Engineering | *(planned)* |
 | VIII | Governance, Compliance and Information Science | *(planned)* |
 
-## Document index
-### Core documentation
-- [README.md](README.md)
-- [PHILOSOPHY.md](PHILOSOPHY.md)
-- [METHODOLOGY.md](METHODOLOGY.md)
-- [DOCTRINE.md](DOCTRINE.md)
-- [POSTULATE.md](POSTULATE.md)
-- [FR.md](FR.md)
-- [NFR.md](NFR.md)
-- [LITERATURE.md](LITERATURE.md)
-- [DICTIONARY.md](DICTIONARY.md)
-- [CLAUDE.md](CLAUDE.md)
-- [POLICY.md](POLICY.md)
-- [MANIFEST.in](MANIFEST.in)
+## Where things live
 
+| Layer | Artefact |
+|---|---|
+| Philosophy (umbrella) | [PHILOSOPHY.md](PHILOSOPHY.md) |
+| Norms (registry `D-01…D-17`) | [DOCTRINE.md](DOCTRINE.md) |
+| Claims (registry `P-01…P-21`) | [POSTULATE.md](POSTULATE.md) |
+| References (append-only, keys 1–64) | [LITERATURE.md](LITERATURE.md) |
+| Method (Volume I) | [METHODOLOGY.md](METHODOLOGY.md) · [`05-METHOD/`](05-METHOD/dqi.md) |
+| Policy | [CLAUDE.md](CLAUDE.md) (= `POLICY.md`) |
+| Discourse vocabulary | [dictionary.yaml](dictionary.yaml) → [DICTIONARY.md](DICTIONARY.md) |
+| Requirements | [`01-HLRQ/`](01-HLRQ/0-HLRQ-EN.md) · [`02-FRQ/`](02-FRQ/0-FRQ-EN.md) · [`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md) |
+| Analyses · change records | [`06-ANALYSIS/`](06-ANALYSIS/) · [`07-CHANGES/`](07-CHANGES/) |
+| Conformance snapshots | [`workflow/conformance/`](workflow/conformance/) |
+| Worklist (state of work, not norm) | [`workflow/TODO.md`](workflow/TODO.md) · [`workflow/DONE.md`](workflow/DONE.md) |
+
+**Language.** The source language is Croatian until v1.0 (`CLAUDE.md` §3.2); English editions
+that already exist before that point are a declared divergence, not an approved translation —
+see the note in `CLAUDE.md` §3.2.
+
+**Local repository.** Pushing to `origin` is deliberately disabled; only the UK English edition
+is published, at v1.0, as a separate deliberate act (`CLAUDE.md` §8).

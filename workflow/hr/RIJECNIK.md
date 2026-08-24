@@ -41,9 +41,9 @@ alternative, cijenu i temelje. Nepromjenjiva; kasnija odluka je nadomješta
 (`supersedes`), nikad ne prepisuje. `[čin | sve razine | 44][45]`
 
 **Zapis odluke (DR)** *(decision record)* — artefakt koji serijalizira
-odluku; trenutna pod-metoda evidencije (METHODOLOGY §8.1). Naslijeđeni naziv
-ADR zadržava se samo u povijesnim referencama; DR nosi polje `sloj` koje
-odluku smješta u kaskadu. `[artefakt | metoda | 44][46]`
+odluku; trenutna pod-metoda evidencije (METHODOLOGY §7.1). 
+DR nosi polje `sloj` koje odluku smješta u kaskadu.
+`[artefakt | metoda | 44][46]`
 
 **Politika** *(policy)* — normativno stanje na snazi: što *mora* vrijediti.
 Deontička je (može se prekršiti, pa se provodi); donosi je, mijenja i ukida
@@ -114,7 +114,7 @@ razdiobu nad budućim stanjima svijeta. `[svojstvo | metoda | 6]`
 
 **Konformna mjera** — mjera relativna na deklarirani kriterij: kaže „usklađeno
 s ovim skupom", ne „dobro po sebi"; promijeni kriterij — promijeni se broj.
-Suprotnost: deskriptivna mjera. `[svojstvo | metoda | METHODOLOGY §6.1]`
+Suprotnost: deskriptivna mjera. `[svojstvo | metoda | METHODOLOGY §5.1]`
 
 **Valjanost mjere** — status po protokolu V1–V6: reprezentacijski uvjet, tip
 skale, sadržajna pokrivenost, prediktivna valjanost, osjetljivost, erozija.
@@ -152,7 +152,7 @@ PHILOSOPHY.md; 32]`
 
 # Dio III — Artefakti i alati
 
-**FR / NFR** — funkcionalni / nefunkcionalni zahtjev (METHODOLOGY §5).
+**FR / NFR** — funkcionalni / nefunkcionalni zahtjev (METHODOLOGY §4).
 NFR je **primaran** (izveden iz ciljeva i načela; prethodi odlukama kao
 kriterij) ili **izveden** (generiran odlukom). `[artefakt | zahtjevi |
 ISO 29148; ISO 25010]`
@@ -163,11 +163,11 @@ odstupanja lint prijavljuje. `[artefakt/kriterij | metoda | FR.md | NFR.md]`
 
 **wem_lint** — alat konformnosti u dva izdanja (core: sloj sučelja; workflow:
 registar); vektorski izlaz, verzionirani kriterij, izgrađen na frameworku koji
-provjerava (samoreferentnost). `[alat | metoda | METHODOLOGY §3b]`
+provjerava (samoreferentnost). `[alat | metoda | METHODOLOGY §10]`
 
 **DQI** *(Data Quality Index)* — deklarirani zbirni indeks kvalitete podataka
 nad vektorom dimenzija (ISO 25012 / 8000-8); konforman, ne deskriptivan;
-primaran je vektor. `[artefakt | metoda | METHODOLOGY §3]`
+primaran je vektor. `[artefakt | metoda | METHODOLOGY §10]`
 
 **Wattleflow Core** — distribucija sučelja dizajn-paterna (čisti ugovori, bez
 politika, stdlib-only). **Wattleflow Workflow** — zero-trust rješenje za
@@ -184,7 +184,6 @@ podatkovne tokove građeno na Coreu; nosi konkretne politike (concrete/ sloj).
 | Akronim | Značenje | Napomena |
 |---|---|---|
 | ABS/STA/TYP/IMP/SFX/FAC/HDR/EXC | dimenzije wem_lint nalaza (apstraktnost, stanje, tipovi, uvozi, side-effecti, fasada, zaglavlja, izuzeća) | vektor konformnosti |
-| ADR | *architecture decision record* — naslijeđeni naziv za DR | v. Dio V, „ADR" |
 | AST | *abstract syntax tree* | statička analiza |
 | CIA | *confidentiality, integrity, availability* | tri različita grafa prijetnje |
 | DR | *decision record* — zapis odluke | zamjenjuje ADR |

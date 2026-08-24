@@ -9,7 +9,7 @@
 | **Odluka** | [`DR-PRC-001`](../04-DR/DR-PRC-001-model-access-boundary.md) — konekcija po pod-sustavu; dohvat je okidač knjižnice |
 | **Razred** | Zahtjev visoke razine — nosi narativ i poslovna pravila; ne opisuje korake |
 | **Distribucija** | `wattleflow-processors` — model runtime je third-party ovisnost (CLAUDE.md §7.4) |
-| **Djeca** | [`FR-CON-13.1`](../02-FRQ/FR-CON-13.1-huggingface-connection.md) · [`FR-CON-13.2`](../02-FRQ/FR-CON-13.2-remote-model-connection.md) · [`FR-DRV-13`](../02-FRQ/FR-DRV-13-llm-model.md) · `FR-PIP-13` (kandidat, §4) |
+| **Djeca** | [`FR-CON-13.1`](../02-FRQ/FRQ-CON-13.1-huggingface-connection.md) · [`FR-CON-13.2`](../02-FRQ/FRQ-CON-13.2-remote-model-connection.md) · [`FR-DRV-13`](../02-FRQ/FRQ-DRV-13-llm-model.md) · `FR-PIP-13` (kandidat, §4) |
 | **Podloga** | [parametri po dobavljaču](../06-ANALYSIS/2026-08-20-model-vendor-parameters.md) · [granica konekcija/driver](../06-ANALYSIS/2026-08-20-connection-driver-boundary.md) · [proxy vs HuggingFace](../06-ANALYSIS/2026-08-20-proxy-vs-huggingface-connection.md) (2026-08-20) |
 | **Sljedivost** | `NFR-ORG-04` (ontologija: `Connection`, `Driver`, `Pipeline`) · `NFR-SEC-03` (lokalnost distribucije, supply-chain) · `CLAUDE.md` §6.1, §7.4 · DR serije `DR-PRC` i `DR-WFL` — **nijedan zapis još nije otvoren** |
 
@@ -66,9 +66,9 @@ kao vokabular koda, ili zaseban registar funkcija) i tko ga održava.
 
 | oznaka | predmet | dokument |
 |---|---|---|
-| `FR-CON-13.1` | Konekcija prema **HuggingFace** pod-sustavu (cache + Hub); `offline` je način rada | [FR-CON-13.1](../02-FRQ/FR-CON-13.1-huggingface-connection.md) ✅ |
-| `FR-CON-13.2` | Ostali dobavljači (Anthropic, Bedrock, Vertex, Foundry) — **pisan po staroj osi**, čeka prepis po pod-sustavima | [FR-CON-13.2](../02-FRQ/FR-CON-13.2-remote-model-connection.md) |
-| `FR-DRV-13` | Driver nad konekcijom: `read` / `write` / `update` / `download` | [FR-DRV-13](../02-FRQ/FR-DRV-13-llm-model.md) |
+| `FR-CON-13.1` | Konekcija prema **HuggingFace** pod-sustavu (cache + Hub); `offline` je način rada | [FR-CON-13.1](../02-FRQ/FRQ-CON-13.1-huggingface-connection.md) ✅ |
+| `FR-CON-13.2` | Ostali dobavljači (Anthropic, Bedrock, Vertex, Foundry) — **pisan po staroj osi**, čeka prepis po pod-sustavima | [FR-CON-13.2](../02-FRQ/FRQ-CON-13.2-remote-model-connection.md) |
+| `FR-DRV-13` | Driver nad konekcijom: `read` / `write` / `update` / `download` | [FR-DRV-13](../02-FRQ/FRQ-DRV-13-llm-model.md) |
 | `FR-PIP-13` | Pipeline kao konzument usluge — kandidat, piše se kad se odluči kanal pipeline→driver (§7 t.2) | — |
 
 **Os podjele: pod-sustav, ne izloženost** ([`DR-PRC-001`](../04-DR/DR-PRC-001-model-access-boundary.md)).

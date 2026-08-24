@@ -1,5 +1,5 @@
 # WattleFlow Processors (Workflow Framework)
-![WattleFlow Logo](https://github.com/wattleflow/core/raw/default/src/wattleflow/logo/wattleflow.png)
+![WattleFlow Logo](https://raw.githubusercontent.com/wattleflow/core/default/src/wattleflow/logo/wattleflow.png)
 
 [![PyPI version](https://img.shields.io/pypi/v/wattleflow-processors.svg)](https://pypi.org/project/wattleflow-processors/)
 [![Python versions](https://img.shields.io/pypi/pyversions/wattleflow-processors.svg)](https://pypi.org/project/wattleflow-processors/)
@@ -19,7 +19,7 @@ reference flows that scale.
 | **Version**              | [![PyPI version](https://img.shields.io/pypi/v/wattleflow-processors.svg)](https://pypi.org/project/wattleflow-processors/) (latest release) |
 | **License**              | [![License](https://img.shields.io/pypi/l/wattleflow-processors.svg)](https://github.com/wattleflow-processors/core/blob/default/LICENSE) |
 | **Python Compatibility** | [![Python versions](https://img.shields.io/pypi/pyversions/wattleflow-processors.svg)](https://pypi.org/project/wattleflow-processors/)|
-| **Dependencies**         | [wattleflow-core](https://www.github.com/wattleflow/core.git), [wattleflow-workflow](https://www.github.com/wattleflow/workflow.git), [wattleflow-oscal](https://www.github.com/wattleflow/oscal.git) |
+| **Dependencies**         | [wattleflow-core](https://www.github.com/wattleflow/core.git), [wattleflow-workflow](https://www.github.com/wattleflow/workflow.git), `cryptography` |
 | **Size**                 | nimble                                                                  |
 | **Documentation**        | [Wattleflow **Documentation**](https://github.com/wattleflow/documentation.git) |
 

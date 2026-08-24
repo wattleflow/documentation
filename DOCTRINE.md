@@ -377,7 +377,9 @@ filozofiji, uklonjena).
 
 - Sloj: filozofija
 - Status: na-snazi
-- Izvor: kodifikacija v0.1; nazivlje `DR` umjesto `ADR` nosi `dictionary.yaml → viseznacnost-adr` i oba DR indeksa (2026-07-28), bez zasebnog zapisa
+- Izvor: kodifikacija v0.1. Nazivlje `DR` umjesto `ADR` (2026-07-28) nose
+  `dictionary.yaml → viseznacnost-adr` i oba DR indeksa, bez zasebnog zapisa
+  (§Bilješke t.3).
 
 **Iskaz**
 
@@ -403,7 +405,7 @@ Odluke bez zapisa = nalaz; kandidat nasljednik: graf odluka (RDF/PROV-O).
 
 - Sloj: policy
 - Status: na-snazi
-- Izvor: kodifikacija v0.1; presedan `DR-COR-013`
+- Izvor: kodifikacija v0.1
 
 **Iskaz**
 
@@ -416,7 +418,7 @@ petlji.
 
 - Postulati: P-01, P-10
 - Literatura: 22
-- Bilješka: presedan potpunog ciklusa: politika verzija Pythona (DR-013)
+- Bilješka: presedan potpunog ciklusa: politika verzija Pythona (`DR-COR-013`)
 
 **Provedba**
 

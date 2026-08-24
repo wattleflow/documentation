@@ -4,7 +4,7 @@
 |---|---|
 | **Status** | Aktivan (planiranje) |
 | **Datum** | 2026-07-03 |
-| **Veže se uz** | `DR-WFL-001` (odluka), `NFR-ORG-04` (`NFR.md`), memorija `routing-capability-dr` |
+| **Veže se uz** | `DR-WFL-001` (odluka), `NFR-ORG-04` (`03-NFRQ/`), memorija `routing-capability-dr` |
 | **Opseg** | dovršetak routing sposobnosti (`helpers/routing.py`, `helpers/files.py`) i njena integracija |
 | **Izvan opsega** | korekcije zatečenih `wem_lint` 9E/6W (zasebna zadaća); test-framework odluka |
 

@@ -2,13 +2,13 @@
 
 | | |
 |---|---|
-| **Status** | **Aktivan** (Prihvaćeno 2026-07-15) — mijenja `NFR-ORG-06` kriterij 1 |
+| **Status** | **Aktivan** (Prihvaćeno 2026-07-15) — mijenja `NFR-SEC-03` kriterij 1 |
 | **Datum** | 2026-07-15 |
 | **Verzija** | 2 (2026-07-28) — v1: 2026-07-15 |
 | **Realizira** | §7 Zero-trust (packaging), uz očuvanu funkcionalnost core konfiguracije |
-| **Mijenja** | `DR-WFL-002` §2.1 (Lokalnost distribucije), `NFR-ORG-06` kriterij 1 |
+| **Mijenja** | `DR-WFL-002` §2.1 (Lokalnost distribucije), `NFR-SEC-03` kriterij 1 (tada `NFR-ORG-06`) |
 | **Kontekst rada** | Dovršetak decouplinga `wattleflow-workflow` corea od third-partyja (2026-07-15) |
-| **Sljedivost** | `PHILOSOPHY.,md` (Zero-trust, Kritičko razmišljanje) · `METHODOLOGIA.md` §1, §6, §8 · `POLICY.md` §7 · `NFR.md` NFR-ORG-06 |
+| **Sljedivost** | `PHILOSOPHY.md` (Zero-trust, Kritičko razmišljanje) · `METHODOLOGY.md` §1, §6, §8 · `POLICY.md` §7 · [`NFR-SEC-03`](../../03-NFRQ/NFR-SEC-03-supply-chain-locality-EN.md) |
 
 ---
 
@@ -81,11 +81,11 @@ Razlika je epistemički provjerljiva, ne stvar prosudbe: **maskiraj paket i uvez
 
 * Svaka čuvana ovisnost nosi `# NOTE` uz `try/except` s razlogom i imenom fallback modula.
 * Fallback mora biti **verificiran testom maskiranja**, ne pretpostavljen. Test je
-  ponovljiv (`METHODOLOGIA.md` §1 t.2) i ulazi u lint/CI kad pipeline postoji.
-* `scope.core_libraries` u `naming_registry.yaml` **ne** dobiva `yaml`/`jsonschema`:
+  ponovljiv (`METHODOLOGY.md` §1 t.2) i ulazi u lint/CI kad pipeline postoji.
+* `scope.core_libraries` u kriteriju koda (`tools/dictionary.json`; tada `naming_registry.yaml`) **ne** dobiva `yaml`/`jsonschema`:
   oni nisu core biblioteke nego opcionalno ubrzanje. Allowlist ostaje minimalan.
 
-## 3. Načela i sljedivost (`METHODOLOGIA.md` §6)
+## 3. Načela i sljedivost (`METHODOLOGY.md` §6)
 
 | Načelo | Implikacija |
 |---|---|
@@ -93,7 +93,7 @@ Razlika je epistemički provjerljiva, ne stvar prosudbe: **maskiraj paket i uvez
 | Occamova britva | seljenje `config*` u processors rješava formalni prekršaj po cijenu gubitka nosivog mehanizma — složenije rješenje za isti sigurnosni ishod |
 | Information Hiding (Parnas) | `try/except` skriva izbor implementacije parsera iza jednog imena (`yaml`); potrošač ne zna koja grana je aktivna |
 | Open–Closed | dodavanje PyYAML mijenja performanse, ne ugovor |
-| Kritičko razmišljanje (`PHILOSOPHY.,md`) | pravilo se ne primjenjuje „po inerciji" — sukob slova i svrhe razrješava se **dokumentiranom revizijom**, ne tihim odstupanjem |
+| Kritičko razmišljanje (`PHILOSOPHY.md`) | pravilo se ne primjenjuje „po inerciji" — sukob slova i svrhe razrješava se **dokumentiranom revizijom**, ne tihim odstupanjem |
 
 Doktrinarno, ovaj DR je primjer pravila *„niži sloj ne nadjačava viši; svako odstupanje je
 izvod iz višeg sloja ili dokumentirana revizija tog sloja"*. Metoda (ORG-06 §2.1) revidirana
