@@ -53,14 +53,6 @@ Registri `HLRQ`/`FRQ`/`NFRQ` razlomljeni su na zapis po zahtjevu u korijenske ka
 `01-HLRQ/`, `02-FRQ/`, `03-NFRQ/`, po obrascu `kategorija-broj-opis-JEZIK.md` (vidi `DONE.md`).
 Ostaje:
 
-- [ ] **Obrisati stubove kad ih više nitko ne referira.** Reference su prevedene na nove
-  putanje 2026-08-24 (vidi `DONE.md`); stubovi `workflow/hr/{FR,NFR,METHODOLOGIA}.md` postoje
-  još samo zbog vanjskih repozitorija. Nekadašnja stavka:
-  `workflow/hr/NFR.md` i `workflow/hr/FR.md` više ne nose sadržaj nego **redirect-stub**, jer ih
-  još referira niz dokumenata (`CLAUDE.md`, `PHILOSOPHY.md`, `DR-WFL-001/002/003/007/013/018/019`,
-  `workflow/analysis/*`, `workflow/changes/*`, `01-HLRQ/HLRQ-13-llm-models.md`, …). Popis se
-  dobiva pretragom (`grep -rn "NFR\.md\|FR\.md"`), ne prepisuje ovamo (D-13). Tek nakon toga
-  stubovi se brišu.
 - [ ] **Razlamanje je izmjena registra → traži DR (D-03).** Zapis mora pokriti: obrazac imena
   (`kategorija-broj-opis-JEZIK.md`), preseljenje `Zajedničkih definicija` u `NFR-DEF-01`,
   povelje `[M]` u `NFR-DEF-02`, Dodatka A u `NFR-APX-01`, i **uvođenje EN izdanja prije v1.0**

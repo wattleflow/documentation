@@ -216,7 +216,7 @@ documentation/
     ├── changes/       zapisi usklađenja s core izdanjima
     ├── concrete/      nacrti uz concrete sloj
     ├── TODO.md / DONE.md  worklist (stanje rada, ne norma)
-    └── hr/            `FILOZOFIJA.md` + stubovi preseljenih registara
+    └── hr/            `FILOZOFIJA.md`, stariji nacrti odluka (`dr/`), arhive
 ```
 
 Uz njih, u **kodnom** repozitoriju: `tools/dictionary.json` (kontrolirani vokabular **koda**,
@@ -224,9 +224,9 @@ UK English — kriterij koji čita lint), `tools/messages.json` (prezentacija na
 `tools/wem_lint.py`.
 
 > **Razlamanje registara je zatečeno stanje, ne odobrena norma** (D-03): `FR.md` i `NFR.md`
-> razlomljeni su 2026-08-24 u `02-FRQ/` i `03-NFRQ/` bez DR zapisa. `workflow/hr/FR.md`,
-> `workflow/hr/NFR.md` i `workflow/hr/METHODOLOGIA.md` su stubovi dok se ulazne reference ne
-> prevedu; brisanje vodi `workflow/TODO.md`.
+> razlomljeni su 2026-08-24 u `02-FRQ/` i `03-NFRQ/` bez DR zapisa. Redirect-stubovi u
+> `workflow/hr/` uklonjeni su 2026-08-25 kad su im ulazne reference pale na nulu; povijest
+> sadržaja nosi git.
 
 **Pravila:**
 
