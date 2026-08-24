@@ -4,7 +4,6 @@
 
 **Verzija:** Draft v0.3.2  
 **Zadnja izmjena:** 2026-08-24  
-**Izvorni jezik:** hrvatski (jedini primjerak; `workflow/hr/METHODOLOGIA.md` je stub)  
 **Nadređeni dokument:** [PHILOSOPHY.md](PHILOSOPHY.md) — filozofija je kišobran; ova metodologija je iz nje izvedena  
 **Pratioci:** [NFR registar](03-NFRQ/0-NFRQ-EN.md), [DOCTRINE.md](DOCTRINE.md), [POSTULATE.md](POSTULATE.md), [dictionary.yaml](dictionary.yaml)
 

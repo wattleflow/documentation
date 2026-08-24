@@ -3,8 +3,8 @@
 # koda zivi u kriteriju po distribuciji (`tools/dictionary.json`), v. biljesku
 # na dnu (DR-WFL-020).
 # Treci registar kontroliranog vokabulara su reference -> LITERATURE.md.
-# RJECNIK.md je GENERIRANI PRIKAZ ovog registra (pravilo pentade: prikaz nije
-# izvor istine). CSV/JSON pogledi izvode se po potrebi.
+# DICTIONARY.md je GENERIRANI PRIKAZ ovog registra (D-13: prikaz nije izvor
+# istine). CSV/JSON pogledi izvode se po potrebi.
 #
 # Shema poravnata sa SKOS-om (W3C) radi buduceg RDF eksporta:
 #   term_hr -> skos:prefLabel@hr, term_en -> skos:prefLabel@en,
@@ -431,7 +431,7 @@ entries:
     definition: >
       Kontrolirani rjecnik diskursa; semioticki stabilizator ljudskog jezika
       doktrine, kao sto je registar imenovanja stabilizator koda. Izvor
-      istine je rjecnik.yaml; RJECNIK.md je generirani prikaz.
+      istine je dictionary.yaml; DICTIONARY.md je generirani prikaz.
     references: [38, 51]
     related: [registar-imenovanja, semanticka-entropija]
     status: usvojen

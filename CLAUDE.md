@@ -194,7 +194,7 @@ documentation/
 ├── DOCTRINE.md                registar normi (HR) — namjerno malen, dopunjuje se kasnije
 ├── POSTULATE.md               registar postulata P-01…P-21 (HR)
 ├── LITERATURE.md              konsolidirane reference, ključevi 1–64 (append-only)
-├── DICTIONARY.md   → workflow/hr/RIJECNIK.md   generirani prikaz rječnika (symlink)
+├── DICTIONARY.md              generirani prikaz rječnika (iz `dictionary.yaml`, D-13)
 ├── dictionary.yaml            rječnik diskursa (izvor istine, HR)
 ├── CLAUDE.md / POLICY.md      ovaj dokument (policy sloj; POLICY.md je symlink)
 │
@@ -216,7 +216,7 @@ documentation/
     ├── changes/       zapisi usklađenja s core izdanjima
     ├── concrete/      nacrti uz concrete sloj
     ├── TODO.md / DONE.md  worklist (stanje rada, ne norma)
-    └── hr/            izvorni HR tekstovi i stubovi preseljenih registara
+    └── hr/            `FILOZOFIJA.md` + stubovi preseljenih registara
 ```
 
 Uz njih, u **kodnom** repozitoriju: `tools/dictionary.json` (kontrolirani vokabular **koda**,
