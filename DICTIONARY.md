@@ -1,1 +1,0 @@
-workflow/hr/RIJECNIK.md
