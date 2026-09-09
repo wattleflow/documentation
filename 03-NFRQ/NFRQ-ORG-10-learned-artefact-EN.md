@@ -39,7 +39,7 @@ deterministic rule demonstrably cannot, and only while it carries its provenance
 6. **Opacity is declared, not hidden** (D-11). Every verdict a model produces is recorded together
    with the model identifier **and the deterministic evidence that was available** at the time, so
    a disputed verdict can be re-examined without the model.
-7. **Locality.** The artefact and its libraries belong to `wattleflow-processors`, which is
+7. **Locality.** The artefact and its libraries belong to `blackwattle`, which is
    already outside the zero-trust scope by declaration (`CLAUDE.md` §7.4) — so `scikit-learn`,
    `numpy` and `scipy` there are **not** a violation of `NFRQ-SEC-03`. No clean-core distribution
    may depend on them, directly or lazily.

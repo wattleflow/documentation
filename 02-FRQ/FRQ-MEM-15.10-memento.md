@@ -6,7 +6,7 @@
 | **Odluka** | [`DR-WFL-022`](../04-DR/DR-WFL-022-class-role-categories.md) — kategorija `MEM`; sam zahtjev nema vlastiti DR |
 | **Nadređeni zahtjev** | [`HLRQ-15`](../01-HLRQ/HLRQ-15-generic-layer.md) — narativ, `BR-15-01…BR-15-09`, zajednički ugovor generičke klase (§4) |
 | **Predmet** | `GenericMemento(Wattleflow, IMemento)` — nepromjenjiva snimka stanja |
-| **Sestrinski** | [`FRQ-PRC-15.3`](FRQ-PRC-15.3-processor.md) (jedini proizvođač i potrošač) · [`FRQ-PTN-15.13`](FRQ-PTN-15.13-state-machine.md) (stanje koje snimka nosi) |
+| **Sestrinski** | [`FRQ-PRC-15.3`](FRQ-PRC-15.3-processor.md) (jedini proizvođač i potrošač) · `FRQ-PTN-15.13` *(nenapisan)* (stanje koje snimka nosi) |
 | **Izvedba** | `workflow/src/wattleflow/concrete/memento.py` (75 linija) |
 
 ## 1. Predmet

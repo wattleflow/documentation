@@ -41,7 +41,7 @@ built to last and grow.
 | Norms (registry, 9 articles) | [DOCTRINE.md](DOCTRINE.md) |
 | Claims (registry `P-01…P-21`) | [POSTULATE.md](POSTULATE.md) |
 | References (append-only, keys 1–64) | [LITERATURE.md](LITERATURE.md) |
-| Method (Volume I) | [METHODOLOGY.md](METHODOLOGY.md) · [`05-METHOD/`](05-METHOD/dqi.md) |
+| Method (Volume I) | [METHODOLOGY.md](METHODOLOGY.md) · [`05-METHODS/`](05-METHODS/dqi.md) |
 | Policy | [CLAUDE.md](CLAUDE.md) (= `POLICY.md`) |
 | Discourse vocabulary | [dictionary.yaml](dictionary.yaml) → [DICTIONARY.md](DICTIONARY.md) |
 | Requirements | [`01-HLRQ/`](01-HLRQ/HLRQ-000-EN.md) · [`02-FRQ/`](02-FRQ/FRQ-000-EN.md) · [`03-NFRQ/`](03-NFRQ/NFRQ-000-EN.md) |
@@ -53,5 +53,15 @@ built to last and grow.
 that already exist before that point are a declared divergence, not an approved translation —
 see the note in `CLAUDE.md` §3.2.
 
-**Local repository.** Pushing to `origin` is deliberately disabled; only the UK English edition
-is published, at v1.0, as a separate deliberate act (`CLAUDE.md` §8).
+**What this published edition contains — and what it does not.** From 2026-09-09 the repository
+is published, superseding the earlier local-only lock (`CLAUDE.md` §8, still to be reconciled
+through a decision record). The published set is the **doctrinal layer and the requirement
+registers** only. Deliberately not published: the decision records (`04-DR/`), the dated analyses
+(`06-ANALYSIS/`), the alignment records (`07-CHANGES/`), the method documents (`05-METHODS/`) and
+the worklist.
+
+**Declared consequence (D-11).** Roughly 150 links in the published texts point into those
+unpublished trees — most of them to `04-DR/`, because a requirement entry cites the decision that
+governs it. Those links do not resolve here. This is stated rather than hidden: an unresolvable
+reference is a known cost of the publication scope, not an error in the text, and the traceability
+it records still holds in the full tree.

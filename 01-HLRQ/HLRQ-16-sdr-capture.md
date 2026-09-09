@@ -211,9 +211,13 @@ Odluke koje ovaj dokument **ne donosi**; svaka traži DR (D-03).
    oblik problema; SDR pada u isti razred i ne smije se odlučiti prešutno.
 4. **Protutlak.** Što se događa kad platno ne stigne primiti blok: odbaci najstariji, odbaci
    najnoviji, ili zaustavi prihvat. Odluka dira `concrete/` (`CLAUDE.md` §2.5) → serija `DR-WFL`.
-5. **Ime distribucije.** `CLAUDE.md` §1 i §7.4 govore o `wattleflow-processors`; distribucija u
-   ovom stablu zove se `blackwattle` (`pyproject.toml`, `name = "blackwattle"`). Razilaženje je
-   **nalaz** (D-02), ne rješava se u ovom tekstu.
+5. **Ime distribucije — razriješeno 2026-09-09.** Nalaz je glasio da `CLAUDE.md` §1 i §7.4
+   govore o `wattleflow-processors`, a distribucija u ovom stablu zove se `blackwattle`
+   (`pyproject.toml`, `name = "blackwattle"`). Razilaženje je zatvoreno provedbom
+   [`DR-PRC-002`](../04-DR/DR-PRC-002-blackwattle-rename.md) u proznom sloju: policy i registri
+   od tog datuma govore `blackwattle`. **Ostaje otvoreno pakiranje** — PyPI ime i
+   `pyproject.toml` kodnog stabla nisu obuhvaćeni tom odlukom (t.3), pa razilaženje teksta i
+   artefakta traje i vodi se u `workflow/TODO.md`.
 6. **Propisna granica prihvata (`BR-10`).** Što se smije primiti, zapisati i zadržati uređeno je
    izvan ovog registra (*Radiocommunications Act 1992*, *Telecommunications (Interception and
    Access) Act 1979*, *Privacy Act 1988* APP 3/APP 11 — usp.

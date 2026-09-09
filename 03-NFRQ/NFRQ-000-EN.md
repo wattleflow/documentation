@@ -91,7 +91,7 @@ tool and versioned separately (`tools/dictionary.json`); finding presentation is
 again separately versioned artefact (`tools/messages.json`, D-13).
 
 **The register is cross-distribution.** The same NFRs govern `wattleflow`,
-`wattleflow-workflow` and `wattleflow-processors`; only the **criterion** differs — each
+`wattleflow-workflow` and `blackwattle`; only the **criterion** differs — each
 distribution ships its own `tools/dictionary.json` with its own `rules[]` block and severities.
 No NFR today is owned by a single distribution.
 

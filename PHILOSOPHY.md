@@ -150,7 +150,7 @@ A measuring instrument corrodes, and does so quietly (P-10); versioning the crit
 *Refuted by:* a validity incident that the versioned system misses for longer than an unversioned benchmark, or findings from two criterion versions that cannot be reconciled by the declared notes.
 
 **H4-DQI is a candidate, not a register entry.** The data-quality index states its own
-hypothesis in [`05-METHOD/dqi.md`](05-METHOD/dqi.md) and declares there that it is not held
+hypothesis in [`05-METHODS/dqi.md`](05-METHODS/dqi.md) and declares there that it is not held
 here; until it is admitted through a DR it binds nothing (D-05, D-11).
 
 The list is open. A new doctrinal claim enters the document with its hypothesis — or with an explicit note that it is conceptual rather than empirical.

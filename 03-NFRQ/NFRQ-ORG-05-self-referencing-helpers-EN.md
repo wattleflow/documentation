@@ -53,7 +53,7 @@ Enforcement is a piecewise legacy migration. **The candidate list is derived by 
 transcribed into this text** (D-13, `CLAUDE.md` §9); its state is tracked in
 [`workflow/TODO.md`](../workflow/TODO.md). A separate form of the same rule — **private module
 functions with their module constants** — is closed in `wattleflow-workflow` and
-`wattleflow-processors`; the remainder is `wattleflow-cad`.
+`blackwattle`; the remainder is `wattleflow-cad`.
 
 Constants in `constants/filetype.py` deliberately stay at module level: inside an `Enum` body
 they would become enum members.

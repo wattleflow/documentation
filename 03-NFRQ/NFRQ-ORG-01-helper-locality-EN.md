@@ -52,7 +52,7 @@ distribution is not in the same `--src`. Therefore:
   distributions;
 * **the report shape is a property of the distribution**: where the shelf serves foreign
   consumers (`wattleflow-workflow`) the criterion is stated as **a single statistic**; where the
-  shelf and its consumers ship together (`wattleflow-processors`) an unused module is a
+  shelf and its consumers ship together (`blackwattle`) an unused module is a
   **per-module finding**;
 * **fan-in is not proof of belonging.** A cross-cutting capability
   ([`NFRQ-ORG-04`](NFRQ-ORG-04-crosscutting-capability-EN.md)) and a module implementing a contract

@@ -108,7 +108,7 @@ događaje; `IEvent` nema izvedbu u stablu, pa bi takva tipizacija bila aspiracij
 
 **Granica distribucije (§7.1):** sve lijevo od odredišta uvozi samo stdlib i `wattleflow`, pa
 ostaje u clean coreu. Dva odredišta imenuju Prometheus i Grafana drivere, pa žive u
-`wattleflow-processors` — deklariranoj iznimci (§7.4).
+`blackwattle` — deklariranoj iznimci (§7.4).
 
 ## 8. Rezultat — objavljeni skup
 
@@ -171,7 +171,7 @@ nije provjereno pri istodobnosti ni rekurziji.
 | `NFRQ-OBS-04` | razdioba umjesto točke; oznake kao podgrupe; ograničena kardinalnost; deklariran `scope` |
 | `NFRQ-DEF-02` | svaka mjera je dijagnostička; promocija u vrata traži DR |
 | `NFRQ-OBS-03` | kolektor ne emitira po stavci; izvještaj nosi ishodne brojače na granici prolaza |
-| `NFRQ-SEC-03` | Prometheus/Grafana driveri pripadaju `wattleflow-processors` (§7.4 iznimka) |
+| `NFRQ-SEC-03` | Prometheus/Grafana driveri pripadaju `blackwattle` (§7.4 iznimka) |
 | `NFRQ-ORG-01` | kolektor je sposobnost dviju domena → dijeljeni helper, ne domenski primitiv |
 
 ## 12. Otvoreno

@@ -9,9 +9,9 @@
 | **Status** | Djelomično provedeno (2026-08-22) — mehanizam radi, `BR-OSCAL-11` **proveden** kroz tri komponentne baze ([`FRQ-OSCAL-14.13`](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md)); vrata su `strict=False` i **inertna** dok se ne odluči tko predaje politiku (§7 t.2) |
 | **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti |
 | **Razred** | Zahtjev visoke razine — nosi narativ i poslovna pravila; ne opisuje korake |
-| **Distribucija** | `wattleflow-processors` — OSCAL nije zaseban paket (provjereno 2026-08-22); uvozno zatvorenje sloja je `stdlib ∪ wattleflow`, bez third-party ovisnosti |
+| **Distribucija** | `blackwattle` — OSCAL nije zaseban paket (provjereno 2026-08-22); uvozno zatvorenje sloja je `stdlib ∪ wattleflow`, bez third-party ovisnosti |
 | **Djeca** | trinaest zapisa `FRQ-OSCAL-14.1…14.13` — §4 |
-| **Podloga** | [pregled zapisa](../processors/OSCAL.md) · `CLAUDE.md` §6.1 (mjesto provedbe) · `HLRQ-13` §6 (prvi potrošač) |
+| **Podloga** | [pregled zapisa](../blackwattle/OSCAL.md) · `CLAUDE.md` §6.1 (mjesto provedbe) · `HLRQ-13` §6 (prvi potrošač) |
 | **Sljedivost** | `NFRQ-SEC-01`…`NFRQ-SEC-06` (§6) · `NFRQ-ORG-04` (ne uvodi se primitiv) · `NFRQ-ORG-05`, `NFRQ-ORG-08` |
 
 ## 1. Narativ
@@ -34,7 +34,7 @@ prijevod taksonomije i gate su izvedeni i pokriveni zapisima `FRQ-OSCAL-14.1…1
 Isporučeni ASD ISM katalog nosi **1130 kontrola u 564 grupe**; tri E8 baselinea biraju 
 **46 / 87 / 123** kontrole.
 
-**Provedba**: `wattleflow` framework kompoenente, poput `wattleflow-processors` ima 
+**Provedba**: `wattleflow` framework kompoenente, poput `blackwattle` ima 
 **module s deklarinim** `OSCAL_CONTROLS` (to su konekcije, driveri i procesori).
 Svaka komponenta mora **primjenjivati dekorater** — trojka  
 (`connections/`, `drivers/`, `processors/`). 
@@ -84,7 +84,7 @@ provedba pripada sloju koji komponente i gradi.
 | `FRQ-OSCAL-14.10` | crosswalk — prijevod taksonomije | [14.10](../02-FRQ/FRQ-OSCAL-14.10-crosswalk.md) ⚠ mapiranja bez sign-offa |
 | `FRQ-OSCAL-14.11` | gate `declared ⊆ baseline` | [14.11](../02-FRQ/FRQ-OSCAL-14.11-policy.md) ✅ |
 | `FRQ-OSCAL-14.12` | javna površina i vendorirani artefakti | [14.12](../02-FRQ/FRQ-OSCAL-14.12-package-surface.md) ⚠ verzija ima tri izvora |
-| `FRQ-OSCAL-14.13` | komponentne baze pod vratima (`wattleflow-processors`) | [14.13](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md) ✅ |
+| `FRQ-OSCAL-14.13` | komponentne baze pod vratima (`blackwattle`) | [14.13](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md) ✅ |
 
 **Izvan opsega, kandidati:** `component-definition` (deklaracija komponente kao OSCAL dokument, a
 ne kao ClassVar), `assessment-results` (rezultat provjere kao OSCAL dokument), katalozi izvan ASD
@@ -138,7 +138,7 @@ mjeri (§7 t.4).
 Odluke koje ovaj dokument ne donosi; svaka traži DR (D-03).
 
 1. ~~Nedeklarirana ovisnost.~~ **Otpalo 2026-08-22.** OSCAL sloj je vendiran u
-   `wattleflow-processors`, pa ovisnosti o zasebnoj distribuciji nema — ni ovdje ni u jezgri.
+   `blackwattle`, pa ovisnosti o zasebnoj distribuciji nema — ni ovdje ni u jezgri.
    Uvoz ostaje eager — `wattleflow.oscal` je unutar tiera `stdlib ∪ wattleflow`, pa ne krši
    `NFRQ-SEC-03`. **Preostaje operativno:** izdanje workflowa s novom ovisnošću i instalacija u
    zatečenim okruženjima; do tada `wattleflow.connections` se uvozi, ali razrješavanje imena
@@ -162,7 +162,7 @@ Odluke koje ovaj dokument ne donosi; svaka traži DR (D-03).
    je i ostaje odbijena — vidi ograničenje uvoza ispod.
 
    ~~Nedostatak: propust se ne vidi ničim.~~ **Riješeno** —
-   [`FRQ-OSCAL-14.13`](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md): tri baze u `wattleflow-processors`
+   [`FRQ-OSCAL-14.13`](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md): tri baze u `blackwattle`
    (`OSCALConnection`, `OSCALDriver`, `OSCALProcessor`) nose dekorater, a konkretne klase ih
    nasljeđuju. Vrata su time svojstvo hijerarhije, a ne pamćenja; dekorater po klasi ostaje
    dostupan za slučaj izvan te tri uloge. Uz to, dekorater sada provjerava **prije** konstrukcije
@@ -224,7 +224,7 @@ Odluke koje ovaj dokument ne donosi; svaka traži DR (D-03).
 
 ## 8. Svjedočanstvo
 
-Alat: skripte `fr_evidence.py`, `prune_oracle.py`, `harness.py` (radno okruženje), `grep` nad stablom `wattleflow-processors`; kriterij: §8 svakog
+Alat: skripte `fr_evidence.py`, `prune_oracle.py`, `harness.py` (radno okruženje), `grep` nad stablom `blackwattle`; kriterij: §8 svakog
 zapisa `FRQ-OSCAL-14.*`; platforma: CPython 3.11.15 (Linux/WSL2), `wattleflow/oscal` radno stablo
 2026-08-21, ASD ISM izdanje 2026-03-24.
 

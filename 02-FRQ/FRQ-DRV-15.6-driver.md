@@ -142,7 +142,7 @@ drivera otvara samo one koje koristi.
 | 9 | `command grep -c '@abstractmethod' concrete/driver.py` | **nula** — hookovi su namjerno nedeklarirani |
 | 10 | pregled komentara | `# stvarni driver` uz `self._driver` |
 
-**Dopunska mjera (k.9).** Svih **20** drivera u `wattleflow-processors` implementira sve četiri
+**Dopunska mjera (k.9).** Svih **20** drivera u `blackwattle` implementira sve četiri
 metode i `metadata()` — disciplina danas drži. To je stanje, ne jamstvo.
 
 **Trojka reproducibilnosti (D-10):** alat — čitanje koda i `command grep`; kriterij — §8 gore;

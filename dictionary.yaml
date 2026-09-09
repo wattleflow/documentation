@@ -671,7 +671,7 @@ acronyms:
   - {id: FRQ,  expansion: "functional requirement", note: "registar 02-FRQ/; oznaka FRQ-<KAT>-NN[.M] (preimenovano iz FR 2026-08-27, bez DR zapisa)"}
   - {id: NMI,  expansion: "normalized mutual information", references: [20]}
   - {id: ORG,  expansion: "kategorija organizacijskih NFR-ova (NFRQ-ORG-NN)"}
-  - {id: OSCAL, expansion: "Open Security Controls Assessment Language (NIST)", note: "ujedno kategorija zahtjeva za OSCAL sloj u wattleflow-processors (FRQ-OSCAL-NN.M); DR-WFL-013"}
+  - {id: OSCAL, expansion: "Open Security Controls Assessment Language (NIST)", note: "ujedno kategorija zahtjeva za OSCAL sloj u blackwattle (FRQ-OSCAL-NN.M); DR-WFL-013"}
   - {id: PDSA, expansion: "plan-do-study-act (Shewhart/Deming)", references: [47, 48]}
   - {id: SBOM, expansion: "software bill of materials", note: "SPDX/CycloneDX; NFRQ-SEC-03"}
   - {id: SBVR, expansion: "Semantics of Business Vocabulary and Rules (OMG)"}

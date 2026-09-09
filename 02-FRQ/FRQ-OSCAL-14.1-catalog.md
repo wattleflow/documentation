@@ -10,7 +10,7 @@
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `Catalog(OSCALElement, ISyncAggregate[Control])` — nepromjenjiv prikaz OSCAL kataloga i agregat kontrola |
 | **Sestrinski** | `Control`, `Group`, `Profile`, loaderi, registar, resolver, crosswalk, policy — zapisi slijede, oznake se dodjeljuju redom |
-| **Izvedba** | `src/wattleflow/oscal/models.py` u `wattleflow-processors` |
+| **Izvedba** | `src/wattleflow/oscal/models.py` u `blackwattle` |
 
 ## 1. Predmet
 
@@ -143,7 +143,7 @@ provjeravaju, a ovaj paket je mehanizam provjere, ne njezin subjekt.
    sposobnosti je `14`, djeca nose oblik `FRQ-OSCAL-14.M`. Preostaje da razred `HLRQ` sam nije u
    vokabularu (`CLAUDE.md` §3.6) — vrijedi za `HLRQ-14` kao i za `HLRQ-13`.
 2. ~~**`CLAUDE.md` §6.1 tvrdi da OSCAL paket nije deployan.**~~ **Otpalo 2026-08-22:** OSCAL
-   više nije zaseban paket nego je vendiran u `wattleflow-processors`; §6.1 je usklađen.
+   više nije zaseban paket nego je vendiran u `blackwattle`; §6.1 je usklađen.
 3. **Katalog ne provjerava jedinstvenost `control-id`.** Duplikat unutar **jednog** kataloga
    prolazi nezapažen; registar ga vidi tek preko pravila „kasniji pobjeđuje". Je li to kvar
    kataloga ili prihvaćeno ponašanje — nije odlučeno.

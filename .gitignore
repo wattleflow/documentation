@@ -5,45 +5,43 @@
 # because D-03 requires a register to change through a decision record and
 # D-11 forbids leaving that gap undeclared.
 #
-# Publication is a separate, deliberate act. Push to `origin` is disabled
-# (`git remote set-url --push origin DISABLED-local-only-repository`); the
-# Croatian texts stay on this machine until the UK English edition exists at
-# v1.0, and only that edition is meant to reach the public repository.
+# Publication is a separate, deliberate act. Push to `origin` was enabled on
+# 2026-09-09 by the maintainer's decision, superseding the earlier local-only
+# lock; the Croatian texts are therefore published before the UK English
+# edition of v1.0. That reverses `CLAUDE.md` §3.2 and §8 and was taken without
+# a decision record — carried as a finding in `workflow/TODO.md` (D-03).
 #
 # Ignore build artefacts and tooling state only — never a document.
 
-04-DR/
-05-METHOD/
-06-ANALYSIS/
-07-CHANGES/
-
-processors/CL*.md
-workflow/
-
-# workflow/analysis
-# workflow/changes
-# workflow/concrete
-# workflow/conformance
-# workflow/core
-# workflow/D*.md
-# workflow/O*.md
-# workflow/T*.md
-
-
+# --- Build artefacts and caches -------------------------------------------
 __pycache__/
 *.pyc
 build/
 dist/
+.ruff_cache/
 
+# --- Editor and CI state ---------------------------------------------------
 .github
 .vscode
+.claude
 
+# --- Paths that are not content -------------------------------------------
 # Symlink to a shared Makefile outside this repository — a path, not content.
 Makefile
-Manifest.in
 
-*.yaml
+# --- Superseded drafts kept on disk, not in history ------------------------
 *.bak
-CLAUDE.md
 *.superseeded
-.gitignorekao 
+# --- Ne objavljuje se: odluke, analize, zapisi uskladenja, worklist, nacrti ---
+# Objavljuje se samo doktrinarni sloj i registri zahtjeva (odluka 2026-09-09).
+# Posljedica je deklarirana: objavljeni tekstovi citiraju 04-DR/ i 06-ANALYSIS/,
+# koji citatelju objavljenog izdanja nisu dostupni — nalaz u workflow/TODO.md.
+04-DR/
+05-METHODS/
+06-ANALYSIS/
+07-CHANGES/
+workflow/analysis/
+workflow/DONE.md
+workflow/TODO.md
+workflow/hr/
+workflow/OLD-TODO.md

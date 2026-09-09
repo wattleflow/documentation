@@ -214,7 +214,7 @@ inerciji — usvajanje je epistemička prosudba i bilježi se.
 | Python PEP (osob. PEP 8) | stil jezika i konvencije imenovanja | samoopisivost (§8) |
 | ISO/IEC/IEEE 42010 | opis arhitekture — gledišta i interesi | arhitektonsku dokumentaciju |
 | ISO/IEC 25010 | model kvalitete proizvoda — sidro za NFR | NFR registar ([`03-NFRQ/`](03-NFRQ/NFRQ-000-EN.md)) |
-| ISO/IEC 25012 | model kvalitete podataka | DQI dimenzije ([`05-METHOD/dqi.md`](05-METHOD/dqi.md)) |
+| ISO/IEC 25012 | model kvalitete podataka | DQI dimenzije ([`05-METHODS/dqi.md`](05-METHODS/dqi.md)) |
 | ISO 8000-8 / 8000-61 | mjerenje i procesni model kvalitete podataka | DQI formula i kontrolne točke (isto) |
 | ISO/IEC 12207 | procesi životnog ciklusa softvera | proces razvoja |
 | ISO/IEC/IEEE 29148 | inženjerstvo zahtjeva | ontologija zahtjeva (§4) |

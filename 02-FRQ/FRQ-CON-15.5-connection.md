@@ -6,7 +6,7 @@
 | **Odluka** | [`DR-WFL-022`](../04-DR/DR-WFL-022-class-role-categories.md) — kategorija `CON`; sam zahtjev nema vlastiti DR |
 | **Nadređeni zahtjev** | [`HLRQ-15`](../01-HLRQ/HLRQ-15-generic-layer.md) — narativ, `BR-15-01…BR-15-09`, zajednički ugovor generičke klase (§4) |
 | **Predmet** | `GenericConnection(ConnectionObserverInterface, Generic[Connection], ABC)` — pristup vanjskom sustavu; uz njega `ConnectionObserverInterface`, `ConnectionState`, `ConnectionAction`, `TRANSITIONS` |
-| **Sestrinski** | [`FRQ-DRV-15.6`](FRQ-DRV-15.6-driver.md) (radi kroz konekciju) · [`FRQ-CON-13.1`](FRQ-CON-13.1-huggingface.md) (specijalizacija u processorsu) · [`FRQ-PTN-15.14`](FRQ-PTN-15.14-managers.md) (`ConnectionManager`) |
+| **Sestrinski** | [`FRQ-DRV-15.6`](FRQ-DRV-15.6-driver.md) (radi kroz konekciju) · [`FRQ-CON-13.1`](FRQ-CON-13.1-huggingface.md) (specijalizacija u processorsu) · `FRQ-PTN-15.14` *(nenapisan)* (`ConnectionManager`) |
 | **Izvedba** | `workflow/src/wattleflow/concrete/connection.py` (430 linija) |
 
 ## 1. Predmet

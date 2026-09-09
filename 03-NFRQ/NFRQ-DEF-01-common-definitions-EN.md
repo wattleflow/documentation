@@ -35,7 +35,7 @@ go through an explicit submodule, never an aggregate (`CLAUDE.md` §2.7 item 4).
 ## 3. The zero-trust boundary
 
 A shared helper that depends on a third-party package (e.g. OCR → `pytesseract`) **must not**
-enter the clean-core `helpers/`; it belongs to `wattleflow-processors` and loads lazily.
+enter the clean-core `helpers/`; it belongs to `blackwattle` and loads lazily.
 Promotion to "shared" respects the zero-trust boundary — see
 [`NFRQ-SEC-03`](NFRQ-SEC-03-supply-chain-locality-EN.md) and `CLAUDE.md` §7.4.
 

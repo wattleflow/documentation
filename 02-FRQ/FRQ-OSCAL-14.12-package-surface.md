@@ -10,7 +10,7 @@
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `wattleflow/oscal/__init__.py`, `_version.py`, `resources/`, `MANIFEST.in`, `pyproject.toml` |
 | **Sestrinski** | svi `FRQ-OSCAL-14.*` — ovaj zapis kaže **što od toga vidi vanjski svijet** |
-| **Izvedba** | paket `wattleflow.oscal` u `wattleflow-processors` |
+| **Izvedba** | paket `wattleflow.oscal` u `blackwattle` |
 
 ## 1. Predmet
 

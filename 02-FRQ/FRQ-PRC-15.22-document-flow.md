@@ -147,16 +147,17 @@ aktivnosti; tko koga poziva i s čime nose dijagrami interakcije.
 | 9 | `command grep -rn "processor\.driver" src/wattleflow/pipelines/` | `pipelines/nlp/entities.py:87` — `processor.driver.read(table="entitet")`; mehanizam je u upotrebi |
 | 10 | `command grep -n "processor=caller" src/wattleflow/blackboards/*.py` | sva četiri blackboarda predaju `processor=caller` create strategiji |
 | — | `plantuml -tpng` nad sva tri `.puml` (2026-09-04) | sva tri se renderiraju bez greške i pregledana su |
-| — | isto, nakon izmjene dijagrama pohrane (2026-09-09) | **nije izvedeno — PlantUML nije dostupan na ovoj platformi.** Provjerena je samo struktura (`@startuml`/`@enduml`, 5 blokova ↔ 5 `end`, 4 `note` ↔ 4 `end note`, `activate`/`deactivate` u ravnoteži za svih 8 sudionika). Renderiranje ostaje **nepokrivena tvrdnja** (D-11) |
+| — | isto, nakon izmjene dijagrama pohrane (2026-09-09) | **izvedeno.** PlantUML 1.2025.4 (lokalni jar, `-tpng -Djava.awt.headless=true`) renderira svih 9 `.puml` datoteka u `02-FRQ/` bez greške; dijagram pohrane je i **pregledan** — obje audit oznake stoje na očekivanom mjestu: `DEBUG Transform/Started` uz korak 3 (pipeline) i `INFO Processed` uz korak 34 (procesor), iza `flush_per_cycle` bloka |
 
-**Trojka reproducibilnosti (D-10):** alat — čitanje koda, `command grep`, PlantUML 1.2025 (`-tpng`,
-samo u prolazu 2026-09-04); kriterij — §8 gore; platforma — radna stabla `workflow` i `processors`
-2026-09-04, dopuna nad `workflow` i `blackwattle` 2026-09-09, CPython 3.11 (Linux/WSL2).
-**Mjereno stablo:** `concrete/{processor,pipeline,repository,workflow}.py`, `blackboards/small.py`,
-`strategies/documents/{file,pdf,mail}.py`.
-**Slijepe pjege (D-11):** (1) nijedan kriterij nije pokriven testom niti lintom — sve je pregled
-koda; (2) izmjena dijagrama iz 2026-09-09 nije renderirana jer PlantUML na toj platformi nije
-dostupan.
+**Trojka reproducibilnosti (D-10):** alat — čitanje koda, `command grep`, PlantUML 1.2025.4
+(`-tpng`, lokalni jar, OpenJDK 17); kriterij — §8 gore; platforma — radna stabla `workflow` i
+`blackwattle` 2026-09-09, CPython 3.11.15 (Linux/WSL2). **Mjereno stablo:**
+`concrete/{processor,pipeline,repository,workflow}.py`, `blackboards/small.py`,
+`strategies/documents/{file,pdf,mail}.py`, `02-FRQ/*.puml`.
+**Slijepa pjega (D-11):** nijedan kriterij nije pokriven testom niti lintom — sve je pregled koda
+i pregled rendera. Generirane slike **ne žive uz izvor** u `02-FRQ/`, protivno §3.1 („izvor `.puml`
++ generirana slika"); vrijedi za svih devet dijagrama registra, ne samo za ovaj — vidi
+`workflow/TODO.md`.
 
 ## 10. Nefunkcionalni zahtjevi
 

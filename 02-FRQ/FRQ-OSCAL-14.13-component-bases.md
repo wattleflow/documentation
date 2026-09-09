@@ -10,7 +10,7 @@
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `OSCALConnection`, `OSCALDriver`, `OSCALProcessor` |
 | **Sestrinski** | [`14.11`](FRQ-OSCAL-14.11-policy.md) vrata i politika |
-| **Izvedba** | `wattleflow-processors`: `connections/oscal.py`, `drivers/oscal.py`, `processors/oscal.py` |
+| **Izvedba** | `blackwattle`: `connections/oscal.py`, `drivers/oscal.py`, `processors/oscal.py` |
 
 ## 1. Predmet
 
@@ -129,7 +129,7 @@ platforma = Python 3.11.15, Linux (WSL2), radna stabla `processors` / `workflow`
    `DR-WFL-014`.
 2. **Kategorija vs distribucija.** [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
    t.2 veže kategoriju `OSCAL` uz distribuciju `wattleflow-oscal`, koja više ne postoji; sve živi u
-   `wattleflow-processors`. Oznaka je zadržana jer je **sposobnost** ista i roditelj je `HLRQ-14`;
+   `blackwattle`. Oznaka je zadržana jer je **sposobnost** ista i roditelj je `HLRQ-14`;
    proširenje osi traži dopunu tog zapisa.
 3. **Vrata su i dalje inertna.** `strict=False` na sve tri baze znači da bez predane politike
    provjere nema. Prednost novog oblika: prelazak na strogi režim je izmjena **na tri mjesta**,

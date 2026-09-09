@@ -6,7 +6,7 @@
 | **Odluka** | [`DR-WFL-022`](../04-DR/DR-WFL-022-class-role-categories.md) — kategorija `WFL`; sam zahtjev nema vlastiti DR |
 | **Nadređeni zahtjev** | [`HLRQ-15`](../01-HLRQ/HLRQ-15-generic-layer.md) — narativ, `BR-15-01…BR-15-09`, zajednički ugovor generičke klase (§4) |
 | **Predmet** | `GenericWorkflow(Wattleflow, IOriginator, ABC)`, `WorkflowFactory`, `WorkflowFactoryLogger`, `WorkflowFactoryException` |
-| **Sestrinski** | [`FRQ-PRC-15.3`](FRQ-PRC-15.3-processor.md) (tvornica ih gradi i uvezuje) · [`FRQ-PTN-15.14`](FRQ-PTN-15.14-managers.md) (tri menadžera) |
+| **Sestrinski** | [`FRQ-PRC-15.3`](FRQ-PRC-15.3-processor.md) (tvornica ih gradi i uvezuje) · `FRQ-PTN-15.14` *(nenapisan)* (tri menadžera) |
 | **Izvedba** | `workflow/src/wattleflow/concrete/workflow.py` (492 linije) |
 
 ## 1. Predmet

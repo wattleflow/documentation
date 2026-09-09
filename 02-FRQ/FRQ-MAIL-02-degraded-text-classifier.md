@@ -55,7 +55,7 @@ sadržaja (`DriverPdf`), i rasklapanje pronađenog bloka (`MailMessage.from_head
 1. Tekst je već izvučen; ovaj zahtjev ne čita datoteku (`FRQ-PRC-15.22`).
 2. A1 je pokrenut **prvi** i nije odlučio — `NFRQ-ORG-10` k.1 zabranjuje model na čistom ulazu.
 3. Artefakt modela i manifest postoje na konfiguriranoj putanji; inače vrijedi EV04.
-4. `scikit-learn` je dostupan. Ovisnost pripada `wattleflow-processors`, koji je **deklarirana
+4. `scikit-learn` je dostupan. Ovisnost pripada `blackwattle`, koji je **deklarirana
    iznimka** od zero-trust opsega (`CLAUDE.md` §7.4), pa nije prekršaj `NFRQ-SEC-03`.
 
 ## 5. Normalan tok
@@ -137,7 +137,7 @@ sintetički korpus, nijedna produkcijska datoteka.
 | `NFRQ-SEC-04` | prag se bira iz omjera cijene i prevalencije; poboljšanje je pomak ROC krivulje, ne praga |
 | `NFRQ-DEF-02` | točnost je `[M]`, omjerna skala, po razredu, dijagnostička — vrata samo kroz DR |
 | `NFRQ-ORG-01` | klasifikator je sposobnost dviju domena → dijeljeni helper, uz vokabular u `mail` |
-| `NFRQ-SEC-03` | `scikit-learn` pripada `wattleflow-processors` (§7.4 iznimka), nikad clean coreu |
+| `NFRQ-SEC-03` | `scikit-learn` pripada `blackwattle` (§7.4 iznimka), nikad clean coreu |
 | `NFRQ-OBS-01/03` | pipeline prijavljuje stavku; klasifikator šuti osim `WARNING`-a iz EV04 |
 
 ## 11. Otvoreno

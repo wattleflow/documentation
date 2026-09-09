@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 Obvezujuće upute i standardi za rad na projektima `wattleflow` (core), `workflow`,
-`processors`, `cad`. Vrijedi za sve sesije s Claude Code agentom.
+`blackwattle`, `cad`. Vrijedi za sve sesije s Claude Code agentom.
 
 **Položaj u kaskadi (D-02).** Ovo je **policy sloj**: filozofija → *policy* → metoda.
 Nadređeni su [PHILOSOPHY.md](PHILOSOPHY.md) (kišobran) i [DOCTRINE.md](DOCTRINE.md) (registar
@@ -17,9 +17,11 @@ gdje ga izmjena koda ili registra zahtjeva učini netočnim.
 
 **Jedan primjerak.** `POLICY.md` je isti dokument (symlink) — doktrinarni tekstovi ga zovu
 `POLICY.md`, repozitoriji `CLAUDE.md`; kodni repozitoriji ga symlinkaju
-(`processors/CLAUDE.md → ../documentation/CLAUDE.md`, od 2026-08-23). Zatečena kopija u
-`wattleflow-processors` povučena je i arhivirana kao
-[`processors/CLAUDE-superseded-2026-08-23.md`](processors/CLAUDE-superseded-2026-08-23.md).
+(`blackwattle/CLAUDE.md → ../documentation/CLAUDE.md`, od 2026-08-23). Zatečena kopija u
+tom projektu povučena je 2026-08-23. **Arhiva te kopije ne postoji** — datoteka
+`processors/CLAUDE-superseded-2026-08-23.md` bila je 0 B, nikad nije ušla u git i nestala je s
+direktorijem; tvrdnja o arhiviranju povučena je 2026-09-09 kao tvrdnja bez svjedočanstva
+(D-05). Povijest sadržaja, ako je ima, nosi git kodnog repozitorija.
 
 **Pravila upravljanja ovim dokumentom:**
 
@@ -42,7 +44,7 @@ sučeljima gradi `concrete/` — generičke implementacije koje su radna osnova 
 iz njih cjevovode (workflow → pipeline → processor → strategy) za preuzimanje, transformaciju
 i skladištenje podataka, u skladu s *Privacy Act 1988* (Cth), APP 3 i APP 11 (`DR-WFL-008`).
 
-**Processors** (`wattleflow-processors`) nosi specijalizacije za heterogene izvore i spremišta
+**Blackwattle** (`blackwattle`) nosi specijalizacije za heterogene izvore i spremišta
 te sloj usklađenosti. Oslonjen je na third-party biblioteke i zato **nije** zero-trust paket
 (§7.4).
 
@@ -50,7 +52,7 @@ te sloj usklađenosti. Oslonjen je na third-party biblioteke i zato **nije** zer
 sloj pripada distribuciji koju određuje §7.1):
 - `core/` — apstraktna sučelja i dizajn patterni (autoritativno). **Živi u zasebnoj
   distribuciji i repozitoriju** (`wattleflow`, GitHub `wattleflow/core`); `workflow` i
-  `processors` stabla ga **nemaju** pod `src/`, nego ga povlače kao ovisnost (`DR-WFL-006`).
+  `blackwattle` stabla ga **nemaju** pod `src/`, nego ga povlače kao ovisnost (`DR-WFL-006`).
   Putanja `src/wattleflow/core/` u ovom dokumentu znači stablo core repozitorija.
 - `concrete/` — generičke implementacije sučelja iz `core/` (radna osnova frameworka)
 - `connections/`, `drivers/`, `processors/`, `pipelines/`, `strategies/`, `documents/` —
@@ -201,18 +203,26 @@ documentation/
 ├── 02-FRQ/                    FR registar — indeks `FRQ-000-EN.md` + zapis po zahtjevu
 ├── 03-NFRQ/                   NFR registar — indeks `NFRQ-000-EN.md` + zapis po zahtjevu
 ├── 04-DR/                     svi zapisi odluka — `DR-COR`, `DR-WFL`, `DR-PRC` + indeksi
-├── 05-METHOD/                 metode (DQI)
+├── 05-METHODS/                metode (DQI)
 ├── 06-ANALYSIS/               analize, datirane
 ├── 07-CHANGES/                zapisi usklađenja s izdanjima koda, datirani
 │
-├── processors/                po-projektni tekstovi + `dictionary-processors.yaml`
+├── blackwattle/               po-projektni tekstovi + `dictionary-blackwattle.yaml`
 └── workflow/
-    ├── conformance/   C-snimke (vektor + trojka reproducibilnosti)
-    ├── Analiza.md     istraživački rad — podloga `[M]` i SEC zahtjeva
     ├── analysis/      analize i index znanja
-    ├── changes/       zapisi usklađenja s core izdanjima
+    ├── core/          `WBS-routing.md` + kriterij core stabla
     ├── TODO.md / DONE.md  worklist (stanje rada, ne norma)
-    └── hr/            `FILOZOFIJA.md`, stariji nacrti odluka (`dr/`), arhive
+    └── hr/            `FILOZOFIJA.md`, stariji nacrti, arhive
+
+> **Jedna deklarirana rupa u ovom stablu (D-11), provjereno 2026-09-09.**
+> `workflow/Analiza.md` **ne postoji nigdje u stablu**, a `POSTULATE.md`, `LITERATURE.md`,
+> `NFRQ-000-EN.md` i §10 vode ga kao bibliografsku podlogu `[M]` i SEC zahtjeva. Dok ga nema,
+> ti se zahtjevi pozivaju na izvor koji čitatelj ne može otvoriti. Vodi se u `workflow/TODO.md`.
+>
+> `workflow/conformance/` je otvoren 2026-09-09 i nosi `README.md` koji objašnjava zašto je
+> prazan; poveznice iz §9, §10, `DOCTRINE.md` D-10 i `NFRQ-000-EN.md` više ne pokazuju u prazno.
+> **Prazan direktorij nije zelen sustav** — §9 („nemjereno se ne smije čitati kao čisto") vrijedi
+> nepromijenjeno.
 ```
 
 Uz njih, u **kodnom** repozitoriju: `tools/dictionary.json` (kontrolirani vokabular **koda**,
@@ -396,9 +406,9 @@ NIST standard za strojno čitljive sigurnosne kontrole. Provodi se dekoratorima
 specijalizacijama; dekorater čita `OSCAL_CONTROLS` ClassVar i izvršava `OSCALPolicy.verify()`
 (semantika: `declared ⊆ baseline`, uz crosswalk translaciju taksonomije).
 
-**Cijeli sloj usklađenosti živi u `wattleflow-processors`** (`DR-WFL-015`): paket
+**Cijeli sloj usklađenosti živi u `blackwattle`** (`DR-WFL-015`): paket
 `wattleflow.oscal`, dekorateri i PSPF dekorater. Clean core distribucije nemaju nijednu OSCAL
-referencu ni ovisnost; tko traži provjeru kontrola, instalira processors — dakle paket koji
+referencu ni ovisnost; tko traži provjeru kontrola, instalira blackwattle — dakle paket koji
 nije zero-trust (§7.4). Svaki dizajn dokument komponente koja nosi dekorater mora naznačiti
 njezinu OSCAL ovisnost i mjesto enforcementa.
 
@@ -454,7 +464,7 @@ tranzitivni closure staje u tier te distribucije:
 > odnosno `pyproject.toml` — vrijednosti se ovdje ne prepisuju.
 
 Modul koji — eager **ili lazy** — referira third-party paket pripada ne-core distribuciji
-(`wattleflow-processors`, `wattleflow-cad`). Lazy-loading smanjuje import-time trošak, ali
+(`blackwattle`, `wattleflow-cad`). Lazy-loading smanjuje import-time trošak, ali
 **ne mijenja** matičnu distribuciju.
 
 **Iznimka — čuvana opcionalna ovisnost (`DR-WFL-003`).** Referenca zaštićena
@@ -481,9 +491,9 @@ Popis nositelja iznimke vodi `DR-WFL-003`.
 - README izdvojenog projekta nosi sigurnosno upozorenje: komponente su primjeri; korisnik je
   odgovoran za audit svake instalirane ovisnosti.
 
-### 7.4 Iznimka: `wattleflow-processors` NIJE zero-trust paket
+### 7.4 Iznimka: `blackwattle` NIJE zero-trust paket
 
-`wattleflow-processors` je **namjerno izvan** opsega §7.1. Sadrži specijalizacije
+`blackwattle` je **namjerno izvan** opsega §7.1. Sadrži specijalizacije
 (`connections/`, `drivers/`, `processors/`, `pipelines/`, `documents/`, `strategies/`,
 `blackboards/`) oslonjene na lazy-loading third-partyja (psycopg2, kafka-python, pyspark,
 pysolr, paramiko, pytesseract…) te **sloj usklađenosti** (`oscal/`, `decorators/oscal/`,
@@ -513,7 +523,7 @@ konsolidira (§4); do tada vrijedi zatečeni predložak i zatečene serije.
   (+ Povijest gdje se odluka mijenjala). *Svjedočanstvo* razdvaja dokazano od aspiracije;
   *Registar* veže odluku uz strojno provjeriv kriterij.
 - **Oznake — serija po projektu:** `DR-COR` (core), `DR-WFL` (workflow), `DR-PRC`
-  (processors), `DR-CAD` (cad). Odluka pripada seriji **onog projekta čiji artefakt mijenja**.
+  (blackwattle; prefiks `PRC` je povijestan, `DR-PRC-002` t.5), `DR-CAD` (cad). Odluka pripada seriji **onog projekta čiji artefakt mijenja**.
   Neprefiksirana oznaka nije valjana.
 - **Smještaj:** sve tri serije žive u [`04-DR/`](04-DR/) od 2026-08-28. Zajednički direktorij
   **ne spaja serije** — prefiks i dalje određuje kojemu projektu odluka pripada, a svaka

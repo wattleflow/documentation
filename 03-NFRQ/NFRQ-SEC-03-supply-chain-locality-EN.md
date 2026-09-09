@@ -24,7 +24,7 @@ its entire transitive closure fits within that distribution's permitted tier:
 > `scope.core_libraries`)
 
 A module that references a third-party package — **eagerly or lazily** — belongs to a non-core
-distribution (`wattleflow-processors`, `wattleflow-cad`). **Deferred loading reduces import-time
+distribution (`blackwattle`, `wattleflow-cad`). **Deferred loading reduces import-time
 cost but does not change the home distribution.**
 
 Every distribution declares a **manifest** of the sub-trees it owns; **no `wattleflow.*` sub-tree
@@ -96,9 +96,9 @@ tier* — has no criterion, so `wem_lint` does not measure it. Open; requires a 
 * `MANIFEST.in` is **the single control point for packaging** (`DR-WFL-006`, `DR-WFL-010`): a
   package that `packages.find` declares but `MANIFEST.in` omits installs **empty**.
 
-## 5. Exception: `wattleflow-processors` is not a zero-trust package
+## 5. Exception: `blackwattle` is not a zero-trust package
 
-`wattleflow-processors` is **deliberately outside** the scope of c.1 (`CLAUDE.md` §7.4): it holds
+`blackwattle` is **deliberately outside** the scope of c.1 (`CLAUDE.md` §7.4): it holds
 specialisations resting on deferred third-party imports, plus the compliance layer
 (`DR-WFL-015`). The package is an example implementation over existing open-source sub-systems;
 **the user is responsible for auditing every installed dependency**, and that must be stated in

@@ -43,7 +43,7 @@ core/          apstraktni ugovori (IWattleflow, IBlackboard, IProcessor, …)   
    ↑
 concrete/      generičke implementacije                                       ← OVAJ ZAHTJEV
    ↑
-specijalizacije (connections/, drivers/, pipelines/, strategies/, …)          ← wattleflow-processors
+specijalizacije (connections/, drivers/, pipelines/, strategies/, …)          ← blackwattle
 ```
 
 Ovisnost je **jednosmjerna** (`CLAUDE.md` §7.2): `concrete/` ne smije uvoziti iz specijalizacija.
@@ -77,7 +77,7 @@ iznimaka, `Attribute`/`NameHelper`. Ona ima jednu oznaku (`PTN`), namjerno
 **U opsegu:** sve u `src/wattleflow/concrete/`.
 
 **Izvan opsega:** `core/` (autoritativno, serija `DR-COR`), specijalizacije u
-`wattleflow-processors` (vlastite sposobnosti), te `helpers/`, `decorators/`, `enums/`,
+`blackwattle` (vlastite sposobnosti), te `helpers/`, `decorators/`, `enums/`,
 `constants/` — dijeljena imena bez `__init__.py` (`DR-WFL-017`), koja ne pripadaju ovom sloju.
 
 ### Zajednički ugovor generičke klase
@@ -125,7 +125,7 @@ Svaka generička klasa ovog sloja:
 | [`NFRQ-ORG-08`](../03-NFRQ/NFRQ-ORG-08-deduplication-EN.md) | zajedničko ponašanje živi u generičkoj klasi, ne prepisano po specijalizacijama |
 
 **OSCAL:** ovaj sloj **ne nosi** OSCAL dekoratere. Sloj usklađenosti živi u
-`wattleflow-processors` (`DR-WFL-015`), a `concrete/` je clean core — nijedna OSCAL referenca ni
+`blackwattle` (`DR-WFL-015`), a `concrete/` je clean core — nijedna OSCAL referenca ni
 ovisnost (`CLAUDE.md` §6.1).
 
 ## 7. Otvoreno

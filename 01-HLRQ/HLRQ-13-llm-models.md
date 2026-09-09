@@ -8,7 +8,7 @@
 | **Status** | Djelomično provedeno (2026-08-20) — `FRQ-CON-13.1` i `FRQ-DRV-13` u kodu (`CHG-PRC-2026-08-20-02`) |
 | **Odluka** | [`DR-PRC-001`](../04-DR/DR-PRC-001-model-access-boundary.md) — konekcija po pod-sustavu; dohvat je okidač knjižnice |
 | **Razred** | Zahtjev visoke razine — nosi narativ i poslovna pravila; ne opisuje korake |
-| **Distribucija** | `wattleflow-processors` — model runtime je third-party ovisnost (CLAUDE.md §7.4) |
+| **Distribucija** | `blackwattle` — model runtime je third-party ovisnost (CLAUDE.md §7.4) |
 | **Djeca** | [`FRQ-CON-13.1`](../02-FRQ/FRQ-CON-13.1-huggingface.md) · [`FRQ-CON-13.2`](../02-FRQ/FRQ-CON-13.2-remote-model.md) · [`FRQ-DRV-13`](../02-FRQ/FRQ-DRV-13-llm-model.md) · `FRQ-PIP-13` (kandidat, §4) |
 | **Podloga** | [parametri po dobavljaču](../06-ANALYSIS/2026-08-20-model-vendor-parameters.md) · [granica konekcija/driver](../06-ANALYSIS/2026-08-20-connection-driver-boundary.md) · [proxy vs HuggingFace](../06-ANALYSIS/2026-08-20-proxy-vs-huggingface-connection.md) (2026-08-20) |
 | **Sljedivost** | `NFRQ-ORG-04` (ontologija: `Connection`, `Driver`, `Pipeline`) · `NFRQ-SEC-03` (lokalnost distribucije, supply-chain) · `CLAUDE.md` §6.1, §7.4 · DR serije `DR-PRC` i `DR-WFL` — **nijedan zapis još nije otvoren** |
@@ -119,7 +119,7 @@ u kriterije prihvaćanja djece ovog HLRQ-a.
 |---|---|---|
 | `NFRQ-SEC-01` blast radius | ograniči dosežljivost iz kompromitirane komponente; least privilege | jedna dijeljena konekcija je **hub** — sve što driver dosegne ulazi u njezin `Blast`. Cijena dijeljenja modela je koncentracija: zato konekcija **po dobavljaču**, ne jedna za sve |
 | `NFRQ-SEC-02` napadna površina | javno sučelje minimalno, `__all__` eksplicitan | ugovor konekcije je namjerno `connect`/`disconnect` + stanje; svaka dodatna metoda je trošak koji se brani, ne dodaje |
-| `NFRQ-SEC-03` supply-chain i lokalnost | closure ⊆ tier distribucije; hash-pinned lock + SBOM; integritet vlastitih modula preko wheel `RECORD` | model runtime je third-party → cijela sposobnost pripada `wattleflow-processors`, lazy uvoz (§7.4). **Preuzeti model je third-party artefakt koji SBOM ne pokriva** — vidi §7 t.6 |
+| `NFRQ-SEC-03` supply-chain i lokalnost | closure ⊆ tier distribucije; hash-pinned lock + SBOM; integritet vlastitih modula preko wheel `RECORD` | model runtime je third-party → cijela sposobnost pripada `blackwattle`, lazy uvoz (§7.4). **Preuzeti model je third-party artefakt koji SBOM ne pokriva** — vidi §7 t.6 |
 | `NFRQ-SEC-06` povjerljivost audit zapisa | bez `**kwargs` splata u zapis; redakcija ovisi o odredištu | pristupni podatak ne smije se pojaviti ni u zapisu ni u poruci greške; sadržaj dokumenta koji ide modelu ne citira se u greškama |
 | `NFRQ-ORG-02` nomenklatura | ime imenuje ulogu; gole generičke imenice zabranjene | `ConnectionHuggingFace`, `DriverLanguageModel` — nikad `ModelManager` ili `Helper` |
 | `NFRQ-ORG-04` sposobnost vs primitiv | cross-cutting sposobnost je helper, ne novi domenski primitiv | koriste se zatečeni primitivi (`Connection`, `Driver`, `Pipeline`); ontologija se ne proširuje |
@@ -154,7 +154,7 @@ uz crosswalk translaciju taksonomije. Svaka zatečena konekcija to već ispunjav
    i `sc-13→ism-1080` su **izvan opsega Essential Eight** — protiv E8 baselinea ispravno padaju.
    Mrežna konekcija koja te kontrole treba pada gate dok se baseline ne proširi; to je zatečeno
    stanje, ne regresija koju uvodimo.
-5. **Ispravljeno 2026-08-22:** OSCAL sloj je vendiran u `wattleflow-processors`, pa prepreke s
+5. **Ispravljeno 2026-08-22:** OSCAL sloj je vendiran u `blackwattle`, pa prepreke s
    ovisnošću o zasebnoj distribuciji nema — dekorirani se moduli uvoze u svakom okruženju u kojem
    je instalirana ova distribucija. Dekorateri su u uporabi na 15 komponenti, među njima
    `connections/postgres.py`, `drivers/postgres.py`, `processors/postgres.py` i
