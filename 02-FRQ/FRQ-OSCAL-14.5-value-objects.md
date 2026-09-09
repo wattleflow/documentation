@@ -1,12 +1,12 @@
-# FR-OSCAL-14.5 — Vrijednosni objekti kataloga
+# FRQ-OSCAL-14.5 — Vrijednosni objekti kataloga
 
-> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
 > (2026-08-21). Oznaka se od tada mijenja kroz DR, ne uređivanjem.
 
 | | |
 |---|---|
-| **Status** | Prijedlog (2026-08-21) — obrnuto inženjerstvo zatečenog koda |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) (kategorija); grupiranje šest klasa u jedan zapis obrazloženo je u §1 |
+| **Status** | Implementiran |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) (kategorija); grupiranje šest klasa u jedan zapis obrazloženo je u §1 |
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `Prop`, `Link`, `Part`, `Param`, `Metadata`, `BackMatter` |
 | **Sestrinski** | [`14.2`](FRQ-OSCAL-14.2-control.md) kontrola · [`14.6`](FRQ-OSCAL-14.6-bases.md) baze |
@@ -105,13 +105,13 @@ Linux (WSL2), radno stablo `oscal` 2026-08-21, artefakt ISM 2026-03-24.
 
 | NFR | posljedica |
 |---|---|
-| `NFR-ORG-08` | mapiranje ključeva je naslijeđeno iz `ModelBase`; nijedna od šest klasa ga ne prepisuje |
-| `NFR-SEC-02` | `back-matter` resursi ostaju sirovi — model ne izmišlja strukturu koju ne treba |
+| `NFRQ-ORG-08` | mapiranje ključeva je naslijeđeno iz `ModelBase`; nijedna od šest klasa ga ne prepisuje |
+| `NFRQ-SEC-02` | `back-matter` resursi ostaju sirovi — model ne izmišlja strukturu koju ne treba |
 
 ## 11. Otvoreno
 
 1. **`BackMatter.resources` je `List[Dict[str, Any]]`** — netipizirano. Ako neki potrošač počne
-   čitati resurse (npr. razrješavanje `href="#uuid"` iz profila, `FR-OSCAL-14.4` §11 t.2), tip
+   čitati resurse (npr. razrješavanje `href="#uuid"` iz profila, `FRQ-OSCAL-14.4` §11 t.2), tip
    treba modelirati. Do tada je netipiziranost namjerna, ne propust.
 2. **Dva aliasa nemaju polje koje ih prima.** `responsible-parties` → `responsible_parties` i
    `control-id` → `control_id` postoje u `ModelBase.KEY_ALIASES`, ali nijedan model nema tako

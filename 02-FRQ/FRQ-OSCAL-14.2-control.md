@@ -1,12 +1,12 @@
-# FR-OSCAL-14.2 — Kontrola
+# FRQ-OSCAL-14.2 — Kontrola
 
-> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
 > (2026-08-21). Oznaka se od tada mijenja kroz DR, ne uređivanjem.
 
 | | |
 |---|---|
 | **Status** | Prijedlog (2026-08-21) — obrnuto inženjerstvo zatečenog koda |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `Control(SelectableElement)` — jedinica kontrole koju profil bira, registar indeksira, a policy provjerava |
 | **Sestrinski** | [`14.1`](FRQ-OSCAL-14.1-catalog.md) katalog · [`14.3`](FRQ-OSCAL-14.3-group.md) grupa · [`14.6`](FRQ-OSCAL-14.6-bases.md) baze |
@@ -110,15 +110,15 @@ Linux (WSL2), radno stablo `oscal` 2026-08-21, artefakt ISM 2026-03-24.
 > **Slijepa pjega (D-11).** Skripta nije u repozitoriju (test framework nije odabran,
 > `CLAUDE.md` §4). Kriteriji 3–6 provjereni su **sintetičkim** stablima jer isporučeni ISM
 > katalog nema nijednu ugniježđenu kontrolu; širu potvrdu daje usporedba s prethodnom izvedbom
-> orezivanja nad 281 nasumičnim stablom (`FR-OSCAL-14.9` §9).
+> orezivanja nad 281 nasumičnim stablom (`FRQ-OSCAL-14.9` §9).
 
 ## 10. Nefunkcionalni zahtjevi
 
 | NFR | posljedica |
 |---|---|
-| `NFR-ORG-05` | `pruned` i `walk_controls` su članovi klase; samoreferenca ide kroz `self.prune_all`, ne kroz tvrdo kodirano ime |
-| `NFR-ORG-08` | pravilo orezivanja postoji na jednom mjestu; `Group` i `resolve()` ga ne prepisuju |
-| `NFR-SEC-02` | kontrola ne izlaže postavljače ni interne popise za izmjenu |
+| `NFRQ-ORG-05` | `pruned` i `walk_controls` su članovi klase; samoreferenca ide kroz `self.prune_all`, ne kroz tvrdo kodirano ime |
+| `NFRQ-ORG-08` | pravilo orezivanja postoji na jednom mjestu; `Group` i `resolve()` ga ne prepisuju |
+| `NFRQ-SEC-02` | kontrola ne izlaže postavljače ni interne popise za izmjenu |
 
 ## 11. Otvoreno
 
@@ -129,4 +129,4 @@ Linux (WSL2), radno stablo `oscal` 2026-08-21, artefakt ISM 2026-03-24.
 2. **Dijelovi modela koje isporučeni ISM nikad ne koristi:** `params`, `links` i ugniježđene
    kontrole imaju 0 pojava. Zadržati radi vjernosti OSCAL modelu ili označiti kao neprovjereno
    područje — otvoreno.
-3. **Jedinstvenost `id` unutar jednog kataloga se ne provjerava** (vidi `FR-OSCAL-14.1` §11 t.3).
+3. **Jedinstvenost `id` unutar jednog kataloga se ne provjerava** (vidi `FRQ-OSCAL-14.1` §11 t.3).

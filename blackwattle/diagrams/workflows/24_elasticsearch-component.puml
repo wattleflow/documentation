@@ -1,0 +1,57 @@
+@startuml 24_elasticsearch-component
+' Generirano iz examples/workflows/24_elasticsearch.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 24_elasticsearch.yaml — Elasticsearch synthetic write + DSL search round-trip
+caption Konfiguracija: 24_elasticsearch.yaml · okruženje: dev
+
+package "connections" {
+  component "elasticsearch" as conn_elasticsearch <<MockElasticSearchConnection>>
+}
+
+package "drivers" {
+  component "elasticsearch-driver" as driv_elasticsearch_driver <<DriverElasticSearch>>
+}
+
+component "elasticsearch-air-traffic" as wf_elasticsearch_air_traffic <<ElasticSearchWorkflow>>
+
+package "synthetic-write" {
+  component "synthetic-write" as proc_synthetic_write <<ElasticSearchSyntheticWriteProcessor>>
+  component "es-write-blackboard" as bbsyntheticwri_es_write_blackboard <<SmallBlackboard>>
+  note bottom of bbsyntheticwri_es_write_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "es-write-pipeline" as pipesyntheticwri_es_write_pipeline <<ElasticSearchWritePipeline>>
+  component "elasticsearch-repository" as reposyntheticwri_elasticsearch_repository <<RepositoryWithDriver>>
+}
+proc_synthetic_write --> pipesyntheticwri_es_write_pipeline : 1. transform()
+pipesyntheticwri_es_write_pipeline .[#AAAAAA].> bbsyntheticwri_es_write_blackboard : write()
+proc_synthetic_write --> bbsyntheticwri_es_write_blackboard : create() «CreateElasticSearchDocument»
+bbsyntheticwri_es_write_blackboard --> reposyntheticwri_elasticsearch_repository : «WriteElasticSearchDocument»
+reposyntheticwri_elasticsearch_repository .[#AAAAAA].> driv_elasticsearch_driver : <<uses>>
+
+package "elasticsearch-read" {
+  component "elasticsearch-read" as proc_elasticsearch_read <<ElasticSearchReadProcessor>>
+  component "es-read-blackboard" as bbelasticsearc_es_read_blackboard <<SmallBlackboard>>
+  note bottom of bbelasticsearc_es_read_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "es-read-pipeline" as pipeelasticsearc_es_read_pipeline <<ElasticSearchReadPipeline>>
+}
+proc_elasticsearch_read --> pipeelasticsearc_es_read_pipeline : 1. transform()
+pipeelasticsearc_es_read_pipeline .[#AAAAAA].> bbelasticsearc_es_read_blackboard : write()
+proc_elasticsearch_read --> bbelasticsearc_es_read_blackboard : create() «CreateElasticSearchDocument»
+
+wf_elasticsearch_air_traffic --> proc_synthetic_write : start()
+wf_elasticsearch_air_traffic --> proc_elasticsearch_read : start()
+
+driv_elasticsearch_driver .[#AAAAAA].> conn_elasticsearch : <<connection_name>>
+@enduml

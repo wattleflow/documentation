@@ -1,0 +1,97 @@
+@startuml FRQ-MET-01-attachment
+' Priključak na zatečeni okvir, i odnos prema core sučeljima.
+' Gledište: integracija. Publika: arhitekt, implementator.
+' Prikaz, ne izvor istine (D-13).
+title FRQ-MET-01 — Attachment: what is reused, what is deliberately not
+
+skinparam class {
+  BackgroundColor #FEFEFE
+  BorderColor #555555
+  ArrowColor #555555
+}
+skinparam NoteBackgroundColor #FFFDE7
+skinparam packageStyle rectangle
+hide empty members
+
+package "existing — untouched" #EEF4FF {
+  class Audit <<ILogger, IObserver>> {
+    +subscribe_handler(handler)
+    +debug() / info() / warning()
+  }
+  class GenericWorkflow <<IOriginator>> {
+    -_connections : ConnectionManager
+    -_drivers : DriverManager
+    -_processors : ProcessorManager
+  }
+  class DriverManager <<IObserver>>
+  class ConnectionManager <<IObserver>>
+  class GenericDriver <<IDriver, IObserver>>
+  class GenericProcessor <<IProcessor>>
+  class DriverPrometheus
+  class DriverGrafana
+}
+
+package "new" #F2FBF4 {
+  class MetricCollector <<Handler>>
+  class MetricReporter
+  class PrometheusSink
+  class GrafanaSink
+}
+
+Audit ..> MetricCollector : subscribe_handler()\n(existing socket)
+GenericDriver ..> Audit : Started / Completed | Failed
+GenericProcessor ..> Audit : Started / Completed | Failed
+
+GenericWorkflow *-- MetricReporter : owns, closes the run >
+DriverManager o-- MetricReporter : optional
+ConnectionManager o-- MetricReporter : optional
+MetricReporter *-- MetricCollector
+MetricReporter o-- PrometheusSink
+MetricReporter o-- GrafanaSink
+PrometheusSink --> DriverPrometheus : write(job, exposition)
+GrafanaSink --> DriverGrafana : write("annotation", ...)
+
+note as N1
+  **Reused, because the contract fits**
+
+  · `Audit.subscribe_handler` — the attachment
+    point already exists; nothing is added to it.
+  · The fan-out shape of `RepositoryWithDriver`
+    (strategy + driver, N destinations over one
+    subject) — reused as a SHAPE.
+  · Transport stays a driver's job: the sink
+    formats, the driver ships (FRQ-PRC-15.22).
+end note
+
+note as N2
+  **Deliberately NOT reused**
+
+  · `IRepository` — its contract is
+    `read(identifier) -> ITarget`; a metric is
+    not a document and has no identity to read
+    back. Naming it a repository would borrow
+    the word without the mechanism.
+  · `StrategyWrite` — `execute(caller, facade)`
+    asserts `ITarget`. Samples are not facades.
+  · `IObserver` on the collector — it receives
+    log RECORDS, not domain events. `IEvent`
+    has no implementation in the tree, so
+    typing it that way would be aspiration.
+end note
+
+note as N3
+  **Distribution boundary (§7.1)**
+
+  Everything left of the sinks imports only
+  stdlib + wattleflow, so it stays in the clean
+  core. The two sinks name Prometheus and
+  Grafana drivers, so they live in
+  `wattleflow-processors`, which is already
+  outside the zero-trust scope (§7.4).
+end note
+
+MetricReporter .. N1
+MetricReporter .. N2
+PrometheusSink .. N3
+
+@enduml

@@ -1,0 +1,38 @@
+@startuml 23_opensearch-sequence-opensearch-read
+' Generirano iz examples/workflows/23_opensearch.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 23_opensearch.yaml — pgvector + OpenSearch dual-write & search round-trip
+caption opensearch-read · 23_opensearch.yaml · okruženje: dev
+
+skinparam sequence {
+    LifeLineBorderColor #999999
+    ParticipantBorderColor #555555
+    ParticipantBackgroundColor #FAFAFA
+}
+
+participant "workflow" as WF
+group opensearch-read <<OpenSearchReadProcessor>>
+  participant "opensearch-read" as PR2
+  participant "opensearch-read-blackboard" as BB2
+  participant "opensearch-read-pipeline" as P2_1
+  WF -> PR2 : start()
+  PR2 -> PR2 : iterate source
+  PR2 -> BB2 : create() «CreateOpenSearchDocument»
+  PR2 -> P2_1 : transform()  <<OpenSearchReadPipeline>>
+  P2_1 -> BB2 : write()
+  note over BB2 : bez repozitorija — dokument ostaje na blackboardu
+end
+@enduml

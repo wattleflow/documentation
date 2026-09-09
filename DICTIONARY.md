@@ -160,7 +160,7 @@ ISO 29148; ISO 25010]`
 
 **Registar (`tools/dictionary.json`)** — strojno čitljivi kontrolirani vokabular
 koda: domene, opseg, obitelji baza, uloge TypeVarova; TARGET vokabular čija
-odstupanja lint prijavljuje. `[artefakt/kriterij | metoda | NFR-ORG-02 | NFR-ORG-03]`
+odstupanja lint prijavljuje. `[artefakt/kriterij | metoda | NFRQ-ORG-02 | NFRQ-ORG-03]`
 
 **wem_lint** — alat konformnosti u dva izdanja (core: sloj sučelja; workflow:
 registar); vektorski izlaz, verzionirani kriterij, izgrađen na frameworku koji
@@ -197,9 +197,9 @@ podatkovne tokove građeno na Coreu; nosi konkretne politike (concrete/ sloj).
 | NCD | *normalized compression distance* | [14] |
 | NMI | *normalized mutual information* | [20]; mjera slaganja particija |
 | ARI | *adjusted Rand index* | [21] |
-| ORG | kategorija organizacijskih NFR-ova (`FR-ORG-NN`) | FR.md, NFR.md |
+| ORG | kategorija organizacijskih NFR-ova (`FR-ORG-NN`) | FR.md, NFRQ.md |
 | PDSA | *plan–do–study–act* (Shewhart/Deming ciklus) | [47][48] |
-| SBOM | *software bill of materials* | SPDX/CycloneDX; NFR-ORG-06 |
+| SBOM | *software bill of materials* | SPDX/CycloneDX; NFRQ-ORG-06 |
 | SBVR | *Semantics of Business Vocabulary and Rules* (OMG) | ontologija zahtjeva |
 | WEM | Wattleflow inženjerska metodologija | Svezak I |
 

@@ -1,0 +1,126 @@
+@startuml FRQ-PRC-15.22-persistence-sequence
+' Tok pohrane kao INTERAKCIJA — poziv po pozivu između instanci.
+' Gledište: izvedba. Publika: implementator.
+' Prikaz, ne izvor istine (D-13) — izvor je kod imenovan u FRQ-PRC-15.22 §1.
+' Audit razine (DR-WFL-028, prijedlog): označeno je SAMO gdje INFO nastaje u
+' sloju vlasnika jedinice. Koraci lanca su po DR-WFL-021 t.3 dužni prijaviti
+' ulaz, ali zatečeno stanje se s tim razilazi — mjerenje u NFRQ-OBS-03 §4.
+title FRQ-PRC-15.22 — Persistence: call flow between instances
+
+autonumber
+skinparam SequenceMessageAlignment center
+
+participant "p :\nGenericProcessor" as P
+participant "pl :\nGenericPipeline" as PL
+participant "f :\nDocumentFacade" as F
+participant "doc :\nDocument" as D
+participant "bb :\nGenericBlackboard" as BB
+participant "r :\nRepositoryWithDriver" as R
+participant "ws :\nStrategyWrite" as WS
+participant "fmt :\nIFormatter" as FMT
+participant "drv :\nGenericDriver" as DRV
+
+activate P
+
+loop for each registered pipeline
+  P -> PL : process(processor=p, facade=f)
+  activate PL
+  PL -> PL : assert IProcessor / ITarget
+  PL -> PL : <b>DEBUG</b> Transform/Started\n(source, document)
+  note right of PL
+    DEBUG, not INFO: the document is the
+    PROCESSOR's unit of work. An INFO here
+    would scale the stream with the number
+    of configured pipelines. (DR-WFL-028)
+  end note
+  PL -> PL : transform(p, f)
+
+  PL -> F : request()
+  activate F
+  F --> PL : doc
+  deactivate F
+
+  opt this transformation needs storage
+    PL -> DRV : read(uri) via processor.driver
+    activate DRV
+    DRV --> PL : content
+    deactivate DRV
+    note right of PL
+      The pipeline reaches the driver
+      through `processor`, which it
+      receives in `process`.
+    end note
+  end
+
+  PL -> D : update_content(...) / update_metadata(...)
+
+  PL -> BB : write(pipeline=pl, facade=f)
+  activate BB
+  BB -> BB : canvas = f
+  BB --> PL : f.identifier
+  deactivate BB
+  PL --> P : None
+  deactivate PL
+end
+
+P -> P : cycle += 1
+
+opt flush_per_cycle
+  P -> BB : flush(caller=p, **p.write_context)
+  activate BB
+
+  loop for each registered repository (sequential)
+    BB -> R : write(caller=bb, facade=f, **kwargs)
+    activate R
+    R -> R : _strategy_context() -> {"driver": r.driver}
+    R -> WS : write(caller=r, facade=f, repository=r,\ndriver=r.driver, **kwargs)
+    activate WS
+    WS -> F : request()
+    F --> WS : doc
+
+    alt the subject applies to this destination
+      WS -> FMT : render(content=doc.content)
+      activate FMT
+      FMT --> WS : payload
+      deactivate FMT
+      WS -> WS : compose the output name
+
+      WS -> DRV : write(payload, filename, suffix)
+      activate DRV
+      DRV --> WS : output
+      deactivate DRV
+
+      WS -> D : update_metadata(stored_by, stored_at, output)
+      WS --> R : True
+    else not this destination's subject
+      WS -> WS : warning
+      WS --> R : False
+    end
+    deactivate WS
+    R -> R : write_counter += 1 when True
+    R --> BB : bool
+    deactivate R
+  end
+
+  note right of BB
+    N repositories = N write strategies
+    = N drivers, over ONE document.
+  end note
+
+  BB -> BB : canvas = None
+  BB --> P : None
+  deactivate BB
+end
+
+P -> P : <b>INFO</b> Processed\n(cycle, source, document)
+note right of P
+  The one INFO record that stands for
+  this document, written by the owner of
+  the unit of work AFTER the flush.
+  A failed document never reaches it —
+  its absence is the signal (DR-WFL-021 t.6).
+end note
+
+deactivate P
+
+@enduml

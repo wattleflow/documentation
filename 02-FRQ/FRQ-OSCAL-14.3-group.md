@@ -1,12 +1,12 @@
-# FR-OSCAL-14.3 — Grupa kontrola
+# FRQ-OSCAL-14.3 — Grupa kontrola
 
-> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
 > (2026-08-21). Oznaka se od tada mijenja kroz DR, ne uređivanjem.
 
 | | |
 |---|---|
 | **Status** | Prijedlog (2026-08-21) — obrnuto inženjerstvo zatečenog koda |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `Group(SelectableElement)` — imenovani dio kataloga koji drži kontrole i podgrupe |
 | **Sestrinski** | [`14.1`](FRQ-OSCAL-14.1-catalog.md) katalog · [`14.2`](FRQ-OSCAL-14.2-control.md) kontrola · [`14.9`](FRQ-OSCAL-14.9-resolver.md) resolver |
@@ -48,7 +48,7 @@ Asimetrija je namjerna i vrijedi je zapisati: `Control.id` je obvezan a `title` 
 ## 4. Preduvjeti
 
 1. `title` postoji u dokumentu; njegov izostanak je greška, ne prazna vrijednost.
-2. Djeca (podgrupe, kontrole) zadovoljavaju vlastite preduvjete (`FR-OSCAL-14.2` §4).
+2. Djeca (podgrupe, kontrole) zadovoljavaju vlastite preduvjete (`FRQ-OSCAL-14.2` §4).
 
 ## 5. Normalan tok
 
@@ -107,8 +107,8 @@ Linux (WSL2), radno stablo `oscal` 2026-08-21, artefakt ISM 2026-03-24.
 
 | NFR | posljedica |
 |---|---|
-| `NFR-ORG-05` | `pruned` koristi naslijeđeni `self.prune_all` za podgrupe i `Control.prune_all` za kontrole — bez prepisane petlje |
-| `NFR-ORG-08` | pravilo „prazna grana nestaje" postoji na jednom mjestu |
+| `NFRQ-ORG-05` | `pruned` koristi naslijeđeni `self.prune_all` za podgrupe i `Control.prune_all` za kontrole — bez prepisane petlje |
+| `NFRQ-ORG-08` | pravilo „prazna grana nestaje" postoji na jednom mjestu |
 
 ## 11. Otvoreno
 
@@ -118,5 +118,5 @@ Linux (WSL2), radno stablo `oscal` 2026-08-21, artefakt ISM 2026-03-24.
    dokument ne kaže koji je ispravan. Nalaz zatiče postojeći kod; ispravak je izmjena ponašanja
    i traži odluku.
 2. **`params`, `props`, `links`, `parts` na grupi nemaju nijednu pojavu u ISM izdanju** — isto
-   pitanje kao `FR-OSCAL-14.2` §11 t.2.
+   pitanje kao `FRQ-OSCAL-14.2` §11 t.2.
 3. **`Group` ne provjerava jedinstvenost naslova ni `id`-a** među braćom.

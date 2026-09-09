@@ -1,12 +1,12 @@
-# FR-OSCAL-14.1 — Katalog sigurnosnih kontrola
+# FRQ-OSCAL-14.1 — Katalog sigurnosnih kontrola
 
-> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
 > (2026-08-21). Oznaka se od tada mijenja kroz DR, ne uređivanjem.
 
 | | |
 |---|---|
 | **Status** | Prijedlog (2026-08-21) — zapisan obrnutim inženjerstvom zatečenog koda, ne unaprijed |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `Catalog(OSCALElement, ISyncAggregate[Control])` — nepromjenjiv prikaz OSCAL kataloga i agregat kontrola |
 | **Sestrinski** | `Control`, `Group`, `Profile`, loaderi, registar, resolver, crosswalk, policy — zapisi slijede, oznake se dodjeljuju redom |
@@ -129,18 +129,18 @@ dokumenta; platforma = Python 3.11.15, Linux (WSL2), radno stablo `oscal` 2026-0
 
 | NFR | posljedica za ovaj zahtjev |
 |---|---|
-| `NFR-SEC-03` | uvozno zatvorenje paketa je `stdlib ∪ wattleflow` — nijedan third-party uvoz; sloj stoji u čistom tieru, premda ga nosi distribucija koja to nije (`CLAUDE.md` §7.4) |
-| `NFR-SEC-02` | javna površina modula deklarirana kroz `__all__`; `_ControlIterator` ostaje privatan |
-| `NFR-ORG-05` | pomoćne metode deserijalizacije i obilaska su članovi klasa (`ModelBase`, `SelectableElement`), ne funkcije modula; samoreferencu nose kroz `cls`/`self` |
-| `NFR-ORG-08` | mapiranje ključeva postoji na **jednom** mjestu (`ModelBase.KEY_ALIASES`); nijedan model ga ne prepisuje |
+| `NFRQ-SEC-03` | uvozno zatvorenje paketa je `stdlib ∪ wattleflow` — nijedan third-party uvoz; sloj stoji u čistom tieru, premda ga nosi distribucija koja to nije (`CLAUDE.md` §7.4) |
+| `NFRQ-SEC-02` | javna površina modula deklarirana kroz `__all__`; `_ControlIterator` ostaje privatan |
+| `NFRQ-ORG-05` | pomoćne metode deserijalizacije i obilaska su članovi klasa (`ModelBase`, `SelectableElement`), ne funkcije modula; samoreferencu nose kroz `cls`/`self` |
+| `NFRQ-ORG-08` | mapiranje ključeva postoji na **jednom** mjestu (`ModelBase.KEY_ALIASES`); nijedan model ga ne prepisuje |
 
 OSCAL kontrole (`OSCAL_CONTROLS`) **ne pripadaju ovom predmetu**: deklariraju ih komponente koje se
 provjeravaju, a ovaj paket je mehanizam provjere, ne njezin subjekt.
 
 ## 11. Otvoreno
 
-1. ~~Kategorija i numeracija.~~ **Riješeno** [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) (2026-08-21): `OSCAL` je u vokabularu, broj
-   sposobnosti je `14`, djeca nose oblik `FR-OSCAL-14.M`. Preostaje da razred `HLRQ` sam nije u
+1. ~~Kategorija i numeracija.~~ **Riješeno** [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) (2026-08-21): `OSCAL` je u vokabularu, broj
+   sposobnosti je `14`, djeca nose oblik `FRQ-OSCAL-14.M`. Preostaje da razred `HLRQ` sam nije u
    vokabularu (`CLAUDE.md` §3.6) — vrijedi za `HLRQ-14` kao i za `HLRQ-13`.
 2. ~~**`CLAUDE.md` §6.1 tvrdi da OSCAL paket nije deployan.**~~ **Otpalo 2026-08-22:** OSCAL
    više nije zaseban paket nego je vendiran u `wattleflow-processors`; §6.1 je usklađen.

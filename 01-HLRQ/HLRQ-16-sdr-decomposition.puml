@@ -1,0 +1,120 @@
+@startuml HLRQ-16-sdr-decomposition
+' Dekompozicija sposobnosti — što je dijeljeno, a što specijalizirano.
+' Gledište: struktura. Publika: implementator, arhitekt.
+' Prikaz, ne izvor istine (D-13) — izvor su HLRQ-16 §4a i NFRQ-ORG-08.
+' Teza dijagrama: NIJEDNA klasa ne postoji po proizvođaču ni po modelu uređaja.
+title HLRQ-16 — Decomposition: what is shared, what is specialised
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
+
+package "wattleflow-workflow (concrete/) — zero-trust" #F4F4F4 {
+  abstract class GenericConnection {
+    +connect() : Generator
+    +disconnect()
+    +state : ConnectionState
+  }
+  abstract class GenericDriver {
+    +read(uri, **kwargs)
+    +write(uri, **kwargs)
+    +state : DriverState
+  }
+  abstract class GenericParser {
+    +deserialise(reader, **opts) : object
+  }
+  abstract class GenericFormatter {
+    +serialise(content, **opts) : bytes
+  }
+}
+
+package "blackwattle — jedan par po PRISTUPNOM MEHANIZMU" #FFF8E1 {
+
+  class ConnectionSdrDevice {
+    .. selektor (BR-02) ..
+    +resolve() : DeviceHandle
+    .. zauzeće (BR-03) ..
+    +claim()
+    .. ispitivanje (BR-11) ..
+    +capabilities() : DeviceCapabilities
+    .. parametri (BR-04, BR-05) ..
+    +apply(params) : EffectiveParams
+    .. smjer (BR-12) ..
+    +mode : DeviceMode
+  }
+
+  class DriverSdrDevice {
+    +read(uri, **kwargs) : Generator<SampleBlock>
+    +write(uri, **kwargs) : str
+  }
+
+  class IqParser <<helper>> {
+    +deserialise(reader, **opts) : SampleBlock
+  }
+  class IqFormatter <<helper>> {
+    +serialise(content, **opts) : bytes
+  }
+
+  class DeviceCapabilities <<value>> {
+    +gain_stages : Map<str, Range>
+    +sample_rates : RangeList
+    +freq_range : RangeList
+    +antennas : List<str>
+    +native_format : str
+    +full_scale : float
+    +directions : Set<Direction>
+  }
+  class SampleBlock <<value>> {
+    +samples
+    +sequence_no, started_at
+    +effective_rate, centre_freq
+    +format, full_scale
+    +lost_before : int
+  }
+  enum DeviceMode {
+    Receive
+    Transmit
+  }
+}
+
+GenericConnection <|-- ConnectionSdrDevice
+GenericDriver     <|-- DriverSdrDevice
+GenericParser     <|-- IqParser
+GenericFormatter  <|-- IqFormatter
+
+ConnectionSdrDevice --> DeviceCapabilities : ispituje\n(ne nosi tablicu)
+ConnectionSdrDevice --> DeviceMode         : poluduplex\nstanje
+DriverSdrDevice     --> ConnectionSdrDevice : koristi
+DriverSdrDevice     ..> IqParser            : read — parser bira\nFACTORY po native_format
+DriverSdrDevice     ..> IqFormatter         : write — samo gdje\ndirections sadrži Transmit
+DriverSdrDevice     --> SampleBlock         : isporučuje
+
+note right of DriverSdrDevice
+  **read je JEDAN kod za sve uređaje.**
+  Razlika među uređajima ulazi kroz
+  DeviceCapabilities (vrijednosti) i kroz
+  parser koji tvornica vrati za ispitani
+  format — ne kroz granu po uređaju.
+  (NFRQ-ORG-08 k.2)
+end note
+
+note bottom of IqFormatter
+  **write je drugi ugovor** (BR-12):
+  drugi protokol, poluduplex stanje,
+  i ovlast (NFRQ-SEC-07).
+  Zato se NE spaja s read putanjom —
+  spajanje bi bilo regresija
+  (NFRQ-ORG-08 k.4).
+end note
+
+note as N1 #FFCDD2
+  **Nema klase po proizvođaču.**
+  RTL2832U/R820T i HackRF One koriste
+  ISTE klase; razlikuju se u vrijednostima
+  koje ispitivanje vrati i u tome sadrže li
+  directions Transmit.
+  Nova klasa tek na promjenu ugovora
+  ili mehanizma (DR-PRC-003 t.5).
+end note
+N1 .. ConnectionSdrDevice
+
+@enduml

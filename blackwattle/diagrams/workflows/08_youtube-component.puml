@@ -1,0 +1,45 @@
+@startuml 08_youtube-component
+' Generirano iz examples/workflows/08_youtube.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 08_youtube.yaml — Youtube video transcript ETL processor - Wattleflow Workflow
+caption Konfiguracija: 08_youtube.yaml · okruženje: dev
+
+package "drivers" {
+  component "local-storage-driver" as driv_local_storage_driver <<DriverLocalStorage>>
+}
+
+package "documents" {
+  component "wattlef-youtube-rdf" as docu_wattlef_youtube_rdf <<Wattle>>
+}
+
+component "youtube-workflow" as wf_youtube_workflow <<Workflow>>
+
+package "youtube-transcript-processor" {
+  component "youtube-transcript-processor" as proc_youtube_transcript_processor <<YoutubeProcessor>>
+  component "youtube-blackboard" as bbyoutubetrans_youtube_blackboard <<SmallBlackboard>>
+  note bottom of bbyoutubetrans_youtube_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "youtube-pipeline" as pipeyoutubetrans_youtube_pipeline <<CleanupPipelineYoutube>>
+  component "local-storage-repository" as repoyoutubetrans_local_storage_repository <<RepositoryWithDriver>>
+}
+proc_youtube_transcript_processor --> pipeyoutubetrans_youtube_pipeline : 1. transform()
+pipeyoutubetrans_youtube_pipeline .[#AAAAAA].> bbyoutubetrans_youtube_blackboard : write()
+proc_youtube_transcript_processor --> bbyoutubetrans_youtube_blackboard : create() «BlackboarCreateYoutubeRDF»
+bbyoutubetrans_youtube_blackboard --> repoyoutubetrans_local_storage_repository : «RepositoryWriteYoutubeRDF»
+repoyoutubetrans_local_storage_repository .[#AAAAAA].> driv_local_storage_driver : <<uses>>
+
+wf_youtube_workflow --> proc_youtube_transcript_processor : start()
+
+@enduml

@@ -1,0 +1,49 @@
+@startuml 05_markdown-component
+' Generirano iz examples/workflows/05_markdown.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 14_markdown.yaml — Wattleflow Workflow - Markdown to Word document conversion.
+caption Konfiguracija: 05_markdown.yaml · okruženje: dev
+
+package "drivers" {
+  component "driver-docx-storage" as driv_driver_docx_storage <<DriverLocalStorage>>
+}
+
+component "workflow" as wf_workflow <<Workflow>>
+
+package "processor-md" {
+  component "processor-md" as proc_processor_md <<FileDocumentProcessor>>
+  note right of proc_processor_md
+    source_path: ${dotenv:processor-md.source_path}
+    pattern: *.md
+    recursive: False
+    created_from: 2026-08-25T18:00:00
+    created_to: 2026-08-25T23:59:00
+  end note
+  component "markdown-blackboard" as bbprocessormd_markdown_blackboard <<SmallBlackboard>>
+  note bottom of bbprocessormd_markdown_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "pipeline-dummy" as pipeprocessormd_pipeline_dummy <<PipelineFileDocumenDummyWrite>>
+  component "repository-markdown" as repoprocessormd_repository_markdown <<RepositoryWithDriver>>
+}
+proc_processor_md --> pipeprocessormd_pipeline_dummy : 1. transform()
+pipeprocessormd_pipeline_dummy .[#AAAAAA].> bbprocessormd_markdown_blackboard : write()
+proc_processor_md --> bbprocessormd_markdown_blackboard : create() «CreateFileDocument»
+bbprocessormd_markdown_blackboard --> repoprocessormd_repository_markdown : «ReadDocumentFile» «WriteMarkdownToWordDocument»
+repoprocessormd_repository_markdown .[#AAAAAA].> driv_driver_docx_storage : <<uses>>
+proc_processor_md .[#AAAAAA].> driv_driver_docx_storage : <<driver>>
+
+wf_workflow --> proc_processor_md : start()
+
+@enduml

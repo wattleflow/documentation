@@ -1,147 +1,99 @@
 # TODO — wattleflow-workflow
 
 Worklist; organizirano po cijeni izvedbe i riziku. Odvojen od `CLAUDE.md` (policy sloj):
-policy nosi normu na snazi, ovaj popis nosi stanje rada. Zatvorena stavka **seli u**
-[`DONE.md`](DONE.md) s datumom i provjerom kojom je zatvorena; povijest i dalje nose git i
-`DR-WFL` serija, ali zatvaranje mora biti ponovljivo bez čitanja diffa.
-
-> **Revizija 2026-08-24.** Popis je prošao provjeru nad `wattleflow` (core),
-> `wattleflow-workflow`, `wattleflow-processors` i `documentation`. Zatvorene stavke su u
-> `DONE.md`; stavke koje su djelomično riješene svedene su ovdje **na ostatak**, a ne
-> ostavljene u zatečenom opsegu.
-
-## Zahtjevi — pokretanje funkcionalne dokumentacije
-
-- [ ] **Većina FR-ova je u statusu *prijedlog*.** Indeks
-  [`02-FRQ/0-FRQ-EN.md`](../02-FRQ/0-FRQ-EN.md) vodi gotovo sve unose kao prijedlog; status se
-  mijenja kroz DR, ne prešutno (D-03). Kategorija `FR-ORG` je prazna — vidi §Razlamanje registara.
-  Faza 3 iz `CLAUDE.md` §4 do tada nije zatvorena.
+policy nosi normu na snazi, ovaj popis nosi stanje rada. Zatvorena stavka se **briše**, ne
+arhivira — povijest nose git i `DR-WFL` serija.
 
 ## Stanje izmješteno iz policyja (2026-08-16)
 
 Brojke i oznake stanja izašle su iz `CLAUDE.md` po §9/D-13; ovdje im je mjesto.
 
-- [ ] **`@staticmethod`/`@classmethod` migracija (`NFR-ORG-05`, §2.9) — ostatak je `cad`.**
-  `wattleflow-workflow` i `wattleflow-processors` su prošli (uz odgođene slučajeve zbog
-  `cls`-param iznimke). `wattleflow-cad` nije mjeren istim testom; popis kandidata izvesti
-  AST pretragom, ne prepisivati ovdje (§9, D-13).
-- [ ] **Odgođeni agregati (`DR-WFL-007`, §2.7) — ostatak.** Na oblik `_EXPORTS` prešli su
-  `connections`, `drivers`, `pipelines`, `processors`. Ostaju `strategies` (+ `cryptography`,
-  `documents`, `helpers` podpaketi), `blackboards`, `documents`, `oscal`, `repositories` i
-  `helpers.converters`. Kvar je latentan — izlazi tek na užoj instalaciji. Brojevno stanje
-  vodi `DR-WFL-007` §Otvoreno.
-- [ ] **Test maskiranja u lint/CI (`DR-WFL-007` §Otvoreno, prioritet).** Bez njega je §4
-  postupak, a ne gate. Izvor popisa opcionalnih biblioteka mora biti distribucijski manifest
-  (`DR-WFL-002` §2.2), ne ručni popis u testu.
-- [ ] **Sinkronost `_EXPORTS` i stvarnih modula.** Ime u mapi bez podmodula pada tek pri
-  pristupu; podmodul bez unosa je nevidljiv. Oboje je AST-provjerljivo i pripada istom
-  pravilu kao gornja stavka.
+- [ ] **`@staticmethod`/`@classmethod` migracija (`NFR-ORG-05`, §2.9).** AST popis zatečenih
+  kandidata ponovno izvesti pretragom; posljednji poznati ostatak je `cad`. `processors` i
+  `workflow` prošli, uz odgođene slučajeve zbog `cls`-param iznimke.
+  - (2026-08-21) Zaseban ostatak istog pravila u `workflow`: **privatne modul-funkcije** uz
+    pripadne modul-konstante (nisu bile dio prethodnog popisa, jer popis je gledao dekoratore
+    postojećih metoda, ne slobodne funkcije). Omotane u kvalificirane klase; pretraga
+    `^def _` nad `src/` sada je prazna. Konstante u `constants/filetype.py` namjerno ostaju
+    modul-razine — unutar `Enum` tijela postale bi članovi enuma.
 - [ ] **Aspiracije bez mehanizma (§6.2 SIEM, §6.4 observability).** Ostaju označene kao
   aspiracija (D-05) dok se ne odluči transport i format; tada prelaze u zahtjev ili se povlače.
-- [ ] **Proširiti §9 zabranu** i na verziju alata i na oznake faza — danas zabranjuje samo
-  „brojeve nalaza", pa su verzija linta i `✅/🔄/⏳` prolazili kroz nju. Izmjena policyja → DR.
-- [ ] **`tools/README.md` zaglavlje zaostaje za alatom** — navodi `Verzija: 1.14.0`, a
-  `wem_lint.__version__` je `1.16.0` (changelog ima unose za 1.15.0 i 1.16.0). Prezentacija
-  se versionira odvojeno od kriterija (D-13), ali zaglavlje alata mora pratiti alat.
-- [ ] **Vlasništvo `conformance/` direktorija po distribuciji.** Snimka processorsa živi u
-  `workflow/conformance/`; `processors/conformance/` ne postoji. Odlučiti: jedan zajednički
-  direktorij (pa preimenovati) ili po jedan po distribuciji (pa preseliti snimku).
 
-## Razlamanje registara (2026-08-24)
-
-Registri `HLRQ`/`FRQ`/`NFRQ` razlomljeni su na zapis po zahtjevu u korijenske kategorije
-`01-HLRQ/`, `02-FRQ/`, `03-NFRQ/`, po obrascu `kategorija-broj-opis-JEZIK.md` (vidi `DONE.md`).
-Ostaje:
-
-- [ ] **Razlamanje je izmjena registra → traži DR (D-03).** Zapis mora pokriti: obrazac imena
-  (`kategorija-broj-opis-JEZIK.md`), preseljenje `Zajedničkih definicija` u `NFR-DEF-01`,
-  povelje `[M]` u `NFR-DEF-02`, Dodatka A u `NFR-APX-01`, i **uvođenje EN izdanja prije v1.0**
-  (vidi sljedeću stavku). Do zapisa je razlamanje **zatečeno stanje**, ne odobrena norma.
-- [ ] **EN izdanje postoji prije v1.0 — uskladiti s `CLAUDE.md` §3.2 i §8.** Policy kaže da
-  doktrinarni tekst ostaje hrvatski **do v1.0**, a EN izdanje je **zaseban, namjeran čin
-  objave**. Sada u stablu stoji `-EN.md` za cijeli sloj zahtjeva. Odlučiti: (a) proširiti §3.2
-  da dopusti dvojezični registar uz HR kao autoritativan, ili (b) povući EN datoteke do v1.0.
-  Do odluke EN nosi banner „HR je autoritativan" — što je deklaracija, ne odobrenje (D-05).
-- [ ] **Dvojezičnost je nova prilika za drift (D-12/D-13).** HR i EN nose istu normu u dvije
-  datoteke; nijedan alat ne provjerava da su u koraku. Kandidat: lint koji uspoređuje strukturu
-  (broj kriterija, oznake, statusi) para `-HR`/`-EN`. Do tada deklarirana slijepa pjega (D-11).
-- [ ] **`NFR-ORG-07` nema unos, a mjeri se kao `error`.** `preset_allowed_declaration` ruši build
-  u objema distribucijama, a `NFR-ORG-08` i `NFR-SEC-06` k.1 ga citiraju kao izvor. Napisati
-  `NFR-ORG-07-input-surface-{HR,EN}.md` — traži DR (D-03).
-- [ ] **`FR-ORG` kategorija je prazna.** Zatečeni registar nosio je samo zaglavlje
-  `## FR-ORG-01 — ...`; razlamanje ga je zamijenilo deklariranom rupom u `02-FRQ/0-FRQ-EN.md`.
-  Popuniti po ISO/IEC/IEEE 29148 ili povući kategoriju.
-- [ ] **Preostale kategorije bez naslijeđene strukture.** `04-DR` nosi samo `DR-PRC-001` dok
-  `DR-WFL` serija (21 zapisa) i `DR-COR` serija još žive u `workflow/dr/` odnosno
-  `workflow/core/dr/`; `05-METHOD/dqi.md` ne slijedi obrazac imena (`METHOD-01-dqi.md`);
-  `06-ANALYSIS` i `07-CHANGES` su datumski, što je vlastiti obrazac i treba ga potvrditi ili
-  uskladiti. Seljenje `DR-WFL` serije lomi ~40 referenci pa traži isti postupak kao prva stavka.
-
-## Nalazi konsolidacije (2026-08-24)
-
-- [ ] **`02-FRQ/` datoteke su preimenovane u `FRQ-*`, a zahtjev se i dalje zove `FR-*`.** Ime
-  datoteke sada nosi ime *registra*, ne *zahtjeva* — različito od `03-NFRQ/NFR-*` i od naslova
-  unutar samih datoteka (`# FR-CON-13.1 — …`). Poveznice su 2026-08-24 poravnate s datotekama
-  koje stvarno postoje; odlučiti koji je obrazac norma (`FR-*` kao u zaglavljima, ili `FRQ-*`)
-  i provesti ga u jednom potezu — to je izmjena obrasca imena, dakle DR (D-03).
-- [ ] **`D-09` i `D-10` su na snazi, a izvor im je `DR-COR-014` u statusu *predložen*.** Norma
-  na snazi izvedena iz neprihvaćene odluke je nalaz pod D-02 (`DOCTRINE` §Bilješke t.2).
-  Prihvatiti `DR-COR-014` ili prekvalificirati članke.
-- [ ] **Kodifikacija doktrine nema DR zapis.** Bivše `DR-018 (kandidat)` bilo je izvor gotovo
-  svakom članku; zapis nikad nije otvoren. Isto vrijedi za povlačenje osam članaka
-  2026-08-24 (v0.1 → v0.2). Deklarirano u `DOCTRINE` §Bilješke t.1; otvara se kad dođe red na
-  reviziju DR serija.
-- [ ] **Dopuna doktrine čeka konsolidaciju sloja zahtjeva.** Registar je namjerno malen
-  (9 članaka); novi ulazi tek uz mehanizam i signal. Kandidati koji su pali na tom testu vode
-  se u tablici *Povučeni članci* — ne brišu se iz vidokruga, čekaju nositelja.
-- [ ] **`FILOZOFIJA.md` (416 linija, HR) i `PHILOSOPHY.md` (271, EN) su se razišli.** Nije
-  prijevod nego dvije verzije istog teksta; §3.2 kaže da HR vlada. Odlučiti koja je izvor pa
-  drugu svesti na prikaz ili stub — isti postupak kao za `LITERATURA`/`POSTULATI`.
-
-## Usklađivanje dokumentacije (nalaz 2026-07-30, revidiran 2026-08-24)
+## Usklađivanje dokumentacije (nalaz 2026-07-30)
 
 Nalazi iz analize `PHILOSOPHY` / `METHODOLOGY` / `DOCTRINE` / `FR` / `NFR`. Sve su izmjene
 registara → idu kroz DR (D-03).
 
-- [ ] **Akronimi — `DR-WFL-004` je i dalje otvoren.** Kriteriji sada **nose suspenziju**
-  (`NFR-ORG-02` §4, `NFR-ORG-03` k.4 — vidi `DONE.md`), pa metoda više ne propisuje
-  neodlučeno. Ostaje sama odluka: `PDF` vs `Pdf`. Do nje pravilo stoji na `WARNING` uz
-  deklarirani waiver i **ne provodi se** masovnim preimenovanjem (D-02).
-- [ ] **`ADR` ostaci izvan registra zahtjeva.** `DOCTRINE.md` i `METHODOLOGY.md` su čisti
-  (provjereno 2026-08-24); ostaju spomeni u `DR-COR-*` „Prijelaz s prethodnih oznaka" tablicama,
-  što je dopuštena povijesna referenca — `ADR` je zabranjen samo za **nove** zapise (§8).
+- [ ] **Ukinuti reference na `tools/naming_registry.yaml`** u `NFR.md` (4×), `FR.md`,
+  `METHODOLOGIA.md` (§10) i `DOCTRINE.md` (D-12) → `tools/dictionary.json`.
+- [ ] **Ispraviti putanje:** `docs/adr/helpers/DR-WFL-001` → `documentation/04-DR/…`;
+  `docs/conformance/` → `documentation/workflow/conformance/`; `documentation/dr/`
+  (FILOZOFIJA, tablica svezaka) → `documentation/04-DR/`; `tools/ANALIZA.md` →
+  `tools/Analiza.md`; `documentation/dictionary.json` (POSTULATE, RIJECNIK) →
+  `documentation/dictionary.yaml`; `documentation/literatura.md` (dictionary.yaml) →
+  `LITERATURE.md`.
+- [ ] **Ukloniti zastarjele brojke lint nalaza** („13 ERROR + 16 WARN" u `NFR.md`/`FR.md`) —
+  zamijeniti uputom na C-snimku; nalaz bez trojke krši D-10.
+- [ ] **Dvostruki registri (D-12/D-13):** `LITERATURE.md` (1–59) i `workflow/hr/LITERATURA.md`
+  (1–57) dodjeljuju **ključevima 56/57 različite radove** → kršenje append-only pravila; isto
+  drift `POSTULATE.md` (P-21) vs `workflow/hr/POSTULATI.md`. Odabrati jedan izvor po registru;
+  uskladiti i layout (dio korijenskih dokumenata su symlinkovi na `hr/`, dio nisu).
+- [ ] **Oznake odluka u `DOCTRINE.md`:** `DR-013/014/016/018` bez prefiksa; `DR-016`/`DR-018`
+  nemaju zapis ni u jednom indeksu. Prefiksirati i otvoriti zapise ili označiti kao kandidate.
+- [ ] **`DOCTRINE` D-02:** „suspendirano do `DR-015`" → `DR-WFL-004` (preimenovano u indeksu).
+- [ ] **`METHODOLOGIA` Povijest izmjena / Bilješka t.2:** nulti rename „DR-WFL-004 →
+  DR-WFL-004" → „`DR-015` → `DR-WFL-004`".
+- [ ] **Predložak DR-a vs `DOCTRINE`:** polje *Temelji* (D-01/D-05/D-15) nije u predlošku →
+  dodati u predložak ili uskladiti naziv sa *Svjedočanstvo*/*Registar*.
+- [ ] **`NFR-ORG-06` više ne postoji** (dekomponiran u SEC-01/02/03, 2026-07-22): ažurirati
+  `METHODOLOGIA` §7 i §10, `DOCTRINE` D-07 i zaglavlje `DR-WFL-002` → `NFR-SEC-03`.
+  Usput: `NFR-SEC-03` citira „`DR-WFL-002/07`" — `07` je predrename oznaka (`DR-WFL-003`).
+- [ ] **Akronimi — sukob registra i metode:** `NFR-ORG-02` kriterij 4 i `NFR-ORG-03` kriterij 4
+  kažu „prekršaj / build pada", dok je pravilo suspendirano na WARNING do `DR-WFL-004`
+  (`METHODOLOGIA` §8, `acronym_identifier_casing.status: undecided`). Kriteriji moraju nositi
+  suspenziju (severity iz statusa) — inače metoda propisuje neodlučeno (D-02).
+- [ ] **`ADR` ostaci u `NFR.md`** („pod ADR upravljanjem", „kroz ADR") — `ADR` je zabranjen za
+  nove zapise; `NFR-ORG-03` već koristi „kroz DR".
 - [ ] **`DR-WFL-002` §5, zadnja natuknica:** „Umbrella distribucije (**budući `DR-WFL-003`**)"
   — zaostatak predrename numeracije. `DR-WFL-003` je čuvana opcionalna ovisnost; registar
   umbrella distribucija nema zapisa ni kandidata. Preimenovati u „budući DR" bez broja i
   otvoriti kandidata, ili povući stavku.
-- [ ] **Test maskiranja na razini paketa nije ničiji kriterij.** `NFR-SEC-03` kriterij 1 sada
-  ga navodi kao metodu verifikacije **na razini modula** (`DR-WFL-003`), ali paketna razina
-  (`DR-WFL-007` §4, §2.7 t.3 — *uvozivost paketa pod maskiranim opcionalnim tierom*) nema
-  kriterij, pa je `wem_lint` ne mjeri. Kandidat: novi kriterij u `NFR-SEC-03` ili `NFR-SEC-02`
-  (import-time closure je učitani kod = napadna površina). Traži DR (D-03).
+- [ ] **Test maskiranja nije ničiji kriterij.** Postupak nose dva DR-a (`DR-WFL-003` §2.3 na
+  razini modula, `DR-WFL-007` §4 na razini paketa) i §2.7, ali nijedan NFR ga ne navodi kao
+  kriterij prihvaćanja, pa ga `wem_lint` ne mjeri. Kandidat: `NFR-SEC-03` novi kriterij
+  („uvozivost paketa pod maskiranim opcionalnim tierom") ili `NFR-SEC-02` (import-time
+  closure je učitani kod = napadna površina). Traži DR (D-03).
 - [ ] **Agregatni rub nestaje iz AST-a (`DR-WFL-007`).** `dictionary.yaml` već bilježi da
   ORG-01 fan-in ne razrješava agregatne uvoze pa je donja granica; s `__getattr__` agregatom
-  ruba nema ni u AST-u — mapa `_EXPORTS` je jedini statički trag, a `wem_lint` je ne čita
-  (`grep _EXPORTS tools/wem_lint.py` je prazan). Bez toga `drivers`/`connections`/`processors`
-  postaju nevidljivi grafu ovisnosti.
-- [ ] **`PHILOSOPHY.,md`** (zarez u nazivu datoteke) — pojave u `POSTULATE.md`,
-  `workflow/hr/{POSTULATI,LITERATURA,METHODOLOGIA}.md`, `DR-WFL-002`, `DR-WFL-003`,
-  `workflow/changes/2026-07-28-…`. Nijedna ne razrješava u postojeću putanju.
-- [ ] **Prebrojati unakrsne reference na `METHODOLOGIA`.** Dokument danas ima §1–§10 (+5.1,
-  7.1) — §11 iz starijih referenci ne postoji. Reference provjeriti pretragom, ne prepravljati
-  napamet.
-- [ ] **`POSTULATE.md` / `POSTULATI.md` zaglavlje** navodi nadređene v0.4 / v0.3 → v0.4.1 /
-  v0.3.1 (i `PHILOSOPHY.,md` → `PHILOSOPHY.md`, `dictionary.json` → `dictionary.yaml`).
-- [ ] **Kolizija DR oznaka u nacrtima:** `core/dr/DR.md` i `workflow/concrete/DR.md` nose
-  neprefiksirani `DR-001` sa statusom `proposed` (indeks ih vodi kao nacrte, jedan
-  „sadržajno proturječan") → staviti banner „superseded" u same datoteke.
-- [ ] **`DR-WFL-006` vs kod:** odluka pina `wattleflow>=0.0.0.46`, `workflow/pyproject.toml`
-  ima `>=0.0.0.50` → zabilježiti kao verziju zapisa (D-03).
+  ruba nema ni u AST-u — mapa `_EXPORTS` je jedini statički trag. Pravilo mora naučiti čitati
+  tu mapu (obična literalna `dict`), inače `drivers`/`connections`/`processors` postaju
+  nevidljivi grafu ovisnosti.
+- [ ] **`PHILOSOPHY.,md`** (zarez u nazivu datoteke) — 17 pojava u 7 dokumenata
+  (`POSTULATE.md`, `workflow/hr/{POSTULATI,LITERATURA,METHODOLOGIA}.md`, `DR-WFL-002`,
+  `DR-WFL-003`, `workflow/changes/2026-07-28-…`). Nijedna ne razrješava u postojeću putanju.
+- [ ] **`NFR-ORG-02`, implementacijske napomene:** `PipelinePDFExtractText →
+  PipelinePDFExtractText` je identitet (izvorno ime izgubljeno); popis traži
+  `PipelinePDFRedact → PipelinePDFRedact`, a tablica u „Deduplikacija koda" vodi
+  `PipelinePDFRedact` — uskladiti worklist imena.
+- [ ] **Duplicirane „Zajedničke definicije"** (domena, helper, kanonski subjekt) u `FR.md` i
+  `NFR.md` — držati u jednom registru, drugi referira.
+- [ ] **Kriva referenca sljedivosti:** `FR.md` i `NFR.md` upućuju na „`METHODOLOGY.md` §9
+  *Arhitektonska sljedivost*". Provjereno 2026-08-23: §9 je *AI-potpomognuto inženjerstvo*, §8
+  je *Samoopisivost i imenovanje*, a **sljedivost je §6**. Usput: reference na `METHODOLOGIA`
+  §10/§11 u ovom worklistu pokazuju na odjeljke kojih nema — dokument ima §1–§9 (+5.1, 7.1);
+  cijeli skup unakrsnih referenci treba ponovno prebrojati, ne prepravljati napamet.
+- [ ] **`POSTULATE.md` zaglavlje** navodi nadređene v0.4 / v0.3 → v0.4.1 / v0.3.1.
+- [ ] **Kolizija DR oznaka u nacrtima:** `core/DR.md` i `workflow/concrete/DR.md` nose
+  neprefiksirani `DR-001` (indeks ih vodi kao nacrte, jedan „sadržajno proturječan") → staviti
+  banner „superseded" u same datoteke.
+- [ ] **`DR-WFL-006` vs kod:** odluka pina `wattleflow>=0.0.0.46`, `pyproject.toml` ima
+  `>=0.0.0.47` → zabilježiti kao verziju zapisa (D-03).
+- [ ] **`FR.md` je prazan** (`## FR-ORG-01 — ...`) iako ga FILOZOFIJA/METHODOLOGIA/DOCTRINE
+  tretiraju kao aktivan registar (Svezak V) → popuniti ili deklarirati kao aspiraciju (D-05).
 - [ ] **Nedovršene doktrinarne tvrdnje:** (a) `DOCTRINE` tvrdi da proza citira norme
-  D-oznakama — nijedna D-oznaka nije u `PHILOSOPHY`/`METHODOLOGIA`; (b) `DOCTRINE`:242
-  koristi **H4-DQI** kao doktrinarnu hipotezu, a `PHILOSOPHY` §Hipoteze ima samo H1–H3.
-  Metoda je H4 već deklarirala kao kandidata (`processors/method/dqi.md`) — uskladiti
-  doktrinu s tim ili upisati H4 u registar hipoteza.
+  D-oznakama — nijedna D-oznaka nije u `PHILOSOPHY`/`METHODOLOGY`; (b) **H4-DQI** se koristi
+  kao doktrinarna hipoteza, ali `PHILOSOPHY` §Hipoteze ima samo H1–H3— upisati u registar
+  hipoteza ili je voditi kao kandidat.
 
 ## Metode
 
@@ -150,42 +102,60 @@ registara → idu kroz DR (D-03).
   taj pripada ovoj distribuciji, za razliku od DQI-ja.
 - [ ] **DQI nalazi pripadaju `wattleflow-processors`** — metoda i implementacija su tamo
   (`processors/method/dqi.md`, `pipelines/quality/dqi.py`). Prenijeti u worklist te
-  distribucije kad ga dobije. Ostatak nalaza: implementirana je **jedna dimenzija od šest**,
-  `dqi.py` nema modulski `__all__` (paketni `quality/__init__.py` ga ima), a V1–V6 protokol
-  valjanosti stoji na *otvoreno*. (Uvoz modula više ne puca — `helpers.dtime` je razriješen.)
+  distribucije kad dobije svoj: modul se ne uvozi (referira `wattleflow.helpers.datetime`,
+  preimenovan u workflow stablu — cross-distribucijska posljedica), implementirana je jedna
+  dimenzija od šest, `__all__` nije deklariran.
+- [ ] **`POSTULATE.md` zaglavlje** navodi nadređene v0.4 / v0.3 → v0.4.1 / v0.3.1.
+- [ ] **Tri mrtve poveznice u `METHODOLOGIA.md`:** `PHILOSOPHY.md`, `DOCTRINE.md` i
+  `POSTULATE.md` navedeni su relativno, a dokument živi u `workflow/hr/` — razrješavaju se
+  tek s `../../`. (`NFR.md` radi jer u tom direktoriju postoji istoimena datoteka.)
+- [ ] **Kolizija DR oznaka u nacrtima:** `core/DR.md` i `workflow/concrete/DR.md` nose
+  neprefiksirani `DR-001` (indeks ih vodi kao nacrte, jedan „sadržajno proturječan") →
+  staviti banner „superseded" u same datoteke.
+- [ ] **`DR-WFL-006` vs kod:** odluka pina `wattleflow>=0.0.0.46`, `pyproject.toml` ima
+  `>=0.0.0.47` → zabilježiti kao verziju zapisa (D-03).
 
 ## Veće (značajna cijena ili arhitektonske odluke)
 
-- [ ] **Migracija tip-hintova na PEP 585/604 — ostatak je jezgra.** `wattleflow-workflow` je
-  čist. Ostaju `core/concurrent.py` i `core/transactional.py` (`Optional`, `Tuple`, `Dict`) —
-  dira autoritativni core (§2.5 → `DR-COR`). Za `wattleflow-processors` vidi zaseban odjeljak.
+- [ ] **Sijanje entiteta pripada driveru, a driver ga danas ne zna primiti** (nalaz
+  2026-09-05). `EntityFileDocumentProcessor._sync_entities` je pisao `INSERT INTO
+  entitet/patterns` **iz procesora**, preko `self._conn` i `self.validate` — a nijedno ne
+  postoji nigdje u MRO-u, pa bi svaka konfiguracija s `entities:` pukla na `AttributeError`.
+  Kod je uklonjen (procesor ne piše, `NFRQ-ORG-04`), pa je sposobnost sada **odsutna**, ne
+  samo premještena. Vratiti je znači proširiti `DriverEntity`, koji je pandas-tabelarni
+  (`DataFrame` → CSV/XLS/JSON/Parquet) i nema SQLite konekciju — dakle novi ugovor na tom
+  driveru ili drugi driver. Arhitektonska odluka, traži DR.
+- [ ] **`EntityFileDocumentProcessor` više ne radi ništa s entitetima** (nalaz 2026-09-05).
+  Nakon uklanjanja sijanja i Tika ekstrakcije procesor samo pretražuje, klasificira rutu,
+  filtrira po datumu i predaje jedinicu — ime je postalo netočno. Preimenovanje ide kroz
+  gramatiku `NFRQ-ORG-02` (`Processor + <Subject> + <Operation>`), pa je i sam izbor imena
+  predmet odluke, ne stila. Ime se navodi na **osam** mjesta u primjerima —
+  `03_pdf_pii`, `04_pii_reduction`, `06_pii_complex_workflow` i `23_opensearch`, svaki u
+  `.py` (registracija) i `.yaml` (`type:`) — pa preimenovanje mora ići kroz sve, ili uz
+  prijelazni alias.
+- [ ] **Migracija tip-hintova na PEP 585/604** — `pyupgrade --py311-plus`; 65 starih
+  (`Optional`, `Union`, `List`, `Dict`, `Tuple`) prema 6 novih u `core/` + `concrete/`
 - [ ] Implementirati SIEM forwarding (`audit/` prazan; iskoristiti `AsyncHandler` +
   `Audit.subscribe_handler()`)
 - [ ] OSCAL katalogizacija — `component-definition`, `assessment-results`, dodatni katalozi
 - [ ] Observability — Prometheus / OpenTelemetry za FSM tranzicije i throughput (uz V1–V6)
-- [ ] **Supply-chain za ne-core distribucije (`NFR-SEC-03` kriterij 4).** Hash-pinned lock +
-  SBOM (CycloneDX/SPDX) po distribuciji; SBOM validator vođen core politikom. Razdvajanje
-  specijalizacija je izvršeno (vidi `DONE.md`), ovo je njegov neisporučeni dio.
-- [ ] **Self-integritet + shadowing gate (`NFR-SEC-03` kriterij 5).** Za izgrađene artefakte
-  verificirati wheel `RECORD` (per-file `sha256`) — ne raditi vlastiti digest-format. Za
-  dev/editable stabla `RECORD` je prazan → `wem_lint` digest-scan (`FileDigest`) koji
-  istodobno detektira namespace-sjenčanje/koliziju. Alat danas `RECORD` samo spominje u
-  komentaru; pravila nema.
-- [ ] **Dovršiti PEP 420 namespace migraciju — ostatak su primjeri.** Stabla su migrirana
-  (vidi `DONE.md`). Preostaje: (1) `examples/processors/*` — **11** datoteka i dalje uvozi
-  agregat `from wattleflow.helpers import …` (02, 03, 04, 06, 07, 08, 09, 10, 11, 12, 13) uz
-  ručno razrješavanje nepostojećih simbola (`FileType`→`wattleflow.constants`,
-  `LocalPath`/`Preset`); (2) `examples/todo/*` je dijelom pre-broken — počistiti ili
-  arhivirati. Popis preseljenja imena: `Attribute` → `concrete.helpers`,
-  `TempPathHelper`/`Project` → `helpers.system`, `Normaliser` → `helpers.normaliser`,
-  `TextStream` → `helpers.streams`, `TextMacros` → `helpers.macros`, `FileType` →
-  `constants.filetype`, `ConfigAdapter` → `helpers.config_adapter`, `Config` → `YAMLConfig`
-  iz `helpers.config_yaml`, `ProcessorMemento` → `GenericMemento` (`concrete.memento`),
-  `DataFrameDocument` → `documents.dataframe`. Primjeri nisu pod verzijskom kontrolom i
-  third-party stack nije instaliran, pa izvršne provjere nema — samo razrješavanje imena.
-  Memorija: `helpers-pep420-namespace`.
-- [ ] **Testovi** — odgođeno do odluke o test frameworku (§4). Provjereno 2026-08-24: nijedna
-  distribucija nema `tests/` ni `[tool.pytest]` blok.
+- [ ] **Razdvajanje specijalizacija u zaseban projekt** — `connections/`, `drivers/`,
+  `processors/`, `strategies/`, `pipelines/`, `documents/` izlaze iz clean core paketa
+  (§7). **Regulira `DR-WFL-002` + `NFR-SEC-03`:** matična distribucija = najteža ovisnost;
+  per-distribucija manifest; symlink → editable install (PEP 420/660); supply-chain preko
+  SBOM/lock. Worklist preseljenja: `helpers/converters/`, `mappers/schema_yaml_json.py`.
+  - [ ] **Self-integritet + shadowing gate (`NFR-SEC-03` kriterij 5).** Za izgrađene artefakte
+    verificirati wheel `RECORD` (per-file `sha256`) — ne raditi vlastiti digest-format. Za
+    dev/editable stabla `RECORD` je prazan → `wem_lint` digest-scan (`FileDigest`) koji
+    istodobno detektira namespace-sjenčanje/koliziju.
+  - [ ] **Dovršiti PEP 420 namespace migraciju (nastavak 2026-07-12).** `wattleflow.helpers`
+    je namespace (uklonjen workflow `helpers/__init__.py`; 32 lib fajla na eksplicitnim
+    submodul uvozima; bez symlinkova, cross-distribucijske klase uvijek eksplicitno, nikad
+    agregat/`__all__`). **Preostaje:** (1) migrirati `examples/processors/*` + ručno riješiti
+    nepostojeće simbole (`FileType`→`wattleflow.constants`, `LocalPath`/`Preset`);
+    (2) `examples/todo/*` je dijelom pre-broken — počistiti ili arhivirati; (3) isti princip
+    na ostale dijeljene subtree-eve (`decorators` itd.). Memorija: `helpers-pep420-namespace`.
+- [ ] **Testovi** — odgođeno do odluke o test frameworku (§4)
 
 ## `__slots__` i MRO (nalaz 2026-06-29, djelomično riješeno)
 
@@ -195,9 +165,8 @@ ne prethodi generičkom parametru. Riješeno Fixom B — preslagivanjem redoslij
 komentar uz klasu to čuva na mjestu.
 
 - [ ] **Fix A (niži prioritet)** — alternativa: uskladiti **core** `IOriginator` na
-  `(Generic[State], IWattleflow, ABC)`, tj. isti redoslijed na sučelju `originator` obitelji.
-  Danas je `core/behavioural.py:217` `(IWattleflow, Generic[State], ABC)`. Dira autoritativni
-  core (§2.5 → `DR-COR`) i ima širi domet; razmotriti ako se pojavi još C-builtin/MRO sudara.
+  `(Generic[State], IWattleflow, ABC)`, tj. isti redoslijed na sučelju `originator` obitelji. Dira autoritativni core (§2.5 → `DR-COR`) i ima širi domet;
+  razmotriti ako se pojavi još C-builtin/MRO sudara.
 
 ## OSCAL crosswalk — čeka compliance sign-off
 
@@ -205,20 +174,38 @@ komentar uz klasu to čuva na mjestu.
 provjere; unmapped ID-evi prolaze nepromijenjeni. Mapping je **kuriran compliance artefakt** —
 ne izmišljati mapiranja.
 
-- [ ] **Mapiranja su `PROPOSED`** (`resources/crosswalk/nist-sp800-53_to_asd-ism.json`,
-  `status: proposed-requires-compliance-review`, 2026-05-31) i traže sign-off prije
-  oslanjanja. Postgres deklaracija: `ac-3→ism-0445`, `ia-5→ism-1401` (E8 ML1);
-  `sc-8→ism-0469`, `sc-13→ism-1080` (izvan Essential Eight opsega — protiv E8 baselinea
-  ispravno padaju).
+- [ ] **Mapiranja su `PROPOSED`** (`status: proposed-requires-compliance-review`, 2026-05-31)
+  i traže sign-off prije oslanjanja. Postgres deklaracija: `ac-3→ism-0445`, `ia-5→ism-1401`
+  (E8 ML1); `sc-8→ism-0469`, `sc-13→ism-1080` (izvan Essential Eight opsega — protiv E8
+  baselinea ispravno padaju).
 
 ## Konzistentnost i standardi
 
-- [ ] **Objava preimenovanog paketa.** Kod i dokumentacija nose `wattleflow-processors`;
-  preostaje uskladiti PyPI i GitHub opise (nije provjerljivo iz repozitorija).
+- [ ] **`tools/README.md` preskače izdanje.** Changelog ide 1.11.0 → (ništa) → 1.13.0; za
+  `wem_lint 1.12.0` nema zapisa iako je promijenio opseg mjerenja (scope filtar). Dopisati ili
+  deklarirati kao rupu.
 
-### Refaktoring: migracija tip-hintova u `wattleflow-processors`
+- [ ] **Preimenovanje paketa** `wattleflow-workflow-processors` → `wattleflow-processors` je
+  provedeno u kodu; preostaje uskladiti dokumentaciju i PyPI/GitHub opise.
+- [ ] **Preostali lazy-loading deferrali** (§2.7): `strategies/__init__` (documents strategije),
+  `pipelines/__init__` (nlp).
 
-Provjereno 2026-08-24: **103** datoteke s `Optional`/`Union`/`List[`/`Dict[`/`Tuple[`.
+- [ ] **`REQUIRED` uz `ALLOWED` — preporuka, traži mjerenje vrijednosti (nalaz 2026-08-31).**
+  `ALLOWED` deklarira *dopuštene* konfiguracijske ključeve; ništa ne deklarira **obvezne**.
+  Posljedica: `WorkflowFactory` je repozitoriju bez `configuration.driver` tiho predavao
+  `None`, a kvar se javljao tek u strategiji. Privremeno rješenje (dogovoreno 2026-08-31):
+  tvornica čita `PresetGate.resolve(<klasa>)` i traži `driver` ako ga klasa deklarira — dakle
+  *dopušteno* se čita kao *obvezno*, što je semantičko rastezanje i ovdje se vodi kao nalaz.
+  Preporuka: druga deklaracija `REQUIRED = (...)` koju tvornica provodi jednako za sve
+  komponente (veze, driveri, procesori, repozitoriji), umjesto provjere po tipu.
+  **Prije odluke izmjeriti vrijednost:** prebrojati konfiguracijske ključeve koji su danas
+  de facto obvezni po komponenti (`ALLOWED` naspram onoga što konstruktor asertira) — ako ih
+  je malo, mehanizam ne zaslužuje vokabular. Širi kontrolirani vokabular → traži DR (D-03,
+  D-12).
+
+### Refaktoring: migracija tip-hintova
+
+Potvrđeno i u `wattleflow-processors` (73 datoteke s `Optional`/`Union`/`List`/`Dict`):
 
 1. Uvesti `from __future__ import annotations` gdje nedostaje.
 2. `pyupgrade --py311-plus` (ili `ruff check --select UP --fix`), **jedan commit po pod-paketu**.
@@ -227,21 +214,21 @@ Provjereno 2026-08-24: **103** datoteke s `Optional`/`Union`/`List[`/`Dict[`/`Tu
 
 ### Tika kao connection/driver + driver-kanal za create-strategije (nalaz 2026-06-26)
 
-**Kontekst.** `EntityFileDocumentProcessor` ekstrahira sadržaj preko Tike i prosljeđuje
-`content=` u `blackboard.create`. Arhitektonski pogrešno: ekstrakcija je odgovornost
-create-strategije, ne procesora. (Od tada je ekstrakcija barem **opt-in** — `extract: true`
-— pa procesor po zadanom više ne zove Tiku; sama arhitektura nije promijenjena.)
+**Kontekst.** `EntityFileDocumentProcessor` bezuvjetno ekstrahira sadržaj preko Tike i
+prosljeđuje `content=` u `blackboard.create`. Arhitektonski pogrešno: ekstrakcija je
+odgovornost create-strategije, ne procesora.
 
 **Odluka korisnika (2026-06-26): odgođeno.** Smjer (ne implementirati bez dogovora):
 
 - [ ] **ConnectionTika + DriverTika** (OSCAL obavezan). Server-management (jar staging, Java
-  provjera, timeout) seli iz procesora u `ConnectionTika`.
+  provjera, timeout) seli iz `OCRTextProcessor` u `ConnectionTika`.
 - [ ] **CreateTextDocument** koristi `DriverTika` za ekstrakciju iz `filename`;
   `CreatePdfDocument` (fitz) ostaje za PDF.
 - [ ] **EntityFileDocumentProcessor** prestaje zvati Tiku; prosljeđuje samo `filename`.
 - [ ] **Otvoreno pitanje — driver-kanal za create-strategije.** Create-strategije nemaju
   pristup driveru (write-strategije ga imaju preko `kwargs.get("driver")`). Smjer: isti
   mehanizam; izvedba dira `concrete/` (§2.5 — tražiti odluku).
+- [ ] **Usputno:** `ReadDocumentFile` se referira u yaml-ima (03/04/05) ali **ne postoji**.
 
 **Interim:** `tika_timeout` default 300s; suvišan Tika poziv u 04 ostaje do refaktora.
 
@@ -250,9 +237,22 @@ create-strategije, ne procesora. (Od tada je ekstrakcija barem **opt-in** — `e
 **Status:** analiza dovršena; implementacija **zaustavljena na zahtjev korisnika** dok se ne
 izradi DR (arhitektura + NFR) koji vodi sustavni pristup. Ne dirati kod do tada.
 
-> **D1 je riješen** zajedno s reorgom pipelinea (2026-07-06) — vidi `DONE.md`. **Otvoreno iz
-> tog reorga:** pixel-apply write-strategija `WriteReductedPNG` nije implementirana —
-> `PipelineReductSpans` piše spanove u metadata.
+> **D1 RIJEŠEN + reorg pipelinea (2026-07-06, direktiva korisnika — D2–D13 i dalje DR-gated).**
+> `ocr_tokens` → **`helpers/ocr.py` `OcrText.tokens()`** (lazy pytesseract + `safe_open`).
+> Razdvojena ekstrakcija od redukcije, native od generičkih:
+>
+> | Klasa | Modul | Uloga |
+> |---|---|---|
+> | `PipelineOCRExtract` (`OCRPreflightMixin`) | `pipelines/ocr/ocr.py` | tekst-ekstrakcija (Tika/tesseract, format-agnostično) |
+> | `PipelineReductSpans` | `pipelines/entity/reduct.py` | samo redukcija — OCR bbox spanovi, image-only |
+> | `PipelineMacroRedaction` | `pipelines/entity/macros.py` | text macro redakcija (`pii_hits`) |
+> | `PipelinePDFExtractText` | `pipelines/pdf/pdf.py` | PDF tekst-ekstrakcija (native + OCR dopuna) |
+> | `PipelinePDFRedact` | `pipelines/pdf/pdf.py` | PDF redakcijski spanovi (fitz `search_for`) |
+>
+> `pipelines/png/` uklonjen. **Otvoreno:** pixel-apply write-strategija `WriteReductedPNG`
+> nije implementirana — `PipelineReductSpans` piše spanove u metadata.
+> *Napomena:* imena u ovoj tablici i worklist preimenovanja u `NFR-ORG-02` se razilaze —
+> vidi „Usklađivanje dokumentacije".
 
 | # | Klaster | ~Pojava | Lokacije (uzorak) |
 |---|---|---|---|
@@ -260,7 +260,6 @@ izradi DR (arhitektura + NFR) koji vodi sustavni pristup. Ne dirati kod do tada.
 | D3 | Strategy `execute()` try/except→`StrategyException` | ~41 | sve `strategies/documents/*` |
 | D4 | Driver resolution (3 varijante) | ~21 | kanon: `strategies/documents/pdf.py _resolve_driver` |
 | D5 | `isinstance(caller/facade…)` preambule | ~38 | sve strategije (osim `pdf.py` → `Attribute.evaluate`) |
-| D6 | Metadata pečat `created_by/at`,`stored_by/at` | ~21 | create/write strategije |
 | D7 | Lazy import guard | ~34 | `connections/*`, `drivers/*`, `processors/youtube.py` |
 | D8 | `raise DriverXxxError(caller=self, …)` wrapper | **112** | `drivers/*`, `connections/*` |
 | D9 | Prazne `class DriverXError(DriverException): pass` | ~35 | kolizija `KafkaConnectionError` 2× |
@@ -274,9 +273,9 @@ izradi DR (arhitektura + NFR) koji vodi sustavni pristup. Ne dirati kod do tada.
 `safe_open`, `Normaliser`/`TextMacros`, `decorators/preset.py` + `decorators/oscal/policy.py`,
 `helpers/system.py`, `BaseWriteStrategy`.
 
-- [ ] **Helper/Facade:** `helpers/system.py += require_module(name, pip=…)` → **D7**;
-  `strategies/_support.py resolve_driver()` + `stamp_created/stored()` → **D4, D6**
-  (provjereno 2026-08-24: nijedan od njih još ne postoji)
+- [~] **Helper/Facade:** **[x]** `helpers/ocr.py OcrText.tokens()` → **D1**;
+  **[ ]** `helpers/system.py += require_module(name, pip=…)` → **D7**;
+  **[ ]** `strategies/_support.py resolve_driver()` + `stamp_created/stored()` → **D4, D6**
 - [ ] **Dekoratori:** `@strategy_guard` → **D3** (alternativa u core `GenericStrategy.call()`
   — §2.5, traži `DR-COR`); `@wrap_errors(DriverXxxError)` → **D8**
 - [ ] **Mixini/baze:** `RecordDocument` → **D10**; `GraphDocumentMixin` → **D11**;
@@ -284,66 +283,98 @@ izradi DR (arhitektura + NFR) koji vodi sustavni pristup. Ne dirati kod do tada.
 - [ ] **Tipovi/konstante:** centralni `pipelines/types.py` → **D2**; `*_SUFFIX` iz `FileType`
 - [ ] **D9:** ostaviti eksplicitne klase (greppabilnost), riješiti koliziju `KafkaConnectionError`
 
-**Preostali bug uočen usput:** `stored_at` je nedosljedan — `strategies/documents/json.py:268`
-koristi `Now.utc()`, sve ostale write-strategije `document.utc_time_stamp()`. (Ostala tri buga
-iz izvornog nalaza su ispravljena — vidi `DONE.md`.)
+**Bugovi uočeni usput:** youtube write-strategija diže `PipelineException` (neuvezen) umjesto
+`StrategyException`; `strategies/documents/text.py:149,195` `exec=e` umjesto `exc=e`;
+`strategies/documents/solr.py:48-64` gradi `SolrDocument` 2×; `stored_at` nedosljedan
+(`Now.utc()` vs `utc_time_stamp()`).
 
 **Granice (§2.5):** `@strategy_guard` u coreu traži odluku korisnika; third-party helperi (OCR)
 **moraju** u processors paket, lazy (§7.4). Redoslijed: (1) pipelines, (2) strategije, (3) driveri.
 
 ## NFR-ORG-01 / SEC-03 nalazi (wem_lint)
 
-Stanje vektora se ne prepisuje ovdje (§9, D-13) — pokreni `tools/wem_lint.py --snapshot` i
-referiraj snimku u `documentation/workflow/conformance/`. Nalazi nad clean core stablom su
-zatvoreni (vidi `DONE.md`); ovdje ostaje `wattleflow-processors`.
+Rješenja **moraju poštovati zero-trust (§7.1)** i zahtijevaju strukturne izmjene. Stanje
+vektora se ne prepisuje ovdje (§9, D-13) — pokreni `tools/wem_lint.py --snapshot` i referiraj
+snimku u `documentation/workflow/conformance/`.
 
-- [ ] **`wattleflow-processors` nosi zatečene warninge** (`OBS-01/02/03` audit zapis,
-  `ORG-01` neiskorišteni dijeljeni helperi, `ORG-02` package-alias i pipeline-gramatika,
-  `ORG-03` typevar-role, `SEC-03` foreign-import i manifest) — snimka
-  `2026-08-23-processors.json`. Vektor je zelen jer nijedno pravilo nije `error`; worklist je
-  sadržaj snimke, ne prepis brojki ovamo.
+- [ ] **Ciklus i jednosmjerni proboj `concrete` ↔ `helpers`.** Shared helper uzvodno uvozi
+  jezgru (`helpers/config/base.py` → `concrete.base`, uz povratni brid `concrete/workflow.py` →
+  `helpers`), dok concrete uvozi `helpers.*`. **Opseg smanjen 2026-08-20:** `config_adapter` i
+  `config_validator` preselili su u `wattleflow-processors` (`DR-WFL-012`), pa više nisu dio
+  ovog nalaza. Smjer (TBD, dira `concrete/` → §2.5): zajedničke iznimke/konstante ispod
+  helpersa ili lokalne iznimke u helpersima; cilj acikličnost shared sloja. **Postalo mjerljivo
+  tek s `wem_lint 1.12.0`** — prije je scope filtar brisao module prije nego ih pravilo vidi.
+- [ ] **Odluka o razini dok se ciklus ne razriješi.** `domain_acyclicity` je `error`, pa ti
+  nalazi ruše build. Ostaviti tako, spustiti na `warning` ili dati deklarirani waiver — izmjena
+  `rules` bloka u kriteriju, dakle **kroz DR** (D-03).
+- [ ] **Jedno-potrošački dijeljeni helperi.** Prema ORG-01 kriteriju 1 pripadaju unutar domene
+  koja ih koristi ili u njezin domain-internal shared modul; tolerirani su dok se ne presele.
+- [ ] **§7.1 procurivanje third-partyja u jezgru:** `mappers/schema_yaml_json.py` →
+  pandas/yaml/jsonschema (kandidat za `wattleflow-processors`). `concrete/logger.py`→pandas je
+  **riješen 2026-07-22** (duck-typing `hasattr(shape, "columns")`).
+- [ ] **18 processors-modula u workflow stablu** (converters/, formatters/, parsers/, protobuf,
+  image_guard, generators, localmodels) — kandidati za seljenje (vezano uz „Razdvajanje
+  specijalizacija"); `scope` filtar ih za sad isključuje iz opsega.
 
 ## Konfiguracijski moduli (stanje 2026-08-19, uz `DR-WFL-012`)
 
+Riješeno tim zapisom: prekid uvoza `concrete/`, nemogućnost izvršenja alata konformnosti,
+i deklarirana iznimka bez pokrića (`scope.guarded_optional` sada prazan, kriterij 0.8.2).
+Ostaje:
+
 - [ ] **Je li `DR-WFL-003` još živ?** Odluka o čuvanoj opcionalnoj ovisnosti nema više
-  nijednog nositelja u ovoj distribuciji (`scope.guarded_optional` je prazan, potvrđeno i u
-  `NFR-SEC-03` kriteriju 1). Povući je ili je zadržati kao mehanizam za buduće slučajeve —
-  kroz DR, ne šutnjom.
+  nijednog nositelja u ovoj distribuciji. Povući je ili je zadržati kao mehanizam za
+  buduće slučajeve — kroz DR, ne šutnjom.
+- [ ] **Processors nema C-snimku.** Alat je nad njim izvršen 2026-08-22 (**0 error**,
+  warningi zatečeni), ali vektor nije arhiviran kao snimka — `processors/conformance/`
+  još ne postoji.
+- [ ] **Primjeri se ne uvoze** — `from wattleflow.helpers import …` pretpostavlja agregat
+  `wattleflow.helpers` koji ne postoji ni u jednoj distribuciji (zatečeno). Par
+  `01_processor_etl_direct.py` / `01_processor_synthetic_data.py` usklađen 2026-08-22;
+  preostaje **11** datoteka u `examples/processors/` plus `examples/todo/`. Popis imena za
+  preseljenje: `Attribute` → `concrete.helpers`, `TempPathHelper`/`Project` →
+  `helpers.system`, `Normaliser` → `helpers.normaliser`, `TextStream` → `helpers.streams`,
+  `TextMacros` → `helpers.macros`, `FileType` → `constants.filetype`, `ConfigAdapter` →
+  `helpers.config_adapter`, `Config` → `YAMLConfig` iz `helpers.config_yaml`,
+  `ProcessorMemento` → `GenericMemento` (`concrete.memento`), `DataFrameDocument` →
+  `documents.dataframe`. Primjeri nisu pod verzijskom kontrolom i third-party stack nije
+  instaliran, pa izvršne provjere nema — samo razrješavanje imena.
 - [ ] **`get()` nosi dvije nespojive semantike** u konfiguraciji i adapteru; dok se ne
   usklade, nije dio ugovora `IConfig` (`DR-COR-016` §Otvoreno).
-- [ ] **`DR-WFL-017` je prijedlog, a kod je već izveden.** `wattleflow.enums`, `constants`,
-  `decorators` i `helpers` su PEP 420 imena bez `__init__.py` u objema distribucijama; uvoz
-  je eksplicitan submodul. Zapis je i dalje **Prijedlog (nacrt, 2026-08-22)**. Prevesti ga u
-  *prihvaćen* ili ga odbaciti — do tada registar nosi dvije nespojive tvrdnje o vlasništvu
-  imena (`DR-WFL-016` t.2).
+- [ ] **`DR-WFL-017` je prijedlog, a kod je već izveden** (jezgra `v0.0.1.2` + radno stablo,
+  processors radno stablo). `wattleflow.enums`, `constants`, `decorators` i `helpers` sada su
+  PEP 420 imena bez `__init__.py` u objema distribucijama; uvoz je eksplicitan submodul.
+  Prevesti zapis u *prihvaćen* ili ga odbaciti — do tada registar nosi dvije nespojive tvrdnje
+  o vlasništvu imena (`DR-WFL-016` t.2).
 - [ ] **`DR-WFL-007` ne spominje dijeljeno ime.** `CLAUDE.md` §2.7 t.4 propisuje eksplicitan
   submodul za cross-distribucijski uvoz, ali zapis na koji upućuje bira samo između eager i
   odgođenog agregata — treći slučaj (*agregata nema jer ga nijedna distribucija ne posjeduje*)
   ondje nije zapisan. Dopuniti (`DR-WFL-017` §Otvoreno t.2).
-- [ ] **`wattleflow-processors` nosi `constants/keys.py`** — ime koje jezgra posjeduje, a
-  njegov kod ga ne uvozi (`grep` nalazi samo vlastito zaglavlje modula). `MANIFEST.in` ga
-  šalje u sdist. Odlučiti brisanje. (`constants/errors.py` je obrisan — vidi `DONE.md`.)
-- [ ] **Repovi `DR-WFL-016` (mrtvi vokabular).** Preseljen je, ne obrisan — simboli danas
-  žive u `processors/enums/{audit,pipeline}.py`: `ConnectionStatus`, `EventLog`,
-  `ProtectiveMarkings`, `WattleflowOSCAL`, `PipelineAction`, `PipelineType`,
-  `ProvenanceHandler`. Odlučiti brisanje. `Event.Classification` ostaje u jezgri
-  (`workflow/enums/event.py:38`) iako sam pojam klasifikacije više nije ondje — pregledati
-  kad se `Event` bude čistio.
-- [ ] **Rep `DR-WFL-015`:** `wattleflow-oscal` treba povući s PyPI-ja ili označiti napuštenim
-  dok kolizija imena ne prestane biti moguća. (Ostala tri repa su zatvorena — vidi `DONE.md`.)
+- [ ] **`wattleflow-processors` nosi `constants/errors.py` i `constants/keys.py`** — ime koje
+  jezgra posjeduje, a njegov kod ih više ne uvozi. `MANIFEST.in` ih šalje u sdist,
+  `packages.find` ih isključuje iz wheela (`SEC-03` K12). Odlučiti brisanje.
+- [ ] **Repovi `DR-WFL-016` (mrtvi vokabular).** Preseljen je, ne obrisan — odlučiti brisanje
+  (`ConnectionStatus`, `EventLog`, `ProtectiveMarkings`, `WattleflowOSCAL`, `PipelineAction`,
+  `PipelineType`, `ProvenanceHandler`, većina `errors.py`/`keys.py`). `Event.Classification`
+  ostaje u jezgri iako sam pojam klasifikacije više nije ondje — pregledati kad se `Event`
+  bude čistio.
+- [ ] **Repovi `DR-WFL-015` (sloj usklađenosti u processorsu, `v0.0.0.99` / `v0.0.20`).**
+  `constants.WattleflowOSCAL` ostao je u jezgri bez ijednog potrošača (seli ili se briše —
+  mijenja javni API `constants`); `wattleflow-oscal` treba povući s PyPI-ja ili označiti
+  napuštenim dok kolizija imena ne prestane biti moguća; TypeVar `Node` u `oscal/models.py`
+  nije u vokabularu uloga (`NFR-ORG-03`); `namespaces` nije deklariran u
+  `processors/pyproject.toml` (`SEC-03` K11).
 - [ ] **Ostaci u dokumentacijskom stablu.** `hr/METHODOLOGIA copy.md` (stariji nacrt,
-  slomljene relativne poveznice, još govori o „ADR"), `hr/METHODOLOGIA.md.superseded`,
-  `hr/FILOZOFIJAmd.superseeded` (nosi *Bilješku o sintezi* koje u `FILOZOFIJA.md` nema),
-  `README.bak` i `OLD-TODO.md`. Odlučiti: prenijeti sadržaj pa obrisati.
+  slomljene relativne poveznice), `hr/FILOZOFIJAmd.superseeded` (nosi *Bilješku o sintezi*
+  koje u `FILOZOFIJA.md` nema) i `OLD-TODO.md`. Odlučiti: prenijeti sadržaj pa obrisati.
 
 ## Verzijska kontrola i objava dokumentacije (nalaz 2026-08-03)
 
-Praćenje je riješeno (§8): `documentation` prati cijeli sadržaj, push na `origin` je
-onemogućen (`git remote -v` → `DISABLED-local-only-repository`). Preostaje ono što praćenje
-ne rješava:
+Praćenje je riješeno (§8): `documentation` v0.0.5 prati cijeli sadržaj, push na `origin` je
+onemogućen. Preostaje ono što praćenje ne rješava:
 
 - [ ] **Hrvatski doktrinarni tekst je već javan na GitHubu.** `.gitignore` je štitio samo
-  `*/hr/*`, pa su `DOCTRINE.md`, `POSTULATE.md`, `dictionary.yaml`, cijela `workflow/dr/`
+  `*/hr/*`, pa su `DOCTRINE.md`, `POSTULATE.md`, `dictionary.yaml`, cijela `04-DR/`
   serija, `workflow/analysis/` i `core/DR.md` objavljeni na
   `github.com/wattleflow/documentation` (grana `default`, do `v0.0.4`). Odluka: prihvatiti
   zatečeno stanje, ili povući repozitorij / prepisati povijest prije v1.0.
@@ -356,9 +387,70 @@ ne rješava:
 - [ ] **Neprefiksirane DR oznake u `workflow/hr/dr/`** — `DR-007-iterator.md`,
   `DR-ORG-05-observable.md`. Sada su praćene, pa se vidi da krše §8 („Neprefiksirana oznaka
   nije valjana"); dodati banner ili preimenovati.
-- [ ] **Serija `DR-PRC` nema indeks.** `documentation/processors/dr/` nosi
-  `DR-PRC-001-model-access-boundary.md`, a `DR-WFL-INDEX.md` vodi samo WFL seriju —
-  deklarirana rupa (D-11, `CLAUDE.md` §8).
+
+## Audit: vlasništvo i lanac (nalaz 2026-09-09)
+
+Iz rada nad `06_fetch_emails` i izmjene koja je potvrdu po dokumentu premjestila na procesora
+([`DR-WFL-028`](../04-DR/DR-WFL-028-per-document-confirmation-belongs-to-the-processor.md),
+**prijedlog** — kod je već izmijenjen).
+
+- [ ] **`DR-WFL-021` t.7 nije proveden za blackboard i repozitorij.** Odluka traži ulazni `INFO`
+  u `GenericRepository.write`, `RepositoryWithDriver.write` i `SmallBlackboard.write`; provjereno
+  `command grep -rn 'self\.info('` 2026-09-09 — te metode nose **samo `DEBUG`**. Jedini `INFO` u
+  `GenericRepository` stoji u `clear()`, što nije korak lanca. Ulazni zapis postoji samo u
+  `DriverLocalStorage` i u mail write strategijama. Svjedočanstvo `DR-WFL-021` opisuje pet zapisa
+  po dokumentu — kod ih ne daje. Odlučiti: provesti t.7, ili izmijeniti `DR-WFL-021` da prizna
+  djelomično prijavljivanje. **Nije posljedica `DR-WFL-028`** — zatečeno je i starije.
+- [ ] **`DR-WFL-028` nema svjedočanstvo izvođenja.** Provjere su statičke (grep, `wem_lint`,
+  `unittest`, `ruff`); tvrdnja da tok glasi `Start → Processed×N → Completed` traži pokretanje.
+  Do tada je oblik toka aspiracija (D-05), a odluka stoji na *prijedlog*.
+- [ ] **Kriterij lintera i dalje mjeri po `DR-WFL-018`.** `audit_info_placement` i
+  `audit_event_vocabulary` nisu usklađeni ni s `DR-WFL-021` ni s `DR-WFL-028`; `Event.Processed`
+  nije u skupu faznih članova granice jedinice, a sloj pipelinea nije prebačen među izuzete.
+  Dok traje razmak, C-snimka za `OBS-01/02/03` **ne postoji** — nepromijenjeno od `DR-WFL-021`.
+- [ ] **`04-DR/` je gitignoriran u dokumentacijskom repozitoriju.** `.gitignore:15` ignorira cijeli
+  direktorij, pa nova odluka (`DR-WFL-028`, 2026-09-09) nastaje **nepraćena**; zatečeni zapisi su u
+  indeksu samo zato što su ranije forsirano dodani. `DR-WFL-INDEX.md` §Otvoreno tvrdi da ta serija
+  „**smije** biti praćena" jer leži izvan `*/hr/*` — što je točno za putanju, a netočno za pravilo
+  koje je doista na snazi. Uskladiti: ili izuzeti `04-DR/` iz `.gitignore`, ili ispraviti tvrdnju
+  u indeksu.
+- [ ] **`workflow/conformance/` ne postoji.** `CLAUDE.md` §3.1 i `NFRQ-OBS-01` §Verifikacija
+  poveznicom upućuju na to stablo; direktorija nema, pa je poveznica slomljena. Uzrok je dosljedan
+  (nijedna C-snimka još nije uzeta), ali dokument tvrdi postojanje spremišta koje nema. Ili
+  otvoriti stablo s `README` koji kaže da je prazno, ili prepisati poveznicu u tekst.
+- [ ] **Dijagram pohrane nije renderiran nakon izmjene.** `FRQ-PRC-15.22-persistence-sequence.puml`
+  dobio je audit oznake 2026-09-09; PlantUML na toj platformi nije dostupan, pa je provjerena samo
+  struktura. Renderirati pri prvoj prilici.
+
+## Konfiguracija: preset i `write_context` (nalaz 2026-09-09)
+
+- [ ] **`write_context` nema nijednog implementatora.** `GenericProcessor.write_context` vraća
+  `{}`, `flush` ga prosljeđuje sve do `strategy.write(**kwargs)`, a `FRQ-PRC-15.22` EV08 ga opisuje
+  kao postojeći put — ali **nijedna podklasa ga ne nadjačava**, pa put nikad nije izvršen.
+  Mehanizam je dokumentiran i pozvan, nikad dokazan (D-05). Odlučiti: dati mu prvog implementatora,
+  ili ga povući i izmijeniti EV08.
+- [ ] **`read_content` je mrtav ključ bio u primjeru.** Ne postoji nigdje u kodu (`core`,
+  `workflow`, `blackwattle`) — ostatak prije nego što je čitanje sadržaja prešlo na create
+  strategiju. Uklonjen iz `06_fetch_emails.yaml` 2026-09-09.
+- [ ] **Isti obrazac u tri druga primjera (izmjereno 2026-09-09).** Pretraga svih 19
+  `examples/**.yaml` po `ALLOWED` uniji kroz lanac baza, uz priznavanje ključeva koje `__init__`
+  potroši prije preseta (imenovani parametar ili `kwargs.pop/get`). Preostaje pet blokova:
+  - `06_pii_complex_workflow.yaml` — `tika_timeout` na sva tri `EntityFileDocumentProcessor`-a;
+    deklariraju ga `OCRTextProcessor` i `PipelineOCRExtractTika`, dakle **kriv sloj**, ne mrtav
+    ključ. Isti oblik kao `skip_*` u `06_fetch_emails`.
+  - `08_youtube.yaml` — `namespace` i `agents` na `YoutubeProcessor` (`ALLOWED = ["videos"]`).
+    Oba su **mrtva**: `namespace` u `strategies/documents/youtube.py` je tvrdo kodiran
+    `Namespace("urn:wattleflow:youtubegraph#")` i ne dolazi iz konfiguracije, a `agents` ne čita
+    nitko. Primjer time izgleda kao da rotira user-agente, a ne rotira ih.
+  - `24_elasticsearch.yaml` — `index` na `RepositoryWithDriver`; deklariraju ga `DriverElasticSearch`
+    i `DriverOpenSearch`, dakle pripada driver bloku.
+  Alat: `preset_scan.py` (ad-hoc, u scratchpadu). Kandidat je za `wem_lint` pravilo — konfiguracija
+  se danas mjeri tek pri izvođenju, i to samo za blokove koji se doista instanciraju.
+- [ ] **`skip_inline`/`skip_types`/`skip_below` bili su na krivom sloju.** Deklarira ih
+  `PipelineMailExtractAttachment.ALLOWED` i čita `WriteEmailAttachments`; u primjeru su stajali na
+  procesoru, gdje ih `PresetGate` odbacuje uz `warning`. Uklonjeni 2026-09-09 (privici su u tom
+  workflowu ionako isključeni). Ako se privici uključe, idu u konfiguraciju pipelinea.
+  `NFRQ-ORG-07` je pritom radio kako je propisano — nalaz je konfiguracijski, ne kodni.
 
 ## Otvorena pitanja za razgovor
 

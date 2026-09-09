@@ -1,0 +1,130 @@
+@startuml 04_pii_reduction-component
+' Generirano iz examples/workflows/04_pii_reduction.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 04_pii_reduction.yaml — Wattleflow Workflow - PII reduction workflow for PDF, PNG, msg emal files.
+caption Konfiguracija: 04_pii_reduction.yaml · okruženje: dev
+
+package "drivers" {
+  component "driver-entity-storage" as driv_driver_entity_storage <<DriverEntity>>
+  component "driver-txt-storage" as driv_driver_txt_storage <<DriverLocalStorage>>
+  component "driver-original-storage" as driv_driver_original_storage <<DriverLocalStorage>>
+}
+
+component "workflow" as wf_workflow <<Workflow>>
+
+package "processor-pdf" {
+  component "processor-pdf" as proc_processor_pdf <<EntityFileDocumentProcessor>>
+  note right of proc_processor_pdf
+    source_path: ${dotenv:processor-pdf.source_path}
+    pattern: 2026-07-06*.pdf
+    recursive: False
+    created_from: 2026-07-06T00:00:00
+    created_to: 2026-07-06T23:59:59
+  end note
+  component "blackboard-pdf" as bbprocessorpdf_blackboard_pdf <<SmallBlackboard>>
+  note bottom of bbprocessorpdf_blackboard_pdf : zapis u repozitorije na flush() (defer_flush: true)
+  component "digest" as pipeprocessorpdf_digest <<PipelineFileDigest>>
+  component "pdf-transformation-pipline" as pipeprocessorpdf_pdf_transformation_pipline <<PipelineOCRExtractTika>>
+  component "entities" as pipeprocessorpdf_entities <<PipelineProcessorDriverEntities>>
+  component "repository-reducted-txt" as repoprocessorpdf_repository_reducted_txt <<RepositoryWithDriver>>
+  component "repository-original" as repoprocessorpdf_repository_original <<RepositoryWithDriver>>
+}
+proc_processor_pdf --> pipeprocessorpdf_digest : 1. transform()
+pipeprocessorpdf_digest .[#AAAAAA].> bbprocessorpdf_blackboard_pdf : write()
+pipeprocessorpdf_digest --> pipeprocessorpdf_pdf_transformation_pipline : 2. transform()
+pipeprocessorpdf_pdf_transformation_pipline .[#AAAAAA].> bbprocessorpdf_blackboard_pdf : write()
+pipeprocessorpdf_pdf_transformation_pipline --> pipeprocessorpdf_entities : 3. transform()
+pipeprocessorpdf_entities .[#AAAAAA].> bbprocessorpdf_blackboard_pdf : write()
+proc_processor_pdf --> bbprocessorpdf_blackboard_pdf : create() «CreateTextDocument»
+bbprocessorpdf_blackboard_pdf --> repoprocessorpdf_repository_reducted_txt : «ReadDocumentFile» «WriteTextContent»
+repoprocessorpdf_repository_reducted_txt .[#AAAAAA].> driv_driver_txt_storage : <<uses>>
+bbprocessorpdf_blackboard_pdf --> repoprocessorpdf_repository_original : «WriteOriginalWithText»
+repoprocessorpdf_repository_original .[#AAAAAA].> driv_driver_original_storage : <<uses>>
+proc_processor_pdf .[#AAAAAA].> driv_driver_entity_storage : <<driver>>
+
+package "processor-msg" {
+  component "processor-msg" as proc_processor_msg <<EntityFileDocumentProcessor>>
+  note right of proc_processor_msg
+    source_path: ${dotenv:processor-msg.source_path}
+    pattern: 2026-07-*.msg
+    recursive: False
+  end note
+  component "msg-blackboard" as bbprocessormsg_msg_blackboard <<BundleBlackboard>>
+  note bottom of bbprocessormsg_msg_blackboard : zapis u repozitorije na flush() (defer_flush: true)
+  component "digest" as pipeprocessormsg_digest <<PipelineFileDigest>>
+  component "msg-extract-pipeline" as pipeprocessormsg_msg_extract_pipeline <<PipelineMessageExtract>>
+  component "mail-attachments" as pipeprocessormsg_mail_attachments <<PipelineMailExtractAttachment>>
+  component "entities" as pipeprocessormsg_entities <<PipelineProcessorDriverEntities>>
+  component "repository-reducted-txt" as repoprocessormsg_repository_reducted_txt <<RepositoryWithDriver>>
+  component "repository-original" as repoprocessormsg_repository_original <<RepositoryWithDriver>>
+  component "repository-attachments" as repoprocessormsg_repository_attachments <<RepositoryWithDriver>>
+}
+proc_processor_msg --> pipeprocessormsg_digest : 1. transform()
+pipeprocessormsg_digest .[#AAAAAA].> bbprocessormsg_msg_blackboard : write()
+pipeprocessormsg_digest --> pipeprocessormsg_msg_extract_pipeline : 2. transform()
+pipeprocessormsg_msg_extract_pipeline .[#AAAAAA].> bbprocessormsg_msg_blackboard : write()
+pipeprocessormsg_msg_extract_pipeline --> pipeprocessormsg_mail_attachments : 3. transform()
+pipeprocessormsg_mail_attachments .[#AAAAAA].> bbprocessormsg_msg_blackboard : write()
+pipeprocessormsg_mail_attachments --> pipeprocessormsg_entities : 4. transform()
+pipeprocessormsg_entities .[#AAAAAA].> bbprocessormsg_msg_blackboard : write()
+proc_processor_msg --> bbprocessormsg_msg_blackboard : create() «CreateFileDocument»
+bbprocessormsg_msg_blackboard --> repoprocessormsg_repository_reducted_txt : «ReadDocumentFile» «WriteTextContent»
+repoprocessormsg_repository_reducted_txt .[#AAAAAA].> driv_driver_txt_storage : <<uses>>
+bbprocessormsg_msg_blackboard --> repoprocessormsg_repository_original : «WriteOriginalWithText»
+repoprocessormsg_repository_original .[#AAAAAA].> driv_driver_original_storage : <<uses>>
+bbprocessormsg_msg_blackboard --> repoprocessormsg_repository_attachments : «WriteAttachmentDocument»
+repoprocessormsg_repository_attachments .[#AAAAAA].> driv_driver_original_storage : <<uses>>
+proc_processor_msg .[#AAAAAA].> driv_driver_entity_storage : <<driver>>
+
+package "processor-eml" {
+  component "processor-eml" as proc_processor_eml <<EntityFileDocumentProcessor>>
+  note right of proc_processor_eml
+    source_path: ${dotenv:processor-eml.source_path}
+    pattern: *.eml
+    recursive: False
+  end note
+  component "eml-blackboard" as bbprocessoreml_eml_blackboard <<BundleBlackboard>>
+  note bottom of bbprocessoreml_eml_blackboard : zapis u repozitorije na flush() (defer_flush: true)
+  component "digest" as pipeprocessoreml_digest <<PipelineFileDigest>>
+  component "eml-extract-pipeline" as pipeprocessoreml_eml_extract_pipeline <<PipelineEmailExtract>>
+  component "mail-attachments" as pipeprocessoreml_mail_attachments <<PipelineMailExtractAttachment>>
+  component "entities" as pipeprocessoreml_entities <<PipelineProcessorDriverEntities>>
+  component "repository-reducted-txt" as repoprocessoreml_repository_reducted_txt <<RepositoryWithDriver>>
+  component "repository-original" as repoprocessoreml_repository_original <<RepositoryWithDriver>>
+  component "repository-attachments" as repoprocessoreml_repository_attachments <<RepositoryWithDriver>>
+}
+proc_processor_eml --> pipeprocessoreml_digest : 1. transform()
+pipeprocessoreml_digest .[#AAAAAA].> bbprocessoreml_eml_blackboard : write()
+pipeprocessoreml_digest --> pipeprocessoreml_eml_extract_pipeline : 2. transform()
+pipeprocessoreml_eml_extract_pipeline .[#AAAAAA].> bbprocessoreml_eml_blackboard : write()
+pipeprocessoreml_eml_extract_pipeline --> pipeprocessoreml_mail_attachments : 3. transform()
+pipeprocessoreml_mail_attachments .[#AAAAAA].> bbprocessoreml_eml_blackboard : write()
+pipeprocessoreml_mail_attachments --> pipeprocessoreml_entities : 4. transform()
+pipeprocessoreml_entities .[#AAAAAA].> bbprocessoreml_eml_blackboard : write()
+proc_processor_eml --> bbprocessoreml_eml_blackboard : create() «CreateFileDocument»
+bbprocessoreml_eml_blackboard --> repoprocessoreml_repository_reducted_txt : «ReadDocumentFile» «WriteTextContent»
+repoprocessoreml_repository_reducted_txt .[#AAAAAA].> driv_driver_txt_storage : <<uses>>
+bbprocessoreml_eml_blackboard --> repoprocessoreml_repository_original : «WriteOriginalWithText»
+repoprocessoreml_repository_original .[#AAAAAA].> driv_driver_original_storage : <<uses>>
+bbprocessoreml_eml_blackboard --> repoprocessoreml_repository_attachments : «WriteAttachmentDocument»
+repoprocessoreml_repository_attachments .[#AAAAAA].> driv_driver_original_storage : <<uses>>
+proc_processor_eml .[#AAAAAA].> driv_driver_entity_storage : <<driver>>
+
+wf_workflow --> proc_processor_pdf : start()
+wf_workflow --> proc_processor_msg : start()
+wf_workflow --> proc_processor_eml : start()
+
+@enduml

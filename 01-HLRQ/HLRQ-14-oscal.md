@@ -2,17 +2,17 @@
 
 > **Razred `HLRQ` nije u vokabularu** (`CLAUDE.md` §3.6 — „u uporabi, ali nije u registru");
 > uvođenje traži DR (D-12). Kategorija `OSCAL` **jest**, od
-> [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md).
+> [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md).
 
 | | |
 |---|---|
-| **Status** | Djelomično provedeno (2026-08-22) — mehanizam radi, `BR-OSCAL-11` **proveden** kroz tri komponentne baze ([`FR-OSCAL-14.13`](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md)); vrata su `strict=False` i **inertna** dok se ne odluči tko predaje politiku (§7 t.2) |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti |
+| **Status** | Djelomično provedeno (2026-08-22) — mehanizam radi, `BR-OSCAL-11` **proveden** kroz tri komponentne baze ([`FRQ-OSCAL-14.13`](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md)); vrata su `strict=False` i **inertna** dok se ne odluči tko predaje politiku (§7 t.2) |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti |
 | **Razred** | Zahtjev visoke razine — nosi narativ i poslovna pravila; ne opisuje korake |
 | **Distribucija** | `wattleflow-processors` — OSCAL nije zaseban paket (provjereno 2026-08-22); uvozno zatvorenje sloja je `stdlib ∪ wattleflow`, bez third-party ovisnosti |
-| **Djeca** | trinaest zapisa `FR-OSCAL-14.1…14.13` — §4 |
+| **Djeca** | trinaest zapisa `FRQ-OSCAL-14.1…14.13` — §4 |
 | **Podloga** | [pregled zapisa](../processors/OSCAL.md) · `CLAUDE.md` §6.1 (mjesto provedbe) · `HLRQ-13` §6 (prvi potrošač) |
-| **Sljedivost** | `NFR-SEC-01`…`NFR-SEC-06` (§6) · `NFR-ORG-04` (ne uvodi se primitiv) · `NFR-ORG-05`, `NFR-ORG-08` |
+| **Sljedivost** | `NFRQ-SEC-01`…`NFRQ-SEC-06` (§6) · `NFRQ-ORG-04` (ne uvodi se primitiv) · `NFRQ-ORG-05`, `NFRQ-ORG-08` |
 
 ## 1. Narativ
 
@@ -30,7 +30,7 @@ pokriva daje **jedan baseline** (ASD ISM Essential Eight), **jedan oblik deklara
 koje se moze kvantizirati.
 
 **Mehanizam**: distribucija je objavljena, modeli, učitavanje, razrješavanje profila,
-prijevod taksonomije i gate su izvedeni i pokriveni zapisima `FR-OSCAL-14.1…14.13`. 
+prijevod taksonomije i gate su izvedeni i pokriveni zapisima `FRQ-OSCAL-14.1…14.13`. 
 Isporučeni ASD ISM katalog nosi **1130 kontrola u 564 grupe**; tri E8 baselinea biraju 
 **46 / 87 / 123** kontrole.
 
@@ -63,28 +63,28 @@ provedba pripada sloju koji komponente i gradi.
 
 | nije | zašto |
 |---|---|
-| ocjena sigurnosti | gate kaže govori li komponenta o kontrolama u opsegu, ne je li sigurna (`FR-OSCAL-14.11` §1) |
+| ocjena sigurnosti | gate kaže govori li komponenta o kontrolama u opsegu, ne je li sigurna (`FRQ-OSCAL-14.11` §1) |
 | skalarna mjera usklađenosti | izlaz je skup prekršaja, ne postotak (D-09) |
 | izvor kontrola | ISM katalog je **vendoriran artefakt** ASD-a; ovaj paket ga isporučuje, ne piše |
-| novi domenski primitiv | `Catalog`, `Profile`, `Control` nisu framework primitivi (`NFR-ORG-04`, `DR-WFL-013` t.4) |
+| novi domenski primitiv | `Catalog`, `Profile`, `Control` nisu framework primitivi (`NFRQ-ORG-04`, `DR-WFL-013` t.4) |
 
 ## 4. Opseg
 
 | oznaka | predmet | dokument |
 |---|---|---|
-| `FR-OSCAL-14.1` | `Catalog` — agregat kontrola | [14.1](../02-FRQ/FRQ-OSCAL-14.1-catalog.md) ✅ |
-| `FR-OSCAL-14.2` | `Control` — jedinica po kojoj se sudi | [14.2](../02-FRQ/FRQ-OSCAL-14.2-control.md) ✅ |
-| `FR-OSCAL-14.3` | `Group` — hijerarhija kataloga | [14.3](../02-FRQ/FRQ-OSCAL-14.3-group.md) ✅ |
-| `FR-OSCAL-14.4` | `Profile` i selektori — baseline | [14.4](../02-FRQ/FRQ-OSCAL-14.4-profile.md) ✅ |
-| `FR-OSCAL-14.5` | vrijednosni objekti | [14.5](../02-FRQ/FRQ-OSCAL-14.5-value-objects.md) ✅ |
-| `FR-OSCAL-14.6` | baze modela i njihovi ugovori | [14.6](../02-FRQ/FRQ-OSCAL-14.6-bases.md) ✅ |
-| `FR-OSCAL-14.7` | učitavanje — granica prema disku | [14.7](../02-FRQ/FRQ-OSCAL-14.7-loaders.md) ✅ |
-| `FR-OSCAL-14.8` | registar — ravni indeks kontrola | [14.8](../02-FRQ/FRQ-OSCAL-14.8-registry.md) ✅ |
-| `FR-OSCAL-14.9` | razrješavanje profila u katalog | [14.9](../02-FRQ/FRQ-OSCAL-14.9-resolver.md) ✅ |
-| `FR-OSCAL-14.10` | crosswalk — prijevod taksonomije | [14.10](../02-FRQ/FRQ-OSCAL-14.10-crosswalk.md) ⚠ mapiranja bez sign-offa |
-| `FR-OSCAL-14.11` | gate `declared ⊆ baseline` | [14.11](../02-FRQ/FRQ-OSCAL-14.11-policy.md) ✅ |
-| `FR-OSCAL-14.12` | javna površina i vendorirani artefakti | [14.12](../02-FRQ/FRQ-OSCAL-14.12-package-surface.md) ⚠ verzija ima tri izvora |
-| `FR-OSCAL-14.13` | komponentne baze pod vratima (`wattleflow-processors`) | [14.13](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md) ✅ |
+| `FRQ-OSCAL-14.1` | `Catalog` — agregat kontrola | [14.1](../02-FRQ/FRQ-OSCAL-14.1-catalog.md) ✅ |
+| `FRQ-OSCAL-14.2` | `Control` — jedinica po kojoj se sudi | [14.2](../02-FRQ/FRQ-OSCAL-14.2-control.md) ✅ |
+| `FRQ-OSCAL-14.3` | `Group` — hijerarhija kataloga | [14.3](../02-FRQ/FRQ-OSCAL-14.3-group.md) ✅ |
+| `FRQ-OSCAL-14.4` | `Profile` i selektori — baseline | [14.4](../02-FRQ/FRQ-OSCAL-14.4-profile.md) ✅ |
+| `FRQ-OSCAL-14.5` | vrijednosni objekti | [14.5](../02-FRQ/FRQ-OSCAL-14.5-value-objects.md) ✅ |
+| `FRQ-OSCAL-14.6` | baze modela i njihovi ugovori | [14.6](../02-FRQ/FRQ-OSCAL-14.6-bases.md) ✅ |
+| `FRQ-OSCAL-14.7` | učitavanje — granica prema disku | [14.7](../02-FRQ/FRQ-OSCAL-14.7-loaders.md) ✅ |
+| `FRQ-OSCAL-14.8` | registar — ravni indeks kontrola | [14.8](../02-FRQ/FRQ-OSCAL-14.8-registry.md) ✅ |
+| `FRQ-OSCAL-14.9` | razrješavanje profila u katalog | [14.9](../02-FRQ/FRQ-OSCAL-14.9-resolver.md) ✅ |
+| `FRQ-OSCAL-14.10` | crosswalk — prijevod taksonomije | [14.10](../02-FRQ/FRQ-OSCAL-14.10-crosswalk.md) ⚠ mapiranja bez sign-offa |
+| `FRQ-OSCAL-14.11` | gate `declared ⊆ baseline` | [14.11](../02-FRQ/FRQ-OSCAL-14.11-policy.md) ✅ |
+| `FRQ-OSCAL-14.12` | javna površina i vendorirani artefakti | [14.12](../02-FRQ/FRQ-OSCAL-14.12-package-surface.md) ⚠ verzija ima tri izvora |
+| `FRQ-OSCAL-14.13` | komponentne baze pod vratima (`wattleflow-processors`) | [14.13](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md) ✅ |
 
 **Izvan opsega, kandidati:** `component-definition` (deklaracija komponente kao OSCAL dokument, a
 ne kao ClassVar), `assessment-results` (rezultat provjere kao OSCAL dokument), katalozi izvan ASD
@@ -123,15 +123,15 @@ mjeri (§7 t.4).
 
 | NFR | što nalaže | posljedica za ovu sposobnost |
 |---|---|---|
-| `NFR-SEC-01` blast radius | ograniči dosežljivost iz kompromitirane komponente | jedan policy po baselineu; prekršaj imenuje `uuid` profila, pa se opseg vidi. Registar je u memoriji i po procesu — nema dijeljene točke kvara |
-| `NFR-SEC-02` napadna površina | javno sučelje minimalno, `__all__` eksplicitan | 23 imena u paketnom `__all__`; loaderi su jedina točka koja otvara datoteku; baze modela namjerno nisu izvezene |
-| `NFR-SEC-03` supply-chain i lokalnost | closure ⊆ tier distribucije | uvozno zatvorenje je `stdlib ∪ wattleflow` — **paket smije uvoziti clean core potrošač**; `MANIFEST.in` je kontrolna točka pakiranja |
-| `NFR-SEC-04` radna točka detekcije | nalaz mora biti radnja, ne istraga | poruka prekršaja nosi komponentu, baseline i sortirani popis `id`-eva |
-| `NFR-SEC-05` model protivnika | disciplina ulaganja | vrata odbijaju deklaraciju izvan opsega; ne procjenjuju rizik i ne rangiraju prijetnje |
-| `NFR-SEC-06` povjerljivost zapisa | bez tajni u zapisu | ova sposobnost ne dodiruje kredencijale — deklaracija je popis `id`-eva |
-| `NFR-ORG-04` sposobnost vs primitiv | cross-cutting sposobnost je helper, ne novi primitiv | ontologija se ne proširuje (§3) |
-| `NFR-ORG-05` enkapsulacija | samoreferencirajuće metode kroz `cls` | deserijalizacija, obilazak i orezivanje su članovi klasa; u paketu nema nijedne funkcije na razini modula osim javne `resolve` |
-| `NFR-ORG-08` deduplikacija | pravilo živi na jednom mjestu | mapiranje ključeva, prazan popis i prolaz kroz čvorove postoje jednom (`FR-OSCAL-14.6`) |
+| `NFRQ-SEC-01` blast radius | ograniči dosežljivost iz kompromitirane komponente | jedan policy po baselineu; prekršaj imenuje `uuid` profila, pa se opseg vidi. Registar je u memoriji i po procesu — nema dijeljene točke kvara |
+| `NFRQ-SEC-02` napadna površina | javno sučelje minimalno, `__all__` eksplicitan | 23 imena u paketnom `__all__`; loaderi su jedina točka koja otvara datoteku; baze modela namjerno nisu izvezene |
+| `NFRQ-SEC-03` supply-chain i lokalnost | closure ⊆ tier distribucije | uvozno zatvorenje je `stdlib ∪ wattleflow` — **paket smije uvoziti clean core potrošač**; `MANIFEST.in` je kontrolna točka pakiranja |
+| `NFRQ-SEC-04` radna točka detekcije | nalaz mora biti radnja, ne istraga | poruka prekršaja nosi komponentu, baseline i sortirani popis `id`-eva |
+| `NFRQ-SEC-05` model protivnika | disciplina ulaganja | vrata odbijaju deklaraciju izvan opsega; ne procjenjuju rizik i ne rangiraju prijetnje |
+| `NFRQ-SEC-06` povjerljivost zapisa | bez tajni u zapisu | ova sposobnost ne dodiruje kredencijale — deklaracija je popis `id`-eva |
+| `NFRQ-ORG-04` sposobnost vs primitiv | cross-cutting sposobnost je helper, ne novi primitiv | ontologija se ne proširuje (§3) |
+| `NFRQ-ORG-05` enkapsulacija | samoreferencirajuće metode kroz `cls` | deserijalizacija, obilazak i orezivanje su članovi klasa; u paketu nema nijedne funkcije na razini modula osim javne `resolve` |
+| `NFRQ-ORG-08` deduplikacija | pravilo živi na jednom mjestu | mapiranje ključeva, prazan popis i prolaz kroz čvorove postoje jednom (`FRQ-OSCAL-14.6`) |
 
 ## 7. Otvoreno
 
@@ -140,11 +140,11 @@ Odluke koje ovaj dokument ne donosi; svaka traži DR (D-03).
 1. ~~Nedeklarirana ovisnost.~~ **Otpalo 2026-08-22.** OSCAL sloj je vendiran u
    `wattleflow-processors`, pa ovisnosti o zasebnoj distribuciji nema — ni ovdje ni u jezgri.
    Uvoz ostaje eager — `wattleflow.oscal` je unutar tiera `stdlib ∪ wattleflow`, pa ne krši
-   `NFR-SEC-03`. **Preostaje operativno:** izdanje workflowa s novom ovisnošću i instalacija u
+   `NFRQ-SEC-03`. **Preostaje operativno:** izdanje workflowa s novom ovisnošću i instalacija u
    zatečenim okruženjima; do tada `wattleflow.connections` se uvozi, ali razrješavanje imena
    (`__getattr__`) puca bez instalirane OSCAL distribucije.
 2. **`BR-OSCAL-11` je proveden, `BR-OSCAL-03` još nije.** Vrata nosi tri komponentne baze
-   ([`FR-OSCAL-14.13`](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md)), a svih 15 komponenti koje
+   ([`FRQ-OSCAL-14.13`](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md)), a svih 15 komponenti koje
    deklariraju `OSCAL_CONTROLS` (12 konekcija — kafka nosi dvije — 2 drivera, 1 procesor) ih
    nasljeđuje, uz `strict=False`. Posljedica koju treba držati na oku: dok nitko ne predaje
    `oscal_policy=`, provjera se preskače — vrata su postavljena, ali ne provode ništa. Sa `strict=True` iste bi komponente pale pri prvom prijelazu, jer
@@ -162,11 +162,11 @@ Odluke koje ovaj dokument ne donosi; svaka traži DR (D-03).
    je i ostaje odbijena — vidi ograničenje uvoza ispod.
 
    ~~Nedostatak: propust se ne vidi ničim.~~ **Riješeno** —
-   [`FR-OSCAL-14.13`](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md): tri baze u `wattleflow-processors`
+   [`FRQ-OSCAL-14.13`](../02-FRQ/FRQ-OSCAL-14.13-component-bases.md): tri baze u `wattleflow-processors`
    (`OSCALConnection`, `OSCALDriver`, `OSCALProcessor`) nose dekorater, a konkretne klase ih
    nasljeđuju. Vrata su time svojstvo hijerarhije, a ne pamćenja; dekorater po klasi ostaje
    dostupan za slučaj izvan te tri uloge. Uz to, dekorater sada provjerava **prije** konstrukcije
-   ([`DR-WFL-014`](../workflow/dr/DR-WFL-014-oscal-gate-before-construction.md)), pa neusklađena
+   ([`DR-WFL-014`](../04-DR/DR-WFL-014-oscal-gate-before-construction.md)), pa neusklađena
    konekcija više ne stigne otvoriti vezu.
 
    **Kad se tome vrati — zatvoren je samo put kroz dekorater, ne i sama prisila.** Razlika je
@@ -192,7 +192,7 @@ Odluke koje ovaj dokument ne donosi; svaka traži DR (D-03).
    **Ograničenje otkriveno pri izvedbi:** dekorirati i pretka i potomka je kvar, ne redundancija.
    Vanjski omotač popne `oscal_policy` iz kwargsa pa ga unutarnji ne vidi; pod `strict=True`
    unutarnji guard odbija ispravno konfiguriranu komponentu. Zato `ConnectionHuggingFace` vrata
-   **nasljeđuje** od `ProxyConnection` (`FR-OSCAL-14.11` §11 t.7).
+   **nasljeđuje** od `ProxyConnection` (`FRQ-OSCAL-14.11` §11 t.7).
 3. **Crosswalk mapiranja su `proposed`** i čekaju compliance sign-off; `sc-8` i `sc-13` prevode se
    u kontrole **izvan** Essential Eight opsega, pa protiv E8 baselinea ispravno padaju. Do
    sign-offa vrijedi `BR-OSCAL-09`.
@@ -213,19 +213,19 @@ Odluke koje ovaj dokument ne donosi; svaka traži DR (D-03).
    catalog/profile (`component-definition`, `assessment-results`) — otvoreno pitanje iz
    `CLAUDE.md`; model ih danas ne pokriva.
 7. **Prazna deklaracija prolazi vrata** (`∅ ⊆ baseline`): gate ne razlikuje „nema što deklarirati"
-   od „zaboravljeno" (`FR-OSCAL-14.11` §11 t.1). Kandidat za proširenje `BR-OSCAL-02`.
+   od „zaboravljeno" (`FRQ-OSCAL-14.11` §11 t.1). Kandidat za proširenje `BR-OSCAL-02`.
 8. **Vrijednosni objekti nemaju core pattern** — `CLAUDE.md` §2.5 traži da svaka klasa naslijedi
    odgovarajući pattern, a `wattleflow.core` nema ugovor za nepromjenjiv vrijednosni objekt
-   (`FR-OSCAL-14.6` §11 t.1). Razina `DR-COR`.
+   (`FRQ-OSCAL-14.6` §11 t.1). Razina `DR-COR`.
 9. **Verzija distribucije ima tri izvora istine** (`_version.py` `0.0.0.1`, `pyproject` `0.0.5`,
-   PyPI `0.0.4`) — `FR-OSCAL-14.12` §11 t.1.
+   PyPI `0.0.4`) — `FRQ-OSCAL-14.12` §11 t.1.
 10. **Razred `HLRQ` nije u vokabularu** — vrijedi za ovaj zapis kao i za `HLRQ-13`
    (`DR-WFL-013` §Otvoreno t.2).
 
 ## 8. Svjedočanstvo
 
 Alat: skripte `fr_evidence.py`, `prune_oracle.py`, `harness.py` (radno okruženje), `grep` nad stablom `wattleflow-processors`; kriterij: §8 svakog
-zapisa `FR-OSCAL-14.*`; platforma: CPython 3.11.15 (Linux/WSL2), `wattleflow/oscal` radno stablo
+zapisa `FRQ-OSCAL-14.*`; platforma: CPython 3.11.15 (Linux/WSL2), `wattleflow/oscal` radno stablo
 2026-08-21, ASD ISM izdanje 2026-03-24.
 
 **Ponašanje vrata pod dekoraterom** (`gate_probe.py`; sintetička komponenta s pravim

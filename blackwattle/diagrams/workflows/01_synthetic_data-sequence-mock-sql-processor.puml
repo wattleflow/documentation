@@ -1,0 +1,39 @@
+@startuml 01_synthetic_data-sequence-mock-sql-processor
+' Generirano iz examples/workflows/01_synthetic_data.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 01_processor_synthetic_data.yaml — Processor - Synthetic data - ETL - Wattleflow Workflow
+caption mock-sql-processor · 01_synthetic_data.yaml · okruženje: dev
+
+skinparam sequence {
+    LifeLineBorderColor #999999
+    ParticipantBorderColor #555555
+    ParticipantBackgroundColor #FAFAFA
+}
+
+participant "workflow" as WF
+group mock-sql-processor <<ProcessorMockSQL>>
+  participant "mock-sql-processor" as PR1
+  participant "synthetic-data-blackboard" as BB1
+  participant "test-pipeline" as P1_1
+  participant "local-storage-repository" as R1_1
+  WF -> PR1 : start()
+  PR1 -> PR1 : iterate source
+  PR1 -> BB1 : create() «StrategyCreateSimpleMock»
+  PR1 -> P1_1 : transform()  <<PipelineTest>>
+  P1_1 -> BB1 : write()
+  BB1 -> R1_1 : «StrategyWriteSimpleMock»
+end
+@enduml

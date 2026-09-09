@@ -1,12 +1,12 @@
-# FR-OSCAL-14.7 — Učitavanje OSCAL dokumenata
+# FRQ-OSCAL-14.7 — Učitavanje OSCAL dokumenata
 
-> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
 > (2026-08-21). Oznaka se od tada mijenja kroz DR, ne uređivanjem.
 
 | | |
 |---|---|
 | **Status** | Prijedlog (2026-08-21) — obrnuto inženjerstvo zatečenog koda |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `ASDOSCALLoader` (baza), `ASDOSCALCatalogLoader`, `ASDOSCALProfileLoader` |
 | **Sestrinski** | [`14.1`](FRQ-OSCAL-14.1-catalog.md) katalog · [`14.4`](FRQ-OSCAL-14.4-profile.md) profil |
@@ -60,7 +60,7 @@ smjera.
 3. EV03 — katalog loader odbija dokument s ključem `profile`, profilni odbija onaj s `catalog`.
    Poruka nosi putanju **i** ime loadera koji je trebalo upotrijebiti.
 4. EV04 — `Catalog.from_dict` / `Profile.from_dict`; omotani i goli oblik oba prolaze
-   (`FR-OSCAL-14.1` §5, `FR-OSCAL-14.4` §5).
+   (`FRQ-OSCAL-14.1` §5, `FRQ-OSCAL-14.4` §5).
 5. `caller` se prima jer ga ugovor `IStrategy` traži; loader ga **ne koristi**.
 
 ## 6. Alternativni tokovi
@@ -109,10 +109,10 @@ Linux (WSL2), radno stablo `oscal` 2026-08-21, artefakti ISM 2026-03-24.
 
 | NFR | posljedica |
 |---|---|
-| `NFR-SEC-02` | jedina točka koja otvara datoteku u paketu; površina prema disku je jedna, ne raspršena |
-| `NFR-SEC-03` | učitavanje koristi `json` iz stdlib-a — bez YAML-a i bez third-party parsera |
-| `NFR-ORG-05` | `_require_path` je `@classmethod` (koristi `cls.__name__`), `_read_json` `@staticmethod` |
-| `NFR-ORG-08` | čitanje i provjera argumenata postoje jednom, na bazi |
+| `NFRQ-SEC-02` | jedina točka koja otvara datoteku u paketu; površina prema disku je jedna, ne raspršena |
+| `NFRQ-SEC-03` | učitavanje koristi `json` iz stdlib-a — bez YAML-a i bez third-party parsera |
+| `NFRQ-ORG-05` | `_require_path` je `@classmethod` (koristi `cls.__name__`), `_read_json` `@staticmethod` |
+| `NFRQ-ORG-08` | čitanje i provjera argumenata postoje jednom, na bazi |
 
 ## 11. Otvoreno
 

@@ -1,12 +1,12 @@
-# FR-OSCAL-14.10 — Prijevod taksonomije kontrola (crosswalk)
+# FRQ-OSCAL-14.10 — Prijevod taksonomije kontrola (crosswalk)
 
-> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
 > (2026-08-21). Oznaka se od tada mijenja kroz DR, ne uređivanjem.
 
 | | |
 |---|---|
 | **Status** | Prijedlog (2026-08-21) — obrnuto inženjerstvo zatečenog koda |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) (kategorija); **mapiranja čekaju compliance sign-off** (§1) |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) (kategorija); **mapiranja čekaju compliance sign-off** (§1) |
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `Crosswalk` + artefakt `resources/crosswalk/nist-sp800-53_to_asd-ism.json` |
 | **Sestrinski** | [`14.11`](FRQ-OSCAL-14.11-policy.md) policy — jedini potrošač |
@@ -106,9 +106,9 @@ Linux (WSL2), radno stablo `oscal` 2026-08-21, artefakt `nist-sp800-53_to_asd-is
 
 | NFR | posljedica |
 |---|---|
-| `NFR-SEC-05` | prijevod ne smije skrivati prekršaj: nemapirani `id` pada, ne nestaje |
-| `NFR-SEC-02` | `__slots__ = ("_name", "_map")`; tablica se nakon konstrukcije ne mijenja |
-| `NFR-SEC-03` | samo `json` i `pathlib` iz stdlib-a |
+| `NFRQ-SEC-05` | prijevod ne smije skrivati prekršaj: nemapirani `id` pada, ne nestaje |
+| `NFRQ-SEC-02` | `__slots__ = ("_name", "_map")`; tablica se nakon konstrukcije ne mijenja |
+| `NFRQ-SEC-03` | samo `json` i `pathlib` iz stdlib-a |
 
 ## 11. Otvoreno
 

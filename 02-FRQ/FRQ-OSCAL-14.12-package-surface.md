@@ -1,15 +1,15 @@
-# FR-OSCAL-14.12 — Javna površina paketa i vendorirani artefakti
+# FRQ-OSCAL-14.12 — Javna površina paketa i vendorirani artefakti
 
-> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
 > (2026-08-21). Oznaka se od tada mijenja kroz DR, ne uređivanjem.
 
 | | |
 |---|---|
 | **Status** | Prijedlog (2026-08-21) — obrnuto inženjerstvo zatečenog koda |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `wattleflow/oscal/__init__.py`, `_version.py`, `resources/`, `MANIFEST.in`, `pyproject.toml` |
-| **Sestrinski** | svi `FR-OSCAL-14.*` — ovaj zapis kaže **što od toga vidi vanjski svijet** |
+| **Sestrinski** | svi `FRQ-OSCAL-14.*` — ovaj zapis kaže **što od toga vidi vanjski svijet** |
 | **Izvedba** | paket `wattleflow.oscal` u `wattleflow-processors` |
 
 ## 1. Predmet
@@ -101,15 +101,15 @@ Linux (WSL2), radno stablo `processors` 2026-08-22.
 
 > **Slijepa pjega (D-11), dvije.** (a) Skripta nije u repozitoriju (`CLAUDE.md` §4). (b) Kriterij
 > 3 provjeren je nad **radnim stablom**, ne nad izgrađenim wheelom — da pakiranje stvarno nosi
-> artefakte, dokazao bi tek `RECORD` izgrađenog wheela (`NFR-SEC-03` kriterij 5).
+> artefakte, dokazao bi tek `RECORD` izgrađenog wheela (`NFRQ-SEC-03` kriterij 5).
 
 ## 10. Nefunkcionalni zahtjevi
 
 | NFR | posljedica |
 |---|---|
-| `NFR-SEC-03` | paket stoji u čistom tieru (`stdlib ∪ wattleflow`), pa ga clean core potrošač smije uvoziti; `MANIFEST.in` je kontrolna točka pakiranja |
-| `NFR-SEC-02` | `__all__` je deklarirana površina; baze modela namjerno nisu u njoj |
-| `NFR-SEC-01` | vendorirani artefakti znače da paket ne poseže na mrežu pri radu |
+| `NFRQ-SEC-03` | paket stoji u čistom tieru (`stdlib ∪ wattleflow`), pa ga clean core potrošač smije uvoziti; `MANIFEST.in` je kontrolna točka pakiranja |
+| `NFRQ-SEC-02` | `__all__` je deklarirana površina; baze modela namjerno nisu u njoj |
+| `NFRQ-SEC-01` | vendorirani artefakti znače da paket ne poseže na mrežu pri radu |
 
 ## 11. Otvoreno
 
@@ -121,6 +121,6 @@ Linux (WSL2), radno stablo `processors` 2026-08-22.
    Razilaženje je tiho: sdist i wheel mogu nositi različit sadržaj.
 3. **`ModelBase`, `OSCALElement` i `SelectableElement` nisu u paketnom `__all__`** iako jesu u
    `models.__all__`. Vanjska specijalizacija modela mora uvoziti iz podmodula — namjerno ili
-   propust, nije zapisano (`FR-OSCAL-14.6` §11 t.2).
-4. **Nema provjere verzije dokumenta pri učitavanju** (`FR-OSCAL-14.7` §11 t.2): `OSCAL_VERSION`
+   propust, nije zapisano (`FRQ-OSCAL-14.6` §11 t.2).
+4. **Nema provjere verzije dokumenta pri učitavanju** (`FRQ-OSCAL-14.7` §11 t.2): `OSCAL_VERSION`
    postoji, ali ništa ne uspoređuje učitani dokument s njim.

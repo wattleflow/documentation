@@ -1,0 +1,106 @@
+@startuml 06_pii_complex_workflow-component
+' Generirano iz examples/workflows/06_pii_complex_workflow.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 03_pii_complex_workflow.yaml — Wattleflow Workflow - per-type processors routing many labels by filename format (pdf/eml/msg).
+caption Konfiguracija: 06_pii_complex_workflow.yaml · okruženje: dev
+
+package "drivers" {
+  component "driver-entity-storage" as driv_driver_entity_storage <<DriverEntity>>
+  component "driver-storage" as driv_driver_storage <<DriverLocalStorage>>
+}
+
+component "workflow" as wf_workflow <<Workflow>>
+
+package "processor-pdf" {
+  component "processor-pdf" as proc_processor_pdf <<EntityFileDocumentProcessor>>
+  note right of proc_processor_pdf
+    source_path: ${dotenv:source.path}
+    pattern: {'glob': '*.pdf', 'format': '\\d{4}-\\d{2}-\\d{2}-{label}[-.]', 'labels': [{'name': 'FWC-AB2026-20', 'target': '01-FWC-AB2026-20'}, {'name': 'COMCARE', 'target': '02-COMCARE'}, {'name': 'IPS', 'target': '03-IPS'}, {'name': 'PID', 'target': '04-PID'}, {'name': 'FFD', 'target': '05-FFD'}, {'name': 'COR', 'target': '06-COR'}, {'name': 'CODEA', 'target': '07-CODEA'}, {'name': 'CPSU', 'target': '08-CPSU'}, {'name': 'FOI', 'target': '09-FOI'}, {'name': 'RES', 'target': '10-RES'}]}
+    recursive: True
+  end note
+  component "bb-pdf" as bbprocessorpdf_bb_pdf <<SmallBlackboard>>
+  note bottom of bbprocessorpdf_bb_pdf : zapis u repozitorije na flush() (defer_flush: true)
+  component "entities" as pipeprocessorpdf_entities <<PipelineProcessorDriverEntities>>
+  component "pdf-redaction" as pipeprocessorpdf_pdf_redaction <<PipelinePDFRedact>>
+  component "repo-reduced-pdf" as repoprocessorpdf_repo_reduced_pdf <<RepositoryWithDriver>>
+  component "repo-evidence-pdf" as repoprocessorpdf_repo_evidence_pdf <<RepositoryWithDriver>>
+}
+proc_processor_pdf --> pipeprocessorpdf_entities : 1. transform()
+pipeprocessorpdf_entities .[#AAAAAA].> bbprocessorpdf_bb_pdf : write()
+pipeprocessorpdf_entities --> pipeprocessorpdf_pdf_redaction : 2. transform()
+pipeprocessorpdf_pdf_redaction .[#AAAAAA].> bbprocessorpdf_bb_pdf : write()
+proc_processor_pdf --> bbprocessorpdf_bb_pdf : create() «CreatePdfDocument»
+bbprocessorpdf_bb_pdf --> repoprocessorpdf_repo_reduced_pdf : «WriteRoutedText»
+repoprocessorpdf_repo_reduced_pdf .[#AAAAAA].> driv_driver_storage : <<uses>>
+bbprocessorpdf_bb_pdf --> repoprocessorpdf_repo_evidence_pdf : «WriteRoutedEvidence»
+repoprocessorpdf_repo_evidence_pdf .[#AAAAAA].> driv_driver_storage : <<uses>>
+proc_processor_pdf .[#AAAAAA].> driv_driver_entity_storage : <<driver>>
+
+package "processor-eml" {
+  component "processor-eml" as proc_processor_eml <<EntityFileDocumentProcessor>>
+  note right of proc_processor_eml
+    source_path: ${dotenv:source.path}
+    pattern: {'glob': '*.eml', 'format': '\\d{4}-\\d{2}-\\d{2}-{label}[-.]', 'labels': [{'name': 'FWC-AB2026-20', 'target': '01-FWC-AB2026-20'}, {'name': 'COMCARE', 'target': '02-COMCARE'}, {'name': 'IPS', 'target': '03-IPS'}, {'name': 'PID', 'target': '04-PID'}, {'name': 'FFD', 'target': '05-FFD'}, {'name': 'COR', 'target': '06-COR'}, {'name': 'CODEA', 'target': '07-CODEA'}, {'name': 'CPSU', 'target': '08-CPSU'}, {'name': 'FOI', 'target': '09-FOI'}, {'name': 'RES', 'target': '10-RES'}]}
+    recursive: True
+  end note
+  component "bb-eml" as bbprocessoreml_bb_eml <<SmallBlackboard>>
+  note bottom of bbprocessoreml_bb_eml : zapis u repozitorije na flush() (defer_flush: true)
+  component "eml-extract" as pipeprocessoreml_eml_extract <<PipelineEmailExtract>>
+  component "entities" as pipeprocessoreml_entities <<PipelineProcessorDriverEntities>>
+  component "repo-reduced-eml" as repoprocessoreml_repo_reduced_eml <<RepositoryWithDriver>>
+  component "repo-evidence-eml" as repoprocessoreml_repo_evidence_eml <<RepositoryWithDriver>>
+}
+proc_processor_eml --> pipeprocessoreml_eml_extract : 1. transform()
+pipeprocessoreml_eml_extract .[#AAAAAA].> bbprocessoreml_bb_eml : write()
+pipeprocessoreml_eml_extract --> pipeprocessoreml_entities : 2. transform()
+pipeprocessoreml_entities .[#AAAAAA].> bbprocessoreml_bb_eml : write()
+proc_processor_eml --> bbprocessoreml_bb_eml : create() «CreateFileDocument»
+bbprocessoreml_bb_eml --> repoprocessoreml_repo_reduced_eml : «WriteRoutedText»
+repoprocessoreml_repo_reduced_eml .[#AAAAAA].> driv_driver_storage : <<uses>>
+bbprocessoreml_bb_eml --> repoprocessoreml_repo_evidence_eml : «WriteRoutedEvidence»
+repoprocessoreml_repo_evidence_eml .[#AAAAAA].> driv_driver_storage : <<uses>>
+proc_processor_eml .[#AAAAAA].> driv_driver_entity_storage : <<driver>>
+
+package "processor-msg" {
+  component "processor-msg" as proc_processor_msg <<EntityFileDocumentProcessor>>
+  note right of proc_processor_msg
+    source_path: ${dotenv:source.path}
+    pattern: {'glob': '*.msg', 'format': '\\d{4}-\\d{2}-\\d{2}-{label}[-.]', 'labels': [{'name': 'FWC-AB2026-20', 'target': '01-FWC-AB2026-20'}, {'name': 'COMCARE', 'target': '02-COMCARE'}, {'name': 'IPS', 'target': '03-IPS'}, {'name': 'PID', 'target': '04-PID'}, {'name': 'FFD', 'target': '05-FFD'}, {'name': 'COR', 'target': '06-COR'}, {'name': 'CODEA', 'target': '07-CODEA'}, {'name': 'CPSU', 'target': '08-CPSU'}, {'name': 'FOI', 'target': '09-FOI'}, {'name': 'RES', 'target': '10-RES'}]}
+    recursive: True
+  end note
+  component "bb-msg" as bbprocessormsg_bb_msg <<SmallBlackboard>>
+  note bottom of bbprocessormsg_bb_msg : zapis u repozitorije na flush() (defer_flush: true)
+  component "msg-extract" as pipeprocessormsg_msg_extract <<PipelineMessageExtract>>
+  component "entities" as pipeprocessormsg_entities <<PipelineProcessorDriverEntities>>
+  component "repo-reduced-msg" as repoprocessormsg_repo_reduced_msg <<RepositoryWithDriver>>
+  component "repo-evidence-msg" as repoprocessormsg_repo_evidence_msg <<RepositoryWithDriver>>
+}
+proc_processor_msg --> pipeprocessormsg_msg_extract : 1. transform()
+pipeprocessormsg_msg_extract .[#AAAAAA].> bbprocessormsg_bb_msg : write()
+pipeprocessormsg_msg_extract --> pipeprocessormsg_entities : 2. transform()
+pipeprocessormsg_entities .[#AAAAAA].> bbprocessormsg_bb_msg : write()
+proc_processor_msg --> bbprocessormsg_bb_msg : create() «CreateFileDocument»
+bbprocessormsg_bb_msg --> repoprocessormsg_repo_reduced_msg : «WriteRoutedText»
+repoprocessormsg_repo_reduced_msg .[#AAAAAA].> driv_driver_storage : <<uses>>
+bbprocessormsg_bb_msg --> repoprocessormsg_repo_evidence_msg : «WriteRoutedEvidence»
+repoprocessormsg_repo_evidence_msg .[#AAAAAA].> driv_driver_storage : <<uses>>
+proc_processor_msg .[#AAAAAA].> driv_driver_entity_storage : <<driver>>
+
+wf_workflow --> proc_processor_pdf : start()
+wf_workflow --> proc_processor_eml : start()
+wf_workflow --> proc_processor_msg : start()
+
+@enduml

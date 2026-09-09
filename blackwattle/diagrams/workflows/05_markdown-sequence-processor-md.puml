@@ -1,0 +1,39 @@
+@startuml 05_markdown-sequence-processor-md
+' Generirano iz examples/workflows/05_markdown.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 14_markdown.yaml — Wattleflow Workflow - Markdown to Word document conversion.
+caption processor-md · 05_markdown.yaml · okruženje: dev
+
+skinparam sequence {
+    LifeLineBorderColor #999999
+    ParticipantBorderColor #555555
+    ParticipantBackgroundColor #FAFAFA
+}
+
+participant "workflow" as WF
+group processor-md <<FileDocumentProcessor>>
+  participant "processor-md" as PR1
+  participant "markdown-blackboard" as BB1
+  participant "pipeline-dummy" as P1_1
+  participant "repository-markdown" as R1_1
+  WF -> PR1 : start()
+  PR1 -> PR1 : iterate source
+  PR1 -> BB1 : create() «CreateFileDocument»
+  PR1 -> P1_1 : transform()  <<PipelineFileDocumenDummyWrite>>
+  P1_1 -> BB1 : write()
+  BB1 -> R1_1 : «WriteMarkdownToWordDocument»
+end
+@enduml

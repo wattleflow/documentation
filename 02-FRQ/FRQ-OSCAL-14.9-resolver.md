@@ -1,12 +1,12 @@
-# FR-OSCAL-14.9 — Razrješavanje profila u katalog
+# FRQ-OSCAL-14.9 — Razrješavanje profila u katalog
 
-> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
 > (2026-08-21). Oznaka se od tada mijenja kroz DR, ne uređivanjem.
 
 | | |
 |---|---|
 | **Status** | Prijedlog (2026-08-21) — obrnuto inženjerstvo zatečenog koda |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `resolve(profile, source, *, catalog_uuid=None, strict=True) -> Catalog` |
 | **Sestrinski** | [`14.4`](FRQ-OSCAL-14.4-profile.md) profil · [`14.2`](FRQ-OSCAL-14.2-control.md) kontrola · [`14.3`](FRQ-OSCAL-14.3-group.md) grupa |
@@ -23,7 +23,7 @@ Podjela odgovornosti je namjerna i vrijedi je zapisati: **orezivanje pripada čv
 odabrani, koliko strogo se sudi nedostatku, i od čega se sastavlja rezultat.
 
 Neprovedeno **namjerno**: `modify` (alters/sets), uzorci, parametarske preinake i `include-all`
-— ASD ISM profili ih ne koriste (`FR-OSCAL-14.4` §11 t.1).
+— ASD ISM profili ih ne koriste (`FRQ-OSCAL-14.4` §11 t.1).
 
 ## 2. Akteri
 
@@ -47,7 +47,7 @@ Neprovedeno **namjerno**: `modify` (alters/sets), uzorci, parametarske preinake 
 
 1. Profil bira **barem jedan** `id`.
 2. Izvorni katalog odgovara profilu — provjeru `imports[*].href` resolver **ne radi**
-   (`FR-OSCAL-14.4` §11 t.2).
+   (`FRQ-OSCAL-14.4` §11 t.2).
 
 ## 5. Normalan tok
 
@@ -122,10 +122,10 @@ jednakost s prethodnom izvedbom; platforma = Python 3.11.15, Linux (WSL2), radno
 
 | NFR | posljedica |
 |---|---|
-| `NFR-ORG-05` | resolver ne drži nijednu pomoćnu funkciju modula; orezivanje je na čvorovima |
-| `NFR-ORG-08` | pravilo preživljavanja postoji jednom — resolver ga ne prepisuje |
-| `NFR-SEC-01` | rezultat je nov objekt; kvar u razrješavanju ne može oštetiti izvorni katalog |
-| `NFR-SEC-02` | javna površina modula je jedno ime (`resolve`) |
+| `NFRQ-ORG-05` | resolver ne drži nijednu pomoćnu funkciju modula; orezivanje je na čvorovima |
+| `NFRQ-ORG-08` | pravilo preživljavanja postoji jednom — resolver ga ne prepisuje |
+| `NFRQ-SEC-01` | rezultat je nov objekt; kvar u razrješavanju ne može oštetiti izvorni katalog |
+| `NFRQ-SEC-02` | javna površina modula je jedno ime (`resolve`) |
 
 ## 11. Otvoreno
 
@@ -134,5 +134,5 @@ jednakost s prethodnom izvedbom; platforma = Python 3.11.15, Linux (WSL2), radno
    vratiti ih uz rezultat ili zapisati.
 2. **Rezultat ne bilježi podrijetlo.** Razriješeni katalog ne nosi trag koji ga profil i koji
    izvor tvore; `metadata` je profilova, ali izvor nestaje. Za audit trag to je rupa.
-3. **`href` se ne provjerava** (`FR-OSCAL-14.4` §11 t.2) — razrješavanje protiv pogrešnog kataloga
+3. **`href` se ne provjerava** (`FRQ-OSCAL-14.4` §11 t.2) — razrješavanje protiv pogrešnog kataloga
    prolazi kad se `id`-evi slučajno preklope.

@@ -1,4 +1,4 @@
-# FR-DRV-13 — Driver za jezični model
+# FRQ-DRV-13 — Driver za jezični model
 
 > **Oznaka je provizorna.** Kategorija `DRV` nije u vokabularu FR registra; uvođenje traži DR
 > (D-12).
@@ -8,7 +8,7 @@
 | **Status** | Prijedlog (2026-08-20) |
 | **Nadređeni zahtjev** | [`HLRQ-13`](../01-HLRQ/HLRQ-13-llm-models.md) — narativ i poslovna pravila `BR-01…BR-06` |
 | **Predmet** | `DriverLanguageModel` — perzistencijske operacije nad modelom: **`read` / `write` / `update` / `download`** |
-| **Sestrinski** | [`FR-CON-13.1`](FRQ-CON-13.1-huggingface-connection.md) i [`FR-CON-13.2`](FRQ-CON-13.2-remote-model-connection.md) — pristup koji ovaj driver koristi |
+| **Sestrinski** | [`FRQ-CON-13.1`](FRQ-CON-13.1-huggingface.md) i [`FRQ-CON-13.2`](FRQ-CON-13.2-remote-model.md) — pristup koji ovaj driver koristi |
 | **Zatečeno** | Ne postoji. Presedan oblika: `DriverClaude` (`load`/`close`/`read`/`write`/`complete`) za udaljeni model; od `CHG-PRC-2026-08-20-01` ondje su pristupni parametri odvojeni od parametara poziva (`ACCESS` / `CALL`), pa je preseljenje pristupa iza konekcije mehaničko |
 
 ## 1. Predmet
@@ -53,7 +53,7 @@ Model **nije akter**: ne pokreće ništa, ulazi kao sudionik i kao izvor kvara.
 ## 4. Preduvjeti
 
 1. Driver je registriran i veže se na **postojeću** imenovanu konekciju (`BR-01`).
-2. Konekcija je u stanju *povezan* (`FR-CON-13.1` §5 ili `FR-CON-13.2` §5). Driver **ne zna**
+2. Konekcija je u stanju *povezan* (`FRQ-CON-13.1` §5 ili `FRQ-CON-13.2` §5). Driver **ne zna**
    koju je dobio — vidi samo zajednički ugovor.
 3. Konfiguracija imenuje model i, gdje je primjenjivo, reviziju, uređaj i cache.
 4. Runtime koji driver koristi je dostupan — inače je to kvar iz §6, ne izuzetak usred obrade.
@@ -165,11 +165,11 @@ Ovdje samo ono što je specifično za driver.
 
 | NFR | posljedica za ovaj zahtjev |
 |---|---|
-| `NFR-SEC-01` | model učitan jednom i dijeljen je **hub**: dobitak u memoriji plaća se koncentracijom. Oslobađanje na kraju workflowa (§5 t.7) je dio te cijene |
-| `NFR-SEC-02` | javna površina su četiri operacije; učitavanje, uređaj i cache ostaju unutarnji (§8 k.1) |
-| `NFR-SEC-03` | preuzeti model je third-party artefakt: težine u `pickle` formatu su izvršni sadržaj — prednost `safetensors`, uz provjeru revizije/sha (§6 zabluda 4) |
-| `NFR-SEC-06` | driver vidi **sadržaj dokumenata**; poruka greške ga ne smije citirati, kao ni kredencijal. Zapisuju se veličine i identifikatori, ne tekst |
-| `NFR-ORG-07` | `ALLOWED` je deklarirana ulazna površina; podjela `ACCESS` / `CALL` u `DriverClaude` (`CHG-PRC-2026-08-20-01`) je prvi korak provedbe |
+| `NFRQ-SEC-01` | model učitan jednom i dijeljen je **hub**: dobitak u memoriji plaća se koncentracijom. Oslobađanje na kraju workflowa (§5 t.7) je dio te cijene |
+| `NFRQ-SEC-02` | javna površina su četiri operacije; učitavanje, uređaj i cache ostaju unutarnji (§8 k.1) |
+| `NFRQ-SEC-03` | preuzeti model je third-party artefakt: težine u `pickle` formatu su izvršni sadržaj — prednost `safetensors`, uz provjeru revizije/sha (§6 zabluda 4) |
+| `NFRQ-SEC-06` | driver vidi **sadržaj dokumenata**; poruka greške ga ne smije citirati, kao ni kredencijal. Zapisuju se veličine i identifikatori, ne tekst |
+| `NFRQ-ORG-07` | `ALLOWED` je deklarirana ulazna površina; podjela `ACCESS` / `CALL` u `DriverClaude` (`CHG-PRC-2026-08-20-01`) je prvi korak provedbe |
 | OSCAL | `@oscal_driver` s istim skupom kao pripadna konekcija; deklaracija ne smije tvrditi kontrolu koju driver ne provodi |
 
 ## 11. Otvoreno

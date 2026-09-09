@@ -5,7 +5,7 @@
 **Verzija:** Draft v0.3.2  
 **Zadnja izmjena:** 2026-08-24  
 **Nadređeni dokument:** [PHILOSOPHY.md](PHILOSOPHY.md) — filozofija je kišobran; ova metodologija je iz nje izvedena  
-**Pratioci:** [NFR registar](03-NFRQ/0-NFRQ-EN.md), [DOCTRINE.md](DOCTRINE.md), [POSTULATE.md](POSTULATE.md), [dictionary.yaml](dictionary.yaml)
+**Pratioci:** [NFR registar](03-NFRQ/NFRQ-000-EN.md), [DOCTRINE.md](DOCTRINE.md), [POSTULATE.md](POSTULATE.md), [dictionary.yaml](dictionary.yaml)
 
 > Ova metodologija nije zbirka praksi. Ona je ponovljiv test kojim se tvrdnje o sustavu provjeravaju u skladu s filozofijom i doktrinom.
 
@@ -189,10 +189,10 @@ Znanstvena teorija + Inženjersko načelo + Poslovni cilj
 ```
 
 Razrješenje smjera (ispravak v0.3): v0.2 je postavila „DR prije FR/NFR" apsolutno, čime
-je nastao sukob s §4 (`realises` poslovni zahtjev) i s praksom (NFR-ORG-02 prethodio je
+je nastao sukob s §4 (`realises` poslovni zahtjev) i s praksom (NFRQ-ORG-02 prethodio je
 odluci o korijenu i bio joj kriterij). Ispravno je **oboje, razdvojeno**: primarni
 zahtjevi prethode odlukama i ograničavaju ih; izvedeni zahtjevi nastaju iz odluka
-(zero-trust → `NFR-SEC-01/02/03`; clean-core → `NFR-ORG-01`). Rečenica iz `PHILOSOPHY.md`
+(zero-trust → `NFRQ-SEC-01/02/03`; clean-core → `NFRQ-ORG-01`). Rečenica iz `PHILOSOPHY.md`
 („arhitektonske odluke generiraju mjerljive NFR-ove") odnosi se na izvedene.
 
 Sljedivost je po naravi **graf**, ne lanac: čvorovi su načela, ciljevi, pravila, zahtjevi,
@@ -213,7 +213,7 @@ inerciji — usvajanje je epistemička prosudba i bilježi se.
 |---|---|---|
 | Python PEP (osob. PEP 8) | stil jezika i konvencije imenovanja | samoopisivost (§8) |
 | ISO/IEC/IEEE 42010 | opis arhitekture — gledišta i interesi | arhitektonsku dokumentaciju |
-| ISO/IEC 25010 | model kvalitete proizvoda — sidro za NFR | NFR registar ([`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md)) |
+| ISO/IEC 25010 | model kvalitete proizvoda — sidro za NFR | NFR registar ([`03-NFRQ/`](03-NFRQ/NFRQ-000-EN.md)) |
 | ISO/IEC 25012 | model kvalitete podataka | DQI dimenzije ([`05-METHOD/dqi.md`](05-METHOD/dqi.md)) |
 | ISO 8000-8 / 8000-61 | mjerenje i procesni model kvalitete podataka | DQI formula i kontrolne točke (isto) |
 | ISO/IEC 12207 | procesi životnog ciklusa softvera | proces razvoja |
@@ -222,7 +222,7 @@ inerciji — usvajanje je epistemička prosudba i bilježi se.
 | OMG OCL | formalna ograničenja na razini modela | modelska ograničenja |
 | NIST OSCAL | strojno čitljive sigurnosne kontrole | compliance |
 | W3C RDF / OWL / PROV-O | ontologija, semantika, provenijencija | informacijski sloj; graf sljedivosti (§6) |
-| SPDX / CycloneDX *(budući)* | software bill of materials | supply-chain (`NFR-SEC-03`) |
+| SPDX / CycloneDX *(budući)* | software bill of materials | supply-chain (`NFRQ-SEC-03`) |
 
 ## 7.1 Evidencija odluka kao funkcija; DR kao zamjenjiva pod-metoda
 
@@ -252,7 +252,7 @@ uloga-eksplicitna** — gole generičke imenice (`Manager`, `Helper`, `Parser`) 
 zabranjene; kvalificirani oblici (`DriverS3UriParser`, `KafkaReadProcessor`) su ispravni.
 Imenovanje je semiotička politika (P-08): ime je znak čiji odnos prema ulozi registar
 fiksira, a lint provodi — arhitektonsko pitanje, ne stilska preferencija. Provediva
-gramatika i kontrolirani rječnik su u **[`NFR-ORG-02`](03-NFRQ/NFR-ORG-02-class-nomenclature-EN.md)**.
+gramatika i kontrolirani rječnik su u **[`NFRQ-ORG-02`](03-NFRQ/NFRQ-ORG-02-class-nomenclature-EN.md)**.
 
 > **Otvorena odluka (DR-WFL-004, pending):** pisanje akronima (`CreatePDFDocument` po PEP 8
 > vs zatečeno `CreatePdfDocument`). Do odluke: pripadno lint pravilo **suspendirano je na
@@ -282,8 +282,8 @@ tvrdnja (ljudska ili strojno generirana) provjerava, a ne pretpostavlja.
 Zahtjevi su primarni (iz ciljeva i načela) ili izvedeni (iz odluka); svaki NFR usidren je
 na karakteristiku iz **ISO/IEC 25010**, nosi identifikator (`NFR-<KATEGORIJA>-NN`),
 kriterije prihvaćanja, metodu verifikacije i sljedivost prema gore (§6). Registar se vodi
-u **[`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md)** — zapis po zahtjevu, uz zajedničke definicije
-(`NFR-DEF-01`), povelju `[M]` (`NFR-DEF-02`) i Dodatak A o redoslijedu faceta (`NFR-APX-01`).
+u **[`03-NFRQ/`](03-NFRQ/NFRQ-000-EN.md)** — zapis po zahtjevu, uz zajedničke definicije
+(`NFRQ-DEF-01`), povelju `[M]` (`NFRQ-DEF-02`) i Dodatak A o redoslijedu faceta (`NFRQ-APX-01`).
 Opseg kategorija vodi indeks registra, ne ovaj tekst (D-13).
 
 Verifikacija konformnosti izvedena je kao **statička provjera nad izvornim kodom**, po istoj

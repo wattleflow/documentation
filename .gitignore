@@ -12,6 +12,24 @@
 #
 # Ignore build artefacts and tooling state only — never a document.
 
+04-DR/
+05-METHOD/
+06-ANALYSIS/
+07-CHANGES/
+
+processors/CL*.md
+workflow/
+
+# workflow/analysis
+# workflow/changes
+# workflow/concrete
+# workflow/conformance
+# workflow/core
+# workflow/D*.md
+# workflow/O*.md
+# workflow/T*.md
+
+
 __pycache__/
 *.pyc
 build/
@@ -22,6 +40,10 @@ dist/
 
 # Symlink to a shared Makefile outside this repository — a path, not content.
 Makefile
+Manifest.in
 
-# Editor backups.
+*.yaml
 *.bak
+CLAUDE.md
+*.superseeded
+.gitignorekao 

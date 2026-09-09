@@ -1,0 +1,45 @@
+@startuml 10_aiprocessor-component
+' Generirano iz examples/workflows/10_aiprocessor.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 10_aiprocessor.yaml — Wattleflow Workflow - AI Pipeline Demo (PDF -> Claude summary)
+caption Konfiguracija: 10_aiprocessor.yaml · okruženje: dev
+
+package "drivers" {
+  component "driver-txt-storage" as driv_driver_txt_storage <<DriverLocalStorage>>
+  component "driver-claude-ai" as driv_driver_claude_ai <<AIClaudeDriver>>
+}
+
+component "workflow" as wf_workflow <<Workflow>>
+
+package "processor-ai-summary" {
+  component "processor-ai-summary" as proc_processor_ai_summary <<AIProcessor>>
+  note right of proc_processor_ai_summary
+    source_path: ${dotenv:processor-ai-summary.source_path}
+    pattern: *.pdf
+    recursive: False
+  end note
+  component "claude-blackboard" as bbprocessorais_claude_blackboard <<ClaudeBlackboard>>
+  note bottom of bbprocessorais_claude_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "pipeline-claude-summarise" as pipeprocessorais_pipeline_claude_summarise <<AIPipeline>>
+}
+proc_processor_ai_summary --> pipeprocessorais_pipeline_claude_summarise : 1. transform()
+pipeprocessorais_pipeline_claude_summarise .[#AAAAAA].> bbprocessorais_claude_blackboard : write()
+proc_processor_ai_summary --> bbprocessorais_claude_blackboard : create() «CreateClaudeDocument»
+proc_processor_ai_summary .[#AAAAAA].> driv_driver_claude_ai : <<driver>>
+
+wf_workflow --> proc_processor_ai_summary : start()
+
+@enduml

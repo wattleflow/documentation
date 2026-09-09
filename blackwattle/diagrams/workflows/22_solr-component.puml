@@ -1,0 +1,57 @@
+@startuml 22_solr-component
+' Generirano iz examples/workflows/22_solr.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 22_solr.yaml — Apache Solr round-trip — synthetic air-traffic indexing & query
+caption Konfiguracija: 22_solr.yaml · okruženje: dev
+
+package "connections" {
+  component "solr-flights" as conn_solr_flights <<MockSolrConnection>>
+}
+
+package "drivers" {
+  component "solr-flights-driver" as driv_solr_flights_driver <<DriverSolr>>
+}
+
+component "solr-air-traffic" as wf_solr_air_traffic <<SolrWorkflow>>
+
+package "solr-write" {
+  component "solr-write" as proc_solr_write <<SolrSyntheticWriteProcessor>>
+  component "solr-write-blackboard" as bbsolrwrite_solr_write_blackboard <<SmallBlackboard>>
+  note bottom of bbsolrwrite_solr_write_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "solr-write-pipeline" as pipesolrwrite_solr_write_pipeline <<SolrWritePipeline>>
+  component "solr-write-repository" as reposolrwrite_solr_write_repository <<RepositoryWithDriver>>
+}
+proc_solr_write --> pipesolrwrite_solr_write_pipeline : 1. transform()
+pipesolrwrite_solr_write_pipeline .[#AAAAAA].> bbsolrwrite_solr_write_blackboard : write()
+proc_solr_write --> bbsolrwrite_solr_write_blackboard : create() «CreateSolrDocument»
+bbsolrwrite_solr_write_blackboard --> reposolrwrite_solr_write_repository : «WriteSolrDocument»
+reposolrwrite_solr_write_repository .[#AAAAAA].> driv_solr_flights_driver : <<uses>>
+
+package "solr-read" {
+  component "solr-read" as proc_solr_read <<SolrReadProcessor>>
+  component "solr-read-blackboard" as bbsolrread_solr_read_blackboard <<SmallBlackboard>>
+  note bottom of bbsolrread_solr_read_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "solr-read-pipeline" as pipesolrread_solr_read_pipeline <<SolrReadPipeline>>
+}
+proc_solr_read --> pipesolrread_solr_read_pipeline : 1. transform()
+pipesolrread_solr_read_pipeline .[#AAAAAA].> bbsolrread_solr_read_blackboard : write()
+proc_solr_read --> bbsolrread_solr_read_blackboard : create() «CreateSolrDocument»
+
+wf_solr_air_traffic --> proc_solr_write : start()
+wf_solr_air_traffic --> proc_solr_read : start()
+
+driv_solr_flights_driver .[#AAAAAA].> conn_solr_flights : <<connection_name>>
+@enduml

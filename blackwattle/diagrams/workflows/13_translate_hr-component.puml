@@ -1,0 +1,49 @@
+@startuml 13_translate_hr-component
+' Generirano iz examples/workflows/13_translate_hr.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 13_translate_hr.yaml — Wattleflow Workflow - EN -> HR translation (local HuggingFace model)
+caption Konfiguracija: 13_translate_hr.yaml · okruženje: dev
+
+package "drivers" {
+  component "driver-hr-storage" as driv_driver_hr_storage <<DriverLocalStorage>>
+}
+
+component "workflow" as wf_workflow <<Workflow>>
+
+package "processor-translate-en-hr" {
+  component "processor-translate-en-hr" as proc_processor_translate_en_hr <<TranslateProcessor>>
+  note right of proc_processor_translate_en_hr
+    source_path: ${dotenv:processor-translate-en-hr.source_path}
+    pattern: ['*.pdf']
+    recursive: True
+  end note
+  component "translate-blackboard" as bbprocessortra_translate_blackboard <<SmallBlackboard>>
+  note bottom of bbprocessortra_translate_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "pipeline-pdf-extract" as pipeprocessortra_pipeline_pdf_extract <<PipelineExtractText>>
+  component "pipeline-translate-en-hr" as pipeprocessortra_pipeline_translate_en_hr <<PipelineTranslateEnHr>>
+  component "repository-hr-txt" as repoprocessortra_repository_hr_txt <<RepositoryWithDriver>>
+}
+proc_processor_translate_en_hr --> pipeprocessortra_pipeline_pdf_extract : 1. transform()
+pipeprocessortra_pipeline_pdf_extract .[#AAAAAA].> bbprocessortra_translate_blackboard : write()
+pipeprocessortra_pipeline_pdf_extract --> pipeprocessortra_pipeline_translate_en_hr : 2. transform()
+pipeprocessortra_pipeline_translate_en_hr .[#AAAAAA].> bbprocessortra_translate_blackboard : write()
+proc_processor_translate_en_hr --> bbprocessortra_translate_blackboard : create() «CreateTranslationDocument»
+bbprocessortra_translate_blackboard --> repoprocessortra_repository_hr_txt : «ReadTranslationDocument» «WriteTranslationToFile»
+repoprocessortra_repository_hr_txt .[#AAAAAA].> driv_driver_hr_storage : <<uses>>
+
+wf_workflow --> proc_processor_translate_en_hr : start()
+
+@enduml

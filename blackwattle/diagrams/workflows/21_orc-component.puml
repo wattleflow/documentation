@@ -1,0 +1,56 @@
+@startuml 21_orc-component
+' Generirano iz examples/workflows/21_orc.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 21_orc.yaml — Apache ORC round-trip — synthetic air-traffic data
+caption Konfiguracija: 21_orc.yaml · okruženje: dev
+
+package "drivers" {
+  component "orc-local-driver" as driv_orc_local_driver <<DriverLocalStorage>>
+}
+
+component "orc-air-traffic" as wf_orc_air_traffic <<OrcWorkflow>>
+
+package "orc-write" {
+  component "orc-write" as proc_orc_write <<OrcSyntheticWriteProcessor>>
+  component "orc-write-blackboard" as bborcwrite_orc_write_blackboard <<SmallBlackboard>>
+  note bottom of bborcwrite_orc_write_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "orc-write-pipeline" as pipeorcwrite_orc_write_pipeline <<OrcWritePipeline>>
+  component "orc-write-repository" as repoorcwrite_orc_write_repository <<RepositoryWithDriver>>
+}
+proc_orc_write --> pipeorcwrite_orc_write_pipeline : 1. transform()
+pipeorcwrite_orc_write_pipeline .[#AAAAAA].> bborcwrite_orc_write_blackboard : write()
+proc_orc_write --> bborcwrite_orc_write_blackboard : create() «CreateOrcDocument»
+bborcwrite_orc_write_blackboard --> repoorcwrite_orc_write_repository : «WriteOrcDocument»
+repoorcwrite_orc_write_repository .[#AAAAAA].> driv_orc_local_driver : <<uses>>
+
+package "orc-read" {
+  component "orc-read" as proc_orc_read <<OrcReadProcessor>>
+  note right of proc_orc_read
+    pattern: *.orc
+    recursive: True
+  end note
+  component "orc-read-blackboard" as bborcread_orc_read_blackboard <<SmallBlackboard>>
+  note bottom of bborcread_orc_read_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "orc-read-pipeline" as pipeorcread_orc_read_pipeline <<OrcReadPipeline>>
+}
+proc_orc_read --> pipeorcread_orc_read_pipeline : 1. transform()
+pipeorcread_orc_read_pipeline .[#AAAAAA].> bborcread_orc_read_blackboard : write()
+proc_orc_read --> bborcread_orc_read_blackboard : create() «CreateOrcDocument»
+
+wf_orc_air_traffic --> proc_orc_write : start()
+wf_orc_air_traffic --> proc_orc_read : start()
+
+@enduml

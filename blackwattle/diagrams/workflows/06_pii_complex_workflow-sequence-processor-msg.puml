@@ -1,0 +1,47 @@
+@startuml 06_pii_complex_workflow-sequence-processor-msg
+' Generirano iz examples/workflows/06_pii_complex_workflow.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 03_pii_complex_workflow.yaml — Wattleflow Workflow - per-type processors routing many labels by filename format (pdf/eml/msg).
+caption processor-msg · 06_pii_complex_workflow.yaml · okruženje: dev
+
+skinparam sequence {
+    LifeLineBorderColor #999999
+    ParticipantBorderColor #555555
+    ParticipantBackgroundColor #FAFAFA
+}
+
+participant "workflow" as WF
+group processor-msg <<EntityFileDocumentProcessor>>
+  participant "processor-msg" as PR3
+  participant "bb-msg" as BB3
+  participant "msg-extract" as P3_1
+  participant "entities" as P3_2
+  participant "repo-reduced-msg" as R3_1
+  participant "repo-evidence-msg" as R3_2
+  WF -> PR3 : start()
+  PR3 -> PR3 : iterate source
+  PR3 -> BB3 : create() «CreateFileDocument»
+  PR3 -> P3_1 : transform()  <<PipelineMessageExtract>>
+  P3_1 -> BB3 : write()
+  PR3 -> P3_2 : transform()  <<PipelineProcessorDriverEntities>>
+  P3_2 -> BB3 : write()
+  group flush (defer_flush: true)
+    PR3 -> BB3 : flush()
+    BB3 -> R3_1 : «WriteRoutedText»
+    BB3 -> R3_2 : «WriteRoutedEvidence»
+  end
+end
+@enduml

@@ -1,0 +1,54 @@
+@startuml FRQ-MAIL-01-message-parser
+' Viewpoint: one message from container to available data. Audience: analyst,
+' implementer. A view, not a source of truth (D-13). Labels: UK English.
+title FRQ-MAIL-01 — Reading a mail message
+
+|A1 pass|
+start
+:Hand over a container;
+
+|Reading|
+if (Container belongs to this requirement?\n(by CONTENT, not by name — BR-04)) then (no)
+  :Skip, record why;
+  stop
+else (yes)
+endif
+
+if (Carries a transport trace?) then (yes -- EV02)
+  :Read the standard structure;
+else (no -- EV03)
+  if (External reader available?) then (no)
+    :Fail BEFORE processing;
+    stop
+  else (yes)
+  endif
+  :Read what the client extracted;
+endif
+
+:Reduce headers to ONE named set\n(independent of the path taken);
+
+|EV04 on demand|
+fork
+  :Parties — name + address,\nrepeats counted once (BR-02);
+fork again
+  :Times — instant + whether\nthe zone is KNOWN (BR-03);
+fork again
+  :Text — no executable content (BR-05);
+fork again
+  :Attachments — content + fingerprint;
+  note right
+    A broken attachment is dropped,
+    the message continues (BR-06).
+  end note
+end fork
+
+|Result|
+:Same named data regardless\nof the container;
+stop
+
+note left
+  Unreadable container: reported as a
+  single failure class; the pass over the
+  source location is not interrupted.
+end note
+@enduml

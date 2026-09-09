@@ -1,0 +1,174 @@
+@startuml FRQ-MET-01-structure
+' Građa kolektora metrike. Gledište: dekompozicija. Publika: arhitekt.
+' Prikaz, ne izvor istine (D-13).
+title FRQ-MET-01 — Metric collection: decomposition
+
+skinparam class {
+  BackgroundColor #FEFEFE
+  BorderColor #555555
+  ArrowColor #555555
+}
+skinparam NoteBackgroundColor #FFFDE7
+skinparam packageStyle rectangle
+hide empty members
+
+package "python stdlib" #F0F0F0 {
+  abstract class "logging.Handler" as Handler <<external>> {
+    +level : int
+    --
+    +{abstract} emit(record) : None
+    +handle(record) : bool
+    +setLevel(level) : None
+    +addFilter(filter) : None
+    +format(record) : str
+    +handleError(record) : None
+    +createLock() : None
+  }
+  note bottom of Handler
+    Purpose-built subclass, not a reused one.
+    What the base contributes: level gate,
+    filters, and its own lock — which matters
+    the moment spans arrive from more than one
+    thread. Only `emit` is overridden;
+    `format` is deliberately NOT called, since
+    the collector wants the record, not a line
+    of text.
+  end note
+}
+
+package "wattleflow-workflow  ·  clean core tier" #F5F7FA {
+
+  enum MetricKind <<enumeration>> {
+    COUNTER
+    GAUGE
+    HISTOGRAM
+  }
+
+  class MetricSpan <<value>> {
+    +component : str
+    +method : str
+    +event : str
+    +outcome : str
+    +started : float
+    +seconds : float
+    +quantity : int | None
+    +depth : int
+    --
+    +exclusive(children) : float
+  }
+  note right of MetricSpan
+    One measured operation, derived from a
+    `Started` / `Completed`|`Failed` pair.
+    `depth` is what makes exclusive time
+    computable — the same work is otherwise
+    reported once per layer (NFRQ-OBS-04 c.6).
+  end note
+
+  class MetricSample <<value>> {
+    +name : str
+    +kind : MetricKind
+    +labels : Mapping[str, str]
+    +value : float
+    +buckets : Mapping[str, int] | None
+  }
+  note right of MetricSample
+    One published series point. `buckets` is
+    what separates a distribution from a
+    number (NFRQ-OBS-04 c.1); a mean is never
+    stored, only derived at query time.
+  end note
+
+  class MetricSet {
+    -_spans : list[MetricSpan]
+    -_counters : dict
+    -_open_spans : int
+    -_dropped : int
+    --
+    +record(span) : None
+    +samples() : list[MetricSample]
+    +health() : list[MetricSample]
+    +clear() : None
+  }
+  note bottom of MetricSet
+    Owns the DERIVATION: counters, buckets,
+    throughput. Nothing arrives here already
+    aggregated, so a stored figure can never
+    disagree with the figures it came from.
+  end note
+
+  class MetricCollector {
+    -_open : dict[Key, list[float]]
+    -_set : MetricSet
+    +ttl : float
+    --
+    +emit(record) : None  <<override>>
+    -_pair(record) : MetricSpan | None
+    -_expire() : None
+  }
+  note left of MetricCollector
+    The ONE place that corrects:
+      · `Failed` closes a span
+      · a stale span expires, never hangs
+      · quantity read from the closing record
+    Components stay unaware it exists.
+  end note
+
+  abstract class MetricSink <<abstract>> {
+    +{abstract} publish(samples) : bool
+    +{abstract} accepts(kind) : bool
+  }
+
+  class MetricReporter {
+    -_sinks : list[MetricSink]
+    -_set : MetricSet
+    --
+    +register(sink) : None
+    +collector() : MetricCollector
+    +report() : None
+  }
+  note bottom of MetricReporter
+    N sinks = N destinations over ONE sample
+    set — the fan-out `FRQ-PRC-15.22` already
+    uses for documents. A failing sink does
+    not stop the others.
+  end note
+}
+
+package "wattleflow-processors  ·  declared zero-trust exception" #FFF4E6 {
+  class PrometheusSink {
+    -_driver : DriverPrometheus
+    +job : str
+    --
+    +publish(samples) : bool
+    -_exposition(samples) : str
+  }
+  note bottom of PrometheusSink
+    Builds exposition 0.0.4 as TEXT, because
+    the driver's structured path emits no
+    `# TYPE` / `# HELP` (measured) and a
+    histogram needs both.
+  end note
+
+  class GrafanaSink {
+    -_driver : DriverGrafana
+    --
+    +publish(samples) : bool
+  }
+  note bottom of GrafanaSink
+    Annotations only: run start / end and
+    failures. Not a metric store.
+  end note
+}
+
+Handler <|-- MetricCollector
+MetricCollector *-- MetricSet : owns >
+MetricCollector ..> MetricSpan : creates >
+MetricSet o-- MetricSpan : accumulates >
+MetricSet ..> MetricSample : derives >
+MetricReporter *-- MetricSet
+MetricReporter o-- MetricSink : 0..*
+MetricSink <|-- PrometheusSink
+MetricSink <|-- GrafanaSink
+MetricSample --> MetricKind
+
+@enduml

@@ -14,8 +14,8 @@ Proza u [PHILOSOPHY.md](PHILOSOPHY.md) i [METHODOLOGY.md](METHODOLOGY.md)
 citira norme D-oznakama i obrazlaže ih; normativni teret nosi ovaj registar.
 
 **Status: registar je na početku životnog ciklusa i namjerno je malen.** Primat
-u dokumentiranju ima sloj zahtjeva ([`01-HLRQ/`](01-HLRQ/0-HLRQ-EN.md),
-[`02-FRQ/`](02-FRQ/0-FRQ-EN.md), [`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md)), jer je kod
+u dokumentiranju ima sloj zahtjeva ([`01-HLRQ/`](01-HLRQ/HLRQ-000-EN.md),
+[`02-FRQ/`](02-FRQ/FRQ-000-EN.md), [`03-NFRQ/`](03-NFRQ/NFRQ-000-EN.md)), jer je kod
 zreliji od svojeg zapisa. Doktrina se dopunjuje kad taj sloj bude konsolidiran.
 
 **Kriterij ulaska (v0.2).** Članak stoji u registru samo ako ima **stvaran
@@ -140,7 +140,7 @@ svaka politika.
 
 **Provedba**
 
-[`NFR-SEC-01/02/03`](03-NFRQ/0-NFRQ-EN.md) (nasljednici povučenog `NFR-ORG-06`);
+[`NFRQ-SEC-01/02/03`](03-NFRQ/NFRQ-000-EN.md) (nasljednici povučenog `NFRQ-ORG-06`);
 `POLICY.md` §7; lint pravila `clean_core_imports` (**ERROR**) i
 `distribution_manifest` (`WARNING`).
 
@@ -296,7 +296,7 @@ sadržaj i dalje živi, naveden je nositelj.
 | `D-01` | Model odlučivanja | Provedba je bila polje *Temelji*, kojeg u DR predlošku nema; evaluacija („udio DR-ova s popunjenim Temeljima") stoga nemjerljiva. Iskaz je uz to opis stanja, ne norma. | — |
 | `D-04` | Iteracija pod kaskadom | Iskaz je konjunkcija `D-02` i `D-03`; vlastitog mehanizma nema. | `D-02`, `D-03` |
 | `D-06` | Opovrgljivost tvrdnje | Provedba je bila sekcija *Hipoteze* u `PHILOSOPHY.md`; `H4-DQI` u nju nikad nije upisan, pa mehanizam ne stoji. | `PHILOSOPHY.md` §Hypotheses (praksa, ne norma) |
-| `D-08` | Mjera i valjanost | Protokol `V1–V6` je metoda, ne norma; evaluacija se pozivala na `H4-DQI`, kandidata izvan registra. | `METHODOLOGY.md` §5.1, `NFR-DEF-02` |
+| `D-08` | Mjera i valjanost | Protokol `V1–V6` je metoda, ne norma; evaluacija se pozivala na `H4-DQI`, kandidata izvan registra. | `METHODOLOGY.md` §5.1, `NFRQ-DEF-02` |
 | `D-14` | Evidencija odluka | Ista norma već stoji na metodološkom i policy sloju; ovdje je bila treći primjerak (kršenje `D-13`). Revizija DR forme je odgođena. | `METHODOLOGY.md` §7.1, `POLICY.md` §8 |
 | `D-15` | Politika na snazi | Nosivi dio („bez mehanizma i signala = aspiracija") sada je klauzula u `D-05`; ostatak je duplikat. | `D-05` |
 | `D-16` | Dokumentacija kao sustav publika | Provedba je bila „matrica publika × artefakt (kandidat)" — artefakt ne postoji. | `PHILOSOPHY.md` (kao teza) |

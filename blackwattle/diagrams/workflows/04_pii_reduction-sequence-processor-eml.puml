@@ -1,0 +1,55 @@
+@startuml 04_pii_reduction-sequence-processor-eml
+' Generirano iz examples/workflows/04_pii_reduction.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 04_pii_reduction.yaml — Wattleflow Workflow - PII reduction workflow for PDF, PNG, msg emal files.
+caption processor-eml · 04_pii_reduction.yaml · okruženje: dev
+
+skinparam sequence {
+    LifeLineBorderColor #999999
+    ParticipantBorderColor #555555
+    ParticipantBackgroundColor #FAFAFA
+}
+
+participant "workflow" as WF
+group processor-eml <<EntityFileDocumentProcessor>>
+  participant "processor-eml" as PR3
+  participant "eml-blackboard" as BB3
+  participant "digest" as P3_1
+  participant "eml-extract-pipeline" as P3_2
+  participant "mail-attachments" as P3_3
+  participant "entities" as P3_4
+  participant "repository-reducted-txt" as R3_1
+  participant "repository-original" as R3_2
+  participant "repository-attachments" as R3_3
+  WF -> PR3 : start()
+  PR3 -> PR3 : iterate source
+  PR3 -> BB3 : create() «CreateFileDocument»
+  PR3 -> P3_1 : transform()  <<PipelineFileDigest>>
+  P3_1 -> BB3 : write()
+  PR3 -> P3_2 : transform()  <<PipelineEmailExtract>>
+  P3_2 -> BB3 : write()
+  PR3 -> P3_3 : transform()  <<PipelineMailExtractAttachment>>
+  P3_3 -> BB3 : write()
+  PR3 -> P3_4 : transform()  <<PipelineProcessorDriverEntities>>
+  P3_4 -> BB3 : write()
+  group flush (defer_flush: true)
+    PR3 -> BB3 : flush()
+    BB3 -> R3_1 : «WriteTextContent»
+    BB3 -> R3_2 : «WriteOriginalWithText»
+    BB3 -> R3_3 : «WriteAttachmentDocument»
+  end
+end
+@enduml

@@ -1,0 +1,83 @@
+@startuml FRQ-PRC-15.22-document-activity
+' Activity dijagram: RADNJE i OBJEKTNI TOK — što se s dokumentom događa i u kojem
+' je stanju između radnji. Nema potpisa metoda, asercija ni audit zapisa: tko koga
+' zove nosi sequence dijagram, ne ovaj.
+' PlantUML activity sintaksa nema notaciju objektnog čvora, pa su objektni čvorovi
+' prikazani kao obojene radnje s imenom objekta i stanjem u uglatim zagradama.
+' Gledište: analiza. Publika: arhitekt, tester.
+' Prikaz, ne izvor istine (D-13).
+title FRQ-PRC-15.22 — Activity: one unit becomes a stored document
+
+skinparam ActivityBackgroundColor #FEFEFE
+skinparam ActivityBorderColor #555555
+skinparam ArrowColor #555555
+skinparam NoteBackgroundColor #FFFDE7
+
+|#F5F7FA|Processor|
+start
+:Discover a unit of work;
+#EDE7F6:**unit descriptor**\n[selected];
+if (within name, date and order criteria?) then (no)
+  :Discard the unit;
+  end
+else (yes)
+endif
+
+|#F2FBF4|Create strategy|
+:Construct the document
+for this subject;
+:Stamp its origin;
+#EDE7F6:**document**\n[described];
+note right
+  Described, not read: the document
+  carries a manifest of the subject,
+  not its bytes.
+end note
+
+|#FFF4E6|Pipeline|
+repeat
+  :Extract content
+  from the subject;
+  :Enrich the document;
+  #EDE7F6:**document**\n[enriched];
+repeat while (another transformation?) is (yes)
+->no;
+
+|#EEF4FF|Blackboard|
+:Hold the document
+on the canvas;
+if (flush boundary reached?) then (no)
+  :Carry to the next boundary;
+  end
+else (yes)
+endif
+
+repeat :Take the next destination;
+
+|#F2FBF4|Write strategy|
+  if (the document is this destination's subject?) then (no)
+    :Decline the destination;
+  else (yes)
+    :Render the payload
+    in the destination's format;
+    #EDE7F6:**payload**\n[rendered];
+    :Compose the output name;
+
+|#FFEBEE|Driver|
+    :Store the payload;
+    #EDE7F6:**payload**\n[stored];
+
+|#F2FBF4|Write strategy|
+    :Record where it landed;
+    #EDE7F6:**document**\n[stored];
+  endif
+
+|#EEF4FF|Blackboard|
+repeat while (another destination?) is (yes)
+->no;
+:Release the canvas;
+
+|#F5F7FA|Processor|
+stop
+
+@enduml

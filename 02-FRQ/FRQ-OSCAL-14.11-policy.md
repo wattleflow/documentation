@@ -1,12 +1,12 @@
-# FR-OSCAL-14.11 — Provjera komponente prema baselineu
+# FRQ-OSCAL-14.11 — Provjera komponente prema baselineu
 
-> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
 > (2026-08-21). Oznaka se od tada mijenja kroz DR, ne uređivanjem.
 
 | | |
 |---|---|
 | **Status** | Prijedlog (2026-08-21) — obrnuto inženjerstvo zatečenog koda |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `OSCALPolicy`, `OSCALPolicyError` |
 | **Sestrinski** | [`14.4`](FRQ-OSCAL-14.4-profile.md) profil · [`14.10`](FRQ-OSCAL-14.10-crosswalk.md) crosswalk |
@@ -89,7 +89,7 @@ razred prava pristupa, ne razred podatkovne greške.
    nasljeđenu bazu, ne kroz vlastiti dekorater ([`14.13`](FRQ-OSCAL-14.13-component-bases.md)). ✅
 8. **Dekorater se ne ponavlja na klasi čiji je predak dekoriran** — vrata se nasljeđuju. ✅
 9. **Provjera prethodi konstrukciji** — neusklađena komponenta ne izvrši ništa iz svojeg
-   `__init__` ([`DR-WFL-014`](../workflow/dr/DR-WFL-014-oscal-gate-before-construction.md)). ✅
+   `__init__` ([`DR-WFL-014`](../04-DR/DR-WFL-014-oscal-gate-before-construction.md)). ✅
 10. Komponenta pod vratima **dobiva aktivnu politiku** pri konstrukciji. ❌ — nijedno mjesto ne
     predaje `oscal_policy=`; vrata su zato `strict=False` i inertna (§11 t.5)
 
@@ -122,10 +122,10 @@ Linux (WSL2), radno stablo `oscal` 2026-08-21, artefakti ASD ISM E8 ML1 i NIST�
 
 | NFR | posljedica |
 |---|---|
-| `NFR-SEC-05` | gate je disciplina ulaganja: odbija deklaraciju izvan opsega, ne procjenjuje rizik |
-| `NFR-SEC-04` | poruka imenuje komponentu, baseline i sporne `id`-eve — nalaz je odmah radnja, ne istraga |
-| `NFR-SEC-01` | jedan policy po baselineu; prekršaj imenuje `uuid`, pa se opseg vidi |
-| `NFR-SEC-02` | `__slots__`; policy ne izlaže ni baseline za izmjenu (`frozenset`) |
+| `NFRQ-SEC-05` | gate je disciplina ulaganja: odbija deklaraciju izvan opsega, ne procjenjuje rizik |
+| `NFRQ-SEC-04` | poruka imenuje komponentu, baseline i sporne `id`-eve — nalaz je odmah radnja, ne istraga |
+| `NFRQ-SEC-01` | jedan policy po baselineu; prekršaj imenuje `uuid`, pa se opseg vidi |
+| `NFRQ-SEC-02` | `__slots__`; policy ne izlaže ni baseline za izmjenu (`frozenset`) |
 
 ## 11. Otvoreno
 
@@ -143,7 +143,7 @@ Linux (WSL2), radno stablo `oscal` 2026-08-21, artefakti ASD ISM E8 ML1 i NIST�
    (isti §7 t.2).
 4. **Vrata su prešla s klase na bazu.** Dekorater je od 2026-08-21 na tri komponentne baze
    (`OSCALConnection`, `OSCALDriver`, `OSCALProcessor`), a konkretne klase ih nasljeđuju —
-   [`FR-OSCAL-14.13`](FRQ-OSCAL-14.13-component-bases.md). Po klasi ostaje dostupan za ulogu izvan
+   [`FRQ-OSCAL-14.13`](FRQ-OSCAL-14.13-component-bases.md). Po klasi ostaje dostupan za ulogu izvan
    te tri; unutar njih je zabranjen (t.7).
 5. **Vrata su postavljena, ali inertna.** `strict=False` na sve tri baze znači: dok nitko ne
    predaje `oscal_policy=`, provjera se preskače i `BR-OSCAL-03` **ne provodi ništa**. Sa
@@ -152,9 +152,9 @@ Linux (WSL2), radno stablo `oscal` 2026-08-21, artefakti ASD ISM E8 ML1 i NIST�
    [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) §7 t.2.
 6. **Vrata nemaju FR u svojoj distribuciji.** Dekorater je izvedba `BR-OSCAL-03` i `BR-OSCAL-11`,
    ali pripada `wattleflow-workflow`, pa ga kategorija `OSCAL` ne pokriva
-   ([`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) t.2). Njegov ugovor —
+   ([`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) t.2). Njegov ugovor —
    kad se vrata otvaraju, što znači izostanak `_fsm`, kako `merge` razrješava MRO — danas nije
-   nigdje zapisan kao zahtjev. Kandidat: `FR-WFL-*`.
+   nigdje zapisan kao zahtjev. Kandidat: `FRQ-WFL-*`.
 7. **Dekorirati i pretka i potomka je latentni kvar.** Vanjski omotač popne `oscal_policy` iz
    kwargsa, pa ga unutarnji više ne vidi: pod `strict=True` unutarnji guard odbija **ispravno
    konfiguriranu** komponentu (`OSCALPolicyError: … oscal_policy kwarg is required`), iako je

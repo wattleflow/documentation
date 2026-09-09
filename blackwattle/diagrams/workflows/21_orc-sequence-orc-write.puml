@@ -1,0 +1,39 @@
+@startuml 21_orc-sequence-orc-write
+' Generirano iz examples/workflows/21_orc.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 21_orc.yaml — Apache ORC round-trip — synthetic air-traffic data
+caption orc-write · 21_orc.yaml · okruženje: dev
+
+skinparam sequence {
+    LifeLineBorderColor #999999
+    ParticipantBorderColor #555555
+    ParticipantBackgroundColor #FAFAFA
+}
+
+participant "orc-air-traffic" as WF
+group orc-write <<OrcSyntheticWriteProcessor>>
+  participant "orc-write" as PR1
+  participant "orc-write-blackboard" as BB1
+  participant "orc-write-pipeline" as P1_1
+  participant "orc-write-repository" as R1_1
+  WF -> PR1 : start()
+  PR1 -> PR1 : iterate source
+  PR1 -> BB1 : create() «CreateOrcDocument»
+  PR1 -> P1_1 : transform()  <<OrcWritePipeline>>
+  P1_1 -> BB1 : write()
+  BB1 -> R1_1 : «WriteOrcDocument»
+end
+@enduml

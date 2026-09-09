@@ -35,7 +35,7 @@ The document is accordingly an **anti-manifesto**: a manifesto declares values w
 
 The guiding operational principle is **measurability**: a load-bearing doctrinal claim comes in falsifiable form, or it remains unverified (section *Hypotheses*). This applies to the premises of this document as well.
 
-Architecture and functionality are derived from requirements that live in [`02-FRQ/`](02-FRQ/0-FRQ-EN.md) (functional, with [`01-HLRQ/`](01-HLRQ/0-HLRQ-EN.md) above them) and [`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md) (non-functional); the foundations of the methodology are set out in Volume I ([`METHODOLOGY.md`](METHODOLOGY.md)).
+Architecture and functionality are derived from requirements that live in [`02-FRQ/`](02-FRQ/FRQ-000-EN.md) (functional, with [`01-HLRQ/`](01-HLRQ/HLRQ-000-EN.md) above them) and [`03-NFRQ/`](03-NFRQ/NFRQ-000-EN.md) (non-functional); the foundations of the methodology are set out in Volume I ([`METHODOLOGY.md`](METHODOLOGY.md)).
 
 ## Contents (volumes)
 
@@ -43,9 +43,9 @@ Architecture and functionality are derived from requirements that live in [`02-F
 |---|---|---|
 | I | Foundations | [METHODOLOGY.md](METHODOLOGY.md) |
 | II | Architectural principles | *(planned)* |
-| III | Decision Records | `workflow/dr/` (WFL) · `workflow/core/dr/` (COR) · `04-DR/` (PRC) *(active)* |
+| III | Decision Records | `04-DR/` — WFL · COR · PRC *(active)* |
 | IV | System design | *(planned)* |
-| V | Development standards and functionality | [`02-FRQ/`](02-FRQ/0-FRQ-EN.md), [`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md) *(active)* |
+| V | Development standards and functionality | [`02-FRQ/`](02-FRQ/FRQ-000-EN.md), [`03-NFRQ/`](03-NFRQ/NFRQ-000-EN.md) *(active)* |
 | VI | Quality assurance | *(planned)* |
 | VII | AI-assisted software engineering | *(planned)* |
 | VIII | Governance, compliance and information science | *(planned)* |
@@ -205,7 +205,7 @@ More deeply: architecture is the externalised part of the theory a team holds ab
 
 Architecture is intelligible without reading the implementation: a class name, its inheritance, its place in the package and its dependencies communicate layer, domain, responsibility and life cycle.
 
-Names are accordingly **domain-qualified and role-explicit**. Bare generic nouns (`Manager`, `Helper`, `Parser`, `Piece`, `Sheet`) do not pass — qualified forms (`DriverS3UriParser`, `SheetNestingPlacement`) do. This is a semiotic policy (P-08): a name is a sign whose relation to its role the registry fixes and the linter enforces. The enforceable grammar is [`NFR-ORG-02`](03-NFRQ/NFR-ORG-02-class-nomenclature-EN.md); the rationale is in Volume I §8.
+Names are accordingly **domain-qualified and role-explicit**. Bare generic nouns (`Manager`, `Helper`, `Parser`, `Piece`, `Sheet`) do not pass — qualified forms (`DriverS3UriParser`, `SheetNestingPlacement`) do. This is a semiotic policy (P-08): a name is a sign whose relation to its role the registry fixes and the linter enforces. The enforceable grammar is [`NFRQ-ORG-02`](03-NFRQ/NFRQ-ORG-02-class-nomenclature-EN.md); the rationale is in Volume I §8.
 
 ## AI-assisted software engineering
 
@@ -231,7 +231,7 @@ The record format itself is a replaceable sub-method of the doctrinal function o
 
 ## Functional requirements
 
-ISO/IEC/IEEE 29148 defines functional requirements as those describing system behaviour, the services it provides, its inputs and outputs, and its responses to external events. In Wattleflow that idea lives in [`02-FRQ/`](02-FRQ/0-FRQ-EN.md), where functional requirements are given unique identifiers, acceptance criteria, and traceability to business objectives and architecture.
+ISO/IEC/IEEE 29148 defines functional requirements as those describing system behaviour, the services it provides, its inputs and outputs, and its responses to external events. In Wattleflow that idea lives in [`02-FRQ/`](02-FRQ/FRQ-000-EN.md), where functional requirements are given unique identifiers, acceptance criteria, and traceability to business objectives and architecture.
 
 The main disciplines from 29148 that this document follows:
 
@@ -247,7 +247,7 @@ This approach bears out the document’s decision: functionality is held in a se
 
 Architectural decisions generate **measurable** non-functional requirements: each anchored to ISO/IEC 25010, identified as `NFR-<CATEGORY>-NN`, and enforced through coding standards, architectural reviews, static analysis and CI/CD controls.
 
-The conformance measure is vectorial — by dimension, with no scalar overall score. The reason is metric rather than stylistic: a weighted sum across nominal and ordinal scales is not a defined operation (P-09), so a single “system score” would be a number without meaning. The register is held in [`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md).
+The conformance measure is vectorial — by dimension, with no scalar overall score. The reason is metric rather than stylistic: a weighted sum across nominal and ordinal scales is not a defined operation (P-09), so a single “system score” would be a number without meaning. The register is held in [`03-NFRQ/`](03-NFRQ/NFRQ-000-EN.md).
 
 ## Standards compliance
 

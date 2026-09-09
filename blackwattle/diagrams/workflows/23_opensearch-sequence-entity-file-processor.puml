@@ -1,0 +1,41 @@
+@startuml 23_opensearch-sequence-entity-file-processor
+' Generirano iz examples/workflows/23_opensearch.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 23_opensearch.yaml — pgvector + OpenSearch dual-write & search round-trip
+caption entity-file-processor · 23_opensearch.yaml · okruženje: dev
+
+skinparam sequence {
+    LifeLineBorderColor #999999
+    ParticipantBorderColor #555555
+    ParticipantBackgroundColor #FAFAFA
+}
+
+participant "workflow" as WF
+group entity-file-processor <<EntityFileDocumentProcessor>>
+  participant "entity-file-processor" as PR1
+  participant "file-write-blackboard" as BB1
+  participant "dummy-write-pipeline" as P1_1
+  participant "pgvector-repository" as R1_1
+  participant "opensearch-repository" as R1_2
+  WF -> PR1 : start()
+  PR1 -> PR1 : iterate source
+  PR1 -> BB1 : create() «CreateFileDocument»
+  PR1 -> P1_1 : transform()  <<PipelineFileDocumenDummyWrite>>
+  P1_1 -> BB1 : write()
+  BB1 -> R1_1 : «WriteFileToPgVector»
+  BB1 -> R1_2 : «WriteFileToOpenSearch»
+end
+@enduml

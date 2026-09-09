@@ -239,7 +239,7 @@ Run s greškama arhivira se kao `finding-vector`, ne kao C-snimka (`CLAUDE.md §
 ## 8. Reference
 
 - `CLAUDE.md` / `POLICY.md` — policy sloj; `03-NFRQ/` — `NFR-ORG-01…05`, `NFR-SEC-01…05`
-- `documentation/workflow/dr/DR-WFL-INDEX.md` — aktivna serija odluka
+- `documentation/04-DR/DR-WFL-INDEX.md` — aktivna serija odluka
 - [`zero-trust-architecture.md`](zero-trust-architecture.md) — lokalnost distribucije
 - [`type-registry-ownership.md`](type-registry-ownership.md) — otvoreni problem dizajna
 - `src/wattleflow/concrete/` — radna osnova; `tools/wem_lint.py` — provedba kriterija

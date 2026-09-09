@@ -1,15 +1,15 @@
-# FR-OSCAL-14.6 — Bazne klase modela
+# FRQ-OSCAL-14.6 — Bazne klase modela
 
-> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
 > (2026-08-21). Oznaka se od tada mijenja kroz DR, ne uređivanjem.
 
 | | |
 |---|---|
 | **Status** | Prijedlog (2026-08-21) — obrnuto inženjerstvo zatečenog koda |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) (kategorija); ograničenje iz §1 t.3 je posljedica jezika, ne izbora |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) (kategorija); ograničenje iz §1 t.3 je posljedica jezika, ne izbora |
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `ModelBase`, `OSCALElement`, `SelectableElement` |
-| **Sestrinski** | svi ostali `FR-OSCAL-14.*` — ovaj zapis nosi ugovor koji oni troše |
+| **Sestrinski** | svi ostali `FRQ-OSCAL-14.*` — ovaj zapis nosi ugovor koji oni troše |
 | **Izvedba** | `src/wattleflow/oscal/models.py` |
 
 ## 1. Predmet
@@ -26,7 +26,7 @@ Tri ograničenja koja objašnjavaju **zašto baš ovako**:
 
 1. **Ništa ne živi na razini modula.** Pomoćne metode su članovi klase; što referira vlastitu
    klasu je `@classmethod` (`cls.KEY_ALIASES`), što ne referira ništa je `@staticmethod`
-   (`_items`) — `NFR-ORG-05`.
+   (`_items`) — `NFRQ-ORG-05`.
 2. **`Catalog` i `Profile` nisu selektabilni.** Nemaju djecu koja se biraju, pa ne nose ugovor
    koji ne mogu ispuniti.
 3. **Framework root se ne može nasljeđivati.** `wattleflow.concrete.base.Wattleflow` nasljeđuje
@@ -118,10 +118,10 @@ Python 3.11.15, Linux (WSL2), radno stablo `oscal` 2026-08-21.
 
 | NFR | posljedica |
 |---|---|
-| `NFR-ORG-05` | ovaj zapis je izravna provedba: samoreferencirajuće pomoćne metode su `@classmethod` s `cls`, nikad tvrdo kodirano ime klase |
-| `NFR-ORG-08` | jedno pravilo — jedno mjesto: mapiranje ključeva, praznjenje popisa, prolaz kroz čvorove |
-| `NFR-SEC-02` | pomoćne metode su privatne (`_`), javna površina modula je `__all__` |
-| `NFR-SEC-03` | baze uvoze samo `abc`, `dataclasses`, `typing` i `wattleflow.core` |
+| `NFRQ-ORG-05` | ovaj zapis je izravna provedba: samoreferencirajuće pomoćne metode su `@classmethod` s `cls`, nikad tvrdo kodirano ime klase |
+| `NFRQ-ORG-08` | jedno pravilo — jedno mjesto: mapiranje ključeva, praznjenje popisa, prolaz kroz čvorove |
+| `NFRQ-SEC-02` | pomoćne metode su privatne (`_`), javna površina modula je `__all__` |
+| `NFRQ-SEC-03` | baze uvoze samo `abc`, `dataclasses`, `typing` i `wattleflow.core` |
 
 ## 11. Otvoreno
 

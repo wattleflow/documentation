@@ -1,0 +1,39 @@
+@startuml 07_pg_alchemy-sequence-processor-postgres-read
+' Generirano iz examples/workflows/07_pg_alchemy.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 07_pg_alchemy.yaml — Wattleflow Workflow - Postgres read phase (SQL -> DataFrame -> storage)
+caption processor-postgres-read · 07_pg_alchemy.yaml · okruženje: dev
+
+skinparam sequence {
+    LifeLineBorderColor #999999
+    ParticipantBorderColor #555555
+    ParticipantBackgroundColor #FAFAFA
+}
+
+participant "workflow" as WF
+group processor-postgres-read <<PostgresReadProcessor>>
+  participant "processor-postgres-read" as PR1
+  participant "dataframe-blackboard" as BB1
+  participant "dataframe-clean" as P1_1
+  participant "repository-csv" as R1_1
+  WF -> PR1 : start()
+  PR1 -> PR1 : iterate source
+  PR1 -> BB1 : create() «CreateDataframeDocument»
+  PR1 -> P1_1 : transform()  <<PipelineDataFrameClean>>
+  P1_1 -> BB1 : write()
+  BB1 -> R1_1 : «WriteDataframeDocument»
+end
+@enduml

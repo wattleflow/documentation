@@ -1,0 +1,39 @@
+@startuml 22_solr-sequence-solr-write
+' Generirano iz examples/workflows/22_solr.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 22_solr.yaml — Apache Solr round-trip — synthetic air-traffic indexing & query
+caption solr-write · 22_solr.yaml · okruženje: dev
+
+skinparam sequence {
+    LifeLineBorderColor #999999
+    ParticipantBorderColor #555555
+    ParticipantBackgroundColor #FAFAFA
+}
+
+participant "solr-air-traffic" as WF
+group solr-write <<SolrSyntheticWriteProcessor>>
+  participant "solr-write" as PR1
+  participant "solr-write-blackboard" as BB1
+  participant "solr-write-pipeline" as P1_1
+  participant "solr-write-repository" as R1_1
+  WF -> PR1 : start()
+  PR1 -> PR1 : iterate source
+  PR1 -> BB1 : create() «CreateSolrDocument»
+  PR1 -> P1_1 : transform()  <<SolrWritePipeline>>
+  P1_1 -> BB1 : write()
+  BB1 -> R1_1 : «WriteSolrDocument»
+end
+@enduml

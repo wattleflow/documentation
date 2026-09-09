@@ -1,0 +1,51 @@
+@startuml 03_pdf_pii-component
+' Generirano iz examples/workflows/03_pdf_pii.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 04_pdf_pii.yaml — Wattleflow Workflow - PII reduction workflow for PDF and PNG files.
+caption Konfiguracija: 03_pdf_pii.yaml · okruženje: dev
+
+package "drivers" {
+  component "driver-entity-storage" as driv_driver_entity_storage <<DriverEntity>>
+  component "driver-txt-storage" as driv_driver_txt_storage <<DriverLocalStorage>>
+}
+
+component "workflow" as wf_workflow <<Workflow>>
+
+package "file-processor" {
+  component "file-processor" as proc_file_processor <<EntityFileDocumentProcessor>>
+  note right of proc_file_processor
+    source_path: ${dotenv:file-processor.source_path}
+    pattern: *.pdf
+    recursive: False
+  end note
+  component "blackboard-pdf" as bbfileprocesso_blackboard_pdf <<SmallBlackboard>>
+  note bottom of bbfileprocesso_blackboard_pdf : zapis u repozitorije na flush() (defer_flush: true)
+  component "entities" as pipefileprocesso_entities <<PipelineProcessorDriverEntities>>
+  component "pdf-transformation-pipline" as pipefileprocesso_pdf_transformation_pipline <<PipelinePDFRedact>>
+  component "repository-text-reduced" as repofileprocesso_repository_text_reduced <<RepositoryWithDriver>>
+}
+proc_file_processor --> pipefileprocesso_entities : 1. transform()
+pipefileprocesso_entities .[#AAAAAA].> bbfileprocesso_blackboard_pdf : write()
+pipefileprocesso_entities --> pipefileprocesso_pdf_transformation_pipline : 2. transform()
+pipefileprocesso_pdf_transformation_pipline .[#AAAAAA].> bbfileprocesso_blackboard_pdf : write()
+proc_file_processor --> bbfileprocesso_blackboard_pdf : create() «CreatePdfDocument»
+bbfileprocesso_blackboard_pdf --> repofileprocesso_repository_text_reduced : «ReadDocumentFile» «WriteTextContent»
+repofileprocesso_repository_text_reduced .[#AAAAAA].> driv_driver_txt_storage : <<uses>>
+proc_file_processor .[#AAAAAA].> driv_driver_entity_storage : <<driver>>
+
+wf_workflow --> proc_file_processor : start()
+
+@enduml

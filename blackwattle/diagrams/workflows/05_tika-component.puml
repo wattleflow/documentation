@@ -1,0 +1,47 @@
+@startuml 05_tika-component
+' Generirano iz examples/workflows/05_tika.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 01_processor_synthetic_data.yaml — Processor - Synthetic data - ETL - Wattleflow Workflow
+caption Konfiguracija: 05_tika.yaml · okruženje: dev
+
+package "drivers" {
+  component "driver-entity-storage" as driv_driver_entity_storage <<DriverEntity>>
+  component "local-storage-driver" as driv_local_storage_driver <<DriverLocalStorage>>
+}
+
+component "tika-procesor-workflow" as wf_tika_procesor_workflow <<Workflow>>
+
+package "processor-tika" {
+  component "processor-tika" as proc_processor_tika <<OCRTextProcessor>>
+  note right of proc_processor_tika
+    source_path: ${dotenv:processor-tika.source_path}
+    pattern: *.pdf
+    recursive: False
+  end note
+  component "tika-blackboard" as bbprocessortik_tika_blackboard <<SmallBlackboard>>
+  note bottom of bbprocessortik_tika_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "cleanup-pipeline" as pipeprocessortik_cleanup_pipeline <<CleanupTextDocumentPipeline>>
+  component "local-storage-repository" as repoprocessortik_local_storage_repository <<RepositoryWithDriver>>
+}
+proc_processor_tika --> pipeprocessortik_cleanup_pipeline : 1. transform()
+pipeprocessortik_cleanup_pipeline .[#AAAAAA].> bbprocessortik_tika_blackboard : write()
+proc_processor_tika --> bbprocessortik_tika_blackboard : create() «CreateTextDocument»
+bbprocessortik_tika_blackboard --> repoprocessortik_local_storage_repository : «ReadDocumentFile» «WriteTextDocumentToFile»
+repoprocessortik_local_storage_repository .[#AAAAAA].> driv_local_storage_driver : <<uses>>
+
+wf_tika_procesor_workflow --> proc_processor_tika : start()
+
+@enduml

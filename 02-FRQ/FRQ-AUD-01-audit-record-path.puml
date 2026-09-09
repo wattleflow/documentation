@@ -1,0 +1,43 @@
+@startuml FRQ-AUD-01-audit-record-path
+' Viewpoint: audit record path, component -> sink. Audience: developer, architect.
+' A view, not a source of truth (D-13). Labels: UK English.
+' Scope: the SPECIFIED path. Steps 2-6 are not implemented as of 2026-08-28 --
+' the assembler flattens fields into the message before the handler is reached.
+' What is in code per step: FRQ-AUD-01-audit-record-path.md SS5-SS6.
+title FR-AUD-01 — Audit record path
+
+start
+:Component emits record\n(named AU-3 fields);
+if (**kwargs splat?) then (yes)
+  :Reject — input surface\nis not record surface;
+  stop
+else (no)
+endif
+:Assemble record;
+:Classify each field\n(public / identity / measure / classified);
+if (any handler subscribed?) then (no)
+  :Warn once on default output;
+  stop
+else (yes)
+endif
+fork
+  :Handler A — compare field class\nagainst declared capability;
+  :Redact what capability\ndoes not cover;
+  :Format and write to sink;
+fork again
+  :Handler B — same resolution,\ndifferent destination trust;
+  :Format and write to sink;
+end fork
+if (write failed?) then (yes)
+  :Raise handler failure event\n(to monitoring, not to caller);
+  stop
+else (no)
+endif
+:Record persisted per handler;
+note right
+  Records produced inside a handler
+  never re-enter this path
+  (recursion breaker).
+end note
+stop
+@enduml

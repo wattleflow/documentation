@@ -1,12 +1,12 @@
-# FR-OSCAL-14.8 — Registar kataloga
+# FRQ-OSCAL-14.8 — Registar kataloga
 
-> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
 > (2026-08-21). Oznaka se od tada mijenja kroz DR, ne uređivanjem.
 
 | | |
 |---|---|
 | **Status** | Prijedlog (2026-08-21) — obrnuto inženjerstvo zatečenog koda |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `OSCALCatalogRegistry(Wattleflow)` |
 | **Sestrinski** | [`14.1`](FRQ-OSCAL-14.1-catalog.md) katalog · [`14.2`](FRQ-OSCAL-14.2-control.md) kontrola |
@@ -41,7 +41,7 @@ ovdje se ne prepričava (D-13).
 
 ## 4. Preduvjeti
 
-1. Katalog je već izgrađen i valjan (`FR-OSCAL-14.1`).
+1. Katalog je već izgrađen i valjan (`FRQ-OSCAL-14.1`).
 2. Redoslijed registracije je **odgovornost pozivatelja** — vidi §5 t.2.
 
 ## 5. Normalan tok
@@ -102,9 +102,9 @@ Linux (WSL2), radno stablo `oscal` 2026-08-21, artefakt ISM 2026-03-24.
 
 | NFR | posljedica |
 |---|---|
-| `NFR-SEC-01` | registar je **u memoriji i po procesu**; ne dijeli stanje između procesa, pa nema zajedničke točke kvara |
-| `NFR-SEC-02` | indeksi su privatni; javna površina su pogledi, ne rječnici |
-| `NFR-SEC-03` | samo stdlib i `wattleflow` |
+| `NFRQ-SEC-01` | registar je **u memoriji i po procesu**; ne dijeli stanje između procesa, pa nema zajedničke točke kvara |
+| `NFRQ-SEC-02` | indeksi su privatni; javna površina su pogledi, ne rječnici |
+| `NFRQ-SEC-03` | samo stdlib i `wattleflow` |
 
 ## 11. Otvoreno
 

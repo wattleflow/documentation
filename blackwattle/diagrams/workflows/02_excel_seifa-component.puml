@@ -1,0 +1,55 @@
+@startuml 02_excel_seifa-component
+' Generirano iz examples/workflows/02_excel_seifa.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 02_excel_seifa.yaml — Wattleflow Workflow - Excel example (SEIFA)
+caption Konfiguracija: 02_excel_seifa.yaml · okruženje: dev
+
+package "connections" {
+  component "abs-proxy" as conn_abs_proxy <<ProxyConnection>>
+}
+
+package "drivers" {
+  component "abs-http-driver" as driv_abs_http_driver <<DriverHttpProxy>>
+  component "local-storage-driver" as driv_local_storage_driver <<DriverLocalStorage>>
+}
+
+package "documents" {
+  component "excel-data-frame-document" as docu_excel_data_frame_document <<ExcelDataFrameDocument>>
+}
+
+component "excel-files-processing" as wf_excel_files_processing <<Workflow>>
+
+package "excel-workbook-processor" {
+  component "excel-workbook-processor" as proc_excel_workbook_processor <<ExcelWorkbookProcessor>>
+  note right of proc_excel_workbook_processor
+    pattern: *.xls*
+    recursive: True
+  end note
+  component "excel-data-blackboard" as bbexcelworkboo_excel_data_blackboard <<SmallBlackboard>>
+  note bottom of bbexcelworkboo_excel_data_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "excel-data-cleanup" as pipeexcelworkboo_excel_data_cleanup <<ExcelCleanupPipeline>>
+  component "local-storage-repository" as repoexcelworkboo_local_storage_repository <<RepositoryWithDriver>>
+}
+proc_excel_workbook_processor --> pipeexcelworkboo_excel_data_cleanup : 1. transform()
+pipeexcelworkboo_excel_data_cleanup .[#AAAAAA].> bbexcelworkboo_excel_data_blackboard : write()
+proc_excel_workbook_processor --> bbexcelworkboo_excel_data_blackboard : create() «CreateDataframeFromExcel»
+bbexcelworkboo_excel_data_blackboard --> repoexcelworkboo_local_storage_repository : «WriteExcelDataFrame» «WriteExcelDataFrame»
+repoexcelworkboo_local_storage_repository .[#AAAAAA].> driv_local_storage_driver : <<uses>>
+
+wf_excel_files_processing --> proc_excel_workbook_processor : start()
+
+driv_abs_http_driver .[#AAAAAA].> conn_abs_proxy : <<connection_name>>
+@enduml

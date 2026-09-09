@@ -1,0 +1,67 @@
+@startuml FRQ-PRC-15.22-create-sequence
+' Tok nastanka kao INTERAKCIJA — poziv po pozivu između instanci.
+' Gledište: izvedba. Publika: implementator.
+' Prikaz, ne izvor istine (D-13) — izvor je kod imenovan u FRQ-PRC-15.22 §1.
+title FRQ-PRC-15.22 — Creation: call flow between instances
+
+autonumber
+skinparam SequenceMessageAlignment center
+
+participant "p :\nGenericProcessor" as P
+participant "bb :\nGenericBlackboard" as BB
+participant "cs :\nStrategyCreate" as CS
+participant "doc :\nDocument" as D
+participant "f :\nDocumentFacade" as F
+participant "drv :\nGenericDriver" as DRV
+
+[-> P : start()
+activate P
+P -> P : create_generator()
+
+loop for each discovered unit
+  P -> P : select by name, date, order
+  note right of P
+    The processor discovers and selects.
+    It never opens the source.
+  end note
+
+  P -> BB : create(caller=p, **describing keywords)
+  activate BB
+  BB -> BB : assert isinstance(caller, IProcessor)
+
+  alt strategy_create assigned
+    BB -> CS : create(caller=bb, processor=p, blackboard=bb, **kwargs)
+    activate CS
+    CS -> CS : assert isinstance(caller, IBlackboard)
+    CS -> CS : Attribute.mandatory(...)
+
+    opt the subject must be read to be described
+      CS -> DRV : read(uri) via processor.driver
+      activate DRV
+      DRV --> CS : content
+      deactivate DRV
+    end
+
+    CS -> D : «create» Document(...)
+    activate D
+    D --> CS : doc
+    CS -> D : update_metadata(created_by, created_at,\ncaller, source_format)
+    deactivate D
+
+    CS -> F : «create» DocumentFacade(doc)
+    activate F
+    F --> CS : f
+    deactivate F
+    CS --> BB : f : ITarget
+    deactivate CS
+    BB --> P : f : ITarget
+  else strategy_create missing
+    BB -> BB : warning
+    BB --> P : None
+  end
+  deactivate BB
+  [<- P : yield f
+end
+deactivate P
+
+@enduml

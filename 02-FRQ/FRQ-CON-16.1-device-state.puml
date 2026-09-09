@@ -1,0 +1,56 @@
+@startuml FRQ-CON-16.1-device-state
+' Stanje uređaja — zauzeće i smjer.
+' Gledište: ponašanje. Publika: implementator, tester.
+' Prikaz, ne izvor istine (D-13) — izvor je FRQ-CON-16.1 §5–§6.
+title FRQ-CON-16.1 — Device state: exclusive claim and half-duplex direction
+
+[*] --> Registered : faktory (BR-01)
+
+Registered --> Resolving : connect()
+Resolving --> Failed_Unreachable : 0 pogodaka
+Resolving --> Failed_Ambiguous   : >1 pogodak\n(nikad "uzmi prvi", BR-02)
+Resolving --> Claiming           : točno 1 pogodak
+
+Claiming --> Failed_Busy       : drži drugi proces\n(nabrajanje uspije, zauzimanje ne)
+Claiming --> Failed_Permission : nema prava nad čvorom
+Claiming --> Probing           : zauzeto
+
+Probing --> Failed_Config : konfiguracija imenuje\nstupanj/ulaz koji uređaj nema (BR-11)
+Probing --> Configured    : sposobnosti ispitane
+
+Configured --> Connected : parametri primijenjeni\ni OČITANI natrag (BR-05)
+
+state Connected {
+  [*] --> Receiving : mode = Receive
+  Receiving --> Idle : stop
+  Idle --> Receiving : mode = Receive
+  Idle --> Transmitting : mode = Transmit\n**samo uz ovlast (NFRQ-SEC-07)**
+  Transmitting --> Idle : stop
+
+  note right of Transmitting #FFCDD2
+    Poluduplex: Receiving i Transmitting
+    se **isključuju** (BR-12).
+    Prijamnik nikad ne ulazi ovamo —
+    directions ne sadrži Transmit.
+  end note
+}
+
+Connected --> Interrupted : uređaj nestao\ns magistrale (BR-09)
+Connected --> Released : disconnect()
+Interrupted --> Released : disconnect()\n(idempotentno)
+Released --> [*]
+
+Failed_Unreachable --> [*]
+Failed_Ambiguous --> [*]
+Failed_Busy --> [*]
+Failed_Permission --> [*]
+Failed_Config --> [*]
+
+note as N1
+  Pet razreda kvara razlikuje se **tipom**,
+  ne samo porukom (§8 k.6).
+  "Prisutan" i "raspoloživ" su dva stanja:
+  Resolving uspije dok Claiming padne.
+end note
+
+@enduml

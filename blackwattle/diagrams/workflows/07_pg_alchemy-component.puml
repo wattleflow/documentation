@@ -1,0 +1,49 @@
+@startuml 07_pg_alchemy-component
+' Generirano iz examples/workflows/07_pg_alchemy.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 07_pg_alchemy.yaml — Wattleflow Workflow - Postgres read phase (SQL -> DataFrame -> storage)
+caption Konfiguracija: 07_pg_alchemy.yaml · okruženje: dev
+
+package "connections" {
+  component "postgress-connection" as conn_postgress_connection <<PostgresConnection>>
+}
+
+package "drivers" {
+  component "driver-postgres" as driv_driver_postgres <<DriverPostgres>>
+  component "driver-csv-storage" as driv_driver_csv_storage <<DriverLocalStorage>>
+}
+
+component "workflow" as wf_workflow <<Workflow>>
+
+package "processor-postgres-read" {
+  component "processor-postgres-read" as proc_processor_postgres_read <<PostgresReadProcessor>>
+  component "dataframe-blackboard" as bbprocessorpos_dataframe_blackboard <<SmallBlackboard>>
+  note bottom of bbprocessorpos_dataframe_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "dataframe-clean" as pipeprocessorpos_dataframe_clean <<PipelineDataFrameClean>>
+  component "repository-csv" as repoprocessorpos_repository_csv <<RepositoryWithDriver>>
+}
+proc_processor_postgres_read --> pipeprocessorpos_dataframe_clean : 1. transform()
+pipeprocessorpos_dataframe_clean .[#AAAAAA].> bbprocessorpos_dataframe_blackboard : write()
+proc_processor_postgres_read --> bbprocessorpos_dataframe_blackboard : create() «CreateDataframeDocument»
+bbprocessorpos_dataframe_blackboard --> repoprocessorpos_repository_csv : «WriteDataframeDocument»
+repoprocessorpos_repository_csv .[#AAAAAA].> driv_driver_csv_storage : <<uses>>
+proc_processor_postgres_read .[#AAAAAA].> driv_driver_postgres : <<driver>>
+proc_processor_postgres_read .[#AAAAAA].> conn_postgress_connection : <<connection_name>>
+
+wf_workflow --> proc_processor_postgres_read : start()
+
+driv_driver_postgres .[#AAAAAA].> conn_postgress_connection : <<connection_name>>
+@enduml

@@ -26,9 +26,9 @@ built to last and grow.
 |---|---|---|
 | I | Foundations | [PHILOSOPHY](PHILOSOPHY.md) · [DOCTRINE](DOCTRINE.md) · [METHODOLOGY](METHODOLOGY.md) · [POSTULATE](POSTULATE.md) · [LITERATURE](LITERATURE.md) |
 | II | Architectural Principles | *(planned)* |
-| III | Decision Records | [`workflow/dr/`](workflow/dr/DR-WFL-INDEX.md) (WFL) · [`workflow/core/dr/`](workflow/core/dr/DR-INDEX.md) (COR) · [`04-DR/`](04-DR/) (PRC) *(active)* |
+| III | Decision Records | [`04-DR/`](04-DR/) — [WFL](04-DR/DR-WFL-INDEX.md) · [COR](04-DR/DR-COR-INDEX.md) · [PRC](04-DR/DR-PRC-INDEX.md) *(active)* |
 | IV | System Design | *(planned)* |
-| V | Development Standards | [`01-HLRQ/`](01-HLRQ/0-HLRQ-EN.md) · [`02-FRQ/`](02-FRQ/0-FRQ-EN.md) · [`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md) *(in progress)* |
+| V | Development Standards | [`01-HLRQ/`](01-HLRQ/HLRQ-000-EN.md) · [`02-FRQ/`](02-FRQ/FRQ-000-EN.md) · [`03-NFRQ/`](03-NFRQ/NFRQ-000-EN.md) *(in progress)* |
 | VI | Quality Assurance | *(planned)* |
 | VII | AI-Assisted Software Engineering | *(planned)* |
 | VIII | Governance, Compliance and Information Science | *(planned)* |
@@ -44,7 +44,7 @@ built to last and grow.
 | Method (Volume I) | [METHODOLOGY.md](METHODOLOGY.md) · [`05-METHOD/`](05-METHOD/dqi.md) |
 | Policy | [CLAUDE.md](CLAUDE.md) (= `POLICY.md`) |
 | Discourse vocabulary | [dictionary.yaml](dictionary.yaml) → [DICTIONARY.md](DICTIONARY.md) |
-| Requirements | [`01-HLRQ/`](01-HLRQ/0-HLRQ-EN.md) · [`02-FRQ/`](02-FRQ/0-FRQ-EN.md) · [`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md) |
+| Requirements | [`01-HLRQ/`](01-HLRQ/HLRQ-000-EN.md) · [`02-FRQ/`](02-FRQ/FRQ-000-EN.md) · [`03-NFRQ/`](03-NFRQ/NFRQ-000-EN.md) |
 | Analyses · change records | [`06-ANALYSIS/`](06-ANALYSIS/) · [`07-CHANGES/`](07-CHANGES/) |
 | Conformance snapshots | [`workflow/conformance/`](workflow/conformance/) |
 | Worklist (state of work, not norm) | [`workflow/TODO.md`](workflow/TODO.md) · [`workflow/DONE.md`](workflow/DONE.md) |

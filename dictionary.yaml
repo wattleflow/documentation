@@ -15,7 +15,7 @@
 # Upravljanje: natuknica se dodaje/mijenja/deprecira iskljucivo kroz DR.
 
 registry: wattleflow-rjecnik
-registry_version: "0.3.0"   # 0.2.0: apsorbiran vokabular koda (blok `code:`)
+registry_version: "0.3.1"   # 0.2.0: apsorbiran vokabular koda (blok `code:`)
                             # 0.2.1: kategorija OSCAL (DR-WFL-013)
                             # 0.3.0: blok `code:` uklonjen — kriterij koda je
                             #        tools/dictionary.json (DR-WFL-020)
@@ -667,17 +667,29 @@ acronyms:
   - {id: MDL,  expansion: "minimum description length", references: [13]}
   - {id: MRO,  expansion: "method resolution order (Python C3)"}
   - {id: NCD,  expansion: "normalized compression distance", references: [14]}
-  - {id: NFR,  expansion: "non-functional requirement"}
+  - {id: NFRQ, expansion: "non-functional requirement", note: "registar 03-NFRQ/; oznaka NFRQ-<KAT>-NN (preimenovano iz NFR 2026-08-27, bez DR zapisa)"}
+  - {id: FRQ,  expansion: "functional requirement", note: "registar 02-FRQ/; oznaka FRQ-<KAT>-NN[.M] (preimenovano iz FR 2026-08-27, bez DR zapisa)"}
   - {id: NMI,  expansion: "normalized mutual information", references: [20]}
-  - {id: ORG,  expansion: "kategorija organizacijskih NFR-ova (NFR-ORG-NN)"}
-  - {id: OSCAL, expansion: "Open Security Controls Assessment Language (NIST)", note: "ujedno kategorija zahtjeva za OSCAL sloj u wattleflow-processors (FR-OSCAL-NN.M); DR-WFL-013"}
+  - {id: ORG,  expansion: "kategorija organizacijskih NFR-ova (NFRQ-ORG-NN)"}
+  - {id: OSCAL, expansion: "Open Security Controls Assessment Language (NIST)", note: "ujedno kategorija zahtjeva za OSCAL sloj u wattleflow-processors (FRQ-OSCAL-NN.M); DR-WFL-013"}
   - {id: PDSA, expansion: "plan-do-study-act (Shewhart/Deming)", references: [47, 48]}
-  - {id: SBOM, expansion: "software bill of materials", note: "SPDX/CycloneDX; NFR-SEC-03"}
+  - {id: SBOM, expansion: "software bill of materials", note: "SPDX/CycloneDX; NFRQ-SEC-03"}
   - {id: SBVR, expansion: "Semantics of Business Vocabulary and Rules (OMG)"}
   - {id: SFX,  expansion: "side effects (wem_lint dimenzija)"}
   - {id: STA,  expansion: "state (wem_lint dimenzija)"}
   - {id: TYP,  expansion: "type variables (wem_lint dimenzija)"}
   - {id: WEM,  expansion: "Wattleflow Engineering Methodology"}
+  - {id: BBD,  expansion: "Blackboard", note: "kategorija zahtjeva po ulozi (FRQ-BBD-NN.M); DR-WFL-022"}
+  - {id: CON,  expansion: "Connection", note: "kategorija zahtjeva po ulozi (FRQ-CON-NN.M); DR-WFL-022"}
+  - {id: DOC,  expansion: "Document", note: "kategorija zahtjeva po ulozi (FRQ-DOC-NN.M); DR-WFL-022"}
+  - {id: DRV,  expansion: "Driver", note: "kategorija zahtjeva po ulozi (FRQ-DRV-NN.M); DR-WFL-022"}
+  - {id: MEM,  expansion: "Memento", note: "kategorija zahtjeva po ulozi (FRQ-MEM-NN.M); DR-WFL-022"}
+  - {id: PIP,  expansion: "Pipeline", note: "kategorija zahtjeva po ulozi (FRQ-PIP-NN.M); DR-WFL-022"}
+  - {id: PRC,  expansion: "Processor", note: "kategorija zahtjeva po ulozi (FRQ-PRC-NN.M); DR-WFL-022"}
+  - {id: PTN,  expansion: "Pattern", note: "kategorija zahtjeva za pattern-infrastrukturu sloja concrete/ koja nije domenski primitiv (FRQ-PTN-NN.M); DR-WFL-022"}
+  - {id: REP,  expansion: "Repository", note: "kategorija zahtjeva po ulozi (FRQ-REP-NN.M); DR-WFL-022"}
+  - {id: STR,  expansion: "Strategy", note: "kategorija zahtjeva po ulozi (FRQ-STR-NN.M); DR-WFL-022"}
+  - {id: WFL,  expansion: "Workflow", note: "kategorija zahtjeva po ulozi (FRQ-WFL-NN.M); DR-WFL-022"}
   - {id: FAC,  expansion: "facade (wem_lint dimenzija)"}
   - {id: EXC,  expansion: "exclusions (wem_lint dimenzija)"}
 

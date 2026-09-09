@@ -1,0 +1,71 @@
+@startuml 06_fetch_emails-component
+' Generirano iz examples/workflows/06_fetch_emails.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 06_fetch_emails.yaml — Wattleflow Workflow - archive .eml and .msg by send time, original untouched.
+caption Konfiguracija: 06_fetch_emails.yaml · okruženje: dev
+
+package "drivers" {
+  component "driver-mail-storage" as driv_driver_mail_storage <<DriverLocalStorage>>
+}
+
+component "fetch-emails" as wf_fetch_emails <<Workflow>>
+
+package "processor-eml" {
+  component "processor-eml" as proc_processor_eml <<FileDocumentProcessor>>
+  note right of proc_processor_eml
+    source_path: ${dotenv:processor-mail.source_path}
+    pattern: *.eml
+    recursive: False
+  end note
+  component "eml-blackboard" as bbprocessoreml_eml_blackboard <<SmallBlackboard>>
+  note bottom of bbprocessoreml_eml_blackboard : zapis u repozitorije na flush() (defer_flush: true)
+  component "eml-extract" as pipeprocessoreml_eml_extract <<PipelineEmailExtract>>
+  component "eml-stage" as pipeprocessoreml_eml_stage <<PipelineFileDocumenDummyWrite>>
+  component "repository-eml" as repoprocessoreml_repository_eml <<RepositoryWithDriver>>
+}
+proc_processor_eml --> pipeprocessoreml_eml_extract : 1. transform()
+pipeprocessoreml_eml_extract .[#AAAAAA].> bbprocessoreml_eml_blackboard : write()
+pipeprocessoreml_eml_extract --> pipeprocessoreml_eml_stage : 2. transform()
+pipeprocessoreml_eml_stage .[#AAAAAA].> bbprocessoreml_eml_blackboard : write()
+proc_processor_eml --> bbprocessoreml_eml_blackboard : create() «CreateFileDocument»
+bbprocessoreml_eml_blackboard --> repoprocessoreml_repository_eml : «ReadDocumentFile» «WriteMailByDate»
+repoprocessoreml_repository_eml .[#AAAAAA].> driv_driver_mail_storage : <<uses>>
+
+package "processor-msg" {
+  component "processor-msg" as proc_processor_msg <<FileDocumentProcessor>>
+  note right of proc_processor_msg
+    source_path: ${dotenv:processor-mail.source_path}
+    pattern: *.msg
+    recursive: False
+  end note
+  component "msg-blackboard" as bbprocessormsg_msg_blackboard <<SmallBlackboard>>
+  note bottom of bbprocessormsg_msg_blackboard : zapis u repozitorije na flush() (defer_flush: true)
+  component "msg-extract" as pipeprocessormsg_msg_extract <<PipelineMessageExtract>>
+  component "msg-stage" as pipeprocessormsg_msg_stage <<PipelineFileDocumenDummyWrite>>
+  component "repository-msg" as repoprocessormsg_repository_msg <<RepositoryWithDriver>>
+}
+proc_processor_msg --> pipeprocessormsg_msg_extract : 1. transform()
+pipeprocessormsg_msg_extract .[#AAAAAA].> bbprocessormsg_msg_blackboard : write()
+pipeprocessormsg_msg_extract --> pipeprocessormsg_msg_stage : 2. transform()
+pipeprocessormsg_msg_stage .[#AAAAAA].> bbprocessormsg_msg_blackboard : write()
+proc_processor_msg --> bbprocessormsg_msg_blackboard : create() «CreateFileDocument»
+bbprocessormsg_msg_blackboard --> repoprocessormsg_repository_msg : «ReadDocumentFile» «WriteMailByDate»
+repoprocessormsg_repository_msg .[#AAAAAA].> driv_driver_mail_storage : <<uses>>
+
+wf_fetch_emails --> proc_processor_eml : start()
+wf_fetch_emails --> proc_processor_msg : start()
+
+@enduml

@@ -8,8 +8,8 @@ Nadređeni su [PHILOSOPHY.md](PHILOSOPHY.md) (kišobran) i [DOCTRINE.md](DOCTRIN
 normi); operacionalizacija je [METHODOLOGY.md](METHODOLOGY.md).
 
 **Primat ima sloj zahtjeva.** Kod je zreliji od svojeg zapisa, pa su
-[`01-HLRQ/`](01-HLRQ/0-HLRQ-EN.md), [`02-FRQ/`](02-FRQ/0-FRQ-EN.md) i
-[`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md) trenutno **glavni predmet rada**: oni su stvarna
+[`01-HLRQ/`](01-HLRQ/HLRQ-000-EN.md), [`02-FRQ/`](02-FRQ/FRQ-000-EN.md) i
+[`03-NFRQ/`](03-NFRQ/NFRQ-000-EN.md) trenutno **glavni predmet rada**: oni su stvarna
 dokumentacija sustava i njih se dopunjuje prvo. `DOCTRINE.md`, `PHILOSOPHY.md` i revizija DR
 serija svjesno su odgođeni — ne zato što ne vrijede, nego zato što se dopunjuju tek kad sloj
 zahtjeva bude konsolidiran. Ovaj dokument u međuvremenu ostaje na snazi i mijenja se samo tamo
@@ -58,7 +58,7 @@ sloj pripada distribuciji koju određuje §7.1):
 
 **Domenska ontologija** (Workflow, Processor, Pipeline, Driver, Repository, Blackboard,
 Strategy, Connection, Document, Memento) je autoritativna: to su rezervirani primitivi i
-ne izmišljaju se novi bez DR-a (`METHODOLOGY.md` §4, `NFR-ORG-04`).
+ne izmišljaju se novi bez DR-a (`METHODOLOGY.md` §4, `NFRQ-ORG-04`).
 
 **Publika dokumentacije:** arhitekt, implementator, tester, sigurnosni analitičar, integrator,
 poslovni korisnik, revizor. Jedan format za sve publike nije cilj; publika bez artefakta
@@ -78,7 +78,7 @@ deklarira se kao rupa, ne prešućuje (D-11).
 
 - **Obvezno:** PEP 8 (stil), PEP 484 za javna sučelja, PEP 585 generici iz `builtins`,
   PEP 604 union sintaksa, PEP 621 metapodaci u `pyproject.toml`, PEP 420/660 za dev-stabla
-  (§7, NFR-SEC-03). PEP 257 vrijedi **ograničeno** — vidi §2.4.
+  (§7, NFRQ-SEC-03). PEP 257 vrijedi **ograničeno** — vidi §2.4.
 - **Gdje povećava jasnoću:** PEP 634 `match/case`, PEP 612 `ParamSpec`, PEP 526 anotacije.
 
 ### 2.3 Stil
@@ -115,22 +115,21 @@ deklarira se kao rupa, ne prešućuje (D-11).
 | Svaka konfiguracija | Poddirektorij nosi `__init__.py` s čitljivim `__all__`. |
 
 **Razlog:** navigacija, jasniji review diff, manje merge konflikata, eksplicitna API
-površina (NFR-SEC-02 t.2). Lokalne pomoćne funkcije ostaju uz klasu koju opslužuju.
+površina (NFRQ-SEC-02 t.2). Lokalne pomoćne funkcije ostaju uz klasu koju opslužuju.
 
-**Smještaj helpera propisuje NFR-ORG-01** (lokalnost ovisnosti): helper jedne domene ostaje
+**Smještaj helpera propisuje NFRQ-ORG-01** (lokalnost ovisnosti): helper jedne domene ostaje
 u toj domeni; helper dvaju pod-paketa iste domene ide u domain-internal shared modul; samo
 helper **dviju ili više domena** ide u dijeljeni `helpers/`, organiziran **po sposobnosti**
 (`io`, `text`, `routing`, `validation`), nikad po potrošačkom sloju. Iz `helpers/` ne smije
 postojati import-brid prema domenskom paketu (acikličnost). Cross-cutting sposobnost je
-**pozivljivi helper**, ne specijalizacija domenskog primitiva (NFR-ORG-04, `DR-WFL-001`).
+**pozivljivi helper**, ne specijalizacija domenskog primitiva (NFRQ-ORG-04, `DR-WFL-001`).
 
 ### 2.7 Javni API: `__all__` i `import *`
 
 Standard vrijedi za sve konacne `wattleflow-*` pakete (PEP 8 „Public and internal interfaces");
-puna odluka, oblici agregata s primjerima i worklist migracije: [`DR-WFL-007`](workflow/dr/DR-WFL-007-lazy-aggregate-public-api.md).
 
 1. **Svaki modul i `__init__.py` deklarira `__all__`** — eksplicitna javna API površina;
-   neizloženo ostaje privatno (NFR-SEC-02 t.2).
+   neizloženo ostaje privatno (NFRQ-SEC-02 t.2).
 2. **`from wattleflow.<paket> import *` je podržan ulaz** — `__all__` mora biti potpun i
    točan; imenovani uvoz je ulaz koji radi i na djelomičnoj instalaciji.
 3. **Paketni `__init__.py` agregira javna imena pod-modula**, nikad ih ne prepisuje ručno.
@@ -139,7 +138,7 @@ puna odluka, oblici agregata s primjerima i worklist migracije: [`DR-WFL-007`](w
    svaki `__init__.py`*; paket koji padne mora na odgođeni oblik. Kriterij je strojno izvediv,
    ali **nije automatiziran** — deklarirana slijepa pjega (D-11), ne pokrivenost.
 4. **Cross-distribucijski uvoz je uvijek eksplicitan submodul**, nikad agregat: agregat
-   pripada točno jednoj distribuciji (NFR-SEC-03 kriterij 2) pa ne smije nabrajati tuđe
+   pripada točno jednoj distribuciji (NFRQ-SEC-03 kriterij 2) pa ne smije nabrajati tuđe
    module. Odgođeni oblik ovo ograničenje ne ukida.
 
 ### 2.8 Imenovanje — provodi se lintom
@@ -147,8 +146,8 @@ puna odluka, oblici agregata s primjerima i worklist migracije: [`DR-WFL-007`](w
 Imenovanje je **semiotička politika**, ne stilska preferencija (P-08): ime je znak čiji odnos
 prema ulozi registar fiksira, a lint provodi.
 
-- **Gramatiku imena propisuju registri:** klase — `NFR-ORG-02`, tipske varijable —
-  `NFR-ORG-03`. Ovdje se ne prepisuje; kriterij koji lint čita je `tools/dictionary.json`.
+- **Gramatiku imena propisuju registri:** klase — `NFRQ-ORG-02`, tipske varijable —
+  `NFRQ-ORG-03`. Ovdje se ne prepisuje; kriterij koji lint čita je `tools/dictionary.json`.
 - **Vokabular je kontroliran:** novi facet, domena, obitelj baza, akronim ili uloga ulaze
   **kroz DR**, ne dopisivanjem u registar radi „zelenog" linta. Ime klase se u prozi ne
   navodi (§3.3) — nosi ga `bases` u rječniku, što je i mehanizam protiv ontology creepa.
@@ -157,7 +156,7 @@ prema ulozi registar fiksira, a lint provodi.
   Ne provoditi nijednu stranu (`PDF` vs `Pdf`) masovnim preimenovanjem — provođenje
   neodlučenog krši kaskadu (D-02).
 
-### 2.9 `@staticmethod` vs `@classmethod` i code-wrapping (odluka 2026-07-09, NFR-ORG-05)
+### 2.9 `@staticmethod` vs `@classmethod` i code-wrapping (odluka 2026-07-09, NFRQ-ORG-05)
 
 Srodne **bezstanjne** pomoćne funkcije koje dijeli **više klasa/strategija** omataju se u
 **kvalificiranu klasu** (ne slobodne module-funkcije, ne generički `Helper`) koja drži
@@ -198,23 +197,20 @@ documentation/
 ├── dictionary.yaml            rječnik diskursa (izvor istine, HR)
 ├── CLAUDE.md / POLICY.md      ovaj dokument (policy sloj; POLICY.md je symlink)
 │
-├── 01-HLRQ/                   zahtjevi visoke razine — indeks `0-HLRQ-EN.md` + zapis po sposobnosti
-├── 02-FRQ/                    FR registar — indeks `0-FRQ-EN.md` + zapis po zahtjevu
-├── 03-NFRQ/                   NFR registar — indeks `0-NFRQ-EN.md` + zapis po zahtjevu
-├── 04-DR/                     DR-PRC serija (processors)
+├── 01-HLRQ/                   zahtjevi visoke razine — indeks `HLRQ-000-EN.md` + zapis po sposobnosti
+├── 02-FRQ/                    FR registar — indeks `FRQ-000-EN.md` + zapis po zahtjevu
+├── 03-NFRQ/                   NFR registar — indeks `NFRQ-000-EN.md` + zapis po zahtjevu
+├── 04-DR/                     svi zapisi odluka — `DR-COR`, `DR-WFL`, `DR-PRC` + indeksi
 ├── 05-METHOD/                 metode (DQI)
 ├── 06-ANALYSIS/               analize, datirane
 ├── 07-CHANGES/                zapisi usklađenja s izdanjima koda, datirani
 │
 ├── processors/                po-projektni tekstovi + `dictionary-processors.yaml`
 └── workflow/
-    ├── dr/            DR-WFL serija + `DR-WFL-INDEX.md`
-    ├── core/dr/       DR-COR serija + `DR-INDEX.md`
     ├── conformance/   C-snimke (vektor + trojka reproducibilnosti)
     ├── Analiza.md     istraživački rad — podloga `[M]` i SEC zahtjeva
     ├── analysis/      analize i index znanja
     ├── changes/       zapisi usklađenja s core izdanjima
-    ├── concrete/      nacrti uz concrete sloj
     ├── TODO.md / DONE.md  worklist (stanje rada, ne norma)
     └── hr/            `FILOZOFIJA.md`, stariji nacrti odluka (`dr/`), arhive
 ```
@@ -223,8 +219,10 @@ Uz njih, u **kodnom** repozitoriju: `tools/dictionary.json` (kontrolirani vokabu
 UK English — kriterij koji čita lint), `tools/messages.json` (prezentacija nalaza),
 `tools/wem_lint.py`.
 
-> **Razlamanje registara je zatečeno stanje, ne odobrena norma** (D-03): `FR.md` i `NFR.md`
-> razlomljeni su 2026-08-24 u `02-FRQ/` i `03-NFRQ/` bez DR zapisa. Redirect-stubovi u
+> **Razlamanje registara je zatečeno stanje dok prijedlog ne bude prihvaćen** (D-03): `FR.md`
+> i `NFRQ.md` razlomljeni su 2026-08-24 u `02-FRQ/` i `03-NFRQ/` bez DR zapisa; zapis je
+> napisan naknadno i stoji na *prijedlog* —
+> [`DR-WFL-024`](04-DR/DR-WFL-024-requirement-registers-are-split-by-entry.md). Redirect-stubovi u
 > `workflow/hr/` uklonjeni su 2026-08-25 kad su im ulazne reference pale na nulu; povijest
 > sadržaja nosi git.
 
@@ -253,7 +251,7 @@ UK English — kriterij koji čita lint), `tools/messages.json` (prezentacija na
 
 > **Zatečeno stanje se s ovom normom razilazi (nalaz pod D-02, deklariran po D-11).** Engleski
 > tekst postoji prije v1.0 na tri mjesta: `PHILOSOPHY.md` (HR izvornik `workflow/hr/FILOZOFIJA.md`
-> je razišao), indeksi `0-HLRQ-EN.md` / `0-FRQ-EN.md` nad hrvatskim zapisima, i **cijeli
+> je razišao), indeksi `HLRQ-000-EN.md` / `FRQ-000-EN.md` nad hrvatskim zapisima, i **cijeli
 > `03-NFRQ/` registar, koji HR izdanje uopće nema**. Razrješenje — proširiti §3.2 na dvojezični
 > registar uz HR kao autoritativan, ili povući EN do v1.0 — traži DR (D-03); vodi se u
 > `workflow/TODO.md`. Do odluke EN datoteke nose deklaraciju, ne odobrenje (D-05).
@@ -293,24 +291,38 @@ jedan zapis po zahtjevu; indeks nosi oznaku, iskaz i poveznicu, a ne prepričava
 
 | Razred | Mjesto | Oznaka | Odgovara na | Sidro |
 |---|---|---|---|---|
-| **HLRQ** | [`01-HLRQ/`](01-HLRQ/0-HLRQ-EN.md) | `HLRQ-NN` | *zašto* — narativ, poslovna pravila `BR-nn`, opseg skupine FR-ova | — |
-| **FR** | [`02-FRQ/`](02-FRQ/0-FRQ-EN.md) | `FR-<KATEGORIJA>-NN` | *što* sustav radi | ISO/IEC/IEEE 29148 |
-| **NFR** | [`03-NFRQ/`](03-NFRQ/0-NFRQ-EN.md) | `NFR-<KATEGORIJA>-NN` | *koliko dobro* radi | ISO/IEC 25010 |
+| **HLRQ** | [`01-HLRQ/`](01-HLRQ/HLRQ-000-EN.md) | `HLRQ-NN` | *zašto* — narativ, poslovna pravila `BR-nn`, opseg skupine FR-ova | — |
+| **FR** | [`02-FRQ/`](02-FRQ/FRQ-000-EN.md) | `FR-<KATEGORIJA>-NN` | *što* sustav radi | ISO/IEC/IEEE 29148 |
+| **NFR** | [`03-NFRQ/`](03-NFRQ/NFRQ-000-EN.md) | `NFR-<KATEGORIJA>-NN` | *koliko dobro* radi | ISO/IEC 25010 |
+
+**Razred se bira po blizini problemu, ne po veličini teksta.** Sloj zahtjeva je i sam arhitektura
+i nositelj vrijednosti koja se prenosi učenjem, pa razlika HLRQ/FR nije stilska:
+
+- **HLRQ je na vrhu i izravno odgovara i za arhitekturu i za funkcionalnost.** Gleda **cijeli
+  cjevovod**, redovito kao end-to-end proces.
+- **FR je dekompozicija tog procesa** na pod-proces koji se dade (a) pretvoriti u zadaću i
+  **delegirati**, (b) izgraditi kao **modul** nad već postavljenim frameworkom, (c) **testirati**,
+  (d) opisati normalnim i alternativnim tokom, poslovnim pravilima i dijagramom — ne samo
+  opisnim tekstom.
+- **FR počinje akterima koje sam ne definira**, a bez kojih proces ne može početi. Ako ih zapis ne
+  može imenovati, opisuje građu komponente umjesto funkcionalnosti, ili mu nedostaje nadređeni
+  HLRQ čiji bi proces dekomponirao.
 
 - Svaki zapis nosi **iskaz, kriterije prihvaćanja, metodu verifikacije, opravdanje i sljedivost
   prema gore**; sljedivost je graf, ne lanac (`METHODOLOGY.md` §6).
 - Zahtjev je **primaran** (iz načela i ciljeva; prethodi odlukama i ograničava ih) ili
   **izveden** (nastaje iz odluke).
 - HLRQ ne opisuje korake — korake nose njegova djeca FR-ovi, koja citiraju ista pravila.
-- Mjerni kriteriji nose oznaku **`[M]`** i podliježu povelji `NFR-DEF-02` (tip skale,
+- Mjerni kriteriji nose oznaku **`[M]`** i podliježu povelji `NFRQ-DEF-02` (tip skale,
   dijagnostička uporaba, tranzitivno zatvorenje, promocija u gate samo kroz DR).
 - Zajedničke definicije (domena, helper, kanonski subjekt) žive u **jednom** registru,
-  `NFR-DEF-01`; ostalo ga referira (D-12).
+  `NFRQ-DEF-01`; ostalo ga referira (D-12).
 - **Status se mijenja kroz DR, ne prešutno** (D-03). Većina zapisa danas stoji na *prijedlog*.
 
-> **Vokabular oznaka nije zatvoren.** Razred `HLRQ` te kategorije `AUD`, `CON` i `DRV` nisu u
-> vokabularu registra — do DR-a su te oznake **provizorne** (D-12). Jedina potvrđena kategorija
-> izvan `ORG` je `OSCAL` (`DR-WFL-013`). Opseg i statusi se čitaju iz indeksa, ne odavde.
+> **Vokabular oznaka ima tri osi.** Os po ulozi je **zatvorena** (`DR-WFL-022`: jedanaest
+> oznaka domenske ontologije plus `PTN`); os po sposobnosti i os kvalitete su otvorene i primaju
+> oznaku samo kroz DR (D-12). Popis oznaka po osi vodi [`DR-WFL-027`](04-DR/DR-WFL-027-requirement-category-vocabulary.md),
+> ne ovaj tekst; ondje je i razred `HLRQ`. Opseg i statusi se čitaju iz indeksa, ne odavde.
 
 ---
 
@@ -330,13 +342,26 @@ konsolidiran. Aktivni redoslijed je:
 Dokle se stiglo vodi `workflow/TODO.md`, ne ovaj popis. Optimizacije i refaktori u `core/` ne
 predlažu se bez pitanja korisniku.
 
+**Test framework je odlučen, CI nije (`DR-WFL-023`, 2026-08-28).** Testovi se pišu na `unittest`-u
+iz standardne knjižnice — nijedan testni framework nije ovisnost nijedne distribucije
+(`NFRQ-SEC-03`). Test alata živi uz alat, u `tools/tests/`, izvan `--src` opsega; pokreće se s
+`python -m unittest discover -s tools/tests -v`. Novu tvrdnju prati **mutacijska provjera**: barem
+jedna namjerna izmjena alata koja test mora oboriti. Bez CI-a test se, kao i lint, pokreće **na
+zahtjev**, pa „strojno provjerljivo" i dalje znači provjeru koju netko pokrene.
+
 **Neriješene odluke (ne pretpostavljati):**
 
-- **Test framework i CI** — nije odabran; do tada „strojno provjerljivo" znači lint na zahtjev
+- **CI** — gdje i kada se test i lint pokreću; nije odlučeno (`DR-WFL-023` §Otvoreno)
+- **Pokrivenost koda** — `coverage.py` je third-party i nije uveden; izmjerenost alata je
+  deklarirana slijepa pjega (D-11), ne broj
 - **`DR-WFL-004`** — casing akronima u identifikatorima (otvoren; pravilo je na `WARNING`)
 - **Obrazac imena u `02-FRQ/`** — datoteke su `FRQ-*`, zahtjev je `FR-*`; koji je obrazac norma
-  nije odlučeno
-- **Jezik registra zahtjeva** — `03-NFRQ/` postoji samo na engleskom, protivno §3.2
+  nije odlučeno. Prijedlog:
+  [`DR-WFL-026`](04-DR/DR-WFL-026-requirement-identifier-and-filename.md) (mjereno: `FRQ` 93 %,
+  `NFRQ` 96 % upotrebe)
+- **Jezik registra zahtjeva** — `03-NFRQ/` postoji samo na engleskom, protivno §3.2.
+  Prijedlog: [`DR-WFL-025`](04-DR/DR-WFL-025-requirement-register-language.md) (registar je
+  engleski izvornik, doktrina i DR ostaju hrvatski)
 
 ---
 
@@ -406,17 +431,17 @@ Metrike i dashboardi (Grafana i sl.) dolaze inkrementalno.
 > §5.1) i povelji `[M]`.
 >
 > **Audit zapis nije aspiracija:** razina, imena polja i volumen po jedinici posla uređeni su
-> registrom (`NFR-OBS-01/02/03`, `DR-WFL-018`) i mjere se lintom. Sadržaj zapisa ostaje pod
-> `DR-WFL-008` (`AU-3`), povjerljivost pod `NFR-SEC-06`.
+> registrom (`NFRQ-OBS-01/02/03`, `DR-WFL-018`) i mjere se lintom. Sadržaj zapisa ostaje pod
+> `DR-WFL-008` (`AU-3`), povjerljivost pod `NFRQ-SEC-06`.
 
 ---
 
-## 7. Zero-trust: lokalnost distribucije (NFR-SEC-01/02/03)
+## 7. Zero-trust: lokalnost distribucije (NFRQ-SEC-01/02/03)
 
 Epistemička jezgra: **povjerenje se ne pretpostavlja nego dokazuje** (D-07). Imenovana
 sigurnosna politika koja iz toga slijedi živi ovdje i razrađena je u `03-NFRQ/`
 (SEC-01 blast radius, SEC-02 napadna površina, SEC-03 supply-chain i lokalnost distribucije;
-SEC-03 je nasljednik nekadašnjeg `NFR-ORG-06`). Odluke: `DR-WFL-002`, `DR-WFL-003`.
+SEC-03 je nasljednik nekadašnjeg `NFRQ-ORG-06`). Odluke: `DR-WFL-002`, `DR-WFL-003`.
 
 ### 7.1 Pravilo
 
@@ -490,9 +515,14 @@ konsolidira (§4); do tada vrijedi zatečeni predložak i zatečene serije.
 - **Oznake — serija po projektu:** `DR-COR` (core), `DR-WFL` (workflow), `DR-PRC`
   (processors), `DR-CAD` (cad). Odluka pripada seriji **onog projekta čiji artefakt mijenja**.
   Neprefiksirana oznaka nije valjana.
-- **Indeksi vode opseg serija, ne ovaj tekst:** [`workflow/dr/DR-WFL-INDEX.md`](workflow/dr/DR-WFL-INDEX.md)
-  i [`workflow/core/dr/DR-INDEX.md`](workflow/core/dr/DR-INDEX.md). Serija `DR-PRC` otvorena je
-  2026-08-20 ([`04-DR/`](04-DR/)) i **još nema indeks** — deklarirana rupa (D-11).
+- **Smještaj:** sve tri serije žive u [`04-DR/`](04-DR/) od 2026-08-28. Zajednički direktorij
+  **ne spaja serije** — prefiks i dalje određuje kojemu projektu odluka pripada, a svaka
+  serija ima vlastiti indeks. Ime datoteke je `DR-<SER>-<NNN>-<kratki-naziv>.md`; kratki
+  naziv je kebab-case na engleskom, kao identifikator, dok naslov u zapisu ostaje hrvatski.
+- **Indeksi vode opseg serija, ne ovaj tekst:** [`04-DR/DR-WFL-INDEX.md`](04-DR/DR-WFL-INDEX.md)
+  i [`04-DR/DR-COR-INDEX.md`](04-DR/DR-COR-INDEX.md). Serija `DR-PRC` otvorena je
+  2026-08-20 i od 2026-09-08 ima [`04-DR/DR-PRC-INDEX.md`](04-DR/DR-PRC-INDEX.md); indeks
+  vodi i tri odluke koje su dogovorene i provedene u kriteriju, ali nemaju zapis.
 - **Kad je DR obvezan:** izmjena politike, ugovora, kriterija ili članka doktrine; proširenje
   kontroliranog vokabulara; promocija `[M]` metrike u gate; promjena matične distribucije
   modula.
@@ -502,7 +532,7 @@ konsolidira (§4); do tada vrijedi zatečeni predložak i zatečene serije.
   kao zaseban, namjeran čin, ne kao nuspojava `git push`-a.
 - **Preostale slijepe pjege (D-11):** u **core** repozitoriju je `documentation/` i dalje
   gitignoriran, pa je `DR-COR` serija tamo nepraćena — ovdje živi njezin primjerak
-  (`workflow/core/dr/`). Hrvatski doktrinarni tekst je uz to **već objavljen** na
+  (`04-DR/`). Hrvatski doktrinarni tekst je uz to **već objavljen** na
   `github.com/wattleflow/documentation` (do `v0.0.4`), prije nego što je push onemogućen;
   zatečeno stanje, vodi se u `workflow/TODO.md`.
 
@@ -552,9 +582,9 @@ opisuje metoda, a *čime* — dokument pripadnog alata.
 | `pyproject.toml`, `MANIFEST.in` | metapodaci i pakiranje (`DR-WFL-006`) |
 | `documentation/01-HLRQ/`, `02-FRQ/`, `03-NFRQ/` | registri zahtjeva — **trenutni predmet rada** (§3.6) |
 | `documentation/` | doktrinarni okvir i stablo (§3.1) |
-| `documentation/workflow/dr/`, `workflow/core/dr/`, `04-DR/` | zapisi odluka + indeksi |
+| `documentation/04-DR/` | zapisi odluka svih serija + indeksi |
 | `documentation/workflow/conformance/` | C-snimke konformnosti |
-| `tools/wem_lint.py`, `tools/dictionary.json` | provedba NFR-ORG-01/02/03/07, SEC-03 i vokabular koda |
+| `tools/wem_lint.py`, `tools/dictionary.json` | provedba NFRQ-ORG-01/02/03/07, SEC-03 i vokabular koda |
 | `tools/messages.json` | prezentacija nalaza (en/hr), versionirana odvojeno od kriterija |
 | `documentation/workflow/Analiza.md` | istraživački rad — temelj `[M]` povelje i SEC zahtjeva |
 | `examples/` (symlink) | vanjski primjeri, uključujući Docker konfiguracije |

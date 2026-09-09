@@ -1,0 +1,41 @@
+@startuml 01_synthetic_data-component
+' Generirano iz examples/workflows/01_synthetic_data.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 01_processor_synthetic_data.yaml — Processor - Synthetic data - ETL - Wattleflow Workflow
+caption Konfiguracija: 01_synthetic_data.yaml · okruženje: dev
+
+package "drivers" {
+  component "local-storage-driver" as driv_local_storage_driver <<DriverLocalStorage>>
+}
+
+component "workflow" as wf_workflow <<Workflow>>
+
+package "mock-sql-processor" {
+  component "mock-sql-processor" as proc_mock_sql_processor <<ProcessorMockSQL>>
+  component "synthetic-data-blackboard" as bbmocksqlproce_synthetic_data_blackboard <<SmallBlackboard>>
+  note bottom of bbmocksqlproce_synthetic_data_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "test-pipeline" as pipemocksqlproce_test_pipeline <<PipelineTest>>
+  component "local-storage-repository" as repomocksqlproce_local_storage_repository <<RepositoryWithDriver>>
+}
+proc_mock_sql_processor --> pipemocksqlproce_test_pipeline : 1. transform()
+pipemocksqlproce_test_pipeline .[#AAAAAA].> bbmocksqlproce_synthetic_data_blackboard : write()
+proc_mock_sql_processor --> bbmocksqlproce_synthetic_data_blackboard : create() «StrategyCreateSimpleMock»
+bbmocksqlproce_synthetic_data_blackboard --> repomocksqlproce_local_storage_repository : «StrategyReadSimpleMock» «StrategyWriteSimpleMock»
+repomocksqlproce_local_storage_repository .[#AAAAAA].> driv_local_storage_driver : <<uses>>
+
+wf_workflow --> proc_mock_sql_processor : start()
+
+@enduml

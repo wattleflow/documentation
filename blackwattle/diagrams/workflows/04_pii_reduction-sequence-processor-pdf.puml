@@ -1,0 +1,50 @@
+@startuml 04_pii_reduction-sequence-processor-pdf
+' Generirano iz examples/workflows/04_pii_reduction.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 04_pii_reduction.yaml — Wattleflow Workflow - PII reduction workflow for PDF, PNG, msg emal files.
+caption processor-pdf · 04_pii_reduction.yaml · okruženje: dev
+
+skinparam sequence {
+    LifeLineBorderColor #999999
+    ParticipantBorderColor #555555
+    ParticipantBackgroundColor #FAFAFA
+}
+
+participant "workflow" as WF
+group processor-pdf <<EntityFileDocumentProcessor>>
+  participant "processor-pdf" as PR1
+  participant "blackboard-pdf" as BB1
+  participant "digest" as P1_1
+  participant "pdf-transformation-pipline" as P1_2
+  participant "entities" as P1_3
+  participant "repository-reducted-txt" as R1_1
+  participant "repository-original" as R1_2
+  WF -> PR1 : start()
+  PR1 -> PR1 : iterate source
+  PR1 -> BB1 : create() «CreateTextDocument»
+  PR1 -> P1_1 : transform()  <<PipelineFileDigest>>
+  P1_1 -> BB1 : write()
+  PR1 -> P1_2 : transform()  <<PipelineOCRExtractTika>>
+  P1_2 -> BB1 : write()
+  PR1 -> P1_3 : transform()  <<PipelineProcessorDriverEntities>>
+  P1_3 -> BB1 : write()
+  group flush (defer_flush: true)
+    PR1 -> BB1 : flush()
+    BB1 -> R1_1 : «WriteTextContent»
+    BB1 -> R1_2 : «WriteOriginalWithText»
+  end
+end
+@enduml

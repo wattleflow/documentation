@@ -1,12 +1,12 @@
-# FR-OSCAL-14.13 — Komponentne baze pod OSCAL vratima
+# FRQ-OSCAL-14.13 — Komponentne baze pod OSCAL vratima
 
-> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
 > (2026-08-21). Oznaka se od tada mijenja kroz DR, ne uređivanjem.
 
 | | |
 |---|---|
 | **Status** | Provedeno (2026-08-21) |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) (kategorija); izvedba u `wattleflow-workflow` traži `DR-WFL` — §11 t.1 |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) (kategorija); izvedba u `wattleflow-workflow` traži `DR-WFL` — §11 t.1 |
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `OSCALConnection`, `OSCALDriver`, `OSCALProcessor` |
 | **Sestrinski** | [`14.11`](FRQ-OSCAL-14.11-policy.md) vrata i politika |
@@ -115,11 +115,11 @@ platforma = Python 3.11.15, Linux (WSL2), radna stabla `processors` / `workflow`
 
 | NFR | posljedica |
 |---|---|
-| `NFR-ORG-08` | pravilo „komponenta pod vratima" postoji na jednom mjestu po ulozi, umjesto 14 puta |
-| `NFR-ORG-01` | baza živi u paketu svoje vrste (`connections/`, `drivers/`, `processors/`), uz svoje potrošače |
-| `NFR-SEC-02` | dekorater je na bazi; konkretne klase ne izlažu novu površinu |
-| `NFR-SEC-03` | baze uvoze samo `wattleflow.*` — tier ostaje `stdlib ∪ wattleflow` |
-| `NFR-ORG-04` | ne uvodi se novi primitiv: `OSCALConnection` je specijalizacija `Connection`, ne nova ontološka vrsta |
+| `NFRQ-ORG-08` | pravilo „komponenta pod vratima" postoji na jednom mjestu po ulozi, umjesto 14 puta |
+| `NFRQ-ORG-01` | baza živi u paketu svoje vrste (`connections/`, `drivers/`, `processors/`), uz svoje potrošače |
+| `NFRQ-SEC-02` | dekorater je na bazi; konkretne klase ne izlažu novu površinu |
+| `NFRQ-SEC-03` | baze uvoze samo `wattleflow.*` — tier ostaje `stdlib ∪ wattleflow` |
+| `NFRQ-ORG-04` | ne uvodi se novi primitiv: `OSCALConnection` je specijalizacija `Connection`, ne nova ontološka vrsta |
 
 ## 11. Otvoreno
 
@@ -127,7 +127,7 @@ platforma = Python 3.11.15, Linux (WSL2), radna stabla `processors` / `workflow`
    (provjera prije konstrukcije) i `concrete/connection.py` (`__del__` na polusagrađenom objektu)
    izvedene su 2026-08-21; obje diraju distribuciju kojoj `CLAUDE.md` §2.5 traži DR. Kandidat:
    `DR-WFL-014`.
-2. **Kategorija vs distribucija.** [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+2. **Kategorija vs distribucija.** [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
    t.2 veže kategoriju `OSCAL` uz distribuciju `wattleflow-oscal`, koja više ne postoji; sve živi u
    `wattleflow-processors`. Oznaka je zadržana jer je **sposobnost** ista i roditelj je `HLRQ-14`;
    proširenje osi traži dopunu tog zapisa.

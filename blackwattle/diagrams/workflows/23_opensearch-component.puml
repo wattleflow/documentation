@@ -1,0 +1,68 @@
+@startuml 23_opensearch-component
+' Generirano iz examples/workflows/23_opensearch.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 23_opensearch.yaml — pgvector + OpenSearch dual-write & search round-trip
+caption Konfiguracija: 23_opensearch.yaml · okruženje: dev
+
+package "connections" {
+  component "pgvector" as conn_pgvector <<PostgresConnection>>
+  component "opensearch" as conn_opensearch <<OpenSearchConnection>>
+}
+
+package "drivers" {
+  component "pgvector-driver" as driv_pgvector_driver <<DriverPostgres>>
+  component "opensearch-driver" as driv_opensearch_driver <<DriverOpenSearch>>
+}
+
+component "workflow" as wf_workflow <<Workflow>>
+
+package "entity-file-processor" {
+  component "entity-file-processor" as proc_entity_file_processor <<EntityFileDocumentProcessor>>
+  note right of proc_entity_file_processor
+    source_path: ${dotenv:entity-file-processor.source_path}
+    pattern: *.txt
+    recursive: True
+  end note
+  component "file-write-blackboard" as bbentityfilepr_file_write_blackboard <<SmallBlackboard>>
+  note bottom of bbentityfilepr_file_write_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "dummy-write-pipeline" as pipeentityfilepr_dummy_write_pipeline <<PipelineFileDocumenDummyWrite>>
+  component "pgvector-repository" as repoentityfilepr_pgvector_repository <<RepositoryWithDriver>>
+  component "opensearch-repository" as repoentityfilepr_opensearch_repository <<RepositoryWithDriver>>
+}
+proc_entity_file_processor --> pipeentityfilepr_dummy_write_pipeline : 1. transform()
+pipeentityfilepr_dummy_write_pipeline .[#AAAAAA].> bbentityfilepr_file_write_blackboard : write()
+proc_entity_file_processor --> bbentityfilepr_file_write_blackboard : create() «CreateFileDocument»
+bbentityfilepr_file_write_blackboard --> repoentityfilepr_pgvector_repository : «WriteFileToPgVector»
+repoentityfilepr_pgvector_repository .[#AAAAAA].> driv_pgvector_driver : <<uses>>
+bbentityfilepr_file_write_blackboard --> repoentityfilepr_opensearch_repository : «WriteFileToOpenSearch»
+repoentityfilepr_opensearch_repository .[#AAAAAA].> driv_opensearch_driver : <<uses>>
+
+package "opensearch-read" {
+  component "opensearch-read" as proc_opensearch_read <<OpenSearchReadProcessor>>
+  component "opensearch-read-blackboard" as bbopensearchre_opensearch_read_blackboard <<SmallBlackboard>>
+  note bottom of bbopensearchre_opensearch_read_blackboard : zapis u repozitorije pri svakom write() (defer_flush: false)
+  component "opensearch-read-pipeline" as pipeopensearchre_opensearch_read_pipeline <<OpenSearchReadPipeline>>
+}
+proc_opensearch_read --> pipeopensearchre_opensearch_read_pipeline : 1. transform()
+pipeopensearchre_opensearch_read_pipeline .[#AAAAAA].> bbopensearchre_opensearch_read_blackboard : write()
+proc_opensearch_read --> bbopensearchre_opensearch_read_blackboard : create() «CreateOpenSearchDocument»
+
+wf_workflow --> proc_entity_file_processor : start()
+wf_workflow --> proc_opensearch_read : start()
+
+driv_pgvector_driver .[#AAAAAA].> conn_pgvector : <<connection_name>>
+driv_opensearch_driver .[#AAAAAA].> conn_opensearch : <<connection_name>>
+@enduml

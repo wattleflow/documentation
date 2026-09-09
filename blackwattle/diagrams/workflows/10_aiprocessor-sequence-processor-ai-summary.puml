@@ -1,0 +1,38 @@
+@startuml 10_aiprocessor-sequence-processor-ai-summary
+' Generirano iz examples/workflows/10_aiprocessor.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 10_aiprocessor.yaml — Wattleflow Workflow - AI Pipeline Demo (PDF -> Claude summary)
+caption processor-ai-summary · 10_aiprocessor.yaml · okruženje: dev
+
+skinparam sequence {
+    LifeLineBorderColor #999999
+    ParticipantBorderColor #555555
+    ParticipantBackgroundColor #FAFAFA
+}
+
+participant "workflow" as WF
+group processor-ai-summary <<AIProcessor>>
+  participant "processor-ai-summary" as PR1
+  participant "claude-blackboard" as BB1
+  participant "pipeline-claude-summarise" as P1_1
+  WF -> PR1 : start()
+  PR1 -> PR1 : iterate source
+  PR1 -> BB1 : create() «CreateClaudeDocument»
+  PR1 -> P1_1 : transform()  <<AIPipeline>>
+  P1_1 -> BB1 : write()
+  note over BB1 : bez repozitorija — dokument ostaje na blackboardu
+end
+@enduml

@@ -1,12 +1,12 @@
-# FR-OSCAL-14.4 — Profil (selektor baselinea)
+# FRQ-OSCAL-14.4 — Profil (selektor baselinea)
 
-> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md)
+> **Kategorija `OSCAL` je u vokabularu** — [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md)
 > (2026-08-21). Oznaka se od tada mijenja kroz DR, ne uređivanjem.
 
 | | |
 |---|---|
 | **Status** | Prijedlog (2026-08-21) — obrnuto inženjerstvo zatečenog koda |
-| **Odluka** | [`DR-WFL-013`](../workflow/dr/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
+| **Odluka** | [`DR-WFL-013`](../04-DR/DR-WFL-013-oscal-requirement-category.md) — kategorija i broj sposobnosti; sam zahtjev nema vlastiti DR |
 | **Nadređeni zahtjev** | [`HLRQ-14`](../01-HLRQ/HLRQ-14-oscal.md) — narativ sposobnosti i poslovna pravila `BR-OSCAL-01…BR-OSCAL-12` |
 | **Predmet** | `Profile(OSCALElement)` te njegovi dijelovi `Import`, `IncludeControls`, `Merge` |
 | **Sestrinski** | [`14.9`](FRQ-OSCAL-14.9-resolver.md) resolver · [`14.11`](FRQ-OSCAL-14.11-policy.md) policy · [`14.1`](FRQ-OSCAL-14.1-catalog.md) katalog |
@@ -25,8 +25,8 @@ Maturity Level 1, 2 i 3.
 | `Merge` | kako se spaja (`as-is` u ISM profilima) |
 | `modify` | preinake — **prenosi se kao sirovi rječnik i ništa ga ne čita** |
 
-Profil **ne razrješava sam sebe**: pretvaranje u katalog je posao resolvera (`FR-OSCAL-14.9`), a
-provjera komponente posao policyja (`FR-OSCAL-14.11`).
+Profil **ne razrješava sam sebe**: pretvaranje u katalog je posao resolvera (`FRQ-OSCAL-14.9`), a
+provjera komponente posao policyja (`FRQ-OSCAL-14.11`).
 
 ## 2. Akteri
 
@@ -70,7 +70,7 @@ provjera komponente posao policyja (`FR-OSCAL-14.11`).
 | `uuid` prazan | `ValueError: Profile.uuid must not be empty` |
 | bez `imports` | `ValueError: Profile <uuid> has no imports` |
 | dokument je katalog | odbija ga loader prije `from_dict` |
-| `include_controls` prazan | profil se konstruira; prazan izbor pada tek u resolveru (`FR-OSCAL-14.9` §6) |
+| `include_controls` prazan | profil se konstruira; prazan izbor pada tek u resolveru (`FRQ-OSCAL-14.9` §6) |
 | isti `id` u dva importa | duplikat ostaje u popisu; posljedice nosi potrošač (skup ga svede) |
 | `id` i u `include` i u `exclude` | isključenje pobjeđuje — razlika skupova u resolveru |
 | `modify` prisutan | prenosi se, ne primjenjuje; **tiho neprovedena namjera** (§11 t.1) |
@@ -95,7 +95,7 @@ profila hrane i resolver i policy, bez ijedne kopije popisa kontrola.
 |---|---|---|
 | 1 | `Profile.from_dict({"profile": {…}})` | konstruiran, `uuid = p` |
 | 2 | negativni slučajevi | `Profile.uuid must not be empty`; `Profile p has no imports` |
-| 3 | ML1 profil | 46 `id`-eva iz 1 importa (ML2: 87, ML3: 123 — `FR-OSCAL-14.9` §9) |
+| 3 | ML1 profil | 46 `id`-eva iz 1 importa (ML2: 87, ML3: 123 — `FRQ-OSCAL-14.9` §9) |
 | 4 | ML1 profil; sintetički import s isključenjem | `[]`; `["b"]` isključen iz `["a","b"]` |
 | 5 | ML1 profil | `Merge(as_is=True, …)`, `modify` je `None`, `back_matter` prisutan |
 | 6 | posjetitelj koji bilježi tipove | `["Profile"]` |
@@ -111,9 +111,9 @@ Linux (WSL2), radno stablo `oscal` 2026-08-21, artefakti ASD ISM E8 ML1–ML3 (i
 
 | NFR | posljedica |
 |---|---|
-| `NFR-ORG-08` | popis odabranih i isključenih `id`-eva izvodi se na jednom mjestu (`Import` → `Profile`), a ne u resolveru |
-| `NFR-SEC-02` | profil ne izlaže mutatore; baseline se ne može proširiti nakon konstrukcije |
-| `NFR-SEC-01` | baseline je vezan uz `uuid` profila; poruka o prekršaju imenuje profil, pa se opseg kvara vidi |
+| `NFRQ-ORG-08` | popis odabranih i isključenih `id`-eva izvodi se na jednom mjestu (`Import` → `Profile`), a ne u resolveru |
+| `NFRQ-SEC-02` | profil ne izlaže mutatore; baseline se ne može proširiti nakon konstrukcije |
+| `NFRQ-SEC-01` | baseline je vezan uz `uuid` profila; poruka o prekršaju imenuje profil, pa se opseg kvara vidi |
 
 ## 11. Otvoreno
 

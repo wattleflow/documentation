@@ -1,0 +1,45 @@
+@startuml 06_fetch_emails-sequence-processor-msg
+' Generirano iz examples/workflows/06_fetch_emails.yaml alatom tools/workflow_diagram.py — ne uređivati ručno.
+' Prikaz, ne izvor istine (D-13): izmjena ide u YAML, pa se dijagram regenerira.
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam ArrowColor #333333
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #555555
+}
+skinparam package {
+    BackgroundColor #FFFFFF
+    BorderColor #999999
+}
+
+title 06_fetch_emails.yaml — Wattleflow Workflow - archive .eml and .msg by send time, original untouched.
+caption processor-msg · 06_fetch_emails.yaml · okruženje: dev
+
+skinparam sequence {
+    LifeLineBorderColor #999999
+    ParticipantBorderColor #555555
+    ParticipantBackgroundColor #FAFAFA
+}
+
+participant "fetch-emails" as WF
+group processor-msg <<FileDocumentProcessor>>
+  participant "processor-msg" as PR2
+  participant "msg-blackboard" as BB2
+  participant "msg-extract" as P2_1
+  participant "msg-stage" as P2_2
+  participant "repository-msg" as R2_1
+  WF -> PR2 : start()
+  PR2 -> PR2 : iterate source
+  PR2 -> BB2 : create() «CreateFileDocument»
+  PR2 -> P2_1 : transform()  <<PipelineMessageExtract>>
+  P2_1 -> BB2 : write()
+  PR2 -> P2_2 : transform()  <<PipelineFileDocumenDummyWrite>>
+  P2_2 -> BB2 : write()
+  group flush (defer_flush: true)
+    PR2 -> BB2 : flush()
+    BB2 -> R2_1 : «WriteMailByDate»
+  end
+end
+@enduml
