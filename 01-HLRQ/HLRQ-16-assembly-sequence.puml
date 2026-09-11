@@ -1,0 +1,74 @@
+@startuml HLRQ-16-assembly-sequence
+' Sastavljanje workflowa iz YAML-a do zauzetog uređaja.
+' Gledište: izvedba. Publika: implementator, integrator.
+' Prikaz, ne izvor istine (D-13) — izvor su concrete/workflow.py (WorkflowFactory:
+' _build_connections, _build_drivers, _build_processors) i SDRConnection.create_connection
+' (blackwattle connections/sdr/connection.py, usklađeno 2026-09-11).
+title HLRQ-16 SDR — assembling the workflow up to a claimed device
+
+autonumber
+skinparam SequenceMessageAlignment center
+
+participant "YAML\nconfiguration" as Y
+participant "WorkflowFactory" as WF
+participant "cm :\nConnectionManager" as CM
+participant "con :\nSDRConnection" as CON
+participant "be :\nSDRBackend" as BE
+participant "dm :\nDriverManager" as DM
+participant "drv :\nDriverSDR" as DRV
+participant "p :\nSDRReadProcessor" as P
+
+Y -> WF : build(**kwargs)
+activate WF
+
+== managers.connections ==
+WF -> CON : SDRConnection(connection_name, device, profile,\ncenter_freq, sample_rate, gain, tuning_plan, …)
+activate CON
+alt lazy_loading = False (claim at build time)
+  CON -> CON : ensure_created() → create_connection()
+  CON -> CON : parse profile and instance; instance checked against\nthe profile; centre and plan within range (BR-15)
+  note right : malformed or outside the profile →\nSDRConfigurationError / SDRFrequencyOutOfRange,\nbefore any unit is touched
+  CON -> BE : for_family(profile.family)
+  note right : unknown family, or a library that\ncannot load → SDRBackendUnavailable
+  CON -> BE : version() against profile.requires (BR-14)
+  CON -> BE : enumerate(); resolve selector
+  alt zero matches
+    BE --> CON : SDRDeviceNotFound (BR-02)
+  else more than one match
+    BE --> CON : SDRDeviceAmbiguous (BR-02)
+  end
+  CON -> BE : claim(device), retried until device_timeout
+  note right : busy → SDRDeviceBusy (BR-03)\nno rights → SDRPermissionDenied
+  CON -> BE : report()
+  CON -> CON : verify profile against reported (BR-11)
+  CON -> BE : supports(model) (BR-14)
+  CON -> BE : apply(instance)
+  CON -> BE : read_back()
+  BE --> CON : SDREffective (BR-05)
+  note right : any failure after the claim\nreleases the unit before it rises
+else lazy_loading = True
+  note over CON : claim deferred to DriverSDR.load(); the workflow\nbuilds even when the device is absent,\nso BR-06 holds only at the first block
+end
+CON --> WF : instance
+deactivate CON
+WF -> CM : register_connection(con)
+
+== managers.drivers ==
+WF -> WF : configuration declares connection_name\n→ inject connection_manager = cm
+WF -> DRV : DriverSDR(connection_name, connection_manager=cm,\nblock_size, settle_blocks)
+WF -> DM : register_driver(drv, name)
+
+== workflows.processors ==
+WF -> DM : get_driver(name)
+DM --> WF : drv
+WF -> P : SDRReadProcessor(driver=drv, stop_blocks | stop_seconds,\nsegment_blocks)
+note right : no boundary → ProcessorException (BR-08)
+WF -> P : register_pipeline(…) per pipeline
+WF -> P : register_blackboard(blackboard(strategy_create))
+WF --> Y : GenericWorkflow
+deactivate WF
+
+note over WF, P #FFCDD2
+  Any failure above stops the workflow before the first block (BR-06).
+end note
+@enduml

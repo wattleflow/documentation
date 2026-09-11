@@ -5,12 +5,12 @@
 
 | | |
 |---|---|
-| **Status** | **Prijedlog — nije provedeno** (provjereno 2026-09-09) |
-| **Odluka** | [`DR-PRC-003`](../04-DR/DR-PRC-003-sdr-access-layer.md) — **prijedlog**: driver po pristupnom mehanizmu, format uzorka se ispituje. Ostalo otvoreno ([`HLRQ-16`](../01-HLRQ/HLRQ-16-sdr-capture.md) §7 t.1, t.4) |
+| **Status** | **Djelomično provedeno 2026-09-11** — faza 1 u `blackwattle` `drivers/sdr.py`; ovjereno lažnom obitelji, bez uređaja (§9). Ranije: prijedlog, 2026-09-09 |
+| **Odluka** | **Nijedan DR nije otvoren.** Driver po pristupnom mehanizmu i format uzorka iz profila modela prijedlog su [`HLRQ-16`](../01-HLRQ/HLRQ-16-sdr-capture.md) §4a. Ostalo otvoreno (§7 t.1, t.4) |
 | **Podloga** | [raznolikost SDR uređaja](../06-ANALYSIS/2026-09-09-sdr-vendor-variability.md) (2026-09-09) |
 | **Nadređeni zahtjev** | [`HLRQ-16`](../01-HLRQ/HLRQ-16-sdr-capture.md) — `BR-01…BR-10` |
-| **Predmet** | `DriverSdrDevice(GenericDriver)` — `read` blokova IQ uzoraka i `write` na uređaju koji odašilje; jedan driver, dva protokola |
-| **Dijagrami** | [putanja čitanja](FRQ-DRV-16.2-read-sequence.puml) (sekvencijski) · [dekompozicija](../01-HLRQ/HLRQ-16-sdr-decomposition.puml) (klasni) — pogledi, ne izvor istine (D-13) |
+| **Predmet** | Driver nad konekcijom prema uređaju — `read` blokova IQ uzoraka i `write` na uređaju koji odašilje; jedan driver, dva protokola |
+| **Dijagrami** | [klase](FRQ-DRV-16.2-class.puml) · [čitanje](FRQ-DRV-16.2-read-sequence.puml) (sekvencijski) · [slanje](FRQ-DRV-16.2-write-sequence.puml) (sekvencijski, kandidat) · [dekompozicija](../01-HLRQ/HLRQ-16-sdr-decomposition.puml) — pogledi, ne izvor istine (D-13) |
 | **Kaskada** | P-11 (granica oko promjenjive odluke) · P-14 (specifikacija znanja, ne dnevnik) · P-08 (proza nosi uloge, rječnik imena) |
 | **Norme** | `NFRQ-ORG-08` k.2, k.4 (obvezujuće preko `BR-13`) · `NFRQ-ORG-01` · `NFRQ-SEC-07` (za `write`) · `NFRQ-OBS-03` |
 | **Sestrinski** | [`FRQ-CON-16.1`](FRQ-CON-16.1-sdr-device.md) (pristup uređaju) · [`FRQ-PRC-16.3`](FRQ-PRC-16.3-sdr-capture.md) (vođenje prolaza) |
@@ -24,8 +24,8 @@ isporuči. Uzorak je kompleksan (I i Q), pa je jedinica isporuke **blok** — ni
 opisom uzorkovanja, a ne pojedini uzorak.
 
 Driver je, kao i konekcija, **po pristupnom mehanizmu** ([`HLRQ-16`](../01-HLRQ/HLRQ-16-sdr-capture.md)
-§4a): format uzorka i puna skala razlikuju se među uređajima, ali su **odgovor uređaja**, ne grana
-u kodu. Driver ih preuzima od konekcije (`BR-11`) i ne nosi tablicu po modelu.
+§4a): format uzorka i puna skala razlikuju se među uređajima, ali su **vrijednost profila** za zadani način i stopu, ne grana
+u kodu. Driver ih preuzima od konekcije (`BR-11`) i ne nosi vlastite podatke o modelu.
 
 **Oba smjera nose isti javni API, kao svaki driver u frameworku.** Presedan je zatečeni driver za
 brokera poruka (`drivers/kafka.py`):
@@ -43,7 +43,7 @@ Gdje uređaj **ne prijavljuje** odašiljanje, `write` pada **tipom**, ne tihim n
 
 | putanja | ugovor | izvedba |
 |---|---|---|
-| `read` | isti za svaki uređaj | **jedna** izvedba; razlika ulazi kroz ispitane vrijednosti i kroz **parser** koji tvornica vrati za ispitani format |
+| `read` | isti za svaki uređaj | **jedna** izvedba; razlika ulazi kroz vrijednosti profila i kroz **parser** koji tvornica vrati za zadani format |
 | `write` | drugi ugovor: drugi protokol, stanje, ovlast | **odvojena** izvedba uz **formatter**; ne spaja se s `read` (`NFRQ-ORG-08` k.4 — spajanje bi bilo regresija) |
 
 Pretvorba bajtova u uzorke i natrag je **helper**, ne driverska grana: obitelj parsera i formattera
@@ -77,7 +77,7 @@ zatraži druga domena.
 1. Driver i konekcija registrirani u workflowu (`BR-01`); konekcija je u stanju *povezan*.
 2. Veličina bloka je deklarirana i **usklađena sa stopom**: blok mora trajati dulje nego što traje
    njegova obrada, inače je gubitak sustavan, a ne slučajan.
-3. Djelotvorni parametri **i ispitane sposobnosti** (izvorni format uzorka, puna skala) očitani su
+3. Djelotvorni parametri **i potvrđeni profil** (format uzorka, puna skala) utvrđeni su
    pri uspostavi (`BR-05`, `BR-11`) — driver ih **ne** traži ponovno od uređaja i ne pretpostavlja
    ni tražene vrijednosti ni format.
 
@@ -109,6 +109,7 @@ interpretabilan ni jednim pipelineom.
 | `write` na uređaju koji ne prijavljuje odašiljanje | odbijeno **tipom** — putanja za pozivatelja ne postoji (`NFRQ-SEC-07` k.1) |
 | `write` bez razriješene ovlasti | odbijeno; poruka imenuje **koja** ovlast nedostaje, ne njezin sadržaj (`NFRQ-SEC-07` k.3) |
 | `write` dok je konekcija u prijamu | odbijeno — poluduplex, smjer je stanje uređaja (`BR-12`); driver ga ne prebacuje sam |
+| zahtjev za čitanje na frekvenciji izvan raspona | driver **ne ugađa** uređaj; vraća kvar razreda *izvan raspona* s traženom vrijednošću i dopuštenim rasponom (`BR-15`) |
 | zaustavljanje usred bloka | blok se ili isporuči cijel ili odbaci; polublok se ne isporučuje |
 | ponovni `close` / `reset` | idempotentno, po ugovoru temeljnog drivera |
 
@@ -120,12 +121,12 @@ podacima, ne samo u zapisu.
 
 ## 8. Kriteriji prihvaćanja
 
-Nijedan nije zadovoljen — koda nema.
+Stanje 2026-09-11 vodi §9.
 
 1. `read` isporučuje blokove kao generator; ništa se ne skuplja u memoriju preko jednog bloka.
 2. Svaki blok nosi opis: redni broj, vrijeme, broj uzoraka, djelotvorna stopa, središnja
    frekvencija, format **i puna skala**.
-2a. Format i puna skala dolaze iz ispitanog (`BR-11`); nijedan format nije konstanta u kodu i
+2a. Format i puna skala dolaze iz potvrđenog profila (`BR-11`); nijedan format nije konstanta u kodu i
    nijedna grana ne postoji po modelu uređaja.
 3. Djelotvorni parametri dolaze **iz konekcije**; driver ne pita uređaj i ne pretpostavlja tražene
    vrijednosti (`BR-05`).
@@ -137,6 +138,8 @@ Nijedan nije zadovoljen — koda nema.
    modelu, a pretvorba formata živi u helperu koji tvornica vrati (`BR-13`, `NFRQ-ORG-08` k.2).
 6b. `read` i `write` **nisu** spojeni u zajedničku izvedbu unatoč sličnom obliku poziva
    (`NFRQ-ORG-08` k.4).
+6c. Zahtjev na frekvenciji izvan dopuštenog raspona ne ugađa uređaj i vraća kvar razreda *izvan
+   raspona* (`BR-15`).
 7. Volumen zapisa: jedinica posla je **prolaz**, ne blok (`NFRQ-OBS-03`) — bez retka po bloku.
 8. Modul se uvozi bez driverske knjižnice (test maskiranja, `NFRQ-SEC-03`).
 
@@ -144,16 +147,22 @@ Nijedan nije zadovoljen — koda nema.
 
 | kriterij | metoda | rezultat |
 |---|---|---|
-| 1, 2, 3 | `unittest` nad lažnom konekcijom koja isporučuje unaprijed pripremljene blokove | **nije izvedeno** — nema koda (2026-09-09) |
-| 6, 6b | lažne sposobnosti sa i bez smjera odašiljanja; poziv `write` bez ovlasti | nije izvedeno |
-| 6a | dva lažna uređaja s **različitim** formatom i brojem stupnjeva kroz **istu** putanju čitanja; mutacija: grana po imenu uređaja mora oboriti test | nije izvedeno |
-| 4, 5 | lažna konekcija koja namjerno preskače blokove; provjera brojača i praga | nije izvedeno |
-| 7 | brojanje redaka zapisa po prolazu, uz kriterij iz `NFRQ-OBS-03` | nije izvedeno |
-| 8 | test maskiranja | nije izvedeno |
+| 1, 2, 2a, 3 | blokovi kroz lažnu obitelj; parser za 8-bitni i 16-bitni format | ✅ uz mutaciju m4; format i puna skala iz profila, djelotvorne vrijednosti iz konekcije |
+| 4 | brojač gubitaka | ⚠️ sinkrono čitanje obitelji RTL gubitke **ne vidi**: brojač je prazan i prijavljuje se kao *nemjeren*, nikad kao nula (mutacija m7) |
+| 5 | prag prekoračenja | ❌ **nije provedeno** — bez mjerljivog gubitka nema praga; stiže s obitelji koja gubitke vidi |
+| 6, 6b | `write` | ✅ pada tipom; izvedba odvojena od `read` |
+| 6a | jedna putanja čitanja | ⚠️ jedna izvedba bez grane po obitelji (pregled koda); dva lažna uređaja različitog formata kroz istu putanju **nisu** ispitana |
+| 6c | ugađanje izvan raspona | ✅ uz mutaciju m1 — uređaj se ne ugađa |
+| 7 | redci zapisa po bloku | ✅ pregledom: tok ne piše zapis po bloku; brojanjem nije izmjereno |
+| 8 | test maskiranja | ✅ uz mutaciju m8 |
+
+> **Trojka (D-10):** `unittest`, Python 3.11.15, `blackwattle/tests/sdr/` — 28 testova · kriterij §8 ·
+> WSL2 6.18.33.2, 2026-09-11. Mutacijske provjere m1–m8 (`DR-WFL-023`) sve obaraju testove.
 
 Svaka tvrdnja uz **mutacijsku provjeru** ([`DR-WFL-023`](../04-DR/DR-WFL-023-test-framework-is-stdlib-unittest.md)).
 
-> **Slijepa pjega (D-11):** kriterij 5 mjeri se lažnim gubicima. Odgovara li deklarirani prag
+> **Slijepa pjega (D-11):** zaključavanje PLL-a knjižnica ne izlaže, pa se nakon preugađanja odbacuje
+> zadani broj blokova — broji se, ne mjeri. Kriterij 5 mjerio bi se lažnim gubicima. Odgovara li deklarirani prag
 > stvarnom ponašanju uređaja pod opterećenjem, ovim se **ne** provjerava.
 
 ## 10. Nefunkcionalni zahtjevi

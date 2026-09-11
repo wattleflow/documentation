@@ -1,0 +1,87 @@
+@startuml FRQ-PRC-16.3-class
+' Klasni model procesora prihvata i onoga što predaje platnu.
+' Gledište: struktura (izvedba). Publika: implementator, tester.
+' Prikaz, ne izvor istine (D-13) — izvor su FRQ-PRC-16.3 §1, §5, temeljni sloj
+' concrete/processor.py, IBlackboard i kod blackwattle processors/sdr.py (usklađeno 2026-09-11).
+' Procesor po smjeru ne postoji i plan ugađanja nije njegov — oboje je u sloju konekcije
+' (autor, 2026-09-11). Razred dokumenta bira strategija stvaranja; FRQ-DOC-16.4 nije napisan.
+title FRQ-PRC-16.3 — SDRReadProcessor class model
+
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "concrete · existing" #F4F4F4 {
+  abstract class GenericProcessor {
+    +blackboard : IBlackboard
+    +cycle : int
+    +flush_per_cycle : bool
+    +write_context : dict
+    +start() : None
+    +register_pipeline(pipeline: IPipeline) : None
+    +register_blackboard(blackboard: IBlackboard) : None
+    +save_state() : GenericMemento
+    +restore_state(memento: GenericMemento) : None
+    {abstract} +create_generator() : Generator[ITarget]
+  }
+  interface IBlackboard {
+    +create(caller: IProcessor, **kwargs) : ITarget
+    +flush(caller: IWattleflow, **kwargs) : None
+  }
+}
+
+class DriverSDR <<see FRQ-DRV-16.2-class>>
+class SDRSampleBlock <<see FRQ-DRV-16.2-class>>
+
+class SDRReadProcessor {
+  {static} +ALLOWED : list[str]
+  {static} +SEGMENT_BLOCKS : int = 1
+  +summary : SDRPassSummary
+  +create_generator() : Generator[ITarget]
+}
+
+class SDRPassSummary <<value>> {
+  +blocks : int
+  +samples : int
+  +documents : int
+  +duration : float
+  +lost : int | None
+  +effective : dict | None
+  +partial : bool
+  +reason : str | None
+  +as_record() : dict
+}
+
+class "create strategy\n(FRQ-DOC-16.4, unwritten)" as CS <<open>>
+
+GenericProcessor <|-- SDRReadProcessor
+SDRReadProcessor --> DriverSDR : driver (injected by the factory)
+SDRReadProcessor ..> SDRSampleBlock : consumes
+SDRReadProcessor *-- SDRPassSummary
+SDRReadProcessor ..> IBlackboard : create(caller, content, metadata)
+IBlackboard ..> CS : strategy_create
+
+note right of SDRReadProcessor
+  <b>ALLOWED</b>: driver, stop_blocks, stop_seconds,
+  segment_blocks — a boundary is mandatory (BR-08)
+  ----
+  One document = up to segment_blocks blocks,
+  never across two frequencies.
+  <b>content</b>: the segment's samples, concatenated.
+  <b>metadata</b>: the first block's description +
+  sample_count, blocks, loss_measured.
+  ----
+  One summary record per pass: INFO when whole,
+  WARNING when partial (NFRQ-OBS-03).
+end note
+
+note bottom of GenericProcessor
+  start() is the base loop: it drives the generator,
+  runs every pipeline over each item, flushes and
+  writes one INFO record per document.
+  A pipeline failure ends the pass — the rule
+  (author, 2026-09-11); exemptions are open.
+  save_state / restore_state: a live stream has no
+  rewindable position (FRQ-PRC-16.3 §11 t.1).
+end note
+@enduml

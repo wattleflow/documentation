@@ -5,14 +5,14 @@
 
 | | |
 |---|---|
-| **Status** | **Prijedlog — nije provedeno** (provjereno 2026-09-09; u `blackwattle/src/` nema uređajne komponente) |
-| **Odluka** | [`DR-PRC-003`](../04-DR/DR-PRC-003-sdr-access-layer.md) — **prijedlog**: klasa po pristupnom mehanizmu, selektor umjesto skalara, ispitivanje sposobnosti. Izbor mehanizma i dalje otvoren ([`HLRQ-16`](../01-HLRQ/HLRQ-16-sdr-capture.md) §7 t.1) |
+| **Status** | **Djelomično provedeno 2026-09-11** — faza 1 (RTL2832U, prijam) u `blackwattle` `connections/sdr/`; ovjereno lažnom obitelji, bez uređaja (§9). Ranije: prijedlog, 2026-09-09 |
+| **Odluka** | **Nijedan DR nije otvoren.** Klasa po pristupnom mehanizmu, selektor umjesto skalara i profil modela provjeren ispitivanjem prijedlog su [`HLRQ-16`](../01-HLRQ/HLRQ-16-sdr-capture.md) §4a; opseg obitelji otvoren (§7 t.1) |
 | **Podloga** | [raznolikost SDR uređaja](../06-ANALYSIS/2026-09-09-sdr-vendor-variability.md) (2026-09-09) |
-| **Dijagrami** | [stanje uređaja](FRQ-CON-16.1-device-state.puml) (stanja) · [dekompozicija](../01-HLRQ/HLRQ-16-sdr-decomposition.puml) (klasni) — pogledi, ne izvor istine (D-13) |
+| **Dijagrami** | [klase](FRQ-CON-16.1-class.puml) · [stanje uređaja](FRQ-CON-16.1-device-state.puml) · [sastavljanje](../01-HLRQ/HLRQ-16-assembly-sequence.puml) (sekvencijski) · [dekompozicija](../01-HLRQ/HLRQ-16-sdr-decomposition.puml) — pogledi, ne izvor istine (D-13) |
 | **Kaskada** | P-11 (granica oko promjenjive odluke) · P-14 (specifikacija znanja, ne dnevnik) · P-08 (proza nosi uloge, rječnik imena) |
 | **Norme** | `NFRQ-ORG-07` (`ALLOWED`) · `NFRQ-ORG-08` (obvezujuće preko `BR-13`) · `NFRQ-SEC-07` (smjer i ovlast) · `NFRQ-SEC-01`, `NFRQ-SEC-06` |
 | **Nadređeni zahtjev** | [`HLRQ-16`](../01-HLRQ/HLRQ-16-sdr-capture.md) — narativ, `BR-01…BR-10`, svojstva uređaja (§2) |
-| **Predmet** | `ConnectionSdrDevice(GenericConnection)` — isključivo zauzeće prijamnika, ispitivanje sposobnosti i primjena parametara; `connect` / `disconnect`. **Jedna klasa po mehanizmu, ne po proizvođaču** |
+| **Predmet** | Konekcija prema uređaju — isključivo zauzeće prijamnika, ispitivanje sposobnosti i primjena parametara; `connect` / `disconnect`. **Jedna klasa po mehanizmu, ne po proizvođaču** |
 | **Sestrinski** | [`FRQ-DRV-16.2`](FRQ-DRV-16.2-iq-stream.md) (dohvat uzoraka) · [`FRQ-PRC-16.3`](FRQ-PRC-16.3-sdr-capture.md) (vođenje prolaza) |
 | **Izvedba** | — (predložena putanja: `connections/sdr.py`) |
 
@@ -24,24 +24,59 @@ zauzeće je isključivo i stanje *povezan* znači da uređaj **nitko drugi ne mo
 uzorci su driverovi (`FRQ-DRV-16.2`).
 
 Klasa je **po pristupnom mehanizmu**, ne po proizvođaču ([`HLRQ-16`](../01-HLRQ/HLRQ-16-sdr-capture.md)
-§4a): razlika među modelima uređaja iscrpljuje se u imenima i rasponima, a to su vrijednosti koje
-konekcija **ispituje** (`BR-11`), ne konstante koje nosi u kodu.
+§4a): razlika među modelima iscrpljuje se u vrijednostima koje nosi **profil modela** u konfiguraciji,
+a konekcija ga provjerava ispitivanjem (`BR-11`) — ne u konstantama u kodu.
 
-| dolazi iz temeljne konekcije | dodaje ova specijalizacija |
-|---|---|
-| stanje pristupa i njegovi prijelazi | `device` — **selektor**, skup ključ-vrijednost (`BR-02`) |
-| `connect` / `disconnect` / `create_connection` kao ugovor | `sample_rate`, `center_freq` — točka i širina prihvata |
-| `context()`, `hot_swap`, `reset` | `gain_mode` (`auto`/`manual`) i `gain` — **karta imenovanih stupnjeva** (`BR-04`) |
-| `ALLOWED` kao deklarirana ulazna površina (`NFRQ-ORG-07`) | `antenna`, `ppm`, `device_timeout` |
-| — | `direction` — traženi smjer; poluduplex ga čini **stanjem**, ne parametrom poziva (`BR-12`) |
+### Što mora biti u konfiguraciji
 
-Oblik konfiguracije koji iz toga slijedi — uređaj s jednim stupnjem i uređaj s tri razlikuju se
-**samo u broju unosa karte**, ne u obliku ni u klasi:
+Konfiguracija ima **dvije razine**, jer se mijenjaju iz različitih razloga: profil kad se promijeni
+model, instanca kad se promijeni zadatak.
+
+| razina | ključ | što nosi | pravilo |
+|---|---|---|---|
+| **profil modela** — jedan po modelu, dijeli se | `model` | identitet kako ga mehanizam prepoznaje (vrsta tunera, oznaka ploče, zapis proizvođača) | `BR-11` |
+| | `family` | obitelj, tj. knjižnica domaćina | `BR-13` |
+| | `requires` | najmanja inačica mehanizma koja model podržava | `BR-14` |
+| | `freq_ranges` | frekvencijski doseg kao **lista** raspona | `BR-11` |
+| | `sample_rates` | dopuštene stope kao lista raspona, uz najveću stopu bez gubitaka | `BR-07`, `BR-11` |
+| | `gain_stages` | imenovani stupnjevi i njihovi rasponi ili tablice | `BR-04` |
+| | `formats` | formati uzorka s punom skalom i uz koju stopu ili način vrijede | `BR-13` |
+| | `directions`, `duplex` | prijam / odašiljanje; poluduplex ili puni | `BR-12` |
+| | `ports`, `features` | ulazi; bias-tee, HF put, vanjski takt | `BR-11` |
+| **instanca** — jedna po jedinici i zadatku | `device` | selektor, skup ključ-vrijednost koji razrješava točno jedan uređaj | `BR-02` |
+| | `profile` | referenca na profil modela | `BR-11` |
+| | `sample_rate`, `center_freq` | tražena točka i širina prihvata | `BR-04` |
+| | `gain_mode`, `gain` | način (`auto`/`manual`) i karta stupnjeva **imenovanih u profilu** | `BR-04` |
+| | `ppm`, `antenna`, `bias_tee` | korekcija takta, ulaz, napajanje antene | `BR-04` |
+| | `direction`, `authorisation` | smjer; kod odašiljanja i referenca ovlasti | `BR-12`, `NFRQ-SEC-07` |
+| | `device_timeout` | koliko se čeka zauzet uređaj | `BR-03` |
+
+Tri pravila drže razine razdvojenima:
+
+1. Instanca **ne nadjačava** profil: vrijednost izvan profila je kvar konfiguracije.
+2. Profil i ispitano **moraju se slagati** gdje mehanizam nešto zna reći; neslaganje je kvar
+   uspostave, ne tiho odabrana strana (`BR-11`).
+3. Instanca ne nosi sposobnosti, profil ne nosi zadatak.
+
+Oblik — vrijednosti su ilustracija, a profil od zapisa traži izvor za svaku stavku
+([analiza tržišta](../06-ANALYSIS/2026-09-11-sdr-device-market.md)):
 
 ```yaml
-device:    {driver: rtlsdr, serial: "82895453"}   # selektor; oblik pripada mehanizmu
-gain_mode: manual
-gain:      {TUNER: 28.0}                          # troetapni uređaj: {LNA: 24, VGA: 20, AMP: 0}
+profile:                                  # jedan zapis po modelu
+  model:       {tuner: R820T}
+  family:      rtlsdr
+  freq_ranges: [[24.0e6, 1766.0e6]]       # R820T2 prema proizvođaču
+  gain_stages: {TUNER: [0.0, 0.9, 1.4, …, 49.6]}   # 29 vrijednosti, izmjereno 2026-09-09
+  formats:     [{format: u8_iq}]          # 8 bit
+  directions:  [rx]
+
+instance:                                 # jedan zapis po jedinici i zadatku
+  device:      {family: rtlsdr, serial: "82895453"}
+  profile:     r820t
+  sample_rate: 2.4e6
+  center_freq: 137.9125e6
+  gain_mode:   manual
+  gain:        {TUNER: 28.0}
 ```
 
 ## 2. Akteri
@@ -87,11 +122,11 @@ Uređaj i USB podsustav **nisu akteri** — ništa ne pokreću; sudionici su tok
 3. A4 **nabraja** prisutne uređaje i primjenjuje selektor. Nula pogodaka je *dosežnost*, više od
    jedne *dvoznačnost*; ni u jednom slučaju se ne pogađa (`BR-02`). Nabrajanje prethodi zauzimanju
    i uspijeva i kad uređaj drži drugi proces, pa poruka može imenovati **koji** je uređaj zauzet.
-4. A4 zauzima uređaj i **ispituje njegove sposobnosti**: stupnjeve pojačanja i njihove raspone,
-   dopuštene stope (kao **skup raspona**, ne min–max), frekvencijski doseg, ulaze, izvorni format
-   uzorka i punu skalu (`BR-11`).
-5. A4 provjerava konfiguraciju **protiv ispitanog**: ime stupnja ili ulaza koje uređaj ne
-   prijavljuje je kvar konfiguracije, s popisom onoga što uređaj nudi.
+4. A4 zauzima uređaj, prepoznaje model i učitava njegov **profil**; provjerava da ugrađena inačica
+   mehanizma podržava taj model (`BR-14`).
+5. A4 **ispituje** ono što mehanizam zna reći (npr. vrstu tunera i tablicu pojačanja) i provjerava da
+   se slaže s profilom; zatim provjerava instancu protiv profila. Neslaganje je kvar, s obje strane u
+   poruci (`BR-11`).
 6. A4 primjenjuje parametre redom: stopa uzorkovanja → središnja frekvencija → pojačanje → `ppm`.
 7. A4 **čita natrag djelotvorne vrijednosti** i objavljuje ih u zapis (`BR-05`); razlika između
    tražene i postignute vrijednosti je podatak o prihvatu, ne šum. Izmjereno: R820T prihvaća 29
@@ -102,7 +137,7 @@ Uređaj i USB podsustav **nisu akteri** — ništa ne pokreću; sudionici su tok
 9. A3 vraća konekciju, driver je smije koristiti (EV03).
 10. EV04 — `disconnect` oslobađa uređaj i vraća ga na raspolaganje drugom procesu.
 
-**Normalan tok je postignut kad je uređaj zauzet, sposobnosti ispitane i djelotvorni parametri
+**Normalan tok je postignut kad je uređaj zauzet, profil potvrđen i djelotvorni parametri
 očitani.** Nijedan uzorak u ovom toku nije pročitan — prvo čitanje radi driver.
 
 ## 6. Alternativni tokovi
@@ -113,7 +148,9 @@ očitani.** Nijedan uzorak u ovom toku nije pročitan — prvo čitanje radi dri
 | selektor ne pogađa nijedan uređaj | razred *dosežnost*, sa selektorom i popisom prisutnih uređaja u poruci |
 | selektor pogađa više uređaja | razred *dvoznačnost* — nikad se ne uzima prvi (`BR-02`) |
 | konfiguracija imenuje stupanj ili ulaz koji uređaj nema | kvar konfiguracije **pri uspostavi**, s popisom onoga što uređaj nudi (`BR-11`) |
-| ispitivanje vrati nepotpun popis sposobnosti | valjana konfiguracija biva odbijena; poruka mora imenovati **izvor** popisa, da se šutljiv mehanizam razlikuje od krive konfiguracije |
+| ispitano se ne slaže s profilom | kvar uspostave; poruka imenuje obje strane — profil i ono što je mehanizam prijavio — i nikad ne bira tiho (`BR-11`) |
+| mehanizam ne podržava deklarirani model (npr. RTL-SDR V4 sa standardnim driverom) | **glasan** kvar uspostave prije prvog bloka (`BR-14`) — rad na krivoj frekvenciji nije dopušten ishod |
+| frekvencija ili plan ugađanja izvan raspona profila | kvar konfiguracije **pri učitavanju**; workflow ne započinje (`BR-15`) |
 | uređaj drži drugi proces | razred *zauzetost*; čeka se najviše `device_timeout`, pa kvar (`BR-03`) — ne čeka se neodređeno |
 | nema prava nad uređajnim čvorom | razred *prava*, razlikovan od nepostojanja uređaja; poruka imenuje čvor, ne rješenje |
 | uređaj odbija ili zaokružuje parametar | **nije kvar**: djelotvorna vrijednost se očitava i zapisuje (`BR-05`). Kvar je tek kad je razlika izvan deklarirane tolerancije |
@@ -133,7 +170,7 @@ workflow prije prvog bloka (`BR-06`).
 
 ## 8. Kriteriji prihvaćanja
 
-Nijedan nije zadovoljen — koda nema. Popis je **ulaz u izvedbu**, ne izvještaj.
+Popis je bio ulaz u izvedbu i ostaje mjerilo; stanje 2026-09-11 vodi §9.
 
 1. Zadovoljen ugovor konekcije: `connect` / `disconnect` + stanje; nijedna operacija nad uzorcima
    nije konekcijina.
@@ -143,13 +180,17 @@ Nijedan nije zadovoljen — koda nema. Popis je **ulaz u izvedbu**, ne izvješta
    (`BR-02`).
 3a. Pojačanje se konfigurira kao karta imenovanih stupnjeva; uređaj s jednim stupnjem ne traži
    drukčiji oblik ni drugu klasu (`BR-04`).
-3b. Sposobnosti su ispitane s uređaja i konfiguracija je provjerena protiv njih; nijedan raspon ni
+3b. Konfiguracija ima dvije razine; profil je potvrđen ispitivanjem gdje mehanizam to omogućuje, a
+   instanca je provjerena protiv profila; nijedan raspon ni
    popis stupnjeva nije konstanta u kodu (`BR-11`).
 3c. Odašiljanje se ne otključava logičkim ključem: traži prijavljenu sposobnost uređaja **i**
    razriješenu referencu ovlasti, a izostanak bilo čega od toga znači odbijanje (`NFRQ-SEC-07`
    k.1–k.3).
 3d. Prijam i odašiljanje su **stanja koja se isključuju**; konekcija ne prelazi između njih kao
    posljedicu poziva drivera (`BR-12`).
+3e. Mehanizam koji ne podržava deklarirani model odbijen je prije prvog bloka (`BR-14`).
+3f. Frekvencija ili plan ugađanja izvan raspona profila odbijeni su pri učitavanju konfiguracije
+   (`BR-15`).
 4. Djelotvorni parametri očitani s uređaja i dostupni driveru kao svojstva (`BR-05`).
 5. Zauzet uređaj daje razred *zauzetost* nakon `device_timeout`, ne blokira neodređeno (`BR-03`).
 6. Tri razreda kvara — *dosežnost*, *zauzetost*, *prava* — razlikuju se u tipu, ne samo u poruci.
@@ -160,17 +201,24 @@ Nijedan nije zadovoljen — koda nema. Popis je **ulaz u izvedbu**, ne izvješta
 
 | kriterij | metoda | rezultat |
 |---|---|---|
-| 1, 2, 4 | `unittest` nad instancom s lažnim uređajem ([`DR-WFL-023`](../04-DR/DR-WFL-023-test-framework-is-stdlib-unittest.md)) | **nije izvedeno** — nema koda (2026-09-09) |
-| 3, 3a, 3b | lažni mehanizam koji prijavljuje jedan i tri stupnja pojačanja te razmaknute raspone stopa; selektor s nula i s dva pogotka | nije izvedeno |
-| 3c, 3d | lažni transceiver koji prijavljuje odašiljanje: sa i bez ovlasti, te pokušaj usporednog prijama i odašiljanja | nije izvedeno |
-| 5, 6 | negativni slučajevi: uređaj zauzet drugim procesom, čvor bez prava | **djelomično izvedeno** — zauzetost potvrđena na stroju 2026-09-09 (`usb_claim_interface error -6` uz uspješno nabrajanje); ostalo nije |
-| 7 | dvostruki `connect`/`disconnect`, te `disconnect` iz `except` grane | nije izvedeno |
-| 8 | test maskiranja driverske knjižnice | nije izvedeno |
+| 1, 4 | `unittest` nad lažnom obitelji ([`DR-WFL-023`](../04-DR/DR-WFL-023-test-framework-is-stdlib-unittest.md)) | ✅ djelotvorne vrijednosti očitane s uređaja; konekcija nema operaciju nad uzorcima — sirove bajtove vuče driver kroz obiteljski helper |
+| 2 | pregled deklaracije ključeva | ⚠️ **razilaženje:** deklaracija nosi i ključeve iz §1 (`profile`, `bias_tee`, `direction`, `authorisation`) te `tuning_plan` (odluka 2026-09-11); kriterij 2 ih ne navodi i treba ga uskladiti |
+| 3, 3a, 3b | selektor s nula i s dva pogotka; pojačanje kao skalar; model i tablica pojačanja protiv profila | ✅ uz mutaciju m3; uređaj s više stupnjeva **nije** ispitan — lažna obitelj ima jedan |
+| 3c, 3d | smjer odašiljanja | ✅ odbijen tipom kvara konfiguracije jer nijedna obitelj ne odašilje; ovlast i isključivost smjerova čekaju fazu 2 |
+| 3e, 3f | nepodržan model; prenizak `requires`; frekvencija i plan izvan raspona pri učitavanju | ✅ odbijena konfiguracija ne zauzima uređaj |
+| 5, 6 | zauzeto do i nakon `device_timeout`; bez prava; bez pogotka | ✅ na lažnoj obitelji; zauzetost je 2026-09-09 potvrđena i na stroju (`usb_claim_interface error -6`) |
+| 7 | dvostruko zatvaranje; oslobađanje nakon kvara provjere | ✅ uz mutaciju m2 |
+| 8 | test maskiranja u podprocesu | ✅ uz mutaciju m8 — eager uvoz knjižnice obara test |
+
+> **Trojka (D-10):** `unittest`, Python 3.11.15, `blackwattle/tests/sdr/` — 28 testova · kriterij §8 ·
+> WSL2 6.18.33.2, 2026-09-11. Mutacijske provjere m1–m8 (`DR-WFL-023`) sve obaraju testove.
 
 Uz svaku tvrdnju ide **mutacijska provjera** (`DR-WFL-023`): namjerna izmjena koja test mora
 oboriti. Test koji prolazi i s pokvarenom izvedbom nije svjedočanstvo (D-05).
 
-> **Slijepa pjega (D-11):** kriteriji 5, 6 i 7 traže **fizički uređaj** ili njegovu vjernu zamjenu.
+> **Slijepa pjega (D-11):** obiteljski helper za RTL2832U **nije izveden ni jednom** — `pyrtlsdr` nije bio
+> instaliran u okruženju testova, a uređaj nije bio prikopčan; ovjeren je čitanjem koda, ne izvođenjem.
+> Kriteriji 5, 6 i 7 traže **fizički uređaj** ili njegovu vjernu zamjenu.
 > Lažni uređaj dokazuje ugovor, ne ponašanje USB sloja. Uz to je sve izmjereno 2026-09-09 mjereno
 > na **jednom** modelu (RTL2832U + R820T); ponašanje uređaja s više stupnjeva pojačanja i širim
 > formatom uzorka **nije** provjereno ni na jednom primjerku.
@@ -196,8 +244,9 @@ Registar i OSCAL obveza: [`HLRQ-16` §6](../01-HLRQ/HLRQ-16-sdr-capture.md#6-nef
    R820T ima korake do 3,1 dB, pa je traženo rijetko postignuto.
 1b. **Gdje živi ovlast za odašiljanje** — na konekciji uz smjer, ili na driveru uz poziv
    (`FRQ-DRV-16.2` §11 t.3). Jedno mjesto, ne oba (D-12).
-1a. **Gdje živi ispitivanje sposobnosti** — u konekciji pri `connect` (kako ovaj zapis pretpostavlja)
-   ili u driveru pri prvom čitanju ([`DR-PRC-003`](../04-DR/DR-PRC-003-sdr-access-layer.md) §Cijena).
+1a. **Gdje žive profili i gdje se provjeravaju** — profili u paketu ili u korisničkoj konfiguraciji;
+   provjera u konekciji pri `connect` (kako ovaj zapis pretpostavlja)
+   ili u driveru pri prvom čitanju.
 2. **Čeka li se zauzet uređaj uopće.** `device_timeout` pretpostavlja da čekanje ima smisla; za
    isključivi resurs možda nema — tada ključ nestaje, a `BR-03` postaje trenutan kvar.
 3. **Tko vodi životni ciklus** — konekcija ili procesor ([`HLRQ-16`](../01-HLRQ/HLRQ-16-sdr-capture.md)

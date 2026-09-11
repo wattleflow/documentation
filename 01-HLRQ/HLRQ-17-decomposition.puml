@@ -1,0 +1,78 @@
+@startuml HLRQ-17-decomposition
+' Gledište: uloge sposobnosti i klase koje ih ispunjavaju. Publika: arhitekt, implementator.
+' Pogled, ne izvor istine (D-13). Labele: UK English, identifikatori iz koda.
+title HLRQ-17 — Structured documents into records
+
+package "concrete (wattleflow-workflow)" {
+  abstract class GenericPipeline
+  abstract class GenericParser
+  abstract class GenericFormatter
+  abstract class StrategyRead
+  abstract class StrategyWrite
+}
+
+package "helpers" {
+  class XmlConverter <<helper>>
+  class RssConverter <<helper>>
+  class RssFeed <<value>>
+  class DocumentRecords <<helper>>
+  class XmlParser
+  class RssParser
+  class XmlFormatter
+  class RssFormatter
+  class JsonFormatter
+  class CsvFormatter
+  class ParserFactory
+  class FormatterFactory
+}
+
+package "pipelines" {
+  class PipelineXMLExtract
+  class PipelineRSSExtract
+}
+
+package "strategies.documents" {
+  class ReadDocumentRecords
+  class ReadXmlDocument
+  class ReadRssDocument
+  class WriteDocumentRecords
+}
+
+package "drivers" {
+  class DriverLocalStorage
+}
+
+XmlConverter <|-- RssConverter
+RssConverter ..> RssFeed : builds
+GenericParser <|-- XmlParser
+GenericParser <|-- RssParser
+GenericFormatter <|-- XmlFormatter
+GenericFormatter <|-- RssFormatter
+GenericFormatter <|-- JsonFormatter
+GenericFormatter <|-- CsvFormatter
+XmlParser ..> XmlConverter : to_records
+XmlFormatter ..> XmlConverter : from_records
+RssParser ..> RssConverter : to_feed
+RssFormatter ..> RssConverter : to_rss
+ParserFactory ..> XmlParser : FileType.XML
+ParserFactory ..> RssParser : FileType.RSS
+FormatterFactory ..> XmlFormatter : FileType.XML
+FormatterFactory ..> RssFormatter : FileType.RSS
+
+GenericPipeline <|-- PipelineXMLExtract
+PipelineXMLExtract <|-- PipelineRSSExtract
+PipelineXMLExtract ..> XmlParser : read
+PipelineRSSExtract ..> RssParser : read (override)
+PipelineXMLExtract ..> DocumentRecords : stamp
+
+StrategyRead <|-- ReadDocumentRecords
+ReadDocumentRecords <|-- ReadXmlDocument
+ReadDocumentRecords <|-- ReadRssDocument
+StrategyWrite <|-- WriteDocumentRecords
+ReadDocumentRecords ..> DriverLocalStorage : read
+ReadDocumentRecords ..> DocumentRecords : stamp
+WriteDocumentRecords ..> DocumentRecords : content
+WriteDocumentRecords ..> FormatterFactory : create
+WriteDocumentRecords ..> DriverLocalStorage : write(payload)
+DriverLocalStorage ..> ParserFactory : read
+@enduml

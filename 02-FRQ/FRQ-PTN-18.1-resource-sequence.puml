@@ -1,0 +1,64 @@
+@startuml FRQ-PTN-18.1-resource-sequence
+' Praćenje resursa workflowa — prijedlog.
+' Gledište: izvedba. Publika: implementator, operater.
+' Prikaz, ne izvor istine (D-13) — izvor su HLRQ-18 BR-01…BR-08 i FRQ-PTN-18.1 §5–§6.
+' ResourceManager je provizorno ime (autor, 2026-09-11); manageri konekcija, drivera i procesora
+' su zatečeni. Proširenje za GPU živi u blackwattle i uvozi se odgođeno.
+title FRQ-PTN-18.1 — resource awareness: limits at build, samples at unit-of-work boundaries
+
+autonumber
+skinparam SequenceMessageAlignment center
+
+participant "WorkflowFactory" as WF
+participant "rm :\nResourceManager\n<<proposed>>" as RM
+participant "platform\n(cgroup, procfs, sysconf,\ndisk usage, affinity)" as OS
+participant "GPU extension\n(blackwattle)\n<<optional>>" as GPU
+participant "p :\nprocessor" as P
+participant "bb :\nblackboard" as BB
+participant "audit record" as AUD
+
+WF -> RM : ResourceManager(thresholds per resource, storage paths)
+activate RM
+RM -> OS : RAM limit — container memory.max, else host
+RM -> OS : CPU limit — container cpu.max, else affinity
+RM -> OS : storage — free space and inodes per write path
+alt GPU extension installed
+  RM -> GPU : device memory limit
+else
+  RM -> RM : GPU = not measured (BR-08)
+end
+note right of RM
+  narrowest source first (BR-01);
+  each source recorded; unknown stays
+  "unknown", never guessed
+end note
+deactivate RM
+
+P -> RM : pass started (EV02)
+RM -> OS : baselines
+loop per document (unit of work)
+  P -> BB : create → pipelines → flush
+  P -> RM : cycle completed (EV03)
+  activate RM
+  RM -> OS : RSS, CPU throttling, CPU time, free storage
+  opt GPU extension installed
+    RM -> GPU : device memory used
+  end
+  alt threshold crossed or bottleneck visible (EV04)
+    RM -> AUD : WARNING at once — resource, limit source,\nplace in flow; once per crossing
+    note right of RM
+      no stop: warning only
+      (author, 2026-09-11; BR-04)
+    end note
+  end
+  deactivate RM
+end
+P -> RM : pass completed (EV05)
+RM -> AUD : summary once per pass, per resource:\nlimit and source, baseline, peak, share, crossings
+
+note over P, BB #FFCDD2
+  The processor still references the last document until the generator has
+  created the next one, so the memory peak is about two documents even after
+  flush (HLRQ-18 §7 t.4, BR-06).
+end note
+@enduml

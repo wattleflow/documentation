@@ -5,13 +5,14 @@
 
 | | |
 |---|---|
-| **Status** | **Prijedlog — nije provedeno** (provjereno 2026-09-09) |
+| **Status** | **Djelomično provedeno 2026-09-11** — faza 1 u `blackwattle` `processors/sdr.py`; ovjereno lažnom obitelji, bez uređaja (§9). Ranije: prijedlog, 2026-09-09 |
 | **Odluka** | Nijedna; vidi [`HLRQ-16`](../01-HLRQ/HLRQ-16-sdr-capture.md) §7 |
 | **Nadređeni zahtjev** | [`HLRQ-16`](../01-HLRQ/HLRQ-16-sdr-capture.md) — `BR-01…BR-10` |
-| **Predmet** | `ProcessorSdrCapture(GenericProcessor)` — vodi prolaz prihvata: generator nad driverom, dokument po bloku, granica prihvata i flusha |
+| **Predmet** | Procesor prihvata — vodi prolaz prihvata: generator nad driverom, dokument po bloku, granica prihvata i flusha |
 | **Sestrinski** | [`FRQ-CON-16.1`](FRQ-CON-16.1-sdr-device.md) · [`FRQ-DRV-16.2`](FRQ-DRV-16.2-iq-stream.md) |
 | **Kaskada** | P-11 (granica oko promjenjive odluke) · P-14 (specifikacija znanja, ne dnevnik) · P-08 (proza nosi uloge, rječnik imena) |
 | **Ugovor prolaza** | [`FRQ-PRC-15.3`](FRQ-PRC-15.3-processor.md) — procesor vlasnik prolaza; [`FRQ-BBD-15.1`](FRQ-BBD-15.1-blackboard.md) — platno između stopa |
+| **Dijagrami** | [klase](FRQ-PRC-16.3-class.puml) · [prolaz](FRQ-PRC-16.3-capture-sequence.puml) (sekvencijski) · [čitanje](FRQ-DRV-16.2-read-sequence.puml) · [sastavljanje](../01-HLRQ/HLRQ-16-assembly-sequence.puml) — pogledi, ne izvor istine (D-13) |
 | **Izvedba** | — (predložena putanja: `processors/sdr.py`) |
 
 ## 1. Predmet
@@ -75,7 +76,7 @@ vodi platno prema write-strategiji ([`FRQ-PRC-15.22`](FRQ-PRC-15.22-document-flo
 | gubitak blokova ispod praga | prolaz se nastavlja; gubitak putuje u metapodacima dokumenta (§5 t.3) |
 | gubitak iznad praga (EV05) | prolaz staje kao **kvar**; već stvoreni dokumenti ostaju, prolaz se označava parcijalnim |
 | uređaj nestaje usred prolaza (`BR-09`) | isto kao gore: parcijalan rezultat, označen, ne tiho zatvoren |
-| pipeline pada nad jednom stavkom | po ugovoru [`FRQ-PIP-15.2`](FRQ-PIP-15.2-pipeline.md) — jedan razred kvara; **prihvat se ne zaustavlja radi jedne stavke**, jer zaustavljanje gubi tok koji se ne može ponoviti |
+| pipeline pada nad jednom stavkom | **kvar zaustavlja prolaz** — to je pravilo (autor, 2026-09-11), po ugovoru [`FRQ-PIP-15.2`](FRQ-PIP-15.2-pipeline.md). Smije li neki pipeline biti izuzet i kako se takva iznimka evidentira — otvoreno, worklist |
 | obrada je sporija od uređaja | gubitak nastaje na uređaju i broji se (`FRQ-DRV-16.2` §6); procesor ga ne skriva usporavanjem čitanja |
 | granica prihvata nije deklarirana | kvar konfiguracije pri gradnji, ne beskonačan prolaz |
 
@@ -87,13 +88,14 @@ označen kao parcijalan — nikad predan kao potpun.
 
 ## 8. Kriteriji prihvaćanja
 
-Nijedan nije zadovoljen — koda nema.
+Stanje 2026-09-11 vodi §9.
 
 1. `create_generator` isporučuje jednu stavku po bloku; ništa se ne skuplja preko granice flusha.
 2. Dostupnost uređaja provjerena prije prvog dokumenta (`BR-06`).
 3. Metapodaci dokumenta nose opis bloka **i** brojač gubitaka u trenutku stvaranja.
 4. Prolaz staje po deklariranoj granici; prolaz bez granice odbijen pri gradnji (`BR-08`).
-5. Kvar jedne stavke ne zaustavlja prihvat; kvar uređaja i gubitak iznad praga zaustavljaju.
+5. Kvar pipelinea, kvar uređaja i gubitak iznad praga zaustavljaju prolaz; prolaz je označen kao
+   parcijalan (k.6).
 6. Parcijalan prolaz nosi oznaku parcijalnosti u sažetku (`BR-09`).
 7. Zapis: jedan sažetak po prolazu; bez retka po bloku (`NFRQ-OBS-03`).
 8. Sadržaj uzoraka se ne pojavljuje u zapisu ni u poruci kvara (`NFRQ-SEC-06`).
@@ -102,10 +104,14 @@ Nijedan nije zadovoljen — koda nema.
 
 | kriterij | metoda | rezultat |
 |---|---|---|
-| 1, 3 | `unittest` s lažnim driverom koji isporučuje N blokova; pregled metapodataka dokumenata | **nije izvedeno** — nema koda (2026-09-09) |
-| 2, 4 | lažni driver koji prijavljuje nedostupnost; konfiguracija bez granice | nije izvedeno |
-| 5, 6 | lažni pipeline koji pada; lažni driver koji prekida tok | nije izvedeno |
-| 7, 8 | brojanje redaka zapisa i pretraga zapisa na sadržaj bloka | nije izvedeno |
+| 1, 3 | N blokova kroz lažni driver; metapodaci dokumenata | ✅ jedan dokument po segmentu (zadano: po bloku), nikad preko dvije frekvencije (m5); metapodaci nose opis bloka i oznaku je li gubitak mjeren |
+| 2, 4 | uređaj zauzet prije prvog dokumenta; konfiguracija bez granice | ✅ granica uz mutaciju m6; `BR-06` pregledom |
+| 5, 6 | uređaj se gubi usred prolaza | ✅ kvar prolaza, sažetak označen parcijalnim; ⚠️ kod kvara pipelinea generator se zatvara tek pri odbacivanju, pa sažetak kasni; prag gubitka ne postoji (`FRQ-DRV-16.2` k.5) |
+| 7 | zapis | ⚠️ jedan sažetak po prolazu, ali temeljna petlja i dalje piše INFO po dokumentu (§11 t.5) |
+| 8 | sadržaj uzoraka u zapisu | ✅ pregledom: opis bloka i poruke kvara ne nose uzorke; pretraga zapisa nije izvedena |
+
+> **Trojka (D-10):** `unittest`, Python 3.11.15, `blackwattle/tests/sdr/` — 28 testova · kriterij §8 ·
+> WSL2 6.18.33.2, 2026-09-11. Mutacijske provjere m1–m8 (`DR-WFL-023`) sve obaraju testove.
 
 Svaka tvrdnja uz **mutacijsku provjeru** ([`DR-WFL-023`](../04-DR/DR-WFL-023-test-framework-is-stdlib-unittest.md)).
 
@@ -137,3 +143,15 @@ Registar i OSCAL obveza: [`HLRQ-16` §6](../01-HLRQ/HLRQ-16-sdr-capture.md#6-nef
    §2). Je li rješenje jedan procesor s više pipelinea ili razdvajanje toka — otvoreno.
 4. **Prag gubitka** dijeli se s [`FRQ-DRV-16.2`](FRQ-DRV-16.2-iq-stream.md) §11 t.1; definicija
    živi na jednom mjestu (D-12), a mjesto još nije odabrano.
+5. **Gdje u neprekidnom toku završava jedan dokument — razilaženje s temeljnim ugovorom** (pročitano u
+   temeljnom sloju 2026-09-11). Temeljna petlja procesora piše **jedan INFO zapis po dokumentu**.
+   Ako je dokument jedan blok, to je zapis svakih ~55 ms pri 2,4 MS/s, pa k.7 („jedan sažetak po
+   prolazu") ne stoji. Dokument kao **segment blokova** (veličina je konfiguracija) drži volumen
+   razmjernim segmentima; alternativa je nadjačati petlju. Odluka otvorena; veže se uz
+   `FRQ-DOC-16.4`. [Prolaz](FRQ-PRC-16.3-capture-sequence.puml). Pitanje nije *što* je dokument
+   (dokument je dokument, sve obitelji dijele temeljni ugovor), nego **gdje mu je granica**: datoteka,
+   upit i poruka je imaju, tok uzoraka nema. Kod prihvata preko datoteka koje proizvode alati
+   obitelji granica je sama datoteka.
+6. ~~**Kvar pipelinea ruši prolaz — razilaženje s §6.**~~ **Riješeno 2026-09-11 (autor):** kvar
+   pipelinea zaustavlja prolaz — to je pravilo, a §6 i k.5 usklađeni su s njim. Otvoreno ostaje smije
+   li neki pipeline biti izuzet i kako se takve iznimke evidentiraju (worklist).

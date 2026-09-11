@@ -1,0 +1,63 @@
+@startuml FRQ-PRC-16.3-capture-sequence
+' Prolaz prihvata kako ga stvarno vodi temeljni procesor.
+' Gledište: izvedba. Publika: implementator, tester.
+' Prikaz, ne izvor istine (D-13) — izvor su concrete/processor.py (GenericProcessor.start),
+' kod blackwattle processors/sdr.py (usklađeno 2026-09-11) i FRQ-PRC-16.3 §5–§6.
+' Crveno: mjesta gdje se zatečeni ugovor razilazi s FRQ-PRC-16.3 — nalazi, ne odluke.
+title FRQ-PRC-16.3 — capture pass as the base processor runs it
+
+autonumber
+skinparam SequenceMessageAlignment center
+
+participant "caller" as C
+participant "p :\nSDRReadProcessor\n(start: base)" as P
+participant "p :\nSDRReadProcessor\n(create_generator)" as G
+participant "drv :\nDriverSDR" as DRV
+participant "bb :\nBlackboard" as BB
+participant "pl :\nPipeline" as PL
+
+C -> P : start()
+activate P
+P -> P : blackboard present, ≥ 1 pipeline (base check)
+P -> G : create_generator()
+activate G
+G -> DRV : ensure_live() — unit claimed before the first document (BR-06)
+G -> DRV : read(uri)
+note right of DRV : the schedule — one frequency or the\ntuning plan — belongs to the connection
+loop blocks until the boundary: stop_blocks or stop_seconds (BR-08)
+  alt the block changes frequency, or the segment is full
+    G -> BB : create(caller=p, content=segment samples,\nmetadata=description + counts)
+    BB --> G : item
+    G --> P : yield item
+    P -> PL : process(processor=p, item)
+    alt a pipeline raises
+      PL --> P : PipelineException
+      note right of P #FFCDD2
+        Rule (author, 2026-09-11): a pipeline failure
+        ends the pass. The suspended generator closes
+        later and records the pass as partial.
+      end note
+    else every pipeline succeeds
+      P -> BB : flush(caller=p, **write_context)
+      P -> P : INFO Processed (base: one record per document)
+    end
+  end
+end
+alt boundary reached
+  G -> DRV : close the block generator — the session ends
+  G -> G : INFO Finished: summary once per pass
+else device lost (BR-09)
+  DRV --> G : SDRDeviceLost
+  G -> G : WARNING Finished: summary marked partial
+  G --> P : ProcessorException
+end
+deactivate G
+P -> P : INFO Completed (cycles)
+deactivate P
+
+note over P, PL #FFCDD2
+  The base loop writes one INFO per document and the processor one summary
+  per pass: with small segments the INFO stream grows with the capture
+  (FRQ-PRC-16.3 §11 t.5).
+end note
+@enduml

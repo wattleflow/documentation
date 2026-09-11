@@ -31,9 +31,24 @@ The scientific basis for the *Subject-first* order is
 * Generic role nouns (`Manager`, `Helper`, `Utility`, `Piece`, `Sheet`, `Parser`) are forbidden
   **standalone**; they are permitted as a *qualified* facet (`DriverS3UriParser`).
 
-**Two regimes.** The grammar above governs **pipeline** classes. **Helper** classes are governed
+**Three regimes.** The grammar above governs **pipeline** classes. **Helper** classes are governed
 only by: no `Pipeline` prefix, no standalone generic role noun, domain-qualified
-(`SheetNestingPlacement`, not `Placement`).
+(`SheetNestingPlacement`, not `Placement`). **Specialisations of the connection, driver and
+processor families** follow the **established convention** — in use since the first
+implementation and accepted as the norm by the author on 2026-09-11:
+
+| Family | Pattern | In code |
+|---|---|---|
+| connection | `<Subject>Connection` | `PostgresConnection`, `KafkaConsumerConnection` |
+| driver | `Driver<Subject>` | `DriverKafka`, `DriverPostgres` |
+| processor | `<Subject><Operation>Processor` | `KafkaReadProcessor`, `SolrWriteProcessor` |
+
+The convention is **referenced, not measured.** In these families `wem_lint` checks only
+criterion 6 (no standalone generic role noun); facet order and spelling are not checked — a
+declared blind spot (D-11), measured 2026-09-11 (`wem_lint` 1.17.0, criterion 0.8.0): a name
+with a misspelt facet passed with no finding. Existing departures (e.g. a connection named in
+driver order) are the state found, not renamed by this entry. Added at the author's direction
+without a DR; carried in the worklist (D-03).
 
 ## 2. Acceptance criteria
 

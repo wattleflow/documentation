@@ -1,0 +1,49 @@
+@startuml FRQ-DRV-16.2-write-sequence
+' Putanja pisanja (odašiljanje).
+' Gledište: izvedba. Publika: implementator, sigurnosni analitičar.
+' Prikaz, ne izvor istine (D-13) — izvor su FRQ-DRV-16.2 §6, HLRQ-16 BR-12 i BR-15,
+' NFRQ-SEC-07 k.1–k.4 i kod blackwattle drivers/sdr.py (usklađeno 2026-09-11).
+' Procesora za slanje nema: dokument do uređaja stiže kroz repozitorij čija strategija
+' zapisa zove driver (autor, 2026-09-11). Faza 1 je provedena; faza 2 je KANDIDAT —
+' oblik i mjesto ovlasti su otvoreni (NFRQ-SEC-07 §5 t.1, FRQ-CON-16.1 §11 t.1b).
+title FRQ-DRV-16.2 — write path: refused today, candidate for a family that transmits
+
+autonumber
+skinparam SequenceMessageAlignment center
+
+participant "st :\nwrite strategy\n(repository)" as ST
+participant "drv :\nDriverSDR" as DRV
+participant "con :\nSDRConnection" as CON
+participant "fmt :\nIQSampleFormatter\n<<phase 2>>" as FMT
+participant "be :\nSDRBackend" as BE
+participant "audit record" as AUD
+
+ST -> DRV : write(uri, samples)
+activate DRV
+alt phase 1 — every family today
+  DRV --> ST : SDRTransmitNotSupported (NFRQ-SEC-07 c.1)\n"the profile declares no transmit" or\n"no family backend transmits yet"
+else phase 2 — a family that transmits (candidate)
+  DRV -> CON : profile.directions
+  alt TRANSMIT not in profile.directions
+    DRV --> ST : SDRTransmitNotSupported (c.1)
+  end
+  DRV -> DRV : resolve the authorisation reference
+  alt absent, unresolved or expired
+    DRV --> ST : refusal naming which one,\nnever its content (c.3)
+  end
+  DRV -> CON : tune(hz) — BR-15 as on the read path
+  DRV -> CON : direction TRANSMIT, only from IDLE (BR-12, half duplex)
+  DRV -> FMT : serialise(samples, full_scale)
+  FMT --> DRV : bytes
+  DRV -> BE : transmit(session, bytes)
+  DRV -> AUD : emission: authorisation id, device,\nfrequency, duration (c.4)
+  DRV -> CON : direction IDLE
+  DRV --> ST : result uri
+end
+deactivate DRV
+
+note over ST, AUD #FFCDD2
+  An emission without an audit record is a defect of the same class
+  as an emission without authorisation (NFRQ-SEC-07 c.4).
+end note
+@enduml

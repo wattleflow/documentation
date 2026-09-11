@@ -1,0 +1,41 @@
+@startuml FRQ-STR-17.2-record-formats
+' Gledište: pohrana zapisa koje nosi jedan dokument i čitanje pohranjenog feeda natrag.
+' Publika: implementator, tester. Pogled, ne izvor istine (D-13). Labele: UK English.
+title FRQ-STR-17.2 — Records in a standard format
+
+participant "PipelineRSSExtract" as P
+participant "SmallBlackboard" as BB
+participant "RepositoryWithDriver" as R
+participant "WriteDocumentRecords" as W
+participant "ReadDocumentRecords\n(RSS | XML)" as RR
+participant "DocumentRecords" as DR
+participant "FormatterFactory" as FF
+participant "formatter" as F
+participant "DriverLocalStorage" as D
+
+== write ==
+P -> BB : write(facade)
+BB -> R : write(facade)
+R -> W : write(driver)
+W -> DR : content(document)
+DR --> W : records, file type
+alt no records
+  W --> R : False (warning)
+else records present
+  W -> FF : create(file type)
+  FF --> W : formatter
+  W -> F : render(content=records)
+  F --> W : str | bytes
+  W -> D : write(payload, filename, suffix)
+  D --> W : output path
+  W --> R : True
+end
+
+== read-back ==
+R -> RR : read(identifier)
+RR -> D : read(uri)
+D -> D : FileType.detect — suffix, then content
+D --> RR : RssFeed | records (parser by FileType)
+RR -> DR : stamp(document, content, RSS | XML)
+RR --> R : facade
+@enduml

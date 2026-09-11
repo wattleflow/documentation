@@ -1,0 +1,122 @@
+@startuml FRQ-DRV-16.2-class
+' Klasni model drivera i helpera pretvorbe.
+' Gledište: struktura (izvedba). Publika: implementator, tester.
+' Prikaz, ne izvor istine (D-13) — izvor su FRQ-DRV-16.2 §1, §5–§6, core IDriver,
+' concrete/driver.py, concrete/serialisation.py i kod blackwattle drivers/sdr.py
+' (usklađeno 2026-09-11). DriverSDR po konvenciji NFRQ-ORG-02; ostala imena provizorna.
+' Format uzorka je vrijednost ove domene (SampleFormat), ne član FileType-a: parser
+' služi samo ovom driveru (NFRQ-ORG-01), pa tvornica parsera nije uključena.
+title FRQ-DRV-16.2 — DriverSDR class model
+
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "core · existing" #EEEEEE {
+  interface IDriver {
+    +load() : None
+    +close() : None
+    +read(uri: str, **kwargs) : Any
+    +write(uri: str, **kwargs) : Any
+    {static} +metadata() : Any
+  }
+}
+
+package "concrete · existing" #F4F4F4 {
+  abstract class GenericDriver {
+    +state : DriverState
+    +ensure_live() : None
+    +ensure_unloaded() : None
+  }
+  class DriverMetadata <<dataclass>> {
+    +name : str
+    +version : str
+    +protocol : str
+    +capabilities : list[str]
+  }
+  class DriverException
+  abstract class GenericParser {
+    {abstract} +deserialise(reader: BinaryIO, **kwargs) : Content
+  }
+}
+
+class SDRConnection <<see FRQ-CON-16.1-class>>
+enum SampleFormat <<see FRQ-CON-16.1-class>>
+
+class DriverSDR {
+  {static} +ALLOWED : list[str]
+  {static} +BLOCK_SIZE : int = 131072
+  {static} +SETTLE_BLOCKS : int = 1
+  +effective : SDREffective | None
+  +lost_total : int | None
+  +load() : None
+  +close() : None
+  +read(uri: str, **kwargs) : Generator[SDRSampleBlock]
+  +write(uri: str, **kwargs) : never returns
+  {static} +metadata() : DriverMetadata
+}
+
+class IQSampleParser <<helper>> {
+  {static} +ALLOWED : format, full_scale
+  +deserialise(reader: BinaryIO, **kwargs) : ndarray[complex64]
+}
+
+class IQSampleFormatter <<phase 2>>
+
+class SDRSampleBlock <<value>> {
+  +samples : ndarray
+  +sequence_no : int
+  +started_at : datetime
+  +sample_count : int
+  +effective_rate : float
+  +center_freq : float
+  +format : str
+  +full_scale : float
+  +lost_before : int | None
+  +description() : dict
+}
+
+class DriverSDRError
+class SDRTransmitNotSupported
+class SDRDeviceLost
+
+IDriver <|.. GenericDriver
+GenericDriver <|-- DriverSDR
+GenericParser <|-- IQSampleParser
+DriverSDR --> SDRConnection : connection_manager\n+ connection_name
+DriverSDR *-- IQSampleParser : format and full scale\nfrom the profile
+IQSampleParser ..> SampleFormat
+DriverSDR ..> SDRSampleBlock : yields
+DriverSDR ..> DriverMetadata
+DriverException <|-- DriverSDRError
+DriverSDRError <|-- SDRTransmitNotSupported
+DriverSDRError <|-- SDRDeviceLost
+
+note right of DriverSDR
+  <b>ALLOWED</b>: connection_name, connection_manager,
+  block_size, settle_blocks
+  ----
+  <b>read</b> is one implementation for every family
+  (BR-13): the profile gives format and full scale,
+  the connection gives the schedule; retuning drops
+  settle_blocks blocks — the PLL lock is not
+  observable through the host library.
+  ----
+  <b>write</b> fails by <b>type</b>: SDRTransmitNotSupported,
+  on every family today (NFRQ-SEC-07 c.1).
+end note
+
+note bottom of SDRSampleBlock
+  lost_before is None when the mechanism cannot
+  see losses (RTL synchronous reads): reported as
+  unmeasured, never as zero (BR-07).
+  description() carries everything but the samples
+  (NFRQ-SEC-06).
+end note
+
+note bottom of IQSampleFormatter
+  Arrives with a family that transmits,
+  with the authorisation check and the
+  overrun threshold.
+end note
+@enduml

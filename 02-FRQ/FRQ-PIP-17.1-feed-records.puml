@@ -1,0 +1,42 @@
+@startuml FRQ-PIP-17.1-feed-records
+' Gledište: jedan RSS dokument od izvora do zapisa na dokumentu. Publika: analitičar,
+' implementator. Pogled, ne izvor istine (D-13). Labele: UK English.
+title FRQ-PIP-17.1 — Reading a feed into records
+
+|Configuration|
+start
+:Target format named;
+if (Known file type? (BR-08)) then (no)
+  :Pipeline is not built;
+  stop
+else (yes)
+endif
+
+|A1 pass|
+:Hand over one document;
+
+|Reading|
+:Parse with entity-expansion limits (BR-07);
+if (Well-formed, RSS root, has a channel?) then (no)
+  :Report, skip (BR-06);
+  stop
+else (yes)
+endif
+:Channel and items to flat records\n(standard fields, Dublin Core aliases — BR-03);
+:Dates to ISO 8601, unreadable kept (BR-04),\nrepeated elements joined (BR-05);
+if (Any items?) then (no)
+  :Warn, skip;
+  stop
+else (yes)
+endif
+
+|Hand-over|
+if (Target format is RSS?) then (yes)
+  :Feed with its channel;
+else (no)
+  :Items as records;
+endif
+:Records and format onto the document;
+:Publish to the blackboard;
+stop
+@enduml

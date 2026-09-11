@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Provedeno u kodu, zapisano 2026-08-27 — obrnuto inženjerstvo zatečenog |
+| **Status** | Provedeno u kodu, zapisano 2026-08-27 — obrnuto inženjerstvo zatečenog. **Dopunjeno 2026-09-11** pravilom o sadržaju i metapodacima (odluka autora, bez DR-a — §11) |
 | **Odluka** | [`DR-WFL-022`](../04-DR/DR-WFL-022-class-role-categories.md) — kategorija `DOC`; sam zahtjev nema vlastiti DR |
 | **Nadređeni zahtjev** | [`HLRQ-15`](../01-HLRQ/HLRQ-15-generic-layer.md) — narativ, `BR-15-01…BR-15-09`, zajednički ugovor generičke klase (§4) |
 | **Predmet** | `Document(Wattleflow, IAdaptee, Generic[Content], ABC)`, `DocumentAdapter(Wattleflow, IAdapter, Generic[Adaptee])`, `DocumentFacade(Wattleflow, ITarget, Generic[Adaptee], ABC)` |
@@ -31,6 +31,13 @@ dokumenta. Piše ih isključivo `update_metadata`/`update_content`, iznutra.
 
 **Tip sadržaja se zaključava.** Prvi dodijeljeni sadržaj određuje `_expected_type`; svaka sljedeća
 izmjena mora biti istog tipa. Dokument koji je počeo kao tekst ne postaje binaran usput.
+
+**Sadržaj nosi podatke, metapodaci ih opisuju** (odluka autora 2026-09-11). Podaci — tekst, zapisi,
+tablica — žive u sadržaju dokumenta. Metapodaci nose ono što podatke opisuje: izvor, ime datoteke,
+list, shemu, broj redaka, trag obrade. Za strukturirane podatke koristi se dokument kojem je sadržaj
+tablica (DataFrame), **gdje god je to moguće**; ime datoteke taj dokument već čita i piše kroz
+metapodatke. Podaci u metapodacima su skriven kanal: vrsta dokumenta ne govori što nosi, a pristup
+ide preko dogovorenog ključa.
 
 ## 2. Akteri
 
@@ -109,6 +116,8 @@ promjena tipa dokumenta ne dira nijedan od njih.
 8. Modul deklarira `__all__`; import closure je `stdlib ∪ wattleflow`. ✅
 9. Dokument se može staviti u `set` ili koristiti kao ključ rječnika. ❌ — §11 t.1
 10. `content` ne diže iznimku u stanju koje je klasa sama proglasila legalnim. ❌ — §11 t.2
+11. Podaci su u sadržaju, a metapodaci ih samo opisuju. ❌ — put zapisa za RSS i XML drži zapise u
+    metapodacima (§11)
 
 ## 9. Verifikacija
 
@@ -164,3 +173,7 @@ stablo 2026-08-27, CPython 3.11 (Linux/WSL2). **Mjereno stablo:** `concrete/docu
    Razlika je bezopasna danas, ali dvije klase u istom modulu rade isto na dva načina.
 6. **`DocumentFacade.__getattr__` gradi adaptee pri svakom promašaju** (`self._adapter.request()`).
    Za dokument to je jeftin `return self`, ali ugovor `IAdapter` to ne jamči za drugu izvedbu.
+7. **Zapisi u metapodacima.** Put zapisa za RSS i XML (`HLRQ-17`, `FRQ-PIP-17.1` korak 6,
+   `DR-PRC-004` t.5) predaje zapise strategiji zapisa preko metapodataka dokumenta — protivno pravilu iz
+   §1 i kriteriju 11. Pravilo je unijeto odlukom autora 2026-09-11 bez DR-a; usklađivanje traži DR
+   (D-03). Analiza `2026-09-11-dataframe-working-form.md`.

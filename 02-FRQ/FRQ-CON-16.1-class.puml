@@ -1,0 +1,228 @@
+@startuml FRQ-CON-16.1-class
+' Klasni model konekcije prema uređaju.
+' Gledište: struktura (izvedba). Publika: implementator, tester.
+' Prikaz, ne izvor istine (D-13) — izvor su FRQ-CON-16.1 §1, §5–§6, temeljni sloj
+' concrete/connection.py i kod blackwattle connections/sdr/ (usklađeno 2026-09-11).
+' SDRConnection po konvenciji NFRQ-ORG-02 (autor, 2026-09-11); ostala imena provizorna.
+' Smjer i plan ugađanja su stanje ovog sloja (autor, 2026-09-11).
+title FRQ-CON-16.1 — SDRConnection class model
+
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "concrete · existing" #F4F4F4 {
+  abstract class GenericConnection {
+    +connection_name : str
+    +state : ConnectionState
+    +connected : bool
+    +ensure_created()
+    +ensure_closed()
+    {abstract} +create_connection() : None
+    {abstract} +connect() : ContextManager
+    {abstract} +disconnect() : None
+  }
+  enum ConnectionState {
+    NEW
+    CREATING
+    CREATED
+    CONNECTING
+    CONNECTED
+    CLOSING
+    CLOSED
+    FAILED
+  }
+  class ConnectionException
+}
+
+class SDRConnection {
+  {static} +ALLOWED : list[str]
+  +backend : SDRBackend
+  +profile : SDRProfile
+  +effective : SDREffective
+  +direction : Direction
+  +tuning_plan : SDRTuningPlan | None
+  +create_connection() : None
+  +connect() : ContextManager[session]
+  +disconnect() : None
+  +tune(hz: float) : SDREffective
+  +schedule() : Iterator[(hz | None, dwell | None)]
+}
+
+abstract class SDRBackend <<helper>> {
+  {static} +FAMILY : str
+  {static} +DISTRIBUTION : str | None
+  {static} +BLOCK_ALIGN : int
+  {static} +MEASURES_LOSS : bool
+  {static} +register(backend: type) : None
+  {static} +for_family(family: str, owner) : SDRBackend
+  +version() : str | None
+  {abstract} +enumerate() : list[dict[str, str]]
+  {abstract} +claim(device: dict) : session
+  {abstract} +report(session) : SDRReported
+  {abstract} +supports(model: dict) : bool
+  {abstract} +apply(session, instance: SDRInstance) : None
+  {abstract} +read_back(session) : SDREffective
+  {abstract} +tune(session, hz: float) : None
+  {abstract} +read(session, nbytes: int) : bytes
+  {abstract} +release(session) : None
+}
+class RTLSDRBackend <<helper>> {
+  FAMILY = "rtlsdr"
+  DISTRIBUTION = "pyrtlsdr"
+  BLOCK_ALIGN = 512
+  MEASURES_LOSS = False
+}
+class HackRFBackend <<phase 2>>
+
+class SDRProfile <<value>> {
+  +model : dict[str, str]
+  +family : str
+  +requires : str | None
+  +freq_ranges : tuple[(float, float)]
+  +sample_rates : tuple[(float, float)]
+  +gain_stages : dict[str, tuple[float]]
+  +formats : dict[SampleFormat, float]
+  +directions : frozenset[Direction]
+  +duplex : Duplex
+  +ports : tuple[str]
+  +features : frozenset[str]
+  +primary_format : SampleFormat
+  +contains_frequency(hz: float) : bool
+  +allows_rate(sps: float) : bool
+  +allows_gain(stage: str, value: float) : bool
+}
+
+class SDRInstance <<value>> {
+  +selector : SDRSelector
+  +sample_rate : float
+  +center_freq : float
+  +gain_mode : str
+  +gain : dict[str, float]
+  +ppm : int
+  +antenna : str | None
+  +bias_tee : bool | None
+  +direction : Direction
+  +device_timeout : float
+  +tuning_plan : SDRTuningPlan | None
+}
+
+class SDRSelector <<value>> {
+  +keys : dict[str, str]
+  +matches(device: dict) : bool
+}
+
+class SDRTuningPlan <<value>> {
+  +points : tuple[float]
+  +dwell_blocks : int
+}
+
+class SDRReported <<value>> {
+  +model : dict[str, str]
+  +gain_table : dict[str, tuple[float]]
+}
+
+class SDREffective <<value>> {
+  +center_freq : float
+  +sample_rate : float
+  +gain_mode : str
+  +gain : dict[str, float] | None
+  +ppm : int
+}
+
+enum Direction {
+  IDLE
+  RECEIVE
+  TRANSMIT
+}
+
+enum Duplex {
+  NONE
+  HALF
+  FULL
+}
+
+enum SampleFormat {
+  U8_IQ
+  S8_IQ
+  S16_IQ
+  CF32_IQ
+}
+
+class SDRConnectionError
+class SDRBackendUnavailable
+class SDRConfigurationError
+class SDRDeviceNotFound
+class SDRDeviceAmbiguous
+class SDRDeviceBusy
+class SDRPermissionDenied
+class SDRProfileMismatch
+class SDRModelUnsupported
+class SDRFrequencyOutOfRange
+
+GenericConnection <|-- SDRConnection
+SDRConnection *-- SDRProfile
+SDRConnection *-- SDRInstance
+SDRConnection *-- SDREffective
+SDRConnection --> SDRBackend : family backend
+SDRInstance --> SDRSelector
+SDRInstance --> SDRTuningPlan
+SDRInstance --> Direction
+SDRProfile --> Duplex
+SDRProfile --> SampleFormat
+SDRBackend <|-- RTLSDRBackend
+SDRBackend <|-- HackRFBackend
+SDRBackend ..> SDRReported
+ConnectionException <|-- SDRConnectionError
+SDRConnectionError <|-- SDRBackendUnavailable
+SDRConnectionError <|-- SDRConfigurationError
+SDRConnectionError <|-- SDRDeviceNotFound
+SDRConnectionError <|-- SDRDeviceAmbiguous
+SDRConnectionError <|-- SDRDeviceBusy
+SDRConnectionError <|-- SDRPermissionDenied
+SDRConnectionError <|-- SDRProfileMismatch
+SDRConnectionError <|-- SDRModelUnsupported
+SDRConnectionError <|-- SDRFrequencyOutOfRange
+SDRConnection ..> SDRConnectionError : raises
+
+note right of SDRConnection
+  <b>ALLOWED</b> (NFRQ-ORG-07): connection_name,
+  lazy_loading, device, profile, sample_rate,
+  center_freq, gain_mode, gain, ppm, antenna,
+  bias_tee, direction, authorisation,
+  device_timeout, tuning_plan
+  ----
+  <b>create_connection()</b> order:
+  configure: instance within profile, BR-15 ·
+  for_family · BR-14 requires · BR-02 resolve ·
+  BR-03 claim · BR-11 report and verify ·
+  BR-14 supports · BR-04/05 apply and read back
+  ----
+  <b>schedule()</b>: the tuning plan in turn,
+  or (None, None) — stay where tuned.
+end note
+
+note bottom of SDRProfile
+  contains_frequency() is the single
+  definition of the range check, used at
+  load time and at read time (BR-15,
+  NFRQ-ORG-08).
+end note
+
+note bottom of SDRConnectionError
+  Failure classes differ by type,
+  not only by message (k.6).
+  Transmit is refused as
+  SDRConfigurationError until a family
+  backend transmits (NFRQ-SEC-07).
+end note
+
+note bottom of RTLSDRBackend
+  pyrtlsdr[lib], imported on first use;
+  any failure to load (ImportError, or
+  AttributeError from an incompatible
+  librtlsdr) → SDRBackendUnavailable.
+  Losses and PLL lock are not observable
+  through this library.
+end note
+@enduml

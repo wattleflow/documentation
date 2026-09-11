@@ -120,12 +120,12 @@ The role axis categories `CON`, `DRV` and `PRC` are in the vocabulary as of
 
 | Id | Statement | Detail | Status |
 |---|---|---|---|
-| `FRQ-CON-16.1` | The connection holds one physical receiver exclusively, addressed by a **selector that must resolve to exactly one device**, probes what the device can do rather than carrying a per-model table, and reads back the *effective* parameters rather than assuming the requested ones. | [16.1](FRQ-CON-16.1-sdr-device.md) | proposed, **not implemented** |
-| `FRQ-DRV-16.2` | One driver, `read` and `write`, two protocols beneath (the precedent is the existing message-broker driver): the read path is **a single implementation for every device**, with vendor difference entering only as probed values and the parser the factory returns; `write` exists only where the device reports it. | [16.2](FRQ-DRV-16.2-iq-stream.md) | proposed, **not implemented** |
-| `FRQ-PRC-16.3` | The processor owns the capture pass over a source that cannot be paused: it ends on a declared boundary and marks a partial pass as partial. | [16.3](FRQ-PRC-16.3-sdr-capture.md) | proposed, **not implemented** |
+| `FRQ-CON-16.1` | The connection holds one physical receiver exclusively, addressed by a **selector that must resolve to exactly one device**, declares each model's capabilities in a **model profile** verified against what the access mechanism can report, refuses a mechanism build that does not support the declared model, and reads back the *effective* parameters rather than assuming the requested ones. | [16.1](FRQ-CON-16.1-sdr-device.md) | **partially implemented** 2026-09-11 — phase 1 in blackwattle `connections/sdr/`, verified against a fake family, no device (§9) |
+| `FRQ-DRV-16.2` | One driver, `read` and `write`, two protocols beneath (the precedent is the existing message-broker driver): the read path is **a single implementation for every device**, with model difference entering only as profile values and the parser the factory returns; `write` exists only where the device reports it. | [16.2](FRQ-DRV-16.2-iq-stream.md) | **partially implemented** 2026-09-11 — phase 1 in blackwattle `drivers/sdr.py`, verified against a fake family, no device (§9) |
+| `FRQ-PRC-16.3` | The processor owns the capture pass over a source that cannot be paused: it ends on a declared boundary and marks a partial pass as partial. | [16.3](FRQ-PRC-16.3-sdr-capture.md) | **partially implemented** 2026-09-11 — phase 1 in blackwattle `processors/sdr.py`, verified against a fake family, no device (§9) |
 | `FRQ-DOC-16.4` | A document carrying a block of samples and its sampling description — **candidate**; no existing document class carries a raw binary buffer alongside one. | — | **not yet written** |
 | `FRQ-PIP-16.5` | Pipeline as consumer — **candidate**. Demodulation is a transformation, so it is pipeline work, and its steps are built as **helpers**; which ones and how they compose follows the workflow design and is written with it. | — | **not yet written** |
-| `FRQ-PRC-16.6` | The transmit pass — **candidate**; `FRQ-PRC-16.3` covers capture only, and emission is a different pass with a different boundary and its own authorisation (`NFRQ-SEC-07`). | — | **not yet written** |
+| `FRQ-PRC-16.6` | ~~The transmit pass — candidate.~~ **Withdrawn 2026-09-11 (author):** no processor per direction — a document reaches the device through a repository whose write strategy calls the driver's `write`. | — | **withdrawn** |
 
 > The group is written from the device's properties, **not** from existing code: a check on
 > 2026-09-09 found no SDR, USB or device component in `blackwattle/src/`. Every entry is a
@@ -140,9 +140,36 @@ The role axis categories `CON`, `DRV` and `PRC` are in the vocabulary as of
 >
 > **Multi-vendor support is an axis, not a class count.** A class is written when the *contract* or
 > the *access mechanism* changes; a difference exhausted by a name, range, unit or count is
-> configuration, and the device is **asked** for its capabilities rather than described by a table
-> in the repository. Proposed by [`DR-PRC-003`](../04-DR/DR-PRC-003-sdr-access-layer.md), grounded
+> configuration: a **model profile** declares what a model can do and the device is asked to confirm
+> it where the access mechanism can answer. A third-party abstraction layer was rejected on
+> 2026-09-11 — the choice had not been justified; the framework is its own abstraction. A proposal with no decision record yet, grounded
 > in [the vendor-variability analysis](../06-ANALYSIS/2026-09-09-sdr-vendor-variability.md).
+
+
+## HLRQ-17 — structured documents into records
+
+Parent requirement: [`HLRQ-17`](../01-HLRQ/HLRQ-17-document-records.md).
+Role axis categories `PIP` and `STR` ([`DR-WFL-022`](../04-DR/DR-WFL-022-class-role-categories.md));
+no new category is introduced.
+
+| Id | Statement | Detail | Status |
+|---|---|---|---|
+| `FRQ-PIP-17.1` | One RSS document (0.9x/2.0 or 1.0) becomes flat records of the standard's fields, handed to the write side with the configured target format; the source is never changed. | [17.1](FRQ-PIP-17.1-feed-records.md) | in code, recorded |
+| `FRQ-STR-17.2` | The write side renders those records in the target standard format through the formatter family and hands the payload to the driver; a stored RSS or XML document reads back into the same shape. | [17.2](FRQ-STR-17.2-record-formats.md) | in code, recorded |
+| `FRQ-PIP-17.3` | One XML document becomes flat records — one per named element, or per child of the root — with attributes and nested paths as fields; RSS is its specialisation with a known vocabulary. | [17.3](FRQ-PIP-17.3-xml-records.md) | in code, recorded |
+
+> Written **with** the code (2026-09-11), not recovered from it, under
+> [`DR-PRC-004`](../04-DR/DR-PRC-004-pipeline-subjects-and-record-formatters.md) (proposal).
+
+## HLRQ-18 — resource awareness
+
+Parent requirement: [`HLRQ-18`](../01-HLRQ/HLRQ-18-resource-awareness.md). Managers are pattern
+infrastructure, so the entry takes `PTN` from the closed role axis
+([`DR-WFL-022`](../04-DR/DR-WFL-022-class-role-categories.md)); no new category.
+
+| Id | Statement | Detail | Status |
+|---|---|---|---|
+| `FRQ-PTN-18.1` | A resource manager — RAM, storage and CPU in the base layer, GPU through a `blackwattle` extension where external libraries are needed — built beside the connection, driver and processor managers, knows each limit and its source at build time, samples at unit-of-work boundaries and warns as soon as a bottleneck becomes visible; a warning, never a stop. | [18.1](FRQ-PTN-18.1-resource-manager.md) | proposed, **not implemented** |
 
 
 ## OSCAL — machine-checkable compliance

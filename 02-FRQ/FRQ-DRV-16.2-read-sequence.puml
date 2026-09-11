@@ -1,73 +1,66 @@
 @startuml FRQ-DRV-16.2-read-sequence
-' Putanja čitanja kao INTERAKCIJA — poziv po pozivu.
+' Putanja čitanja kao interakcija — poziv po pozivu.
 ' Gledište: izvedba. Publika: implementator.
-' Prikaz, ne izvor istine (D-13) — izvor je FRQ-DRV-16.2 §5.
-' Teza: ovaj tok je ISTI za prijamnik i za transceiver. Uređaj se
-' razlikuje samo u vrijednostima iz caps i u parseru koji tvornica vrati.
-title FRQ-DRV-16.2 — Read path: identical for every device
+' Prikaz, ne izvor istine (D-13) — izvor su FRQ-DRV-16.2 §5–§6, temeljni sloj
+' (IDriver, GenericDriver.ensure_live, GenericParser.deserialise) i kod blackwattle
+' drivers/sdr.py, connections/sdr/connection.py (usklađeno 2026-09-11).
+' Teza: tok je ISTI za svaki uređaj; razlika ulazi kroz profil i obiteljski backend.
+title FRQ-DRV-16.2 — read path: one implementation for every device
 
 autonumber
 skinparam SequenceMessageAlignment center
 
-participant "p :\nProcessorSdrCapture" as P
-participant "drv :\nDriverSdrDevice" as DRV
-participant "con :\nConnectionSdrDevice" as CON
-participant "pf :\nParserFactory" as PF
-participant "par :\nIqParser" as PAR
-participant "bb :\nGenericBlackboard" as BB
+participant "p :\nSDRReadProcessor" as P
+participant "drv :\nDriverSDR" as DRV
+participant "cm :\nConnectionManager" as CM
+participant "con :\nSDRConnection" as CON
+participant "be :\nSDRBackend" as BE
+participant "par :\nIQSampleParser" as PAR
 
-activate P
-P -> DRV : ensure_live()
+P -> DRV : read(uri)
 activate DRV
-DRV -> CON : capabilities()
-activate CON
-note right of CON
-  ispitano pri uspostavi (BR-11),
-  NE tablica po modelu uređaja
-end note
-CON --> DRV : caps {native_format,\nfull_scale, effective_rate, …}
-deactivate CON
-
-DRV -> PF : create(caps.native_format)
-activate PF
-note right of PF
-  jedina točka u kojoj razlika
-  među uređajima ulazi u kod
-end note
-PF --> DRV : par
-deactivate PF
-DRV --> P : live
+DRV -> DRV : ensure_live() → load()
+DRV -> CM : get_connection(connection_name)
+CM --> DRV : con
+DRV -> CON : ensure_created() — claims the unit if lazy (BR-06)
+DRV -> CON : profile: primary format, full scale
+DRV -> DRV : block_size × bytes per sample\nmust respect backend.BLOCK_ALIGN
+DRV -> PAR : IQSampleParser(format, full_scale)
+DRV -> CON : direction is RECEIVE
+DRV --> P : generator
 deactivate DRV
 
-loop dok granica prihvata nije dosegnuta (BR-08)
-  P -> DRV : read(uri)
-  activate DRV
-  DRV -> CON : next_buffer()
-  activate CON
-  CON --> DRV : bytes, lost_count
-  deactivate CON
-  DRV -> PAR : deserialise(bytes,\nfull_scale=caps.full_scale)
-  activate PAR
-  PAR --> DRV : samples
-  deactivate PAR
-  DRV --> P : SampleBlock(samples, opis, lost_before)
-  deactivate DRV
-
-  P -> BB : create(caller=p, content=block)
-  activate BB
-  BB --> P : facade
-  deactivate BB
+P -> DRV : next(generator)
+activate DRV
+DRV -> CON : connect() — stream session
+loop over con.schedule(): the tuning plan in turn, or stay where tuned
+  opt a plan point
+    DRV -> CON : tune(hz)
+    alt hz outside every profile range
+      CON --> DRV : SDRFrequencyOutOfRange (BR-15) — unit not tuned
+    else within range
+      CON -> BE : tune(session, hz); read_back(session)
+      DRV -> BE : read × settle_blocks — dropped
+    end
+  end
+  loop dwell blocks (for ever without a plan)
+    DRV -> BE : read(session, nbytes)
+    alt the unit fails
+      BE --> DRV : error
+      DRV --> P : SDRDeviceLost (BR-09)
+    end
+    BE --> DRV : bytes
+    DRV -> PAR : deserialise(BytesIO(bytes))
+    PAR --> DRV : complex64 samples
+    DRV --> P : yield SDRSampleBlock(samples, description)
+  end
 end
+note over DRV, CON : the processor closes the generator at its boundary;\nthe session ends, the claim stays with the connection
+deactivate DRV
 
-alt gubitak iznad praga (BR-07)
-  DRV --> P : kvar — prihvat staje,\nprolaz označen parcijalnim
-end
-
-P -> DRV : close()
-deactivate P
-
-note over P, BB #E8F5E9
-  Zapis: JEDAN sažetak po prolazu, ne redak po bloku (NFRQ-OBS-03).
+note over P, PAR #E8F5E9
+  Description of every block: sequence number, time of first sample (host clock),
+  sample count, effective rate and centre frequency read back from the unit,
+  format, full scale, losses so far — or None where the mechanism cannot see them.
 end note
-
 @enduml
