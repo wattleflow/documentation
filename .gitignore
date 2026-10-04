@@ -30,8 +30,13 @@
 # v0.0.7: the whole FRQ register is admitted.
 !/requirements/02-FRQ/
 
-# Not yet admitted (v0.0.7): 03-NFRQ, 05-METHODS, 06-ANALYSIS, 07-CHANGES,
-# blackwattle, dockers — covered by `/requirements/*` above.
+# NFRQ register: admitted one record at a time.
+!/requirements/03-NFRQ/
+/requirements/03-NFRQ/*
+!/requirements/03-NFRQ/NFRQ-000-INDEX.md
+
+# Not yet admitted: 05-METHODS, 06-ANALYSIS, 07-CHANGES, blackwattle,
+# dockers — covered by `/requirements/*` above.
 
 # PlantUML and CSS styles included by every inline diagram and rendered page.
 !/requirements/styles/
