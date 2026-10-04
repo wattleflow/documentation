@@ -51,10 +51,6 @@ built to last and grow.
 | Conformance snapshots | `workflow/conformance/` |
 | Worklist (state of work, not norm) | `workflow/TODO.md` · `workflow/DONE.md` |
 
-**Language.** The source language is Croatian until v1.0 (`DOCUMENTATION.md` §3.2); English editions
-that already exist before that point are a declared divergence, not an approved translation —
-see the note in `DOCUMENTATION.md` §3.2.
-
 **What this published edition contains — and what it does not.** From 2026-09-09 the repository
 is published, superseding the earlier local-only lock (`DECISIONS.md` §8, still to be reconciled). The published set is the **doctrinal layer and the requirement
 registers** only. Deliberately not published: the dated analyses
