@@ -89,7 +89,7 @@ Svaka klasa koja nasljeđuje `Wattleflow`:
 
 1. **Nasljeđuje `Wattleflow` prvo**, ispred svojeg pattern sučelja, i nikad ne imenuje `Audit`
    sama. Redoslijed baza je **ograničenje, ne stil** — [MRO](../../GLOSSARY.md#abbr-mro) se inače ne linearizira
-   ([`TODO.md`](../../workflow/TODO.md) §`__slots__` i MRO).
+   (`TODO.md` §`__slots__` i MRO).
 2. **Prosljeđuje cijeli `**kwargs` naviše nepromijenjen.** Razdvajanje logging ključeva od
    ostatka događa se na jednom mjestu, u `Wattleflow.__init__`; podklasa koja to ponovi
    duplicira podjelu i razilazi se čim se doda novi ključ.

@@ -1,5 +1,5 @@
 # Wattleflow documentation
-![WattleFlow Logo](wattleflow.png)
+
 
 [![PyPI version](https://img.shields.io/pypi/v/wattleflow-workflow.svg)](https://pypi.org/project/wattleflow-workflow/)
 [![Python versions](https://img.shields.io/pypi/pyversions/wattleflow-workflow.svg)](https://pypi.org/project/wattleflow-workflow/)
@@ -47,9 +47,9 @@ built to last and grow.
 | Requirements | [`requirements/01-HLRQ/`](requirements/01-HLRQ/HLRQ-00-INDEX.md) · [`requirements/02-FRQ/`](requirements/02-FRQ/FRQ-000-INDEX.md) · [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md) |
 | Analyses · change records | [`requirements/06-ANALYSIS/`](requirements/06-ANALYSIS/) · [`requirements/07-CHANGES/`](requirements/07-CHANGES/) |
 | Diagram register (drawn · reserved) | [`requirements/DIAGRAMS.md`](requirements/DIAGRAMS.md) |
-| Per-distribution documentation | [`core/`](core/README.md) · [`workflow/`](workflow/README.md) · [`blackwattle/`](blackwattle/README.md) |
-| Conformance snapshots | [`workflow/conformance/`](workflow/conformance/) |
-| Worklist (state of work, not norm) | [`workflow/TODO.md`](workflow/TODO.md) · [`workflow/DONE.md`](workflow/DONE.md) |
+| Per-distribution documentation | `core/` · `workflow/` · [`blackwattle/`](blackwattle/README.md) |
+| Conformance snapshots | `workflow/conformance/` |
+| Worklist (state of work, not norm) | `workflow/TODO.md` · `workflow/DONE.md` |
 
 **Language.** The source language is Croatian until v1.0 (`CLAUDE.md` §3.2); English editions
 that already exist before that point are a declared divergence, not an approved translation —

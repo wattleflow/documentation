@@ -103,4 +103,4 @@ The role axis is closed and in the vocabulary as of
 and neither has a parent HLRQ yet. `MAIL` was entered without a recorded decision (2026-08-28): the register is
 held to be sufficient justification, exceptions are decided by the documentation. So does the `HLRQ` class itself (`CLAUDE.md` §3.6). Neither the `FR`→`FRQ`
 nor the `NFR`→`NFRQ` rename of 2026-08-27 has a recorded decision; both are tracked in
-[`TODO`](../../workflow/TODO.md).
+`TODO`.
