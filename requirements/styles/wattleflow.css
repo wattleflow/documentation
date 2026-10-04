@@ -1,0 +1,139 @@
+:root {
+    --green: #2d5a54;
+    --green-soft: #e3efec;
+    --gold: #e8b924;
+    --gold-text: #7a5c00;
+    --text: #1f2933;
+    --link: #e8b924;
+    --heading: #2d5a54;
+    --code-text: #1f4e47;
+    --code-bg: #e3efec;
+}
+
+/* tamna tema VS Code */
+body.vscode-dark,
+body.vscode-high-contrast {
+    --green: #8fd0c0;
+    --green-soft: rgba(143, 208, 192, 0.15);
+    --gold-text: #e8b924;
+    --text: #e6e6e6;
+    --link: #8fd0c0;
+    --heading: #e8b924;
+    --code-text: #b8e4d9;
+    --code-bg: rgba(143, 208, 192, 0.15);
+}
+
+body {
+    font-family: "Segoe UI", "Inter", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+}
+
+/* dijagrami: pregled ih ugrađuje kao <img> sa SVG-om (vektor, oštar pri svakom
+   skaliranju); centrirani, prate širinu okna i nikad nisu veći od izvornika */
+img,
+svg {
+    display: block;
+    margin: 1em auto;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0.5em;
+    border-radius: 6px;
+    user-select: none;
+    -webkit-user-drag: none;
+    cursor: zoom-in;
+}
+
+/* uvećanje: drži lijevu tipku miša na dijagramu; pušta se otpuštanjem.
+   Pregled VS Codea blokira skripte, pa je klik-uključi/isključi moguć samo
+   u izvezenom HTML-u sa skriptom, ne u samom pregledu. */
+img:active {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: 96vw;
+    height: 96vh;
+    max-width: none;
+    object-fit: contain;
+    z-index: 1000;
+    border-radius: 8px;
+    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.6);
+    cursor: zoom-out;
+}
+
+div[align="center"] {
+    text-align: center;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 600;
+    /* color: var(--heading); */
+}
+
+h1,
+h2 {
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 0.2em;
+}
+
+a {
+    color: var(--link);
+    text-decoration: underline;
+    /* text-decoration-color: var(--gold); */
+    text-decoration-thickness: 1px;
+    text-underline-offset: 1px;
+}
+
+a:hover {
+    text-decoration-thickness: 2px;
+}
+
+a:focus-visible {
+    outline: 3px thin var(--gold);
+    outline-offset: 2px;
+}
+
+td:first-child,
+th:first-child {
+    white-space: nowrap;
+}
+
+th {
+    font-weight: 700;
+    font-size: 1.1em;
+    text-align: left;
+    border-bottom: 2px solid var(--green);
+}
+
+code,
+pre {
+    font-family: "JetBrains Mono", Consolas, monospace;
+}
+
+/* inline kod: `tekst` */
+:not(pre)>code {
+    color: var(--code-text);
+    background-color: var(--code-bg);
+    border: 1px thin var(--green);
+    border-radius: 4px;
+    padding: 0.1em 0.35em;
+}
+
+/* blokovi koda */
+pre {
+    background-color: var(--code-bg);
+    border-left: 4px solid var(--gold);
+    padding: 0.6em 0.9em;
+}
+
+pre code {
+    color: var(--code-text);
+    background: none;
+    border: none;
+    padding: 0;
+}

@@ -6,8 +6,9 @@
 # kept as it is (D-03, D-05) — nothing is rewritten.
 #
 # Consequence declared (D-11): published records cite files that are not yet
-# published (sibling FRQ, NFRQ, 06-ANALYSIS). Those links do not resolve for
-# the reader of the published edition until the cited record is admitted.
+# published (sibling NFRQ, 05-METHODS, 06-ANALYSIS, 07-CHANGES). Those links
+# do not resolve for the reader of the published edition until the cited
+# record is admitted.
 
 # --- Ignore everything ----------------------------------------------------
 /*
@@ -26,15 +27,14 @@
 /requirements/01-HLRQ/*
 !/requirements/01-HLRQ/HLRQ-01-GENERIC-LAYER.md
 
+# v0.0.7: the whole FRQ register is admitted.
 !/requirements/02-FRQ/
-/requirements/02-FRQ/*
-!/requirements/02-FRQ/FRQ-AUD-01-audit-record-path.md
-!/requirements/02-FRQ/FRQ-BBD-blackboard.md
 
-# PlantUML style included by every inline diagram.
+# Not yet admitted (v0.0.7): 03-NFRQ, 05-METHODS, 06-ANALYSIS, 07-CHANGES,
+# blackwattle, dockers — covered by `/requirements/*` above.
+
+# PlantUML and CSS styles included by every inline diagram and rendered page.
 !/requirements/styles/
-/requirements/styles/*
-!/requirements/styles/wattleflow.puml
 
 .gitignore
 CLAUDE.md

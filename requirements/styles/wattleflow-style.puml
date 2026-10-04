@@ -1,0 +1,50 @@
+' wattleflow-style.puml
+<style>
+root {
+  BackgroundColor transparent
+  LineColor #e8b924
+  FontColor #ffffff
+  FontName "Segoe UI"
+  FontSize 12
+}
+classDiagram, sequenceDiagram, activityDiagram {
+  FontName "Segoe UI"
+}
+</style>
+
+skinparam backgroundColor transparent
+skinparam shadowing false
+skinparam defaultFontColor #ffffff
+skinparam ArrowColor #e8b924
+skinparam ArrowFontColor #ffffff
+
+skinparam package {
+  BackgroundColor transparent
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam rectangle {
+  BackgroundColor transparent
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam class {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam component {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam participant {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam note {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
