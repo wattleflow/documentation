@@ -340,6 +340,7 @@ Nema otvorenih stavki.
 ## 16. References
 
 - Izvedba: `workflow/src/wattleflow/concrete/pipeline.py`
+- Testovi: `workflow/tests/test_pipeline.py`
 
 ## 17. Change history
 

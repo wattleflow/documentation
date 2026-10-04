@@ -286,7 +286,9 @@ Nema otvorenih stavki.
 
 ## 16. References
 
-- Izvedba: `workflow/src/wattleflow/concrete/iterator.py` (62 linije)
+- Izvedba: `workflow/src/wattleflow/concrete/iterator.py`
+- Analiza: `FRQ-ITR-lazy-iterators-ANL.md`
+- Testovi: `workflow/tests/test_lazy_iterator.py`, `workflow/tests/test_lazy_iterator_build.py`, `workflow/tests/test_lazy_iterator_cost.py`, `workflow/tests/test_lazy_iterator_threads.py`
 
 ## 17. Change history
 
@@ -295,7 +297,7 @@ Nema otvorenih stavki.
 | v0.0.5 | 2026-10-04 | Dijagrami izrađeni iznova prema `wattleflow-uml` (bez `frame`, `package`, `partition` i `System_Boundary`, `Caption`/`title` po pravilu, bez stereotipa i legende, sučelja na vrhu; crvene strelice stanja i akcija neuspjeha podebljane); renderirani s PlantUML 1.2026.8 i pregledani. |
 | v0.0.5 | 2026-10-04 | DEF-ITR-02 zatvoren: nova `ThreadSafeLazyIterator(LazyIterator)` s bravom `_build_lock` (ne `_lock`, zbog zasjenjivanja `Audit._lock`) i dvostrukom provjerom, po uzoru na `ThreadSafeObservable`; kriterij 6, 7 testova, 2 mutacije. Svi defekti ITR zatvoreni. |
 | v0.0.5 | 2026-10-04 | DEF-ITR-03 i DEF-ITR-04 zatvoreni: `_build()` u `LazyIterator` i `LazyAsyncIterator` bilježi `Event.Create` i provjerava tip izvora s `Attribute.evaluate`; kriterij 8, 10 testova u `test_lazy_iterator_build.py`, mutacije. Vraćen `async def __anext__` u `LazyAsyncIterator` (izmjena izvan sesije ga je zamijenila sinkronim `__next__`). |
-| v0.0.5 | 2026-10-04 | DEF-ITR-01 zatvoren kao svojstvo, ne defekt: `LazyIterator` je jednokratan iterator, novi prolaz daje agregat (`Catalog.create_iterator()`); kriterij 5 preformuliran, kriterij 7 (ponovni pokušaj nakon pada izvora), 21 test u `workflow` i 5 u `blackwattle`, mutacije; analiza u [`FRQ-ITR-lazy-iterators-ANL.md`](FRQ-ITR-lazy-iterators-ANL.md). |
+| v0.0.5 | 2026-10-04 | DEF-ITR-01 zatvoren kao svojstvo, ne defekt: `LazyIterator` je jednokratan iterator, novi prolaz daje agregat (`Catalog.create_iterator()`); kriterij 5 preformuliran, kriterij 7 (ponovni pokušaj nakon pada izvora), 21 test u `workflow` i 5 u `blackwattle`, mutacije; analiza u `FRQ-ITR-lazy-iterators-ANL.md`. |
 | v0.0.5 | 2026-10-04 | Otvorene stavke u 15 preimenovane u defekte `DEF-ITR-<nn>`; odjeljak 10 označen kao nije primjenjivo (nema automata) |
 | v0.0.5 | 2026-10-03 | Odjeljci preuređeni u standardnu strukturu FRQ dokumenta 01–17 (`wattleflow-docs` §3e); unutarnje reference preusmjerene. |
 | v0.0.5 | 2026-10-03 | Uklonjena imena klasa izvan distribucije `workflow`; uloge iz drugih projekata zamijenjene općim nazivom. |
@@ -305,8 +307,8 @@ Nema otvorenih stavki.
 
 ## Analiza ponovne iteracije na dan 2026-10-04
 
-Cjelovita analiza: [`FRQ-ITR-lazy-iterators-ANL.md`](FRQ-ITR-lazy-iterators-ANL.md) (ponašanje četiriju izvedbi po scenarijima, trošak, utjecaj na postojeći kod i na izmjene, testovi i mutacije).
-Skripta: [`2026-10-04-iterators-analysis-compare.py`](../06-ANALYSIS/2026-10-04-iterators-analysis-compare.py). Testovi: [`test_lazy_iterator.py`](../../../workflow/tests/test_lazy_iterator.py), [`test_lazy_iterator_cost.py`](../../../workflow/tests/test_lazy_iterator_cost.py), [`test_control_iterator.py`](../../../blackwattle/tests/oscal/test_control_iterator.py).
+Cjelovita analiza: `FRQ-ITR-lazy-iterators-ANL.md` (ponašanje četiriju izvedbi po scenarijima, trošak, utjecaj na postojeći kod i na izmjene, testovi i mutacije).
+Skripta: `2026-10-04-iterators-analysis-compare.py`. Testovi: `test_lazy_iterator.py`, `test_lazy_iterator_cost.py`, `test_control_iterator.py`.
 
 **Rezultat mjerenja:** konstrukcija oko 1,6 µs; sljedeći dohvat 119 ns (sinkrono) i 271 ns (asinkrono); u `for` petlji oko 70 ns po elementu naspram oko 12 ns za običan iterator, razlika je cijena odgode.
 **Rezultat izmjena:** kod nije mijenjan; alternative koje mijenjaju `__iter__` lome protokol iteratora; ponašanje je zaključano testovima.

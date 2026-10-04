@@ -316,6 +316,7 @@ Nema otvorenih stavki.
 ## 16. References
 
 - Izvedba: `workflow/src/wattleflow/concrete/serialisation.py` (`GenericParser`, `ParserError`)
+- Testovi: `workflow/tests/test_serialisation.py`
 
 ## 17. Change history
 

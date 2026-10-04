@@ -29,7 +29,6 @@
 - [15. Open issues](#15-open-issues)
 - [16. References](#16-references)
 - [17. Change history](#17-change-history)
-- [Analiza metoda na dan 2026-10-04](#analiza-metoda-na-dan-2026-10-04)
 
 ## 01. Interface
 
@@ -360,28 +359,29 @@ Stavke su defekti i nose oznaku `DEF-HLP-<nn>`; zatvoren defekt se uklanja, a oz
 
 ## 16. References
 
-- [`helpers.py`](../../../workflow/src/wattleflow/concrete/helpers.py) — izvedba
-- [`FRQ-HLP-helpers-ANL.md`](FRQ-HLP-helpers-ANL.md) — analiza: mjerenja, uporaba, usporedba s predloženom izvedbom
+- Izvedba: `workflow/src/wattleflow/concrete/helpers.py`
+- Analiza: `FRQ-HLP-helpers-ANL.md`
+- Testovi: `workflow/tests/test_attribute_convert.py`, `workflow/tests/test_attribute_helpers.py`, `workflow/tests/test_helpers_cost.py`, `workflow/tests/test_helpers_structure.py`
 
-## 17. Change history
+### Analiza metoda na dan 2026-10-04
 
-| Version | Date | Change |
-|---|---|---|
-| v0.0.5 | 2026-10-04 | Dijagrami izrađeni iznova prema `wattleflow-uml` (bez `frame`, `package`, `partition` i `System_Boundary`, `Caption`/`title` po pravilu, bez stereotipa i legende, sučelja na vrhu; crvene strelice stanja i akcija neuspjeha podebljane); renderirani s PlantUML 1.2026.8 i pregledani. |
-| v0.0.5 | 2026-10-04 | Otvorene stavke preimenovane u defekte `DEF-HLP-<nn>`; ispravljene sve točke iz popisa i `convert` (testovi prije ispravaka padali); `helpers.py` spojen s predloženom izvedbom (zajednički `_resolve`, zaštita od sudara imena, podrška za `__slots__`, `NameHelper.owner`, omotači imena, rani izlaz u `evaluate`) uz provjeru klase prije instanciranja; zatvoreni DEF-HLP-01, -02, -03, -04…-08 (odluke A1–A4: `mandatory` učitava samo `IWattleflow` tipove, `get` sprema samo učitano, `get` bez tipa vraća niz, metode bez korisnika ostaju; A5: `_resolve` je `@classmethod`, ostalo odgođeno po `NFRQ-ORG-05` c.1, DEF-HLP-09); kriteriji 5, 6 i 9–18; odjeljak 10 nije primjenjivo; sučelje, dijagrami klasa i toka te alternativni tokovi usklađeni s kodom; dijagram toka izbačen iz 08 (cjelovit u 09); mjerenja, matrice i usporedba u [analizi](FRQ-HLP-helpers-ANL.md); DEF-HLP-08 (neodlučene točke). |
-| v0.0.5 | 2026-10-03 | Odjeljci preuređeni u standardnu strukturu FRQ dokumenta 01–17 (`wattleflow-docs` §3e); unutarnje reference preusmjerene. |
-| v0.0.5 | 2026-10-03 | Vrijednosti u dijagramima provjerene prema kodu: `evaluate(..., expected_type)`; sudionik „Generic class or decorator” zamijenjen klasama iz koda; uvjet grane u slijedu. |
-| v0.0.5 | 2026-10-02 | Dodane aktivacije u dijagram slijeda. |
-| v0.0.5 | 2026-10-02 | `Verzija` zamjenjuje `Status`; prijašnji status: Provedeno u kodu — s defektima u `Attribute` (`DEF-HLP-01…04`) |
-
-## Analiza metoda na dan 2026-10-04
-
-Cjelovita analiza: [`FRQ-HLP-helpers-ANL.md`](FRQ-HLP-helpers-ANL.md) (matrice troška i uporabe, opis svake metode, usporedba s predloženom izvedbom, odluke).
-Skripte i testovi: [`test_helpers_cost.py`](../../../workflow/tests/test_helpers_cost.py), [`test_attribute_helpers.py`](../../../workflow/tests/test_attribute_helpers.py),
-[`test_attribute_convert.py`](../../../workflow/tests/test_attribute_convert.py).
+Cjelovita analiza: `FRQ-HLP-helpers-ANL.md` (matrice troška i uporabe, opis svake metode, usporedba s predloženom izvedbom, odluke).
+Skripte i testovi: `test_helpers_cost.py`, `test_attribute_helpers.py`,
+`test_attribute_convert.py`.
 
 **Rezultat mjerenja:** 26 javnih metoda `Attribute` i `NameHelper`; medijan po pozivu od 73 do oko 5,7 µs (najsporije `list_dir` i `load_from_class`), proračun
 200 µs. Uporaba (statička, `src`): 14 metoda nema korisnika, 7 se koristi samo unutar `helpers.py`; u `workflow` rabe se `evaluate`, `source_name`, `nc` i `nt`.
 
 **Rezultat izmjena:** ispravljene su sve točke iz popisa i `convert`; iz predložene izvedbe preuzeti su zajednički `_resolve`, zaštita od sudara imena, podrška za
 `__slots__`, `NameHelper.owner`, omotači imena i rani izlaz u `evaluate`; dodana je provjera klase prije instanciranja. Odluke od 2026-10-04 (A1–A5) zapisane su u analizi, §9: tri ograničenja i metode bez korisnika ostaju kakvi jesu, a `@classmethod` samo za privatni `_resolve`.
+
+## 17. Change history
+
+| Version | Date | Change |
+|---|---|---|
+| v0.0.5 | 2026-10-04 | Dijagrami izrađeni iznova prema `wattleflow-uml` (bez `frame`, `package`, `partition` i `System_Boundary`, `Caption`/`title` po pravilu, bez stereotipa i legende, sučelja na vrhu; crvene strelice stanja i akcija neuspjeha podebljane); renderirani s PlantUML 1.2026.8 i pregledani. |
+| v0.0.5 | 2026-10-04 | Otvorene stavke preimenovane u defekte `DEF-HLP-<nn>`; ispravljene sve točke iz popisa i `convert` (testovi prije ispravaka padali); `helpers.py` spojen s predloženom izvedbom (zajednički `_resolve`, zaštita od sudara imena, podrška za `__slots__`, `NameHelper.owner`, omotači imena, rani izlaz u `evaluate`) uz provjeru klase prije instanciranja; zatvoreni DEF-HLP-01, -02, -03, -04…-08 (odluke A1–A4: `mandatory` učitava samo `IWattleflow` tipove, `get` sprema samo učitano, `get` bez tipa vraća niz, metode bez korisnika ostaju; A5: `_resolve` je `@classmethod`, ostalo odgođeno po `NFRQ-ORG-05` c.1, DEF-HLP-09); kriteriji 5, 6 i 9–18; odjeljak 10 nije primjenjivo; sučelje, dijagrami klasa i toka te alternativni tokovi usklađeni s kodom; dijagram toka izbačen iz 08 (cjelovit u 09); mjerenja, matrice i usporedba u `analizi`; DEF-HLP-08 (neodlučene točke). |
+| v0.0.5 | 2026-10-03 | Odjeljci preuređeni u standardnu strukturu FRQ dokumenta 01–17 (`wattleflow-docs` §3e); unutarnje reference preusmjerene. |
+| v0.0.5 | 2026-10-03 | Vrijednosti u dijagramima provjerene prema kodu: `evaluate(..., expected_type)`; sudionik „Generic class or decorator” zamijenjen klasama iz koda; uvjet grane u slijedu. |
+| v0.0.5 | 2026-10-02 | Dodane aktivacije u dijagram slijeda. |
+| v0.0.5 | 2026-10-02 | `Verzija` zamjenjuje `Status`; prijašnji status: Provedeno u kodu — s defektima u `Attribute` (`DEF-HLP-01…04`) |

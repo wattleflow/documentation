@@ -367,6 +367,7 @@ Nema otvorenih stavki.
 ## 16. References
 
 - Izvedba: `workflow/src/wattleflow/concrete/scheduler.py`; potrošač `workflow/src/wattleflow/schedulers/cron_job.py` (`SchedulerCronJob`)
+- Testovi: `workflow/tests/test_scheduler.py`, `workflow/tests/test_scheduler_cron.py`
 
 ## 17. Change history
 

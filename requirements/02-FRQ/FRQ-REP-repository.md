@@ -8,7 +8,7 @@
 | **Odluka** | kategorija `REP` |
 | **Nadređeni zahtjev** | [`HLRQ-01`](../01-HLRQ/HLRQ-01-GENERIC-LAYER.md) — narativ, `BR-WFL-01…02`, `BR-PTN-01…05`, `BR-PRC-01`, `BR-DRV-01`, zajednički ugovor generičke klase (§4), `BR-PTN-07` (`__slots__`) |
 | **Predmet** | `GenericRepository(Wattleflow, IRepository, ABC)` i `RepositoryWithDriver(GenericRepository)` |
-| **Sestrinski** | [`FRQ-BBD`](FRQ-BBD-blackboard.md) (jedini pozivatelj `write`) · [`FRQ-STR`](FRQ-STR-strategy.md) (čita i piše) · [`FRQ-DRV`](FRQ-DRV-driver.md) (kanal prema vanjskom sustavu) · [analiza čitanja](../06-ANALYSIS/2026-09-14-read-path.md) |
+| **Sestrinski** | [`FRQ-BBD`](FRQ-BBD-blackboard.md) (jedini pozivatelj `write`) · [`FRQ-STR`](FRQ-STR-strategy.md) (čita i piše) · [`FRQ-DRV`](FRQ-DRV-driver.md) (kanal prema vanjskom sustavu) · `analiza čitanja` |
 | **Izvedba** | `workflow/src/wattleflow/concrete/repository.py` |
 | **Dijagrami** | inline (02, 03, 06, 08, 09) — pogledi izvedeni iz koda, ne izvor istine (D-13) |
 
@@ -186,7 +186,7 @@ package {
    s `caller=self`, `facade`, `repository=self` i kontekstom (`driver` u varijanti s driverom).
 3. Brojač se poveća **samo kad strategija vrati uspjeh**; rezultat se vraća pozivatelju.
 4. **EV03** — `read` zapisuje `DEBUG` i pozove strategiju čitanja s `caller=self`, `identifier` i
-   kontekstom. Tko danas čita i kojim putem: [analiza čitanja](../06-ANALYSIS/2026-09-14-read-path.md) §3.
+   kontekstom. Tko danas čita i kojim putem: `analiza čitanja` §3.
 5. **EV04** — `clear()` zapisuje `INFO` s brojem zapisa i vraća brojač na nulu.
 
 ### Dijagram slijeda
@@ -334,7 +334,7 @@ zna samo koliko ih je prošlo. Zamjena odredišta je izmjena konfiguracije (`BR-
 | 7 | pregled modula | `__all__`; uvozi `abc`, `typing` + `wattleflow.*` |
 | 8, 9 | `WriteTest`, `IdentityTest` | `object()`, `None`, string kao `caller`; `object()`, `None` kao `facade`; strategija se ne zove |
 | mutacije | ručno | bez provjere pozivatelja, bez provjere strategije, nezaštićen `__getattr__`, `__eq__` koji piše zapis — svaka ruši test |
-| čitanje (svojstvo) | pretraga `\.read\(` nad `workflow/src` i `blackwattle/src` | jedini pozivatelj spremišta je `blackboards/claude.py:579`; tok `Processor`→`Pipeline`→`Blackboard` čitanje ne koristi ([analiza čitanja](../06-ANALYSIS/2026-09-14-read-path.md) §7) |
+| čitanje (svojstvo) | pretraga `\.read\(` nad `workflow/src` i `blackwattle/src` | jedini pozivatelj spremišta je `blackboards/claude.py:579`; tok `Processor`→`Pipeline`→`Blackboard` čitanje ne koristi (`analiza čitanja` §7) |
 
 **Trojka reproducibilnosti (D-10):** alat — `unittest`, pretraga koda; kriterij — odjeljak 13; platforma — CPython 3.12.14, Linux/WSL2, okruženje `workflow`.
 
@@ -347,6 +347,7 @@ Nema otvorenih stavki.
 ## 16. References
 
 - Izvedba: `workflow/src/wattleflow/concrete/repository.py`
+- Testovi: `workflow/tests/test_repository.py`
 
 ## 17. Change history
 

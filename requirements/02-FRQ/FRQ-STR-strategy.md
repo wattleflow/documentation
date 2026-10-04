@@ -302,7 +302,7 @@ Slijedi. Zatečeni dokument nema ovog odjeljka.
 |---|---|
 | [`NFRQ-ORG-04`](../03-NFRQ/NFRQ-ORG-04-crosscutting-capability.md) | `Strategy` je rezervirani primitiv; *cross-cutting* sposobnost (rutiranje, digest) je **helper**, ne strategija |
 | [`NFRQ-SEC-02`](../03-NFRQ/NFRQ-SEC-02-attack-surface.md) | `__all__` izlaže šest imena; obitelj je javna, `execute` je ugovor |
-| [`NFRQ-SEC-03`](../03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md) | clean core tier; third-party (OCR, PDF) živi **isključivo** u specijalizacijama u `blackwattle` (`CLAUDE.md` §7.4) |
+| [`NFRQ-SEC-03`](../03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md) | clean core tier; third-party (OCR, PDF) živi **isključivo** u specijalizacijama u `blackwattle` (`ARCHITECTURE.md` §7.4) |
 | [`NFRQ-ORG-08`](../03-NFRQ/NFRQ-ORG-08-deduplication.md) | ručno prepisano omatanje `try/except → StrategyException` (114 pojava) je otvoreni DRY klaster (`TODO.md` D3) — kandidat za `@strategy_guard` |
 | [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md) | strategija ne otvara vlastitu jedinicu posla; trag joj daje pozivatelj preko `caller` |
 | [`NFRQ-MEM-01`](../03-NFRQ/NFRQ-MEM-01-memory.md) | `BR-PTN-07`: klasa deklarira `__slots__` ili ima zapisanu iznimku; vidi odjeljak 15 |
@@ -349,7 +349,8 @@ Napomena izvan opsega `workflow`: 114 pojava `StrategyException(` u `blackwattle
 
 ## 16. References
 
-- Izvedba: `workflow/src/wattleflow/concrete/strategy.py` (156 linija)
+- Izvedba: `workflow/src/wattleflow/concrete/strategy.py`
+- Testovi: `workflow/tests/test_strategy.py`, `workflow/tests/test_wattleflow_base.py`
 
 ## 17. Change history
 

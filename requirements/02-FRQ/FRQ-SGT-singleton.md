@@ -325,7 +325,8 @@ Nema otvorenih stavki.
 
 ## 16. References
 
-- Izvedba: `workflow/src/wattleflow/concrete/singleton.py` (83 linije)
+- Izvedba: `workflow/src/wattleflow/concrete/singleton.py`
+- Testovi: `workflow/tests/test_singleton.py`
 
 ## 17. Change history
 

@@ -8,7 +8,7 @@
 | **Nadređeni zahtjev** | [`HLRQ-01-GENERIC-LAYER`](../01-HLRQ/HLRQ-01-GENERIC-LAYER.md) — `BR-BBD-01`, `BR-PTN-03`, `BR-PRC-01`, zajednički ugovor generičke klase (§4), `BR-PTN-07` (`__slots__`) |
 | **Predmet** | `GenericBlackboard(Wattleflow, IBlackboard, Generic[Item], ABC)` — dijeljeni radni prostor između pipelinea i spremišta; uz njega `BlackboardState`, `BlackboardAction` i tablica `TRANSITIONS` |
 | **Sestrinski** | [`FRQ-PIP`](FRQ-PIP-pipeline.md) (piše na platno) · [`FRQ-REP`](FRQ-REP-repository.md) (prima flush) · [`FRQ-STR`](FRQ-STR-strategy.md) (`StrategyCreate`) |
-| **Izvedba** | [`workflow/src/wattleflow/concrete/blackboard.py`](../../../workflow/src/wattleflow/concrete/blackboard.py) |
+| **Izvedba** | `workflow/src/wattleflow/concrete/blackboard.py` |
 | **Dijagrami** | inline (02, 03, 06, 08, 09, 10) — pogledi izvedeni iz koda, ne izvor istine (D-13) |
 
 # Index
@@ -481,7 +481,8 @@ Nema otvorenih stavki u opsegu `workflow`.
 
 ## 16. References
 
--  [`blackboard.py`](../../../workflow/src/wattleflow/concrete/blackboard.py)
+- Izvedba: `workflow/src/wattleflow/concrete/blackboard.py`
+- Testovi: `workflow/tests/test_blackboard.py`
 
 ## 17. Change history
 

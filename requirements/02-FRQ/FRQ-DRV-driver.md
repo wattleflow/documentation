@@ -406,7 +406,7 @@ title GenericDriver
 | [`NFRQ-ORG-04`](../03-NFRQ/NFRQ-ORG-04-crosscutting-capability.md) | `Driver` je rezervirani primitiv; operacija je odvojena od pristupa ([`FRQ-CON`](FRQ-CON-connection.md)) |
 | [`NFRQ-SEC-01`](../03-NFRQ/NFRQ-SEC-01-blast-radius.md) | driver ne poznaje ni pipeline ni platno; kompromitacija drivera doseže jedan vanjski sustav |
 | [`NFRQ-SEC-02`](../03-NFRQ/NFRQ-SEC-02-attack-surface.md) | proxy odbija delegirati `_`-imena — introspekcijska površina ne otvara resurs |
-| [`NFRQ-SEC-03`](../03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md) | clean core tier; svaki third-party klijent živi u specijalizaciji u `blackwattle`, lazy (`CLAUDE.md` §7.4) |
+| [`NFRQ-SEC-03`](../03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md) | clean core tier; svaki third-party klijent živi u specijalizaciji u `blackwattle`, lazy (`ARCHITECTURE.md` §7.4) |
 | [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md) | cijeli životni ciklus je `DEBUG`; proxy je dodatno stišan na `WARNING` |
 | [`NFRQ-OBS-02`](../03-NFRQ/NFRQ-OBS-02-audit-fields.md) | `update` nosi `event` i `kwargs` kao imenovana polja, nikad splat ([`NFRQ-SEC-06`](../03-NFRQ/NFRQ-SEC-06-audit-confidentiality.md) k.1) |
 | OSCAL | dekorater `@oscal_driver` stoji na **specijalizacijama** u `blackwattle`; ovaj sloj nema OSCAL referencu |
@@ -430,7 +430,7 @@ drivera otvara samo one koje koristi.
 7. `metadata()` proxyja govori istinu — vraća metapodatke omotanog drivera. ✅
 8. Modul deklarira `__all__`; import closure je `stdlib ∪ wattleflow`. ✅
 9. Ugovor drivera (`load`/`close`/`read`/`write`) je provediv: hookovi su apstraktni kroz `IDriver`, driver koji izostavi jedan ne može se instancirati. ✅
-10. Komentari su na UK engleskom (`CLAUDE.md` §2.4). ✅
+10. Komentari su na UK engleskom (`STANDARDS.md` §2.4). ✅
 11. `__all__` je zadnja naredba modula `driver.py` (kao u ostalim modulima sloja `concrete`), iza definicija koje imenuje; `TRANSITIONS` ostaje izvan njega jer ga nitko ne uvozi (`STANDARDS` §2.7 t.1). ✅
 12. Upit proxyja o stanju drivera (`state`, `can()`, `pause()`) ne spaja, ne gradi niti nastavlja driver: dok je proxy lijen `state` je `PENDING`, `can()` odgovara kao za `PENDING`, a `pause()` ne radi ništa; nakon gradnje sve se delegira. ✅
 13. `DriverMetadata.capabilities` je lista bez duplikata iz kontroliranog vokabulara (`DriverCapability`, `NFRQ-ORG-12`); neispravan popis odbija se pri izgradnji (`TypeError` za tip, `ValueError` za nepoznat ili ponovljen zapis). Novi zapis traži izmjenu vokabulara (D-12). ✅
@@ -468,7 +468,8 @@ Nema otvorenih stavki.
 
 ## 16. References
 
-- Izvedba: [`workflow/src/wattleflow/concrete/driver.py`](../../../workflow/src/wattleflow/concrete/driver.py) (366 linija)
+- Izvedba: `workflow/src/wattleflow/concrete/driver.py`
+- Testovi: `workflow/tests/test_driver_contract.py`, `workflow/tests/test_driver_metadata.py`, `workflow/tests/test_driver_proxy.py`, `workflow/tests/test_module_layout.py`, `workflow/tests/test_source_language.py`
 
 ## 17. Change history
 

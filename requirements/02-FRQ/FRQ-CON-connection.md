@@ -8,7 +8,7 @@
 | **Nadređeni zahtjev** | [`HLRQ-01`](../01-HLRQ/HLRQ-01-GENERIC-LAYER.md) — narativ, `BR-WFL-01…02`, `BR-PTN-01…05`, `BR-PRC-01`, `BR-DRV-01`, zajednički ugovor generičke klase (§4), `BR-PTN-07` (`__slots__`) |
 | **Predmet** | `GenericConnection(ConnectionObserverInterface, Generic[Connection], ABC)` — pristup vanjskom sustavu; uz njega `ConnectionObserverInterface`, `ConnectionState`, `ConnectionAction`, `TRANSITIONS`, `ManagerException` |
 | **Sestrinski** | [`FRQ-DRV`](FRQ-DRV-driver.md) (radi kroz konekciju) · [`FRQ-MGR`](FRQ-MGR-managers.md) (`ConnectionManager`) |
-| **Izvedba** | [`connection.py`](../../../workflow/src/wattleflow/concrete/connection.py) (433 linije) |
+| **Izvedba** | `connection.py` (433 linije) |
 | **Dijagrami** | inline (02, 03, 06, 08, 09, 10) — pogledi izvedeni iz koda, ne izvor istine (D-13) |
 
 # Index
@@ -468,7 +468,7 @@ engine, isti proxy, isti kredencijal. Stanje pristupa je u svakom trenutku čitl
 7. Kvar jednog observera ne ruši obavještavanje ostalih. ✅
 8. Modul deklarira `__all__`; import closure je `stdlib ∪ wattleflow`. ✅
 9. Sve javne metode klase pripadaju konekciji; zamjena registrirane konekcije je `ConnectionManager.hot_swap` ([`FRQ-MGR`](FRQ-MGR-managers.md)). ✅
-10. Poruke kvara su na UK engleskom (`CLAUDE.md` §2.4/§3.2). ✅
+10. Poruke kvara su na UK engleskom (`STANDARDS.md` §2.4/§3.2). ✅
 11. `version` je verzija udaljenog sustava ili `None`; generička klasa je ne puni i svojstvo je samo za čitanje. ✅
 12. `__getattr__` računa set `__slots__` jednom po tipu, a razrješavanje slotova i preseta ostaje isto. ✅
 13. `lazy_loading` je deklariran u `GenericConnection.ALLOWED` i nikad se ne prijavljuje kao nepoznat ključ; ostali nedeklarirani ključevi i dalje se prijavljuju. ✅
@@ -505,7 +505,8 @@ Nema otvorenih stavki.
 
 ## 16. References
 
--  [`connection.py`](../../../workflow/src/wattleflow/concrete/connection.py)
+- Izvedba: `workflow/src/wattleflow/concrete/connection.py`
+- Testovi: `workflow/tests/test_connection_getattr.py`, `workflow/tests/test_connection_preset.py`, `workflow/tests/test_connection_request.py`
 
 ## 17. Change history
 

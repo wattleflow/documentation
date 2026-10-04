@@ -1,0 +1,123 @@
+<link rel="stylesheet" href="requirements/styles/wattleflow.css">
+
+# Consolidated literature (keys 1–69)
+
+| | |
+|---|---|
+| **Version** | Draft v0.3.1 |
+| **Parent documents** | `PHILOSOPHY.md`, `METHODOLOGY.md`, `DOCTRINE.md`, `POSTULATE.md` |
+| **Related artefacts** | [`POSTULATE.md`](POSTULATE.md) (the claims), [`dictionary.yaml`](dictionary.yaml) (the terms), `workflow/Analiza.md` (the paper that uses the table) |
+| **Management** | entries are added, changed, or declared obsolete exclusively with a documented change; see §Maintenance |
+
+
+The single reference table for the paper, the philosophy ([`PHILOSOPHY.md`](PHILOSOPHY.md)) and the analysis. **This is the only copy** — the former `workflow/hr/LITERATURA.md` was withdrawn on 2026-08-24 because it assigned different works to keys 56–57 (D-12).
+
+Keys 1–35: original work table (revision: [11] replaced by the 2006 paper that introduces propagation cost; [35] added for multicriteria optimisation).
+Keys 36–52: supplement (history of process models, lineage of recording decisions, information science).
+Keys 53–59: doctrinal layer (Naur, governance precedents, the normative ISO standards).
+Keys 60–64: audit and privacy (NIST SP 800-53, ISO/IEC 27002 / 29100 / 15408-2, *Privacy Act 1988*).
+Keys 65–66: design theory (Dijkstra, GoF).
+Keys 67–69: substitution and Open–Closed (Liskov, Meyer).
+
+**Append-only.** A new key goes only at the end of the table: inserting one would renumber citations across every document.
+
+Status: no marker = verified in previous passes; (k) = book without DOI; before submission, add the ISBN of the edition actually consulted; (!) = verify before use in the text.
+
+---
+
+## Literature
+
+1. Parnas, D. L. (1972). *On the Criteria To Be Used in Decomposing Systems into Modules*. Communications of the ACM, 15(12), 1053–1058. https://doi.org/10.1145/361598.361623
+2. Simon, H. A. (1962). *The Architecture of Complexity*. Proceedings of the American Philosophical Society, 106(6), 467–482. https://www.jstor.org/stable/985254
+3. Stevens, W. P., Myers, G. J., & Constantine, L. L. (1974). *Structured Design*. IBM Systems Journal, 13(2), 115–139. https://doi.org/10.1147/sj.132.0115
+4. Miller, G. A. (1956). *The Magical Number Seven, Plus or Minus Two*. Psychological Review, 63(2), 81–97. https://doi.org/10.1037/h0043158
+5. Sweller, J. (1988). *Cognitive Load During Problem Solving*. Cognitive Science, 12(2), 257–285. https://doi.org/10.1207/s15516709cog1202_4
+6. Baldwin, C. Y., & Clark, K. B. (2000). *Design Rules, Vol. 1: The Power of Modularity*. MIT Press. https://mitpress.mit.edu/9780262024662/design-rules/
+7. Newman, M. E. J., & Girvan, M. (2004). *Finding and Evaluating Community Structure in Networks*. Physical Review E, 69, 026113. https://doi.org/10.1103/PhysRevE.69.026113
+8. Fortunato, S., & Barthélemy, M. (2007). *Resolution Limit in Community Detection*. PNAS, 104(1), 36–41. https://doi.org/10.1073/pnas.0605965104
+9. Gall, H., Hajek, K., & Jazayeri, M. (1998). *Detection of Logical Coupling Based on Product Release History*. ICSM 1998. https://doi.org/10.1109/ICSM.1998.738508
+10. Zimmermann, T., Weißgerber, P., Diehl, S., & Zeller, A. (2005). *Mining Version Histories to Guide Software Changes*. IEEE TSE, 31(6), 429–445. https://doi.org/10.1109/TSE.2005.72
+11. MacCormack, A., Rusnak, J., & Baldwin, C. Y. (2006). *Exploring the Structure of Complex Software Designs: An Empirical Study of Open Source and Proprietary Code*. Management Science, 52(7), 1015–1030. https://doi.org/10.1287/mnsc.1060.0552
+12. Allen, E. B., & Khoshgoftaar, T. M. (1999). *Measuring Coupling and Cohesion: An Information-Theory Approach*. METRICS 1999. https://doi.org/10.1109/METRIC.1999.809743
+13. Rissanen, J. (1978). *Modeling by Shortest Data Description*. Automatica, 14(5), 465–471. https://doi.org/10.1016/0005-1098(78)90005-5
+14. Cilibrasi, R., & Vitányi, P. M. B. (2005). *Clustering by Compression*. IEEE Transactions on Information Theory, 51(4), 1523–1545. https://doi.org/10.1109/TIT.2005.844059
+15. Krantz, D. H., Luce, R. D., Suppes, P., & Tversky, A. (1971). *Foundations of Measurement, Vol. I*. Academic Press. https://openlibrary.org/isbn/9780124254015
+16. Stevens, S. S. (1946). *On the Theory of Scales of Measurement*. Science, 103(2684), 677–680. https://doi.org/10.1126/science.103.2684.677
+17. Weyuker, E. J. (1988). *Evaluating Software Complexity Measures*. IEEE TSE, 14(9), 1357–1365. https://doi.org/10.1109/32.4634
+18. Briand, L. C., Morasca, S., & Basili, V. R. (1996). *Property-Based Software Engineering Measurement*. IEEE TSE, 22(1), 68–86. https://doi.org/10.1109/32.481535
+19. Fenton, N. E., & Neil, M. (2000). *Software Metrics: Roadmap*. ICSE 2000 — Future of Software Engineering. https://doi.org/10.1145/336512.336588
+20. Danon, L., Díaz-Guilera, A., Duch, J., & Arenas, A. (2005). *Comparing Community Structure Identification*. Journal of Statistical Mechanics, P09008. https://doi.org/10.1088/1742-5468/2005/09/P09008
+21. Hubert, L., & Arabie, P. (1985). *Comparing Partitions*. Journal of Classification, 2, 193–218. https://doi.org/10.1007/BF01908075
+22. Campbell, D. T. (1979). *Assessing the Impact of Planned Social Change*. Evaluation and Program Planning, 2(1), 67–90. https://doi.org/10.1016/0149-7189(79)90048-X
+23. Saltzer, J. H., & Schroeder, M. D. (1975). *The Protection of Information in Computer Systems*. Proceedings of the IEEE, 63(9), 1278–1308. https://doi.org/10.1109/PROC.1975.9939
+24. Adams, A., & Sasse, M. A. (1999). *Users Are Not the Enemy*. Communications of the ACM, 42(12), 40–46. https://doi.org/10.1145/322796.322806
+25. Beautement, A., Sasse, M. A., & Wonham, M. (2008). *The Compliance Budget: Managing Security Behaviour in Organisations*. NSPW 2008, 47–58. https://doi.org/10.1145/1595676.1595684
+26. Gordon, L. A., & Loeb, M. P. (2002). *The Economics of Information Security Investment*. ACM TISSEC, 5(4), 438–457. https://doi.org/10.1145/581271.581274
+27. Manadhata, P. K., & Wing, J. M. (2011). *An Attack Surface Metric*. IEEE TSE, 37(3), 371–386. https://doi.org/10.1109/TSE.2010.60
+28. Anderson, R. (2001). *Why Information Security Is Hard — An Economic Perspective*. ACSAC 2001. https://doi.org/10.1109/ACSAC.2001.991552
+29. Brooks, F. P. (1987). *No Silver Bullet: Essence and Accidents of Software Engineering*. IEEE Computer, 20(4), 10–19. https://doi.org/10.1109/MC.1987.1663532
+30. Ashby, W. R. (1956). *An Introduction to Cybernetics*. Chapman & Hall. http://pespmc1.vub.ac.be/books/IntroCyb.pdf (datum pristupa dodati)
+31. Peterson, W. W., Birdsall, T. G., & Fox, W. C. (1954). *The Theory of Signal Detectability*. IRE Transactions on Information Theory, 4(4), 171–212. https://doi.org/10.1109/TIT.1954.1057460
+32. von Stackelberg, H. (2011). *Market Structure and Equilibrium* (prijevod izvornika iz 1934.). Springer. https://doi.org/10.1007/978-3-642-12586-7
+33. Siegmund, J., Kästner, C., Apel, S., Parnin, C., Bethmann, A., Leich, T., Saake, G., & Brechmann, A. (2014). *Understanding Understanding Source Code with Functional Magnetic Resonance Imaging*. ICSE 2014, 378–389. https://doi.org/10.1145/2568225.2568252
+34. NIST National Vulnerability Database. *CVE-2021-44228 (Log4Shell)*. https://nvd.nist.gov/vuln/detail/CVE-2021-44228 (datum pristupa dodati)
+35. Ehrgott, M. (2005). *Multicriteria Optimization* (2. izd.). Springer. https://doi.org/10.1007/3-540-27659-9
+36. Shannon, C. E. (1948). *A Mathematical Theory of Communication*. Bell System Technical Journal, 27(3), 379–423 i 27(4), 623–656. https://doi.org/10.1002/j.1538-7305.1948.tb01338.x (I. dio); https://doi.org/10.1002/j.1538-7305.1948.tb00917.x (II. dio)
+37. Wiener, N. (1961). *Cybernetics: or Control and Communication in the Animal and the Machine* (2. izd.; izvornik 1948). MIT Press. (k)
+38. Stamper, R. K. (1973). *Information in Business and Administrative Systems*. Wiley (New York) / Batsford (London). (k)
+39. Langefors, B. (1966). *Theoretical Analysis of Information Systems*. Studentlitteratur, Lund (američko izd. Auerbach, 1973). (k)
+40. Royce, W. W. (1970). *Managing the Development of Large Software Systems*. Proceedings of IEEE WESCON, 1–9. (Pretisak: Proc. 9th ICSE, 1987, 328–338.) Bez DOI-ja.
+41. Larman, C., & Basili, V. R. (2003). *Iterative and Incremental Development: A Brief History*. IEEE Computer, 36(6), 47–56. https://doi.org/10.1109/MC.2003.1204375
+42. Boehm, B. W. (1988). *A Spiral Model of Software Development and Enhancement*. IEEE Computer, 21(5), 61–72. https://doi.org/10.1109/2.59
+43. Parnas, D. L., & Clements, P. C. (1986). *A Rational Design Process: How and Why to Fake It*. IEEE Transactions on Software Engineering, SE-12(2), 251–257. https://doi.org/10.1109/TSE.1986.6312940 (ispravak: TSE 12(8), 874, 1986)
+44. Tyree, J., & Akerman, A. (2005). *Architecture Decisions: Demystifying Architecture*. IEEE Software, 22(2), 19–27. https://doi.org/10.1109/MS.2005.27
+45. Jansen, A., & Bosch, J. (2005). *Software Architecture as a Set of Architectural Design Decisions*. Proc. 5th Working IEEE/IFIP Conference on Software Architecture (WICSA 2005), 109–120. https://doi.org/10.1109/WICSA.2005.61
+46. Nygard, M. (2011). *Documenting Architecture Decisions*. Blog zapis, 15. 11. 2011. https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions (!) URL i datum pristupa provjeriti
+47. Shewhart, W. A. (1939). *Statistical Method from the Viewpoint of Quality Control*. The Graduate School, USDA (pretisak Dover, 1986). (k)
+48. Deming, W. E. (1986). *Out of the Crisis*. MIT Center for Advanced Engineering Study (pretisak MIT Press, 2000). (k)
+49. Ackoff, R. L. (1971). *Towards a System of Systems Concepts*. Management Science, 17(11), 661–671. https://doi.org/10.1287/mnsc.17.11.661
+50. Checkland, P. (1981). *Systems Thinking, Systems Practice*. Wiley. (k)
+51. Eco, U. (1976). *A Theory of Semiotics*. Indiana University Press. (k)
+52. Cavoukian, A. (2009). *Privacy by Design: The 7 Foundational Principles*. Information and Privacy Commissioner of Ontario. (!) URL i datum pristupa provjeriti
+53. Naur, P. (1985). *Programming as Theory Building*. Microprocessing and Microprogramming, 15(5), 253–261. https://doi.org/10.1016/0165-6074(85)90032-8
+54. Churchman, C. W., Ackoff, R. L., & Arnoff, E. L. (1957). *Introduction to Operations Research*. Wiley. (k)
+55. Deming, W. E. (1994). *The New Economics for Industry, Government, Education* (2. izd.). MIT Center for Advanced Engineering Study. (k)
+56. Resnick, P. (2014). *On Consensus and Humming in the IETF* (RFC 7282). RFC Editor. https://doi.org/10.17487/RFC7282
+57. Python Steering Council. *PEP 13 — Python Language Governance*. https://peps.python.org/pep-0013/ (živi dokument; datum pristupa dodati)
+58. ISO/IEC/IEEE 29148:2018. *Systems and software engineering — Life cycle processes — Requirements engineering*. ISO/IEEE.
+59. ISO/IEC 25010:2011. *Systems and software engineering — Systems and software quality models*. ISO.
+60. NIST (2020). *SP 800-53 Rev. 5 — Security and Privacy Controls for Information Systems and Organizations*. NIST. https://doi.org/10.6028/NIST.SP.800-53r5 — obitelj AU; `AU-3` (sadržaj audit zapisa, šest elemenata), `AU-3(1)`, `AU-3(3)` (ograničenje PII elemenata), `AU-9`, `AU-12`. Tekst `AU-3` provjeren 2026-08-13 preko zrcala csf.tools; sravniti s izvornikom prije objave.
+61. ISO/IEC 27002:2022. *Information security, cybersecurity and privacy protection — Information security controls*. ISO. — §8.15 *Logging*, §8.11 *Data masking*, §8.12 *Data leakage prevention*. (!) klauzule potvrđene sekundarnim izvorima; norma je plaćena
+62. ISO/IEC 29100:2011. *Information technology — Security techniques — Privacy framework*. ISO. — 11 načela; ovdje nose *collection limitation* i *data minimization*. (!) potvrđeno sekundarnim izvorima
+63. ISO/IEC 15408-2. *Evaluation criteria for IT security — Part 2: Security functional components*. ISO. — klasa **FAU** (FAU_GEN, FAU_SAR, FAU_SEL, FAU_STG). (!) kandidat; nije nosivo ni za jedan kriterij
+64. *Privacy Act 1988* (Cth), Schedule 1 — Australian Privacy Principles; **APP 3** (prikupljanje), **APP 11** (sigurnost osobnih informacija). https://www.legislation.gov.au/C2004A03712/latest
+65. Dijkstra, E. W. (1982). *On the Role of Scientific Thought* (EWD447, 1974). In *Selected Writings on Computing: A Personal Perspective* (pp. 60–66). Springer. https://doi.org/10.1007/978-1-4612-5695-3_12
+66. Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). *Design Patterns: Elements of Reusable Object-Oriented Software*. Addison-Wesley. ISBN 0-201-63361-2 (k)
+67. Liskov, B. (1987). *Data Abstraction and Hierarchy* (keynote address, OOPSLA '87 Addendum to the Proceedings). ACM SIGPLAN Notices, 23(5), 17–34. https://doi.org/10.1145/62139.62141
+68. Liskov, B. H., & Wing, J. M. (1994). *A Behavioral Notion of Subtyping*. ACM Transactions on Programming Languages and Systems, 16(6), 1811–1841. https://doi.org/10.1145/197320.197383
+69. Meyer, B. (1988). *Object-Oriented Software Construction*. Prentice Hall. ISBN 0-13-629049-3 (k)
+
+---
+
+## Notes
+
+1. [11] points to MacCormack, Rusnak & Baldwin (2006, Management Science) —
+   the paper that introduces propagation cost; the mirror paper from 2012,
+   (10.1016/j.respol.2012.04.011), is not in the table because it is not used in the text;
+   it should be reintroduced as a new key if an argument about organisational and
+   technical boundary congruence is made.
+2. [16] carries Stevens (scale types); Pareto/multicriteria analysis is [35].
+3. [37] (Wiener) and [30] (Ashby) share the work: Ashby — the law of requisite
+   variety; Wiener — feedback and regulation.
+4. [40] (Royce): the claim about the source text’s iterativity should be cited with the
+   original text (p. 2: the one-way pass, “risky and invites failure”), not with secondary
+   summaries.
+5. Entries marked (k): before submission, add the ISBN of the edition actually consulted
+   (the rule from the Krantz case — the ISBN must match the edition).
+6. Entries marked (!): do not use in the text until they are verified.
+7. Candidates outside the table (mentioned in discussion, to be added only as needed with
+   verification): Kitchenham et al. 1995 (10.1109/32.489070); Fenton & Bieman,
+   *Software Metrics* (3rd ed.); Sweller, van Merriënboer & Paas 1998
+   (10.1023/A:1022193728205); Beer, *Brain of the Firm*; Boehm is used as
+   [42]; Mills/Cleanroom; Ford, Parsons & Kua, *Building Evolutionary
+   Architectures* (fitness functions — related to the field registry).

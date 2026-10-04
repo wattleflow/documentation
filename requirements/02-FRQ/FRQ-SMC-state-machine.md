@@ -345,7 +345,8 @@ Nema otvorenih stavki.
 
 ## 16. References
 
-- Izvedba: `workflow/src/wattleflow/concrete/state_machine.py` (123 linije)
+- Izvedba: `workflow/src/wattleflow/concrete/state_machine.py`
+- Testovi: `workflow/tests/test_state_machine.py`
 
 ## 17. Change history
 

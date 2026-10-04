@@ -462,6 +462,7 @@ Nema otvorenih stavki.
 ## 16. References
 
 - Izvedba: `workflow/src/wattleflow/concrete/processor.py`
+- Testovi: `workflow/tests/test_processor.py`, `workflow/tests/test_processor_checkpoint.py`, `workflow/tests/test_processor_flush_key.py`, `workflow/tests/test_processor_restore.py`
 
 ## 17. Change history
 

@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="../../requirements/styles/wattleflow.css">
+
 # NFRQ — non-functional requirements register
 
 | | |
@@ -7,7 +9,7 @@
 | **Quality anchor** | ISO/IEC 25010 (ISO/IEC 25012 for data) |
 | **Parents** | [PHILOSOPHY](../../PHILOSOPHY.md) · [METHODOLOGY](../../METHODOLOGY.md) §6 *Traceability* · [DOCTRINE](../../DOCTRINE.md) |
 | **Sibling registers** | [HLRQ](../01-HLRQ/HLRQ-00-INDEX.md) · [FRQ](../02-FRQ/FRQ-000-INDEX.md) |
-| **Language** | EN only — see *Language* below |
+| **Language** | EN only — see4 *Language* below |
 
 This document is an **index**, not a register: each requirement lives in its own file
 (`category-number-slug-EN.md`). The rendering is not the source of truth (D-13) — finding

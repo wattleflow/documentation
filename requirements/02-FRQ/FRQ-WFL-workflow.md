@@ -419,7 +419,8 @@ Zapisana svojstva (ne defekti): upis `runtime:` u `os.environ` je **procesni** n
 
 ## 16. References
 
-- Izvedba: `workflow/src/wattleflow/concrete/workflow.py` (789 linija)
+- Izvedba: `workflow/src/wattleflow/concrete/workflow.py`
+- Testovi: `workflow/tests/test_wattleflow_base.py`, `workflow/tests/test_workflow_factory.py`, `workflow/tests/test_workflow_memento.py`
 
 ## 17. Change history
 

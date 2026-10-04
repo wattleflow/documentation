@@ -427,6 +427,7 @@ Testovi (`workflow/tests`): `test_flow_preconditions.py` (provjere pri gradnji b
 ## 16. References
 
 - Izvedba: `concrete/processor.py`, `concrete/pipeline.py`, `concrete/repository.py`, `concrete/blackboard.py`, `concrete/strategy.py` (workflow) · `blackboards/small.py`, `processors/file.py`, `strategies/documents/*.py` (blackwattle)
+- Testovi: `workflow/tests/test_blackboard.py`, `workflow/tests/test_flow_preconditions.py`, `workflow/tests/test_processor.py`, `workflow/tests/test_repository.py`
 
 ## 17. Change history
 

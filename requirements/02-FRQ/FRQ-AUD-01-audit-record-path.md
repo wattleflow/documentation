@@ -247,7 +247,7 @@ emitirao upozorenje, lijeni proxy otvorio vezu samo da bi bio zapisan.
 **Drugi ulaz.** Sabirnik je i promatrač: promatrani događaj ulazi u isti put kao INFO zapis s
 `msg=Notify`, događajem (`name` ako postoji, inače `str`) kao imenovanim poljem `event` i ostatkom
 argumenata kao poljem `kwargs`; `stacklevel` je 4. To je točka na koju bi se priključilo
-prosljeđivanje vanjskim sustavima (`CLAUDE.md` §6.2).
+prosljeđivanje vanjskim sustavima (`ARCHITECTURE.md` §6.2).
 
 **Promatrač zapisa.** `Audit.observe(observer)` postavlja jedan promatrač na razini procesa
 (poziv `(owner, msg, step, fields)`; vraća prethodnog, a `None` ga uklanja). Poziva se iz
@@ -422,7 +422,7 @@ nemaju predmet.
 
 ## 16. References
 
-- [`audit.py`](../../../workflow/src/wattleflow/helpers/audit.py)
+- Izvedba: `workflow/src/wattleflow/helpers/audit.py`
 
 ## 17. Change history
 

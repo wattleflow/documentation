@@ -9,7 +9,7 @@
 | **Anchor** | ISO/IEC/IEEE 29148 (ISO/IEC 25012 for data) |
 | **Parents** | [PHILOSOPHY](../../PHILOSOPHY.md) · [METHODOLOGY](../../METHODOLOGY.md) §6 *Traceability* · [DOCTRINE](../../DOCTRINE.md) |
 | **Sibling registers** | [HLRQ](../01-HLRQ/HLRQ-00-INDEX.md) · [NFRQ](../03-NFRQ/NFRQ-000-INDEX.md) |
-| **Language** | Index EN; the entries are Croatian (source, `CLAUDE.md` §3.2) |
+| **Language** | Index EN; the entries are Croatian (source, `DOCUMENTATION.md` §3.2) |
 
 This document is an **index**, not a register: each requirement lives in its own file
 (`category-number-slug.md`). The register holds **an identifier, one statement and a link**; the
@@ -21,7 +21,7 @@ requirement is either **primary** (derived from a principle, constraining decisi
 (`METHODOLOGY.md` §6).
 
 **The register runs in both directions.** Some entries **document code that already exists**,
-recovered by reverse engineering (`CLAUDE.md` §4 t.1); others, like the `HLRQ-16` group, **precede
+recovered by reverse engineering (`ARCHITECTURE.md` §4 t.1); others, like the `HLRQ-16` group, **precede
 the code** so that design and architecture can be reviewed, amended and approved before anything is
 written. The entry shape is identical either way — what differs is **Status** and **§Verification**,
 which is where it becomes visible whether a claim was measured or merely stated (D-05). A record is
@@ -29,7 +29,7 @@ a specification of knowledge, not a work log (**P-14**, Parnas & Clements 1986).
 
 **Entries name roles, not classes.** Prose speaks of roles and families; the identifiers live in the
 vocabulary and in the diagrams, which use technical (UML) notation for exactly that purpose
-(`CLAUDE.md` §3.3, **P-08**; a diagram is a view, never a source of truth — **P-20**, D-13).
+(`DOCUMENTATION.md` §3.3, **P-08**; a diagram is a view, never a source of truth — **P-20**, D-13).
 Consequence: renaming a class changes one vocabulary entry, not N places in the texts — and a new
 name enters through a decision, not by appearing in a sentence.
 
@@ -54,9 +54,8 @@ references it (D-12).
 ## HLRQ-01 — the generic layer (`concrete/`)
 
 Parent requirement: [`HLRQ-01`](../01-HLRQ/HLRQ-01-GENERIC-LAYER.md).
-The role axis is **in the vocabulary** as of
- (2026-08-27); its axis is the
-domain ontology (`CLAUDE.md` §1), a closed list of thirteen roles plus `PTN` for the pattern
+The role axis is **in the vocabulary** (2026-08-27); its axis is the
+domain ontology (`ARCHITECTURE.md` §1), a closed list of thirteen roles plus `PTN` for the pattern
 infrastructure that is not a primitive.
 
 | Id | Statement |   | Status |
@@ -77,9 +76,9 @@ infrastructure that is not a primitive.
 | `FRQ-MGR` | Managers of connections, drivers and processors — a name-keyed registry with an operation and teardown at destruction. | [MGR](FRQ-MGR-managers.md) | in code, recorded; defects listed in the entry |
 | `FRQ-OBS` | Thread-safe observable — a list of observers notified outside the lock; one failing observer is logged, not propagated. | [OBS](FRQ-OBS-observable.md) | in code, recorded; defects listed in the entry |
 | `FRQ-SMC` | State machine and its one-shot guard wrapper — transitions only from a table. | [SMC](FRQ-SMC-state-machine.md) | in code, recorded; defects listed in the entry |
-| `FRQ-ITR` | Lazy sync and async iterators — the source is built at the first fetch. | [ITR](FRQ-ITR-lazy-iterators.md) | in code, recorded; defects listed in the entry |
+| `FRQ-ITR` | Lazy sync and async iterators — the source is built at the first fetch. | [ITR](FRQ-ITR-lazy-iterators.md) · `ANL` | in code, recorded; defects listed in the entry |
 | `FRQ-SGT` | Singleton — one instance per concrete subclass, `__init__` runs once. | [SGT](FRQ-SGT-singleton.md) | in code, recorded; defects listed in the entry |
-| `FRQ-HLP` | `Attribute` and `NameHelper` — checks of configuration keys and names for records. | [HLP](FRQ-HLP-helpers.md) | in code, recorded; defects listed in the entry |
+| `FRQ-HLP` | `Attribute` and `NameHelper` — checks of configuration keys and names for records. | [HLP](FRQ-HLP-helpers.md) · `ANL` | in code, recorded; defects listed in the entry |
 | `FRQ-PTN` (exceptions) | Exceptions of the generic layer (`exception.py`). | — | **not yet written** |
 | `FRQ-PRC-01.22` | Two flows the primitives collaborate in — creation (processor → blackboard → create strategy) and persistence (pipeline → blackboard → repository → write strategy → driver); N repositories mean N write strategies over one document. | [PRC](FRQ-PRC-01.22-document-flow.md) | proposed |
 | `FRQ-SER-CNV` | Generic converter — context of a conversion strategy; holds one strategy and runs it, wraps failures in one error class. | [SER](FRQ-SER-CNV-converter.md) | in code, recorded |
@@ -90,17 +89,16 @@ infrastructure that is not a primitive.
 
 > **Declared blind spot (D-11): the category is empty.** The inherited register carries an
 > `FRQ-ORG-01` heading with no content. Fill it per ISO/IEC/IEEE 29148 or withdraw it; until
-> then phase 3 of `CLAUDE.md` §4 is not closed. Tracked in [`TODO`].
+> then phase 3 of `ARCHITECTURE.md` §4 is not closed. Tracked in the worklist (`TODO`).
 
 ## Open — category vocabulary
 
-The role axis is closed and in the vocabulary as of
-: ten primitives (`WFL`, `PRC`,
+The role axis is closed and in the vocabulary (2026-08-27): ten primitives (`WFL`, `PRC`,
 `PIP`, `DRV`, `REP`, `BBD`, `STR`, `CON`, `DOC`, `MEM`) plus `CNV`, `PAR`, `FMT` and `PTN`. The capability axis holds
 `OSCAL`. `ORG` predates both.
 
 **`AUD` and `MAIL` remain provisional** — neither is a primitive nor `concrete/` infrastructure,
 and neither has a parent HLRQ yet. `MAIL` was entered without a recorded decision (2026-08-28): the register is
-held to be sufficient justification, exceptions are decided by the documentation. So does the `HLRQ` class itself (`CLAUDE.md` §3.6). Neither the `FR`→`FRQ`
+held to be sufficient justification, exceptions are decided by the documentation. So does the `HLRQ` class itself (`DOCUMENTATION.md` §3.6). Neither the `FR`→`FRQ`
 nor the `NFR`→`NFRQ` rename of 2026-08-27 has a recorded decision; both are tracked in
 `TODO`.

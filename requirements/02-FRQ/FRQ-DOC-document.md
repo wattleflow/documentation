@@ -369,7 +369,7 @@ promjena tipa dokumenta ne dira nijedan od njih.
 8. Modul deklarira `__all__`; import closure je `stdlib ∪ wattleflow`. ✅
 9. Dokument se može staviti u `set` ili koristiti kao ključ rječnika; hash slaže se s `__eq__` (isti tip i identifikator). ✅
 10. `content` ne diže iznimku u stanju koje je klasa sama proglasila legalnim: dokument uvijek drži sadržaj do `clean()`, a `None` se ne prima. ✅
-11. Podaci su u sadržaju, a metapodaci ih samo opisuju: generička klasa `Document` metapodatke samo opisuje (audit ključevi, `filename`). Odstupanje u `blackwattle` (zapisi u metapodacima) vodi se u [`HLRQ-17`](../blackwattle/requirements/01-HLRQ/HLRQ-17-document-records.md) §6 t.8. ✅
+11. Podaci su u sadržaju, a metapodaci ih samo opisuju: generička klasa `Document` metapodatke samo opisuje (audit ključevi, `filename`). Odstupanje u `blackwattle` (zapisi u metapodacima) vodi se u `HLRQ-17` §6 t.8. ✅
 12. Postoji jedna ruta do vremena, `Now.utc()`: `Document` nema vlastiti sat (`utc_time_stamp` je uklonjen), a audit ključevi `created_at` i `last_change_time` dolaze iz nje; nijedan kod ne traži vrijeme od dokumenta. ✅
 13. Adapter i fasada odbijaju objekt koji nije `IAdaptee` prije svake bazne inicijalizacije (`TypeError`), pa odbijen objekt ne ostavlja ništa napola izgrađeno. ✅
 14. Fasada delegira atribut adaptee-u jednim pristupom (svojstvo se izračuna jednom) i adaptee razrješava pri svakom promašaju, bez predmemorije. ✅
@@ -406,7 +406,8 @@ Nema otvorenih stavki.
 
 ## 16. References
 
-- Izvedba: `workflow/src/wattleflow/concrete/document.py` (286 linija)
+- Izvedba: `workflow/src/wattleflow/concrete/document.py`
+- Testovi: `workflow/tests/test_document_clock.py`, `workflow/tests/test_document_content.py`, `workflow/tests/test_document_facade.py`, `workflow/tests/test_document_hash.py`
 
 ## 17. Change history
 

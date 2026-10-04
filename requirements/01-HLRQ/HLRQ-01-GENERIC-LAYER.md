@@ -53,28 +53,28 @@ Ostale oznake (`PTN`, `HLP`, `ITR`, `MGR`, `OBS`, `ORC`, `SCH`, `SGT`, `SMC`) su
 
 | oznaka | klasa | modul | FRQ |
 |---|---|---|---|
-| **BBD** | `GenericBlackboard` | [`blackboard.py`](../../../workflow/src/wattleflow/concrete/blackboard.py) | [`FRQ-BBD`](../02-FRQ/FRQ-BBD-blackboard.md) |
-| **CON** | `GenericConnection`, `ConnectionObserverInterface` | [`connection.py`](../../../workflow/src/wattleflow/concrete/connection.py) | [`FRQ-CON`](../02-FRQ/FRQ-CON-connection.md) |
-| **DOC** | `Document`, `DocumentAdapter`, `DocumentFacade`, `DummyReadDocument` | [`document.py`](../../../workflow/src/wattleflow/concrete/document.py) | [`FRQ-DOC`](../02-FRQ/FRQ-DOC-document.md) |
-| **DRV** | `GenericDriver`, `LazyDriverProxy` | [`driver.py`](../../../workflow/src/wattleflow/concrete/driver.py) | [`FRQ-DRV`](../02-FRQ/FRQ-DRV-driver.md) |
-| **HLP** | `Attribute`, `NameHelper` | [`helpers.py`](../../../workflow/src/wattleflow/concrete/helpers.py) | [`FRQ-HLP`](../02-FRQ/FRQ-HLP-helpers.md) |
-| **ITR** | `LazyIterator`, `LazyAsyncIterator` | [`iterator.py`](../../../workflow/src/wattleflow/concrete/iterator.py) | [`FRQ-ITR`](../02-FRQ/FRQ-ITR-lazy-iterators.md) |
-| **MEM** | `GenericMemento` | [`memento.py`](../../../workflow/src/wattleflow/concrete/memento.py) | [`FRQ-MEM`](../02-FRQ/FRQ-MEM-memento.md) |
-| **MGR** | `ConnectionManager`, `DriverManager`, `ProcessorManager` | [`manager.py`](../../../workflow/src/wattleflow/concrete/manager.py) | [`FRQ-MGR`](../02-FRQ/FRQ-MGR-managers.md) |
-| **OBS** | `ThreadSafeObservable` | [`observable.py`](../../../workflow/src/wattleflow/concrete/observable.py) | [`FRQ-OBS`](../02-FRQ/FRQ-OBS-observable.md) |
-| **ORC** | `Orchestrator` | [`orchestrator.py`](../../../workflow/src/wattleflow/concrete/orchestrator.py) | [`FRQ-ORC`](../02-FRQ/FRQ-ORC-orchestrator.md) |
-| **PIP** | `GenericPipeline` | [`pipeline.py`](../../../workflow/src/wattleflow/concrete/pipeline.py) | [`FRQ-PIP`](../02-FRQ/FRQ-PIP-pipeline.md) |
-| **PRC** | `GenericProcessor` | [`processor.py`](../../../workflow/src/wattleflow/concrete/processor.py) | [`FRQ-PRC`](../02-FRQ/FRQ-PRC-processor.md) |
-| **PTN** | `Wattleflow` | [`base.py`](../../../workflow/src/wattleflow/concrete/base.py) | [`FRQ-PTN`](../02-FRQ/FRQ-PTN-root-base.md) |
-| **REP** | `GenericRepository`, `RepositoryWithDriver` | [`repository.py`](../../../workflow/src/wattleflow/concrete/repository.py) | [`FRQ-REP`](../02-FRQ/FRQ-REP-repository.md) |
-| **SCH** | `Scheduler` | [`scheduler.py`](../../../workflow/src/wattleflow/concrete/scheduler.py) | [`FRQ-SCH`](../02-FRQ/FRQ-SCH-scheduler.md) |
-| **SER** | `GenericConverter`, `GenericParser`, `GenericFormatter` | [`serialisation.py`](../../../workflow/src/wattleflow/concrete/serialisation.py) | [`FRQ-SER-CNV`](../02-FRQ/FRQ-SER-CNV-converter.md),  [`FRQ-SER-PAR`](../02-FRQ/FRQ-SER-PAR-parser.md), [`FRQ-SER-FMT`](../02-FRQ/FRQ-SER-FMT-formatter.md) |
-| **SGT** | `Singleton` | [`singleton.py`](../../../workflow/src/wattleflow/concrete/singleton.py) | [`FRQ-SGT`](../02-FRQ/FRQ-SGT-singleton.md) |
-| **SMC** | `StateMachine`, `GuardedStateMachine` | [`state_machine.py`](../../../workflow/src/wattleflow/concrete/state_machine.py) | [`FRQ-SMC`](../02-FRQ/FRQ-SMC-state-machine.md) |
-| **STR** | `Strategy`, `StrategyGenerate`, `StrategyCreate`, `StrategyRead`, `StrategyWrite`, `StrategyReadDummy` | [`strategy.py`](../../../workflow/src/wattleflow/concrete/strategy.py) | [`FRQ-STR`](../02-FRQ/FRQ-STR-strategy.md) |
-| **WFL** | `GenericWorkflow`, `WorkflowFactory`, `WorkflowFactoryLogger` | [`workflow.py`](../../../workflow/src/wattleflow/concrete/workflow.py) | [`FRQ-WFL`](../02-FRQ/FRQ-WFL-workflow.md) |
+| **BBD** | `GenericBlackboard` | `blackboard.py` | [`FRQ-BBD`](../02-FRQ/FRQ-BBD-blackboard.md) |
+| **CON** | `GenericConnection`, `ConnectionObserverInterface` | `connection.py` | [`FRQ-CON`](../02-FRQ/FRQ-CON-connection.md) |
+| **DOC** | `Document`, `DocumentAdapter`, `DocumentFacade`, `DummyReadDocument` | `document.py` | [`FRQ-DOC`](../02-FRQ/FRQ-DOC-document.md) |
+| **DRV** | `GenericDriver`, `LazyDriverProxy` | `driver.py` | [`FRQ-DRV`](../02-FRQ/FRQ-DRV-driver.md) |
+| **HLP** | `Attribute`, `NameHelper` | `helpers.py` | [`FRQ-HLP`](../02-FRQ/FRQ-HLP-helpers.md) |
+| **ITR** | `LazyIterator`, `LazyAsyncIterator` | `iterator.py` | [`FRQ-ITR`](../02-FRQ/FRQ-ITR-lazy-iterators.md) |
+| **MEM** | `GenericMemento` | `memento.py` | [`FRQ-MEM`](../02-FRQ/FRQ-MEM-memento.md) |
+| **MGR** | `ConnectionManager`, `DriverManager`, `ProcessorManager` | `manager.py` | [`FRQ-MGR`](../02-FRQ/FRQ-MGR-managers.md) |
+| **OBS** | `ThreadSafeObservable` | `observable.py` | [`FRQ-OBS`](../02-FRQ/FRQ-OBS-observable.md) |
+| **ORC** | `Orchestrator` | `orchestrator.py` | [`FRQ-ORC`](../02-FRQ/FRQ-ORC-orchestrator.md) |
+| **PIP** | `GenericPipeline` | `pipeline.py` | [`FRQ-PIP`](../02-FRQ/FRQ-PIP-pipeline.md) |
+| **PRC** | `GenericProcessor` | `processor.py` | [`FRQ-PRC`](../02-FRQ/FRQ-PRC-processor.md) |
+| **PTN** | `Wattleflow` | `base.py` | [`FRQ-PTN`](../02-FRQ/FRQ-PTN-root-base.md) |
+| **REP** | `GenericRepository`, `RepositoryWithDriver` | `repository.py` | [`FRQ-REP`](../02-FRQ/FRQ-REP-repository.md) |
+| **SCH** | `Scheduler` | `scheduler.py` | [`FRQ-SCH`](../02-FRQ/FRQ-SCH-scheduler.md) |
+| **SER** | `GenericConverter`, `GenericParser`, `GenericFormatter` | `serialisation.py` | [`FRQ-SER-CNV`](../02-FRQ/FRQ-SER-CNV-converter.md),  [`FRQ-SER-PAR`](../02-FRQ/FRQ-SER-PAR-parser.md), [`FRQ-SER-FMT`](../02-FRQ/FRQ-SER-FMT-formatter.md) |
+| **SGT** | `Singleton` | `singleton.py` | [`FRQ-SGT`](../02-FRQ/FRQ-SGT-singleton.md) |
+| **SMC** | `StateMachine`, `GuardedStateMachine` | `state_machine.py` | [`FRQ-SMC`](../02-FRQ/FRQ-SMC-state-machine.md) |
+| **STR** | `Strategy`, `StrategyGenerate`, `StrategyCreate`, `StrategyRead`, `StrategyWrite`, `StrategyReadDummy` | `strategy.py` | [`FRQ-STR`](../02-FRQ/FRQ-STR-strategy.md) |
+| **WFL** | `GenericWorkflow`, `WorkflowFactory`, `WorkflowFactoryLogger` | `workflow.py` | [`FRQ-WFL`](../02-FRQ/FRQ-WFL-workflow.md) |
 
-Enumi i [`DriverMetadata`](../../../workflow/src/wattleflow/concrete/driver.py) nose oznaku svoje klase; iznimke su pattern-infrastruktura (`PTN`), osim
+Enumi i `DriverMetadata` nose oznaku svoje klase; iznimke su pattern-infrastruktura (`PTN`), osim
 `ParserError`, `FormatterError` i `ConverterError`, koje idu uz svoje uloge.
 
 
@@ -88,7 +88,7 @@ Enumi i [`DriverMetadata`](../../../workflow/src/wattleflow/concrete/driver.py) 
 Svaka klasa koja nasljeđuje `Wattleflow`:
 
 1. **Nasljeđuje `Wattleflow` prvo**, ispred svojeg pattern sučelja, i nikad ne imenuje `Audit`
-   sama. Redoslijed baza je **ograničenje, ne stil** — [MRO](../../GLOSSARY.md#abbr-mro) se inače ne linearizira
+   sama. Redoslijed baza je **ograničenje, ne stil** — `MRO` se inače ne linearizira
    (`TODO.md` §`__slots__` i MRO).
 2. **Prosljeđuje cijeli `**kwargs` naviše nepromijenjen.** Razdvajanje logging ključeva od
    ostatka događa se na jednom mjestu, u `Wattleflow.__init__`; podklasa koja to ponovi
@@ -125,7 +125,7 @@ Pravila nose oznaku kategorije kojoj pripadaju (`BR-<oznaka>-<nn>`).
 
 ## 6. Nefunkcionalni zahtjevi
 
-| [NFRQ](../../GLOSSARY.md#abbr-nfrq) | posljedica za ovu sposobnost |
+| `NFRQ` | posljedica za ovu sposobnost |
 |---|---|
 | [`NFRQ-ORG-04`](../03-NFRQ/NFRQ-ORG-04-crosscutting-capability.md) | trinaest uloga je zatvoren popis; *cross-cutting* sposobnost je pozivljivi helper, ne novi primitiv |
 | [`NFRQ-ORG-05`](../03-NFRQ/NFRQ-ORG-05-self-referencing-helpers.md) | metoda koja referira vlastitu klasu je `@classmethod` |

@@ -373,7 +373,8 @@ Nema otvorenih stavki.
 
 ## 16. References
 
-- Izvedba: `workflow/src/wattleflow/concrete/orchestrator.py` (212 linija)
+- Izvedba: `workflow/src/wattleflow/concrete/orchestrator.py`
+- Testovi: `workflow/tests/test_orchestrator.py`
 
 ## 17. Change history
 

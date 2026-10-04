@@ -9,7 +9,7 @@
 | **Nadređeni zahtjev** | [`HLRQ-01`](../01-HLRQ/HLRQ-01-GENERIC-LAYER.md) — zajednički ugovor generičke klase (§4), `BR-PTN-02`, `BR-PTN-05`, `BR-PTN-07` (`__slots__`), `BR-DRV-01` |
 | **Predmet** | `ConnectionManager`, `DriverManager`, `ProcessorManager` (sve `Wattleflow, IObserver`) — registar objekata jedne vrste po imenu, s operacijom nad njima i raspremanjem pri uništenju |
 | **Sestrinski** | [`FRQ-CON`](FRQ-CON-connection.md) · [`FRQ-DRV`](FRQ-DRV-driver.md) · [`FRQ-PRC`](FRQ-PRC-processor.md) (upravljani) · [`FRQ-WFL`](FRQ-WFL-workflow.md) (vlasnik) · [`FRQ-ORC`](FRQ-ORC-orchestrator.md) |
-| **Izvedba** | [`concrete/manager.py`](../../../workflow/src/wattleflow/concrete/manager.py) |
+| **Izvedba** | `concrete/manager.py` |
 | **Dijagrami** | inline (02, 03, 06, 08, 09) — pogledi izvedeni iz koda, ne izvor istine (D-13) |
 
 # Index
@@ -350,7 +350,8 @@ Nema otvorenih stavki.
 
 ## 16. References
 
-- Izvedba: [`concrete/manager.py`](../../../workflow/src/wattleflow/concrete/manager.py)
+- Izvedba: `workflow/src/wattleflow/concrete/manager.py`
+- Testovi: `workflow/tests/test_hot_swap.py`, `workflow/tests/test_manager.py`
 
 ## 17. Change history
 

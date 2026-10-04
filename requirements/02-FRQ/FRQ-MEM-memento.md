@@ -406,7 +406,8 @@ Nalaz izvan opsega `workflow`: `blackwattle/src/wattleflow/blackboards/large.py:
 
 ## 16. References
 
-- Izvedba: `workflow/src/wattleflow/concrete/memento.py` (75 linija)
+- Izvedba: `workflow/src/wattleflow/concrete/memento.py`
+- Testovi: `workflow/tests/test_memento_repr.py`, `workflow/tests/test_memento_store.py`, `workflow/tests/test_processor_checkpoint.py`, `workflow/tests/test_processor_restore.py`, `workflow/tests/test_workflow_memento.py`
 
 ## 17. Change history
 

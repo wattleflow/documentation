@@ -295,7 +295,8 @@ Nema otvorenih stavki.
 
 ## 16. References
 
-- Izvedba: `workflow/src/wattleflow/concrete/observable.py` 
+- Izvedba: `workflow/src/wattleflow/concrete/observable.py`
+- Testovi: `workflow/tests/test_observable.py`
 
 ## 17. Change history
 

@@ -1,0 +1,1104 @@
+# Wattleflow rjecnik — strojno citljivi izvor istine.
+# Nosi JEDAN kontrolirani vokabular: diskurs (entries + acronyms). Vokabular
+# koda zivi u kriteriju po distribuciji (`tools/dictionary.json`), v. biljesku
+# na dnu.
+# Treci registar kontroliranog vokabulara su reference -> LITERATURE.md.
+# DICTIONARY.md je GENERIRANI PRIKAZ ovog registra (D-13: prikaz nije izvor
+# istine). CSV/JSON pogledi izvode se po potrebi.
+#
+# Shema poravnata sa SKOS-om (W3C) radi buduceg RDF eksporta:
+#   term_hr -> skos:prefLabel@hr, term_en -> skos:prefLabel@en,
+#   aliases -> skos:altLabel, definition -> skos:definition@hr,
+# definition_en -> skos:definition@en (en-AU),
+#   related -> skos:related, status: zastarjelo -> owl:deprecated,
+#   scope_note -> skos:scopeNote (razrjesenje viseznacnosti).
+#
+# Upravljanje: natuknica se dodaje/mijenja/deprecira iskljucivo uz dokumentiranu izmjenu.
+
+registry: wattleflow-rjecnik
+registry_version: "0.7.0"   # 0.2.0: apsorbiran vokabular koda (blok `code:`)
+                            # 0.2.1: kategorija OSCAL
+                            # 0.3.0: blok `code:` uklonjen — kriterij koda je
+                            # tools/dictionary.json
+                            # 0.4.0: definition_en, kategorija teorija-dizajna,
+                            # sidra natuknica i GLOSSARY.md
+                            # 0.5.0: natuknica `postulat`; `hipoteza` kao
+                            # opovrgljiv oblik postulata
+                            # 0.6.0: kategorije zahtjeva CNV, FMT, PAR
+                            # 0.6.1: HLRQ-15 postaje HLRQ-01; registar zahtjeva razdvojen po paketu
+                            # 0.7.0: kategorije generickog sloja ORC, SCH, MGR, OBS, SMC, ITR, SGT,
+                            # HLP, SER; oznake FRQ generickih klasa bez numeracije; isti akronim
+                            # smije imati vise znacenja
+languages: [hr, en]
+source_of_truth: true
+generated_views:
+  - path: documentation/DICTIONARY.md
+    note: "ljudski citljiv prikaz; generira se ili verificira prema ovom registru"
+  - path: documentation/GLOSSARY.md
+    note: "engleski prikaz (en-AU) u jednoj tablici sa sidrom po id-u; generira ga tools/glossary.py"
+  - path: documentation/GLOSSARY.html
+    note: "isti sadrzaj s pretrazivanjem po pojmu; generira ga tools/glossary.py"
+
+governance:
+  change_mechanism: dokumentirana-izmjena
+  statuses: [usvojen, privremeno, zastarjelo]
+  entry_criteria:
+    - nosiv za doktrinu
+    - viseznacan u literaturi
+    - koristen u najmanje dva doktrinarna dokumenta
+  precedence: >
+    U sukobu znacenja ovaj registar nadglasava kolokvijalnu upotrebu u svim
+    doktrinarnim dokumentima; sukob s PHILOSOPHY.md ili METHODOLOGY.md je
+    greska koja se razrjesava autor.
+  feeds_hypothesis: H2
+  h2_signal: >
+    Broj razrijesenih viseznacnosti naspram broja nerazrijesenih upotreba u
+    dokumentima (pretraga po forbidden_usages uzorcima).
+
+related_registries:
+  - path: documentation/LITERATURE.md
+    domain: reference (kljucevi 1-66, append-only)
+  - path: documentation/POSTULATE.md
+    domain: tvrdnje (P-01..P-22)
+  - path: documentation/DOCTRINE.md
+    domain: norme (D-02, D-03, D-05, D-07, D-09..D-13)
+# naming_registry.yaml je UKINUT 2026-07-28; njegov sadrzaj je od tada kriterij
+# koda, a od 2026-08-24 zivi samo u `tools/dictionary.json`.
+
+ontological_statuses: [cin, stanje, znak, artefakt, svojstvo, pravilo, pojava, alat]
+layers: [filozofija, policy, princip, metoda, arhitektura, zahtjevi, sve]
+categories:
+  - ontoloska-kategorija   # Dio I
+  - epistemologija-mjerenje # Dio II
+  - artefakt-alat          # Dio III
+  - akronim                # Dio IV
+  - teorija-dizajna # uvrijezeni izrazi teorije dizajna, izvornim nazivom
+  - viseznacnost           # Dio V (scope_note obavezan)
+
+entries:
+
+  # ------------------------------------------------------------------ Dio I
+  - id: odluka
+    term_hr: Odluka
+    term_en: decision
+    category: ontoloska-kategorija
+    ontological_status: cin
+    layer: sve
+    definition: >
+      Evidentiran cin prijelaza: mijenja jedno ili vise stanja (politiku,
+      arhitekturu, kriterij); nosi autora, kontekst, razmotrene alternative,
+      cijenu i temelje. Nepromjenjiva; kasnija odluka je nadomjesta
+      (supersedes), nikad ne prepisuje.
+    definition_en: >
+      A recorded act of transition: it changes one or more states (a policy, an architecture, a
+      criterion) and carries its author, context, alternatives considered, cost and grounding.
+      Immutable — a later decision supersedes it, never rewrites it.
+    references: [44, 45]
+    related: [politika, arhitektura]
+    status: usvojen
+
+  - id: politika
+    term_hr: Politika
+    term_en: policy
+    category: ontoloska-kategorija
+    ontological_status: stanje
+    layer: policy
+    definition: >
+      Normativno stanje na snazi: sto mora vrijediti. Deonticka je (moze se
+      prekrsiti, pa se provodi); donosi je, mijenja i ukida odluka. Svaka
+      politika deklarira provedbeni mehanizam i evaluacijski signal —
+      politika bez oba vodi se kao aspiracija. Kvalifikator obavezan
+      (razvojna, sigurnosna, politika imenovanja).
+    definition_en: >
+      A normative state in force: what must hold. It is deontic — it can be broken, so it is
+      enforced — and a decision creates, changes and withdraws it. Every policy declares an
+      enforcement mechanism and an evaluation signal; without both it is carried as an aspiration.
+      The qualifier is mandatory (development, security, naming policy).
+    references: [22]
+    standards: [OMG SBVR]
+    related: [odluka, kriterij-metoda]
+    status: usvojen
+
+  - id: arhitektura
+    term_hr: Arhitektura
+    term_en: architecture
+    category: ontoloska-kategorija
+    ontological_status: stanje
+    layer: arhitektura
+    definition: >
+      Tehnicko stanje: temeljna svojstva i struktura sustava u njegovu
+      okruzenju (granice, odgovornosti, ovisnosti, ugovori). Nije skup
+      odluka (one su geneza i opravdanje) i nije dijagram (on je prikaz).
+    definition_en: >
+      A technical state: the fundamental properties and structure of a system in its environment —
+      boundaries, responsibilities, dependencies, contracts. It is not a set of decisions (those
+      are its genesis and justification) and not a diagram (that is a view).
+    references: [1, 2]
+    standards: [ISO/IEC/IEEE 42010]
+    related: [opis-arhitekture, prikaz, odluka]
+    status: usvojen
+
+  - id: opis-arhitekture
+    term_hr: Opis arhitekture
+    term_en: architecture description
+    category: ontoloska-kategorija
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Artefakt koji arhitekturu dokumentira; sadrzi poglede, gledista i
+      obrazlozenja. Razlikovati od arhitekture same (stanja).
+    definition_en: >
+      The artefact that documents an architecture; it holds views, viewpoints and rationale.
+      Distinct from the architecture itself, which is a state.
+    standards: [ISO/IEC/IEEE 42010]
+    related: [arhitektura, prikaz]
+    status: usvojen
+
+  - id: kriterij-metoda
+    term_hr: Kriterij / metoda
+    term_en: criterion / method
+    category: ontoloska-kategorija
+    ontological_status: stanje
+    layer: metoda
+    definition: >
+      Mjerno stanje: cime se provjerava konformnost ili kvaliteta (registar,
+      protokol, alat s verzijom). Verzionira se odvojeno od predmeta
+      mjerenja; promjena kriterija mijenja nalaz bez promjene predmeta.
+    definition_en: >
+      A measuring state: what conformance or quality is checked against — a registry, a protocol,
+      a versioned tool. It is versioned separately from what it measures, so changing the
+      criterion changes the finding without changing the subject.
+    references: [22]
+    related: [konformna-mjera, trojka-reproducibilnosti]
+    status: usvojen
+
+  - id: prikaz
+    term_hr: Prikaz / pogled
+    term_en: view
+    category: ontoloska-kategorija
+    ontological_status: znak
+    layer: metoda
+    definition: >
+      Projekcija nekog stanja za odredenu publiku, po deklariranom gledistu
+      (ISO 42010 viewpoint). Generira se iz izvora istine ili se prema njemu
+      verificira; nikad nije izvor istine. Zastarijeva — drift prikaza od
+      stanja ista je klasa problema kao drift dokumentacije.
+    definition_en: >
+      A projection of some state for a stated audience, taken from a declared viewpoint
+      (ISO/IEC/IEEE 42010). It is generated from the source of truth or verified against it, and
+      is never the source of truth. It ages: drift between a view and its state is the same class
+      of problem as documentation drift.
+    references: [38, 51]
+    standards: [ISO/IEC/IEEE 42010]
+    related: [arhitektura, opis-arhitekture]
+    status: usvojen
+
+  - id: filozofija
+    term_hr: Filozofija
+    term_en: philosophy (doctrinal apex)
+    category: ontoloska-kategorija
+    ontological_status: stanje
+    layer: filozofija
+    definition: >
+      Najvisa instanca kaskade: epistemoloski diskurs koji odreduje sto
+      vrijedi kao znanje i kako se revidira; kisobran nad politikama,
+      principima i metodama.
+    definition_en: >
+      The apex of the cascade: the epistemological discourse that settles what counts as knowledge
+      here and how it is revised; the umbrella over policies, principles and methods.
+    related: [doktrina, kaskada]
+    status: usvojen
+
+  - id: doktrina
+    term_hr: Doktrina
+    term_en: doctrine
+    category: ontoloska-kategorija
+    ontological_status: stanje
+    layer: filozofija
+    definition: >
+      Obvezujuci, dokumentirani dio filozofije i njezinih izvedenica; ono
+      cega se ostala dokumentacija mora pridrzavati.
+    definition_en: >
+      The binding, documented part of the philosophy and of what follows from it — what the rest
+      of the documentation must comply with.
+    related: [filozofija, kaskada]
+    status: usvojen
+
+  - id: princip
+    term_hr: Princip
+    term_en: principle
+    category: ontoloska-kategorija
+    ontological_status: stanje
+    layer: princip
+    definition: >
+      Priznato inzenjersko ili znanstveno nacelo usvojeno kao osnova
+      prosudbe (Parnas, SOLID, DRY, Occam...); bira se pod politikama,
+      opravdava metode.
+    definition_en: >
+      A recognised engineering or scientific tenet adopted as a basis for judgement (Parnas,
+      SOLID, DRY, Occam). Principles are chosen under policies and justify methods.
+    references: [1, 2, 29]
+    related: [kaskada, politika]
+    status: usvojen
+
+  - id: kaskada
+    term_hr: Kaskada (subordinacija slojeva)
+    term_en: cascade (layer subordination)
+    category: ontoloska-kategorija
+    ontological_status: pravilo
+    layer: sve
+    definition: >
+      Pravilo da nizi sloj (metoda) ne nadjacava visi (princip, politika,
+      filozofija); prijelaz medu stanjima ide iskljucivo kroz dokumentiranu izmjenu.
+    definition_en: >
+      The rule that a lower layer (a method) never overrides a higher one (a principle, a policy,
+      the philosophy), and that a transition between states happens only with a documented change.
+    related: [odluka, filozofija]
+    status: usvojen
+
+  # ----------------------------------------------------------------- Dio II
+  - id: postulat
+    term_hr: Postulat
+    term_en: postulate
+    category: epistemologija-mjerenje
+    ontological_status: artefakt
+    layer: filozofija
+    definition: >
+      Tvrdnja od koje doktrina polazi i koja se brani ili obara, nikad
+      prihvaca na autoritet: citirani postulat brani podrijetlo (referenca),
+      vlastiti [S] put obrane. Kaze ZASTO norma i zahtjev stoje; ne
+      provjerava se ovdje, nego se koristi. Oboren se povlaci uz dokumentiranu izmjenu.
+      Registar: POSTULATE.md (P-nn).
+    definition_en: >
+      A claim the doctrine starts from and either defends or withdraws,
+      never accepts on authority: a cited postulate is defended by its
+      provenance, an own [S] postulate by a stated path of defence. It
+      says why a norm or requirement holds; it is used here, not tested
+      here. Register: POSTULATE.md (P-nn).
+    related: [hipoteza, doktrina, svjedocanstvo]
+    status: usvojen
+
+  - id: hipoteza
+    term_hr: Hipoteza
+    term_en: hypothesis
+    category: epistemologija-mjerenje
+    ontological_status: artefakt
+    layer: filozofija
+    definition: >
+      Postulat ili druga doktrinarna tvrdnja u opovrgljivom obliku: tvrdnja
+      + mjera + sto bi je oborilo; provjerava se OVDJE, mjerenjem. Tvrdnja
+      bez mjere ostaje konceptualna. Aktivne: H1 (drift), H2 (semanticka
+      entropija), H3 (valjanost instrumenta), H4-DQI (prediktivnost
+      kvalitete). Registar: PHILOSOPHY.md (Hn).
+    definition_en: >
+      A postulate or other doctrinal claim in falsifiable form: the claim,
+      a measure and what would refute it; tested here, by measurement. A
+      claim without a measure stays conceptual. Register: PHILOSOPHY.md (Hn).
+    related: [postulat, svjedocanstvo, valjanost-mjere]
+    status: usvojen
+
+  - id: svjedocanstvo
+    term_hr: Svjedocanstvo
+    term_en: evidence
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: sve
+    definition: >
+      Dokazni status tvrdnje ili odluke: empirijski nalaz, mjerenje,
+      incident, standard ili eksplicitna deklaracija aspiracije. Odsutnost
+      prigovora nije svjedocanstvo.
+    definition_en: >
+      The evidential standing of a claim or a decision: an empirical finding, a measurement, an
+      incident, a standard, or an explicit declaration of aspiration. Absence of objection is not
+      evidence.
+    related: [temelji, hipoteza]
+    status: usvojen
+
+  - id: temelji
+    term_hr: Temelji
+    term_en: grounding
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: sve
+    definition: >
+      Opravdavajuci lanac odluke: informacije -> istrazivanje/konzultacije
+      -> analiza -> zakljucak -> preporuka. Polje zapisa zahtjeva, komplementarno
+      Svjedocanstvu (Temelji prethode odluci; Svjedocanstvo je prati i
+      slijedi).
+    definition_en: >
+      The justifying chain behind a decision: information, then research and consultation,
+      analysis, conclusion, recommendation. A field of a requirement record, complementary to
+      Evidence — grounding precedes the decision, evidence accompanies and follows it.
+    related: [svjedocanstvo]
+    status: usvojen
+
+  - id: mjera-stanja
+    term_hr: Mjera stanja
+    term_en: state measure
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: metoda
+    definition: >
+      Opisuje zatecenu strukturu artefakta; artefakt je dovoljan izvor
+      podataka.
+    definition_en: >
+      A measure describing the structure an artefact currently has; the artefact is a sufficient
+      source of data.
+    references: [11]
+    related: [mjera-odluke]
+    status: usvojen
+
+  - id: mjera-odluke
+    term_hr: Mjera odluke
+    term_en: decision measure
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: metoda
+    definition: >
+      Procjenjuje isplativost izbora pod neizvjesnoscu; trazi razdiobu nad
+      buducim stanjima svijeta.
+    definition_en: >
+      A measure estimating whether a choice pays off under uncertainty; it needs a distribution
+      over future states of the world.
+    references: [6]
+    related: [mjera-stanja, volatilnost]
+    status: usvojen
+
+  - id: konformna-mjera
+    term_hr: Konformna mjera
+    term_en: conformance measure
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: metoda
+    definition: >
+      Mjera relativna na deklarirani kriterij: kaze "uskladeno s ovim
+      skupom", ne "dobro po sebi"; promijeni kriterij — promijeni se broj.
+      Suprotnost: deskriptivna mjera.
+    definition_en: >
+      A measure relative to a declared criterion: it says "aligned with this set", not "good in
+      itself". Change the criterion and the number changes. Its opposite is a descriptive measure.
+    related: [kriterij-metoda, konformnost-vs-kvaliteta]
+    status: usvojen
+
+  - id: valjanost-mjere
+    term_hr: Valjanost mjere
+    term_en: measure validity
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: metoda
+    definition: >
+      Status po protokolu V1-V6 (reprezentacijski uvjet, tip skale,
+      sadrzajna pokrivenost, prediktivna valjanost, osjetljivost, erozija).
+      Mjera bez statusa je tvrdnja na autoritet formule.
+    definition_en: >
+      The standing of a measure under the V1–V6 protocol: representation condition, scale type,
+      content coverage, predictive validity, sensitivity, erosion. A measure without that standing
+      is a claim on the authority of its formula.
+    references: [15, 16, 19, 22, 35]
+    related: [erozija-mjere, vektorski-nalaz]
+    status: usvojen
+
+  - id: erozija-mjere
+    term_hr: Erozija mjere (Goodhart/Campbell)
+    term_en: measure erosion
+    category: epistemologija-mjerenje
+    ontological_status: pojava
+    layer: metoda
+    definition: >
+      Pokazatelj koristen za upravljanje prestaje mjeriti ono sto je mjerio;
+      zato je zadana uporaba mjere dijagnosticka, a upravljacka (gate)
+      eksplicitno ogranicena.
+    definition_en: >
+      An indicator used for control stops measuring what it once measured. Hence the default use
+      of a measure is diagnostic, and its use as a gate is explicitly bounded.
+    references: [22]
+    related: [valjanost-mjere, politika]
+    status: usvojen
+
+  - id: vektorski-nalaz
+    term_hr: Vektorski nalaz
+    term_en: vector finding
+    category: epistemologija-mjerenje
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Rezultat po dimenzijama bez skalarne ukupne ocjene; obavezan gdje su
+      dimenzije nesumjerljive ili skale nominalne/ordinalne.
+    definition_en: >
+      A result reported by dimension with no scalar overall score; mandatory where the dimensions
+      are incommensurable or the scales nominal or ordinal.
+    references: [16, 35]
+    related: [c-snimka, konformna-mjera]
+    status: usvojen
+
+  - id: trojka-reproducibilnosti
+    term_hr: Trojka reproducibilnosti
+    term_en: reproducibility triple
+    category: epistemologija-mjerenje
+    ontological_status: pravilo
+    layer: metoda
+    definition: >
+      (verzija alata, verzija kriterija, verzija platforme); nalaz bez
+      trojke nije reproducibilan.
+    definition_en: >
+      The triple (tool version, criterion version, platform version). A finding without it is not
+      reproducible.
+    related: [c-snimka, kriterij-metoda]
+    status: usvojen
+
+  - id: c-snimka
+    term_hr: C-snimka
+    term_en: conformance snapshot
+    category: epistemologija-mjerenje
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Arhivirani zeleni vektor konformnosti s trojkom, datumom i popisom
+      deklariranih iznimaka; C0 je prva zelena konformnost jezgre.
+    definition_en: >
+      An archived green conformance vector with its triple, its date and the list of declared
+      exceptions. C0 is the first green conformance of the core.
+    related: [vektorski-nalaz, trojka-reproducibilnosti]
+    status: usvojen
+
+  - id: semanticka-entropija
+    term_hr: Semanticka entropija
+    term_en: semantic entropy
+    category: epistemologija-mjerenje
+    ontological_status: pojava
+    layer: sve
+    definition: >
+      Viseznacnost znakova sustava (isti znak, vise uloga; ista uloga, vise
+      znakova); smanjuje se kontroliranim vokabularom. Nulta tocka: jedan
+      TypeVar T s cetiri semantike.
+    definition_en: >
+      Ambiguity in the signs a system uses — one sign in several roles, or one role under several
+      signs. A controlled vocabulary reduces it. The zero point: a single TypeVar `T` carrying
+      four meanings.
+    references: [36, 38]
+    related: [rjecnik-registar]
+    status: usvojen
+
+  - id: slijepa-pjega
+    term_hr: Slijepa pjega
+    term_en: blind spot
+    category: epistemologija-mjerenje
+    ontological_status: svojstvo
+    layer: metoda
+    definition: >
+      Deklarirano nemjereno: ono sto instrument ili proces po konstrukciji
+      ne vidi (izuzeti modul, strateski protivnik, latencija signala).
+      Deklarira se, nikad ne presucuje.
+    definition_en: >
+      Declared unmeasured ground: what an instrument or a process cannot see by construction — an
+      excluded module, a strategic adversary, signal latency. It is declared, never left unsaid.
+    references: [32]
+    related: [valjanost-mjere]
+    status: usvojen
+
+  # ---------------------------------------------------------------- Dio III
+  - id: fr-nfr
+    term_hr: FR / NFR
+    term_en: functional / non-functional requirement
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: zahtjevi
+    definition: >
+      Funkcionalni / nefunkcionalni zahtjev (METHODOLOGY 5). NFR je primaran
+      (iz ciljeva i nacela; prethodi odlukama kao kriterij) ili izveden
+      (generiran odlukom).
+    definition_en: >
+      Functional and non-functional requirement (METHODOLOGY §5). A non-functional requirement is
+      either primary — from goals and principles, preceding decisions as a criterion — or derived,
+      generated by a decision.
+    standards: [ISO/IEC/IEEE 29148, ISO/IEC 25010]
+    related: [politika, odluka]
+    status: usvojen
+
+  - id: registar-imenovanja
+    term_hr: Registar imenovanja
+    term_en: naming registry
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Strojno citljivi kontrolirani vokabular koda: domene, opseg, obitelji
+      baza, uloge TypeVarova, akronimi identifikatora; TARGET vokabular cija
+      odstupanja lint prijavljuje. Od 2026-07-28 zivi kao blok `code:` ovog
+      registra; zasebna datoteka naming_registry.yaml je ukinuta.
+    definition_en: >
+      The machine-readable controlled vocabulary of code: domains, scope, base families, TypeVar
+      roles, identifier acronyms. It is the target vocabulary whose deviations the linter reports.
+      Since 2026-07-28 it lives as the `code:` block of this registry; the separate
+      naming_registry.yaml is withdrawn.
+    related: [wem-lint, rjecnik-registar]
+    status: usvojen
+
+  - id: rjecnik-registar
+    term_hr: Rjecnik (ovaj registar)
+    term_en: doctrine glossary registry
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Kontrolirani rjecnik diskursa; semioticki stabilizator ljudskog jezika
+      doktrine, kao sto je registar imenovanja stabilizator koda. Izvor
+      istine je dictionary.yaml; DICTIONARY.md je generirani prikaz.
+    definition_en: >
+      The controlled vocabulary of discourse; the semiotic stabiliser of the doctrine's human
+      language, as the naming registry is the stabiliser of its code. The source of truth is
+      dictionary.yaml; DICTIONARY.md is a generated view.
+    references: [38, 51]
+    related: [registar-imenovanja, semanticka-entropija]
+    status: usvojen
+
+  - id: wem-lint
+    term_hr: wem_lint
+    term_en: wem_lint
+    category: artefakt-alat
+    ontological_status: alat
+    layer: metoda
+    definition: >
+      Alat konformnosti u dva izdanja (core: sloj sucelja; workflow:
+      registar); vektorski izlaz, verzionirani kriterij, izgraden na
+      frameworku koji provjerava (samoreferentnost).
+    definition_en: >
+      The conformance tool in two editions — core for the interface layer, workflow for the
+      registers. Vectorial output, versioned criterion, and built on the framework it checks
+      (self-reference).
+    related: [vektorski-nalaz, c-snimka, registar-imenovanja]
+    status: usvojen
+
+  - id: dqi
+    term_hr: DQI
+    term_en: data quality index
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Deklarirani zbirni indeks kvalitete podataka nad vektorom dimenzija
+      (ISO 25012 / 8000-8); konforman, ne deskriptivan; primaran je vektor.
+    definition_en: >
+      A declared aggregate index of data quality over a vector of dimensions (ISO/IEC 25012, ISO
+      8000-8). Conformant rather than descriptive; the vector is primary.
+    standards: [ISO/IEC 25012, ISO 8000-8, ISO 8000-61]
+    related: [vektorski-nalaz, valjanost-mjere]
+    status: usvojen
+
+  - id: wattleflow-core
+    term_hr: Wattleflow Core
+    term_en: Wattleflow Core
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: arhitektura
+    definition: >
+      Distribucija sucelja dizajn-paterna: cisti ugovori, bez politika,
+      stdlib-only.
+    definition_en: >
+      The distribution of design-pattern interfaces: clean contracts, no policy, standard library
+      only.
+    related: [wattleflow-workflow]
+    status: usvojen
+
+  - id: wattleflow-workflow
+    term_hr: Wattleflow Workflow
+    term_en: Wattleflow Workflow
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: arhitektura
+    definition: >
+      Zero-trust rjesenje za podatkovne tokove gradeno na Coreu; nosi
+      konkretne politike (concrete/ sloj).
+    definition_en: >
+      The zero-trust solution for data flows built on Core; it carries the concrete policies (the
+      `concrete/` layer).
+    related: [wattleflow-core, zero-trust]
+    status: usvojen
+
+  - id: wem
+    term_hr: WEM
+    term_en: Wattleflow Engineering Methodology
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Wattleflow inzenjerska metodologija (Svezak I = METHODOLOGY.md).
+    definition_en: >
+      The Wattleflow engineering methodology (Volume I = METHODOLOGY.md).
+    related: [filozofija]
+    status: usvojen
+
+  # ----------------------------------------------------------------- Dio IV
+  - id: akronimi
+    term_hr: Akronimi (tablica)
+    term_en: acronyms
+    category: akronim
+    ontological_status: artefakt
+    layer: sve
+    definition: >
+      Skupna natuknica; pojedinacni akronimi u polju acronyms nize.
+    definition_en: >
+      A collective entry; the individual acronyms are in the `acronyms` field below.
+    status: usvojen
+
+  # ------------------------------------------------------------------ Dio V
+  - id: viseznacnost-arhitektura
+    term_hr: Arhitektura vs opis vs dijagram
+    term_en: architecture vs description vs diagram
+    category: viseznacnost
+    ontological_status: znak
+    layer: sve
+    definition: >
+      Tri kategorije: stanje / artefakt / znak (ISO 42010).
+    definition_en: >
+      Three categories: the state, the artefact, the sign (ISO/IEC/IEEE 42010).
+    scope_note: >
+      Recenica "arhitektura je zastarjela" najcesce znaci "prikaz je
+      zastario"; te se tvrdnje ne smiju mijesati.
+    related: [arhitektura, opis-arhitekture, prikaz]
+    status: usvojen
+
+  - id: viseznacnost-politika
+    term_hr: Politika (policy vs politics)
+    term_en: policy vs politics
+    category: viseznacnost
+    ontological_status: znak
+    layer: policy
+    definition: >
+      Ovdje uvijek policy (normativno stanje s provedbom i evaluacijom),
+      nikad politics.
+    definition_en: >
+      Here always policy — a normative state with enforcement and evaluation — never politics.
+    scope_note: Kvalifikator obavezan (razvojna, sigurnosna, imenovanja).
+    related: [politika]
+    status: usvojen
+
+  - id: viseznacnost-mjera
+    term_hr: Mjera vs metrika vs indeks
+    term_en: measure vs metric vs index
+    category: viseznacnost
+    ontological_status: znak
+    layer: metoda
+    definition: >
+      Mjera je homomorfizam iz empirijskog u numericki sustav [15]; metrika
+      se koristi samo kolokvijalno (bez tvrdnje o reprezentacijskom uvjetu);
+      indeks je deklarirana agregacija (npr. DQI) — konforman, ne mjerni
+      rezultat po sebi.
+    definition_en: >
+      A measure is a homomorphism from an empirical to a numerical system [15]; metric is used
+      only colloquially, claiming nothing about the representation condition; an index is a
+      declared aggregation (DQI, for one) — conformant, not a measurement result in itself.
+    scope_note: >
+      U doktrinarnim tekstovima "metrika" se izbjegava osim u citatima i
+      ustaljenim slozenicama (npr. "operativne metrike"); gdje se tvrdi
+      mjerenje, koristi se "mjera" uz status valjanosti.
+    references: [15]
+    related: [valjanost-mjere, dqi]
+    status: usvojen
+
+  - id: volatilnost
+    term_hr: Volatilnost
+    term_en: volatility
+    category: viseznacnost
+    ontological_status: pojava
+    layer: metoda
+    definition: >
+      Pokriva tri razlicita fenomena; tvrdnje o volatilnosti moraju
+      imenovati fenomen.
+    definition_en: >
+      The word covers three distinct phenomena; a claim about volatility must name which one it
+      means.
+    scope_note: >
+      (1) stohasticka (zahtjevi, egzogena); (2) strukturna (tehnologija,
+      koncentracija dobavljaca); (3) strateska (protivnik koji bira potez
+      nakon arhitektonske odluke [32]).
+    references: [6, 32]
+    related: [mjera-odluke, slijepa-pjega]
+    status: usvojen
+
+  - id: viseznacnost-iteracija
+    term_hr: Iteracija
+    term_en: iteration
+    category: viseznacnost
+    ontological_status: znak
+    layer: sve
+    definition: >
+      Ponavljanje ciklusa pod kaskadom s revizijom uz dokumentiranu izmjenu; ne implicira
+      agilni proces.
+    definition_en: >
+      Repetition of a cycle under the cascade, revised with a documented change. It does not imply
+      an agile process.
+    scope_note: >
+      Povratna petlja je znanstveni instrument (PDSA nad teorijom [47][48]),
+      ne procesna ideologija.
+    references: [40, 41, 47, 48]
+    related: [kaskada]
+    status: usvojen
+
+  - id: zero-trust
+    term_hr: Zero-trust
+    term_en: zero trust
+    category: viseznacnost
+    ontological_status: stanje
+    layer: policy
+    definition: >
+      Imenovana sigurnosna politika (policy sloj).
+    definition_en: >
+      A named security policy, at the policy layer.
+    scope_note: >
+      Epistemicka jezgra iz koje slijedi ("povjerenje se dokazuje") pripada
+      filozofiji; zero-trust se ne koristi kao naziv filozofijske razine.
+    related: [politika, filozofija]
+    status: usvojen
+
+  - id: viseznacnost-modul
+    term_hr: Modul
+    term_en: module
+    category: viseznacnost
+    ontological_status: znak
+    layer: arhitektura
+    definition: >
+      U Parnasovu smislu: granica oko odluke koja se moze promijeniti [1].
+    definition_en: >
+      In Parnas's sense: the boundary around a decision that may change [1].
+    scope_note: >
+      Ne "datoteka" ni "paket"; gdje se misli na Python modul, reci "Python
+      modul".
+    references: [1]
+    related: [arhitektura]
+    status: usvojen
+
+  - id: konformnost-vs-kvaliteta
+    term_hr: Konformnost vs kvaliteta
+    term_en: conformance vs quality
+    category: viseznacnost
+    ontological_status: znak
+    layer: metoda
+    definition: >
+      Konformnost je uskladenost s deklariranim kriterijem (moze se postici
+      i losim kriterijem); kvaliteta trazi valjanost kriterija (V1-V6).
+    definition_en: >
+      Conformance is alignment with a declared criterion, and is reachable with a poor one;
+      quality additionally requires that criterion to be valid (V1–V6).
+    scope_note: Zeleni vektor dokazuje konformnost, ne kvalitetu.
+    related: [konformna-mjera, valjanost-mjere, c-snimka]
+    status: usvojen
+
+# --------------------------------------------------------------- akronimi
+  # ------------------------------------------------------- teorija dizajna
+  # Izvorni naziv je term_en i term_hr (wattleflow-glossary §2).
+  - id: separation-of-concerns
+    term_hr: Separation of Concerns
+    term_en: Separation of Concerns
+    category: teorija-dizajna
+    ontological_status: pravilo
+    layer: princip
+    definition: >
+      Jedan aspekt problema razmatra se odvojeno od ostalih, uz svijest o njihovoj
+      vezi; u dizajnu svaka briga ima jednu komponentu i jedan ugovor (P-22).
+    definition_en: >
+      Considering one aspect of a problem in isolation from the others while
+      keeping their relationship in view. In design, each concern is owned by one
+      component with one contract (P-22).
+    references: [65]
+    related: [information-hiding, design-pattern]
+    status: usvojen
+
+  - id: information-hiding
+    term_hr: information hiding
+    term_en: information hiding
+    category: teorija-dizajna
+    ontological_status: pravilo
+    layer: princip
+    definition: >
+      Modul je granica oko odluke koja se moze promijeniti; odluka se skriva iza
+      sucelja da njezina promjena ne dira ostatak sustava (P-11).
+    definition_en: >
+      A module is the boundary around a design decision likely to change; the
+      decision sits behind an interface so that changing it leaves the rest of the
+      system untouched (P-11).
+    references: [1]
+    related: [separation-of-concerns]
+    status: usvojen
+
+  - id: design-pattern
+    term_hr: design pattern
+    term_en: design pattern
+    category: teorija-dizajna
+    ontological_status: pravilo
+    layer: arhitektura
+    definition: >
+      Imenovano, ponovljivo rjesenje problema dizajna koji se ponavlja u danom
+      kontekstu, opisano sudionicima i njihovom suradnjom; rjecnik wattleflow.core.
+    definition_en: >
+      A named, reusable solution to a recurring design problem in a given context,
+      described by its participants and how they collaborate. The vocabulary of
+      wattleflow.core.
+    references: [66]
+    related: [template-method, abstract-factory, builder, strategy-pattern, pattern-map]
+    status: usvojen
+
+  - id: template-method
+    term_hr: Template Method
+    term_en: Template Method
+    category: teorija-dizajna
+    ontological_status: pravilo
+    layer: arhitektura
+    definition: >
+      Bazna operacija fiksira redoslijed koraka, a odabrane korake prepusta
+      podklasama kroz hookove.
+    definition_en: >
+      A behavioural pattern in which a base operation fixes the order of steps and
+      defers selected steps to subclasses through hooks.
+    references: [66]
+    related: [hook, design-pattern]
+    status: usvojen
+
+  - id: hook
+    term_hr: hook
+    term_en: hook
+    category: teorija-dizajna
+    ontological_status: artefakt
+    layer: arhitektura
+    definition: >
+      Metoda koju Template Method poziva u zadanom koraku, a podklasa je
+      implementira ili nadjacava.
+    definition_en: >
+      A method a template method calls at a defined step, which a subclass
+      implements or overrides.
+    references: [66]
+    related: [template-method]
+    status: usvojen
+
+  - id: abstract-factory
+    term_hr: Abstract Factory
+    term_en: Abstract Factory
+    aliases: [factory]
+    category: teorija-dizajna
+    ontological_status: pravilo
+    layer: arhitektura
+    definition: >
+      Kreacijski patern koji stvara srodne objekte kroz sucelje, bez imenovanja
+      konkretnih klasa.
+    definition_en: >
+      A creational pattern that creates related objects through an interface
+      without naming their concrete classes.
+    scope_note: >
+      U wattleflowu IFactory.create je staticka metoda; "factory" u
+      tekstu oznacava tu ulogu.
+    references: [66]
+    related: [builder, design-pattern]
+    status: usvojen
+
+  - id: builder
+    term_hr: Builder
+    term_en: Builder
+    category: teorija-dizajna
+    ontological_status: pravilo
+    layer: arhitektura
+    definition: >
+      Kreacijski patern koji slozeni objekt gradi korak po korak i vraca ga jednom
+      operacijom build.
+    definition_en: >
+      A creational pattern that assembles a complex object step by step and
+      returns it from a single build operation.
+    references: [66]
+    related: [abstract-factory, design-pattern]
+    status: usvojen
+
+  - id: strategy-pattern
+    term_hr: Strategy (patern)
+    term_en: Strategy (pattern)
+    category: teorija-dizajna
+    ontological_status: pravilo
+    layer: arhitektura
+    definition: >
+      Zamjenjivi algoritmi iza jednog sucelja, pa pozivatelj bira algoritam bez
+      izmjene vlastitog koda.
+    definition_en: >
+      A behavioural pattern that places interchangeable algorithms behind one
+      interface, so the caller selects one without changing its own code.
+    scope_note: >
+      Kratica STR oznacava kategoriju zahtjeva za strategije, ne patern.
+    references: [66]
+    related: [design-pattern]
+    status: usvojen
+
+  - id: rule-of-three
+    term_hr: Rule of Three
+    term_en: Rule of Three
+    category: teorija-dizajna
+    ontological_status: pravilo
+    layer: princip
+    definition: >
+      Apstrakcija se izvodi iz tri stvarna slucaja, ne iz dva slicna
+      (NFRQ-ORG-08).
+    definition_en: >
+      An abstraction is derived from three real cases, not from two similar ones
+      (NFRQ-ORG-08).
+    scope_note: >
+      Izvor nije kljuc u LITERATURE.md.
+    related: [design-pattern]
+    status: usvojen
+
+  - id: fixed-point
+    term_hr: fixed point
+    term_en: fixed point
+    category: teorija-dizajna
+    ontological_status: svojstvo
+    layer: metoda
+    definition: >
+      Vrijednost koju funkcija preslikava u samu sebe; ovdje par pretvorbi kod
+      kojeg daljnje pisanje i citanje procitanog ne mijenja rezultat.
+    definition_en: >
+      A value a function maps to itself. Here, a conversion pair whose output is
+      unchanged by a further write and read.
+    related: [round-trip]
+    status: usvojen
+
+  - id: round-trip
+    term_hr: round trip
+    term_en: round trip
+    category: teorija-dizajna
+    ontological_status: cin
+    layer: metoda
+    definition: >
+      Pretvorba podataka u drugi format i natrag; round trip bez gubitka vraca
+      izvorni sadrzaj.
+    definition_en: >
+      Converting data into another format and back; a lossless round trip returns
+      the original content.
+    related: [fixed-point]
+    status: usvojen
+
+  - id: pattern-map
+    term_hr: pattern mapa
+    term_en: pattern map
+    category: artefakt-alat
+    ontological_status: artefakt
+    layer: metoda
+    definition: >
+      Tablica koju wattleflow-patterns daje po klasi: uloga, core sucelje, concrete
+      baza, kolaboratori, izvor konfiguracije i rupe; ulaz za wattleflow-code.
+    definition_en: >
+      The table wattleflow-patterns produces for each class: role, core interface,
+      concrete base, collaborators, configuration source and gaps. The input to
+      wattleflow-code.
+    related: [design-pattern]
+    status: usvojen
+
+  - id: release-tag
+    term_hr: tag izdanja
+    term_en: release tag
+    category: artefakt-alat
+    ontological_status: znak
+    layer: metoda
+    definition: >
+      Oznaka izdanja koda koje nosi izmjenu (make next); upisuje se u komentar uz izmjenu.
+    definition_en: >
+      The version label of the code release that carries a change (make next),
+      recorded in the comment beside the change.
+    status: usvojen
+
+acronyms:
+  - {id: ABS,  expansion: "abstractness (wem_lint dimenzija)", note: "vektor konformnosti", definition_en: "A dimension of the conformance vector reported by [wem_lint](#wem-lint): how much of a package is abstract rather than concrete."}
+  - {id: ARI,  expansion: "adjusted Rand index", references: [21], definition_en: "A measure of agreement between two partitions of the same set, corrected for chance; used when comparing module partitions."}
+  - {id: AST,  expansion: "abstract syntax tree", definition_en: "The parsed form of source code that the linters read, so a finding follows the structure of the code rather than its text."}
+  - {id: CIA,  expansion: "confidentiality, integrity, availability", note: "tri razlicita grafa prijetnje", definition_en: "The three properties a security requirement may protect; each has its own threat graph, so a claim names which one it means ([NFRQ-SEC-09…14](requirements/03-NFRQ/NFRQ-000-INDEX.md))."}
+  - {id: DQI,  expansion: "data quality index", definition_en: "See the term entry [data quality index](#dqi): a declared aggregate over a vector of quality dimensions."}
+  - {id: EOL, expansion: "end of life", note: "politika verzija", definition_en: "The point at which a Python version stops receiving support, which the version policy takes as the floor for the oldest supported release."}
+  - {id: FR,   expansion: "functional requirement", definition_en: "A requirement stating what the system does, under ISO/IEC/IEEE 29148; in this tree the identifier is written FRQ. See [functional / non-functional requirement](#fr-nfr)."}
+  - {id: HDR,  expansion: "header (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: whether a module carries the declared header block."}
+  - {id: IMP,  expansion: "imports (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: what a module imports, which is what decides its home distribution ([zero trust](#zero-trust))."}
+  - {id: LSP,  expansion: "Liskov substitution principle", references: [67, 68], definition_en: "A subtype must be usable wherever its base type is expected, without the caller knowing the difference."}
+  - {id: MDL,  expansion: "minimum description length", references: [13], definition_en: "The principle that the best model of data is the one that describes it in the fewest bits, model and residual counted together."}
+  - {id: MRO,  expansion: "method resolution order (Python C3)", definition_en: "The order in which Python resolves an attribute across base classes (the C3 linearisation) — what decides which implementation a class actually inherits."}
+  - {id: NCD,  expansion: "normalized compression distance", references: [14], definition_en: "A similarity measure derived from how much two artefacts compress together compared with separately."}
+  - {id: NFRQ, expansion: "non-functional requirement", note: "registar requirements/03-NFRQ/; oznaka NFRQ-<KAT>-NN (preimenovano iz NFR 2026-08-27, bez zapisane odluke)", definition_en: "A requirement stating how well the system works, under ISO/IEC 25010, carried in the register requirements/03-NFRQ/. See [functional / non-functional requirement](#fr-nfr)."}
+  - {id: FRQ,  expansion: "functional requirement", note: "registar requirements/02-FRQ/; oznaka FRQ-<KAT>-NN[.M] (preimenovano iz FR 2026-08-27, bez zapisane odluke)", definition_en: "A requirement stating what the system does, carried in the register requirements/02-FRQ/. See [functional / non-functional requirement](#fr-nfr)."}
+  - {id: NMI,  expansion: "normalized mutual information", references: [20], definition_en: "The mutual information between two partitions, normalised to [0, 1]; one of the few quantities here with the properties of a true percentage."}
+  - {id: ORG,  expansion: "kategorija organizacijskih NFR-ova (NFRQ-ORG-NN)", definition_en: "The organisational category of non-functional requirements — module layout, naming, locality of dependencies (NFRQ-ORG-NN)."}
+  - {id: OSCAL, expansion: "Open Security Controls Assessment Language (NIST)", note: "ujedno kategorija zahtjeva za OSCAL sloj u blackwattle (FRQ-OSCAL-NN.M)", definition_en: "NIST's machine-readable format for security controls, and here also the requirement category for the compliance layer in blackwattle (FRQ-OSCAL-NN.M)."}
+  - {id: PDSA, expansion: "plan-do-study-act (Shewhart/Deming)", references: [47, 48], definition_en: "Shewhart's cycle as Deming restated it: plan, do, study, act — the ancestor of the iteration this methodology uses under the [cascade](#kaskada)."}
+  - {id: SBOM, expansion: "software bill of materials", note: "SPDX/CycloneDX; NFRQ-SEC-03", definition_en: "The machine-readable inventory of what a build contains, in SPDX or CycloneDX form; third-party integrity rests on it rather than on a mechanism of our own ([NFRQ-SEC-03](requirements/03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md))."}
+  - {id: SBVR, expansion: "Semantics of Business Vocabulary and Rules (OMG)", definition_en: "An OMG standard for stating business vocabulary and rules in a form both people and machines can read."}
+  - {id: SFX,  expansion: "side effects (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: side effects observed at import time."}
+  - {id: STA,  expansion: "state (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: declared state and its transitions."}
+  - {id: TYP,  expansion: "type variables (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: type variables and whether they are named by role (NFRQ-ORG-03)."}
+  - {id: WEM,  expansion: "Wattleflow Engineering Methodology", definition_en: "See [Wattleflow Engineering Methodology](#wem)."}
+  - {id: BBD, expansion: "Blackboard", note: "kategorija zahtjeva po ulozi (FRQ-BBD; specijalizacije FRQ-BBD-NN.M)", definition_en: "The Blackboard role in the domain ontology, and the requirement category on the role axis (FRQ-BBD for the generic class; FRQ-BBD-NN.M for specialisations)."}
+  - {id: CON, expansion: "Connection", note: "kategorija zahtjeva po ulozi (FRQ-CON; specijalizacije FRQ-CON-NN.M)", definition_en: "The Connection role in the domain ontology, and the requirement category on the role axis (FRQ-CON for the generic class; FRQ-CON-NN.M for specialisations)."}
+  - {id: DOC, expansion: "Document", note: "kategorija zahtjeva po ulozi (FRQ-DOC; specijalizacije FRQ-DOC-NN.M)", definition_en: "The Document role in the domain ontology, and the requirement category on the role axis (FRQ-DOC for the generic class; FRQ-DOC-NN.M for specialisations)."}
+  - {id: DRV, expansion: "Driver", note: "kategorija zahtjeva po ulozi (FRQ-DRV; specijalizacije FRQ-DRV-NN.M)", definition_en: "The Driver role in the domain ontology, and the requirement category on the role axis (FRQ-DRV for the generic class; FRQ-DRV-NN.M for specialisations)."}
+  - {id: MEM, expansion: "Memento", note: "kategorija zahtjeva po ulozi (FRQ-MEM; specijalizacije FRQ-MEM-NN.M)", definition_en: "The Memento role in the domain ontology, and the requirement category on the role axis (FRQ-MEM for the generic class; FRQ-MEM-NN.M for specialisations)."}
+  - {id: MEM, expansion: "memory", note: "kategorija NFRQ-MEM-NN (privremena)", definition_en: "The memory category of non-functional requirements, provisional (NFRQ-MEM-NN); on the FRQ axis MEM names the Memento role."}
+  - {id: PIP, expansion: "Pipeline", note: "kategorija zahtjeva po ulozi (FRQ-PIP; specijalizacije FRQ-PIP-NN.M)", definition_en: "The Pipeline role in the domain ontology, and the requirement category on the role axis (FRQ-PIP for the generic class; FRQ-PIP-NN.M for specialisations)."}
+  - {id: PRC, expansion: "Processor", note: "kategorija zahtjeva po ulozi (FRQ-PRC; specijalizacije FRQ-PRC-NN.M)", definition_en: "The Processor role in the domain ontology, and the requirement category on the role axis (FRQ-PRC for the generic class; FRQ-PRC-NN.M for specialisations). It is also the historical prefix of the blackwattle decision series, from the days the distribution was called processors."}
+  - {id: PTN, expansion: "Pattern", note: "kategorija zahtjeva za korijensku bazu Wattleflow (FRQ-PTN)", definition_en: "The requirement category of the root base of the generic layer (FRQ-PTN); the other pattern-infrastructure categories are ORC, SCH, MGR, OBS, SMC, ITR, SGT and HLP."}
+  - {id: REP, expansion: "Repository", note: "kategorija zahtjeva po ulozi (FRQ-REP; specijalizacije FRQ-REP-NN.M)", definition_en: "The Repository role in the domain ontology, and the requirement category on the role axis (FRQ-REP for the generic class; FRQ-REP-NN.M for specialisations)."}
+  - {id: STR, expansion: "Strategy", note: "kategorija zahtjeva po ulozi (FRQ-STR; specijalizacije FRQ-STR-NN.M)", definition_en: "The Strategy role in the domain ontology, and the requirement category on the role axis (FRQ-STR for the generic class; FRQ-STR-NN.M for specialisations)."}
+  - {id: WFL, expansion: "Workflow", note: "kategorija zahtjeva po ulozi (FRQ-WFL; specijalizacije FRQ-WFL-NN.M)", definition_en: "The Workflow role in the domain ontology, and the requirement category on the role axis (FRQ-WFL for the generic class; FRQ-WFL-NN.M for specialisations). It is also the prefix of the workflow decision series."}
+  - {id: CNV, expansion: "Converter", note: "uloga unutar skupine SER (FRQ-SER-CNV)", definition_en: "The Converter role in the domain ontology, carried by the SER group (FRQ-SER-CNV); FRQ-CNV-NN.M is used by specialisations in blackwattle."}
+  - {id: FMT, expansion: "Formatter", note: "uloga unutar skupine SER (FRQ-SER-FMT)", definition_en: "The Formatter role in the domain ontology, carried by the SER group (FRQ-SER-FMT)."}
+  - {id: PAR, expansion: "Parser", note: "uloga unutar skupine SER (FRQ-SER-PAR)", definition_en: "The Parser role in the domain ontology, carried by the SER group (FRQ-SER-PAR)."}
+  - {id: SER, expansion: "Serialisation (granica formata)", note: "skupina zahtjeva za Converter, Parser i Formatter (FRQ-SER-CNV, FRQ-SER-PAR, FRQ-SER-FMT)", definition_en: "The requirement group for the three roles on the format boundary of the generic layer: Converter (CNV), Parser (PAR) and Formatter (FMT)."}
+  - {id: HLP, expansion: "Helpers", note: "kategorija zahtjeva za pomocne klase Attribute i NameHelper (FRQ-HLP)", definition_en: "The requirement category of the stateless helper classes `Attribute` and `NameHelper` of the generic layer (FRQ-HLP)."}
+  - {id: SCH, expansion: "Scheduler", note: "kategorija zahtjeva za Scheduler (FRQ-SCH)", definition_en: "The requirement category of the scheduler, an event source that drives one orchestrator (FRQ-SCH)."}
+  - {id: MGR, expansion: "Manager", note: "kategorija zahtjeva za upravitelje konekcija, drivera i procesora (FRQ-MGR)", definition_en: "The requirement category of the managers of connections, drivers and processors (FRQ-MGR)."}
+  - {id: SMC, expansion: "State machine", note: "kategorija zahtjeva za automat stanja (FRQ-SMC)", definition_en: "The requirement category of the state machine and its one-shot guard (FRQ-SMC)."}
+  - {id: ITR, expansion: "Iterator", note: "kategorija zahtjeva za lijene iteratore (FRQ-ITR)", definition_en: "The requirement category of the lazy synchronous and asynchronous iterators (FRQ-ITR)."}
+  - {id: SGT, expansion: "Singleton", note: "kategorija zahtjeva za Singleton (FRQ-SGT)", definition_en: "The requirement category of the singleton base, one instance per concrete subclass (FRQ-SGT)."}
+  - {id: OBS, expansion: "Observable", note: "kategorija zahtjeva za nit-siguran promatrani objekt (FRQ-OBS)", definition_en: "The requirement category of the thread-safe observable (FRQ-OBS). On the quality axis OBS means observability (NFRQ-OBS-NN); the prefix FRQ- or NFRQ- tells them apart."}
+  - {id: OBS, expansion: "observability", note: "kategorija NFRQ-OBS-NN", definition_en: "The observability category of non-functional requirements: audit levels, fields, ownership and volume of records, admissibility of metrics (NFRQ-OBS-NN)."}
+  - {id: ORC, expansion: "Orchestrator", note: "kategorija zahtjeva za Orchestrator (FRQ-ORC)", definition_en: "The requirement category of the orchestrator that runs a set of processors and tells listeners (FRQ-ORC). The same abbreviation also names a storage format, Optimized Row Columnar."}
+  - {id: FAC,  expansion: "facade (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: the public surface a package presents (its `__all__`)."}
+  - {id: EXC,  expansion: "exclusions (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: declared exclusions, so what the tool did not measure stays visible ([blind spot](#slijepa-pjega))."}
+
+  # kratice iz zapisa zahtjeva i dizajna; definition_en u en-AU
+  - {id: BR,    expansion: "business rule", note: "oznaka BR-NN u HLRQ", definition_en: "A rule of a capability stated in a high-level requirement and cited by its functional requirements."}
+  - {id: EV,    expansion: "event", note: "oznaka EVnn okidaca u FRQ", definition_en: "A trigger that starts a flow in a functional requirement."}
+  - {id: HLRQ,  expansion: "high-level requirement", note: "registar requirements/01-HLRQ/ (generički sloj, HLRQ-01) i blackwattle/requirements/01-HLRQ/ (paket blackwattle)", definition_en: "A requirement that carries the narrative, business rules and scope of one capability."}
+  - {id: NFR,   expansion: "non-functional requirement", note: "stariji oblik; oznaka je NFRQ", status: zastarjelo, definition_en: "The older spelling of the non-functional requirement identifier; the register writes NFRQ. See [functional / non-functional requirement](#fr-nfr)."}
+  - {id: SEC, expansion: "security", note: "kategorija NFRQ-SEC-NN", definition_en: "The security category of non-functional requirements (NFRQ-SEC-NN)."}
+  - {id: FUN,   expansion: "functional suitability", note: "provizorna kategorija NFRQ-FUN-NN; ceka dokumentiranu izmjenu", status: privremeno, definition_en: "The functional-suitability quality category of ISO/IEC 25010, used provisionally for NFRQ-FUN-NN while its admission awaits a documented change."}
+  - {id: PRF,   expansion: "performance efficiency", note: "provizorna kategorija NFRQ-PRF-NN; ceka dokumentiranu izmjenu", status: privremeno, definition_en: "The performance-efficiency quality category of ISO/IEC 25010, used provisionally for NFRQ-PRF-NN while its admission awaits a documented change."}
+  - {id: GFM,   expansion: "GitHub Flavored Markdown", note: "vlastito ime, americki pravopis", definition_en: "The Markdown dialect GitHub renders, which is the target when a converted document has to survive review in a repository."}
+  - {id: OOXML, expansion: "Office Open XML", note: "ECMA-376 / ISO/IEC 29500", definition_en: "The document format standardised as ECMA-376 and ISO/IEC 29500; the container behind .docx."}
+  - {id: ECMA,  expansion: "Ecma International", note: "ranije European Computer Manufacturers Association", definition_en: "The standards body that publishes ECMA-376, among others; formerly the European Computer Manufacturers Association."}
+  - {id: ISO,   expansion: "International Organization for Standardization", note: "vlastito ime", definition_en: "The international standards body whose 25010, 25012 and 42010 anchor the quality, data-quality and architecture-description vocabulary used here."}
+  - {id: IEC,   expansion: "International Electrotechnical Commission", definition_en: "The international electrotechnical standards body, joint publisher with ISO of the 25010 and 29500 series."}
+  - {id: PSPF,  expansion: "Protective Security Policy Framework", note: "Australian Government", definition_en: "The Australian Government's protective security framework, whose markings a document may have to carry and preserve."}
+  - {id: DLM,   expansion: "dissemination limiting marker", note: "PSPF", definition_en: "A PSPF marking that limits how far a document may be passed on; it has to survive conversion, not merely be recorded."}
+  - {id: APP, expansion: "Australian Privacy Principles", note: "Privacy Act 1988 (Cth)", references: [64], definition_en: "The privacy principles of the Privacy Act 1988 (Cth); APP 3 and APP 11 bound what a pipeline may collect and how it must hold it."}
+  - {id: PII,   expansion: "personally identifiable information", definition_en: "Information that identifies a person, whose handling is what the privacy principles constrain."}
+  - {id: SDR,   expansion: "software-defined radio", note: "HLRQ-16", definition_en: "A radio whose signal processing is done in software, exchanging sample streams with the host (HLRQ-16)."}
+  - {id: IQ,    expansion: "in-phase and quadrature", note: "uzorci SDR signala", definition_en: "The two components of a complex signal sample an SDR exchanges — in-phase and quadrature."}
+  - {id: NLP,   expansion: "natural language processing", definition_en: "Processing of human language, which in this framework lives in blackwattle because its libraries are third-party."}
+  - {id: UTF,   expansion: "Unicode Transformation Format", note: "UTF-8", definition_en: "The Unicode encoding family; UTF-8 is the encoding every text artefact here is read and written in."}
+  - {id: ORC,   expansion: "Optimized Row Columnar", note: "Apache ORC; vlastito ime", definition_en: "Apache's columnar storage format, one of the record formats a pipeline may write."}
+  - {id: DOCX,  expansion: "Office Open XML word-processing document", note: "sufiks .docx", definition_en: "The word-processing document of the OOXML family, carried by the suffix .docx (HLRQ-19)."}
+  - {id: JPEG,  expansion: "Joint Photographic Experts Group", definition_en: "The lossy image format the interface diagrams are rasterised into, flattened onto white because JPEG has no alpha channel."}
+  - {id: TIFF,  expansion: "Tag Image File Format", definition_en: "A tagged image format that may carry multiple pages, which is why a document processor treats it as a container."}
+  - {id: GIF,   expansion: "Graphics Interchange Format", definition_en: "An indexed-colour image format encountered as input to document extraction."}
+  - {id: BMP,   expansion: "bitmap image file", definition_en: "An uncompressed raster image format encountered as input to document extraction."}
+  - {id: PIL,   expansion: "Python Imaging Library", note: "danas Pillow", definition_en: "The Python imaging library, today distributed as Pillow; it is a third-party dependency, so code that needs it belongs outside the clean core ([zero trust](#zero-trust))."}
+
+acronym_identifier_casing:
+  status: neodluceno
+  decision_pending: NFRQ-ORG-02
+  note: "lint upozorava (WARNING, waiver declared), ne kaznjava, dok odluka ne padne"
+
+# Vokabular KODA nije ovdje. Kriterij koji cita tools/wem_lint.py zivi po
+# distribuciji, u JSON obliku (`tools/dictionary.json` + prezentacija
+# `tools/messages.json`), jer je lint stdlib-only pa YAML ne moze parsirati.
+# Blok `code:` bio je od kriterija 0.8.0 zastarjela kopija i uklonjen je
+# 2026-08-24. Povijesne reference na `naming_registry.yaml` i na
+# `dictionary.yaml#code` citati kao `tools/dictionary.json`.
+#
+# PAZNJA — `acronyms` (vrh datoteke) i `identifier_acronyms` u kriteriju koda
+# NISU isti vokabular i ne smiju se spojiti:
+#   acronyms              kratice DOKTRINE (DQI, NFR, PDSA, SBVR); nose
+#                         expansion i reference; citaju ih ljudi
+#   identifier_acronyms   tokeni u IDENTIFIKATORIMA (JSON, URI, SQL, OSCAL);
+#                         nose samo pravilo pisanja; cita ih lint
+# Presjek im je prazan (mjereno 2026-07-28) i mora ostati prazan.

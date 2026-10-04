@@ -7,7 +7,7 @@
 | **Verzija** | v0.0.5 |
 | **Odluka** | t.3 — kategorija `PTN` |
 | **Nadređeni zahtjev** | [`HLRQ-01`](../01-HLRQ/HLRQ-01-GENERIC-LAYER.md) — `BR-PTN-01`, `BR-PTN-02`, zajednički ugovor generičke klase (§4), `BR-PTN-07` (`__slots__`) |
-| **Predmet** | [`Wattleflow(Audit, IWattleflow)`](../../../workflow/src/wattleflow/concrete/base.py) — kanonski korijen svakog objekta frameworka |
+| **Predmet** | `Wattleflow(Audit, IWattleflow)` — kanonski korijen svakog objekta frameworka |
 | **Sestrinski** | svi zapisi `FRQ-*-15.*` — svaki od njih nasljeđuje ovu klasu prvu |
 | **Izvedba** | `workflow/src/wattleflow/concrete/base.py` (69 linija) |
 | **Dijagrami** | inline (02, 03, 06, 08, 09) — pogledi izvedeni iz koda, ne izvor istine (D-13) |
@@ -347,6 +347,7 @@ Nema otvorenih stavki.
 ## 16. References
 
 - Izvedba: `workflow/src/wattleflow/concrete/base.py`; podjela ključeva `workflow/src/wattleflow/helpers/audit.py`
+- Testovi: `workflow/tests/test_wattleflow_base.py`
 
 ## 17. Change history
 

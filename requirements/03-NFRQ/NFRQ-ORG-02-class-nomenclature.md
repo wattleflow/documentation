@@ -1,0 +1,109 @@
+<link rel="stylesheet" href="../../requirements/styles/wattleflow.css">
+
+# NFRQ-ORG-02 — Class nomenclature
+
+| | |
+|---|---|
+| **Version** | v0.0.5 |
+| **Quality (25010)** | Maintainability — analysability; PEP 8 (naming conventions) |
+| **Open decision** | acronym casing |
+| **Enforcement** | `wem_lint` — `base_family_membership` (**error**), `prohibited_standalone` (**error**), `acronym_case` (`warning`, suspended) |
+| **Criterion** | `tools/dictionary.json` — `domains`, `subjects`, `operations`, `acronyms`, `qualifiers`, `bases` |
+| **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
+
+## 1. Statement
+
+A pipeline class name is composed of **controlled, orthogonal facets in a fixed grammar**, so
+that the name encodes the **input→output contract** rather than the internal mechanism.
+
+**Grammar:** `Pipeline + <Subject> + <Operation | ToTarget> + [Qualifier]`
+
+| Facet | Content | Note |
+|---|---|---|
+| **Subject** | format, source or domain | the leading facet; **equal to the canonical subject of the domain package** containing the class (case-insensitive) → `pipelines/pdf/PipelinePDFExtractText` |
+| **Operation** | closed verb vocabulary: `Extract`, `Redact`, `Clean`, `Repair`, `Translate`, `Write` | converters express the source→target relation with the connective `To` (`CSVToSheets`) |
+| **Qualifier** | engine, language, variant (`Spacy`, `Stanza`, `En`, `Hr`) | optional |
+
+The scientific basis for the *Subject-first* order is
+[`NFRQ-APX-01`](NFRQ-APX-01-facet-order.md).
+
+* The universal verb `transform()` is **not** in the name: a token predictable for every class
+  carries zero discriminating information.
+* The `Pipeline` marker is reserved for classes implementing the public pipeline contract.
+* Generic role nouns (`Manager`, `Helper`, `Utility`, `Piece`, `Sheet`, `Parser`) are forbidden
+  **standalone**; they are permitted as a *qualified* facet (`DriverS3UriParser`).
+
+**Three regimes.** The grammar above governs **pipeline** classes. **Helper** classes are governed
+only by: no `Pipeline` prefix, no standalone generic role noun, domain-qualified
+(`SheetNestingPlacement`, not `Placement`). **Specialisations of the connection, driver, processor
+and scheduler families** follow the **established convention** — the first three in use since the
+first implementation and accepted as the norm by a documented decision of 2026-09-11, the fourth added by
+:
+
+| Family | Pattern | In code |
+|---|---|---|
+| connection | `<Subject>Connection` | `PostgresConnection`, `KafkaConsumerConnection` |
+| driver | `Driver<Subject>` | `DriverKafka`, `DriverPostgres` |
+| processor | `<Subject><Operation>Processor` | `KafkaReadProcessor`, `SolrWriteProcessor` |
+| scheduler | `Scheduler<Subject>` | `SchedulerCronJob` |
+
+The convention is **referenced, not measured.** In these families `wem_lint` checks only
+criterion 6 (no standalone generic role noun); facet order and spelling are not checked — a
+declared blind spot (D-11), measured 2026-09-11 (`wem_lint` 1.17.0, criterion 0.8.0): a name
+with a misspelt facet passed with no finding. Existing departures (e.g. a connection named in
+driver order) are the state found, not renamed by this entry. The first three rows were added at
+a direction without a recorded decision and are carried in the worklist (D-03); the `scheduler` row
+carries one.
+
+## 2. Acceptance criteria
+
+1. A class inheriting a pipeline base matches
+   `Pipeline<Subject>(<Operation>|To<Target>)(<Qualifier>)?`; any other shape is a violation.
+2. The `Pipeline` prefix appears **only** on classes implementing the public pipeline contract.
+3. Every facet token belongs to its registered vocabulary; an unregistered token fails the build
+   until the vocabulary is extended **with a documented change**.
+4. Acronym casing follows **PEP 8** — all letters uppercase (`PDF`, `CSV`, `RDF`).
+   **Suspended to `WARNING`** pending
+    see §4.
+5. The Subject facet equals the canonical subject of the domain package containing the class
+   (case-insensitive).
+6. No class name consists solely of a forbidden generic role noun.
+
+## 3. Verification
+
+Linting of name grammar and vocabulary; the build fails on criteria 1, 2, 3, 5, 6.
+Criteria 1/3/5 require a **controlled vocabulary register** — `tools/dictionary.json`, under a documented
+governance. Synonym collapsing for the current catalogue:
+`Redaction→Redact`, `Cleanup`/`Correction→Clean`, `Fix→Repair`.
+
+## 4. Open — acronym casing
+
+ **has not been decided**. Criterion 4 is therefore suspended: the `acronym_case`
+rule reports a `WARNING` under a declared waiver
+(`acronym_identifier_casing.status: undecided`) and **does not fail the build**. Neither side
+(`PDF` vs `Pdf`) is enforced by mass renaming — enforcing an undecided rule breaks the cascade
+(D-02). The criterion text and the severity must stay in step; a divergence is a finding, not
+the state in force.
+
+## 5. Justification
+
+| Principle | Implication for naming |
+|---|---|
+| Least Astonishment | the name is predictable from its facets, and the facets recoverable from the name |
+| Faceted Classification (Ranganathan) | orthogonal axes avoid the combinatorial explosion of a single hierarchy |
+| Information theory (Shannon) | constant tokens (`Transform`) are removed as noise |
+| Information Hiding (Parnas) | the name expresses the external contract, not the wrapped implementation |
+| Single fundamentum divisionis | one basis of classification per axis |
+| DRY | one controlled term per facet; repeating the subject in both path and name is a deliberate trade-off for collocation ([`NFRQ-APX-01`](NFRQ-APX-01-facet-order.md) §3.4) |
+
+## 6. Traceability
+
+Type variables — [`NFRQ-ORG-03`](NFRQ-ORG-03-typevar-nomenclature.md).
+Module placement — [`NFRQ-ORG-01`](NFRQ-ORG-01-helper-locality.md).
+Capabilities — [`NFRQ-ORG-04`](NFRQ-ORG-04-crosscutting-capability.md).
+
+## Change history
+
+| Version | Date | Change |
+|---|---|---|
+| v0.0.5 | 2026-10-02 | `Version` replaces `Status`; previous status: In force |

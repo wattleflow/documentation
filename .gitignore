@@ -1,14 +1,15 @@
-# Wattleflow documentation — staged publication.
+# Wattleflow documentation — publication scope.
 #
-# Decision 2026-10-03: the repository publishes the generic layer only, one
-# record at a time. Everything is ignored unless it is listed below; a record
-# enters publication by adding its own `!` line. Git history up to v0.0.5 is
-# kept as it is (D-03, D-05) — nothing is rewritten.
+# Purpose of the public edition: presenting the project (marketing). Published are the
+# doctrinal layer and the requirement registers (HLRQ, FRQ, NFRQ) with the styles their
+# diagrams include. Not published: analyses (*-ANL.md, 06-ANALYSIS), method documents
+# (05-METHODS), alignment records (07-CHANGES), the policy cascade that steers the agent
+# (CLAUDE.md, POLICY.md, STANDARDS.md, DOCUMENTATION.md, ARCHITECTURE.md, DECISIONS.md,
+# CONFORMANCE.md), tools, generated glossary, per-distribution trees and dockers.
 #
-# Consequence declared (D-11): published records cite files that are not yet
-# published (sibling NFRQ, 05-METHODS, 06-ANALYSIS, 07-CHANGES). Those links
-# do not resolve for the reader of the published edition until the cited
-# record is admitted.
+# Rule: everything is ignored unless listed below. A document enters publication by adding
+# its own `!` line; links from published texts to unlisted files are written as plain code
+# spans, never as links (tools/links.py checks the tree).
 
 # --- Ignore everything ----------------------------------------------------
 /*
@@ -17,31 +18,43 @@
 !/.gitignore
 !/LICENSE
 !/README.md
-!/wattleflow.png
+!/images/
+/images/*
+!/images/wattleflow.png
+!/images/FRQ-BBD-1.png
+!/images/FRQ-BBD-class-diagram.png
+!/images/FRQ-BBD-sequence-diagram.png
+!/images/FRQ-BBD-state-machine-diagram.png
+!/images/FRQ-DRV-class-diagram.png
+!/images/NFRQ-000-INDEX.png
+!/images/NFRQ-APX-01.png
 
-# --- Requirements: generic layer, admitted one by one ---------------------
+# --- Doctrinal layer and vocabulary ---------------------------------------
+!/PHILOSOPHY.md
+!/DOCTRINE.md
+!/METHODOLOGY.md
+!/POSTULATE.md
+!/LITERATURE.md
+!/DICTIONARY.md
+!/dictionary.yaml
+
+# --- Requirement registers -------------------------------------------------
 !/requirements/
 /requirements/*
 
 !/requirements/01-HLRQ/
-/requirements/01-HLRQ/*
-!/requirements/01-HLRQ/HLRQ-01-GENERIC-LAYER.md
-
-# v0.0.7: the whole FRQ register is admitted.
 !/requirements/02-FRQ/
-
-# NFRQ register: admitted one record at a time.
 !/requirements/03-NFRQ/
-/requirements/03-NFRQ/*
-!/requirements/03-NFRQ/NFRQ-000-INDEX.md
+!/requirements/DIAGRAMS.md
 
-# Not yet admitted: 05-METHODS, 06-ANALYSIS, 07-CHANGES, blackwattle,
-# dockers — covered by `/requirements/*` above.
+# Analyses stay in the working tree only.
+*-ANL.md
 
 # PlantUML and CSS styles included by every inline diagram and rendered page.
 !/requirements/styles/
 
-.gitignore
-CLAUDE.md
-
+# --- Never ---------------------------------------------------------------
+__pycache__/
+*.pyc
 .*
+!.gitignore
