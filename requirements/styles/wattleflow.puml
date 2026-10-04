@@ -1,0 +1,229 @@
+' wattleflow.puml — shared wattleflow diagram style (palette, frame, skinparams). Use: !include requirements/styles/wattleflow.puml (path from the workspace root documentation/)
+<style>
+frame {
+  LineColor #e8b924
+  LineThickness 1
+  BackgroundColor transparent
+}
+partition {
+  LineColor #e8b924
+  LineThickness 1
+}
+group {
+  LineColor #e8b924
+  LineThickness 1
+}
+state {
+  LineColor #e8b924
+  LineThickness 1
+}
+json {
+  BackgroundColor #2d5a54
+  LineColor #e8b924
+  FontColor #ffffff
+  RoundCorner 6
+}
+action {
+  BackgroundColor #2d5a54
+  LineColor #e8b924
+  FontColor #ffffff
+}
+process {
+  BackgroundColor #2d5a54
+  LineColor #e8b924
+  FontColor #ffffff
+}
+</style>
+skinparam backgroundColor #2d5a54
+skinparam defaultFontColor #ffffff
+skinparam shadowing false
+skinparam roundCorner 6
+skinparam packageStyle rectangle
+skinparam ArrowColor #e8b924
+skinparam ArrowFontColor #ffffff
+skinparam stereotypeFontColor #6ba89e
+skinparam class {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+  AttributeFontColor #ffffff
+  HeaderBackgroundColor #2d5a54
+}
+skinparam interface {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam component {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+  InterfaceBackgroundColor #6ba89e
+  InterfaceBorderColor #e8b924
+}
+skinparam node {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam artifact {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam cloud {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam database {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam file {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam folder {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam queue {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam storage {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam card {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam agent {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam boundary {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam control {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam entity {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam collections {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam hexagon {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam label {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam stack {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam person {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam usecase {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam actor {
+  BackgroundColor #6ba89e
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam package {
+  BackgroundColor transparent
+  BorderColor #6ba89e
+  FontColor #ffffff
+}
+skinparam rectangle {
+  BackgroundColor transparent
+  BorderColor #6ba89e
+  FontColor #ffffff
+}
+skinparam note {
+  BackgroundColor #e8b924
+  BorderColor #e8b924
+  FontColor #2d5a54
+}
+skinparam participant {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+}
+skinparam sequence {
+  LifeLineBorderColor #6ba89e
+  LifeLineBackgroundColor #2d5a54
+  GroupBorderColor #6ba89e
+  GroupBackgroundColor transparent
+  BoxBorderColor #6ba89e
+  BoxBackgroundColor transparent
+  GroupFontColor #ffffff
+}
+skinparam activity {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+  DiamondBackgroundColor #6ba89e
+  DiamondBorderColor #e8b924
+  DiamondFontColor #ffffff
+  StartColor #e8b924
+  EndColor #c74c3c
+}
+skinparam state {
+  BackgroundColor #2d5a54
+  BorderColor #e8b924
+  FontColor #ffffff
+  StartColor #e8b924
+  EndColor #c74c3c
+}
+
+' Palette roles as preprocessor variables (hex without '#', usable in inline styles: #line:$WF_PRIMARY;line.bold;text:$WF_TEXT)
+!$WF_BACKGROUND = "2d5a54"
+!$WF_PRIMARY = "e8b924"
+!$WF_SECONDARY = "6ba89e"
+!$WF_ERROR = "c74c3c"
+!$WF_TEXT = "ffffff"
+
+' C4: applies only when a C4 library was included before this file
+!if %function_exists("UpdateElementStyle")
+skinparam titleFontColor #ffffff
+skinparam legendBackgroundColor #2d5a54
+skinparam legendFontColor #ffffff
+skinparam legendBorderColor #e8b924
+UpdateElementStyle("system", $bgColor="#2d5a54", $fontColor="#ffffff", $borderColor="#e8b924")
+UpdateElementStyle("external_system", $bgColor="#6ba89e", $fontColor="#ffffff", $borderColor="#e8b924")
+UpdateElementStyle("person", $bgColor="#6ba89e", $fontColor="#ffffff", $borderColor="#e8b924")
+UpdateBoundaryStyle($fontColor="#ffffff", $borderColor="#6ba89e")
+UpdateRelStyle($textColor="#ffffff", $lineColor="#e8b924")
+!endif

@@ -1,47 +1,42 @@
-# Wattleflow documentation — LOCAL-ONLY repository.
+# Wattleflow documentation — staged publication.
 #
-# Everything that is content is tracked: the doctrinal texts, the registers,
-# the DR series and the policy layer all need a revisable change history,
-# because D-03 requires a register to change through a decision record and
-# D-11 forbids leaving that gap undeclared.
+# Decision 2026-10-03: the repository publishes the generic layer only, one
+# record at a time. Everything is ignored unless it is listed below; a record
+# enters publication by adding its own `!` line. Git history up to v0.0.5 is
+# kept as it is (D-03, D-05) — nothing is rewritten.
 #
-# Publication is a separate, deliberate act. Push to `origin` was enabled on
-# 2026-09-09 by the maintainer's decision, superseding the earlier local-only
-# lock; the Croatian texts are therefore published before the UK English
-# edition of v1.0. That reverses `CLAUDE.md` §3.2 and §8 and was taken without
-# a decision record — carried as a finding in `workflow/TODO.md` (D-03).
-#
-# Ignore build artefacts and tooling state only — never a document.
+# Consequence declared (D-11): published records cite files that are not yet
+# published (sibling FRQ, NFRQ, 06-ANALYSIS). Those links do not resolve for
+# the reader of the published edition until the cited record is admitted.
 
-# --- Build artefacts and caches -------------------------------------------
-__pycache__/
-*.pyc
-build/
-dist/
-.ruff_cache/
+# --- Ignore everything ----------------------------------------------------
+/*
 
-# --- Editor and CI state ---------------------------------------------------
-.github
-.vscode
-.claude
+# --- Repository essentials -------------------------------------------------
+!/.gitignore
+!/LICENSE
+!/README.md
+!/wattleflow.png
 
-# --- Paths that are not content -------------------------------------------
-# Symlink to a shared Makefile outside this repository — a path, not content.
-Makefile
+# --- Requirements: generic layer, admitted one by one ---------------------
+!/requirements/
+/requirements/*
 
-# --- Superseded drafts kept on disk, not in history ------------------------
-*.bak
-*.superseeded
-# --- Ne objavljuje se: odluke, analize, zapisi uskladenja, worklist, nacrti ---
-# Objavljuje se samo doktrinarni sloj i registri zahtjeva (odluka 2026-09-09).
-# Posljedica je deklarirana: objavljeni tekstovi citiraju 04-DR/ i 06-ANALYSIS/,
-# koji citatelju objavljenog izdanja nisu dostupni — nalaz u workflow/TODO.md.
-04-DR/
-05-METHODS/
-06-ANALYSIS/
-07-CHANGES/
-workflow/analysis/
-workflow/DONE.md
-workflow/TODO.md
-workflow/hr/
-workflow/OLD-TODO.md
+!/requirements/01-HLRQ/
+/requirements/01-HLRQ/*
+!/requirements/01-HLRQ/HLRQ-01-GENERIC-LAYER.md
+
+!/requirements/02-FRQ/
+/requirements/02-FRQ/*
+!/requirements/02-FRQ/FRQ-AUD-01-audit-record-path.md
+!/requirements/02-FRQ/FRQ-BBD-blackboard.md
+
+# PlantUML style included by every inline diagram.
+!/requirements/styles/
+/requirements/styles/*
+!/requirements/styles/wattleflow.puml
+
+.gitignore
+CLAUDE.md
+
+.*
