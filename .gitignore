@@ -50,6 +50,10 @@
 # Analyses stay in the working tree only.
 *-ANL.md
 
+# Conformance snapshots (C-snapshots, finding vectors) and alignment records: working tree only.
+/requirements/blackwattle/07-CHANGES/
+/requirements/07-CHANGES/
+
 # PlantUML and CSS styles included by every inline diagram and rendered page.
 !/requirements/styles/
 
