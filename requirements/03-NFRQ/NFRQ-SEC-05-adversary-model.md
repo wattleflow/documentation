@@ -53,7 +53,7 @@ diverge, the decision is recorded.
 | Gordon–Loeb (2002) | investment ≤ ~`1/e ≈ 37%` of expected loss; the most vulnerable asset is not necessarily the priority |
 | Economics of security (Anderson 2001) | many failures are a problem of **incentives**, not of measurement |
 
-Scientific basis: `workflow/Analiza.md` §5.3, §5.6 — **the cited sections do not exist** in that file, which carries §1, §2 and §7 only (declared gap, D-11; checked 2026-09-19). Until they do, this criterion rests on a source the reader cannot open (D-05).
+Scientific basis: `TOOLS.md` §5.3, §5.6.
 
 ## Change history
 

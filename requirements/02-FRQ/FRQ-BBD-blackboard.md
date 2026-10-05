@@ -481,8 +481,8 @@ Nema otvorenih stavki u opsegu `workflow`.
 
 ## 16. References
 
-- Izvedba: `workflow/src/wattleflow/concrete/blackboard.py`
-- Testovi: `workflow/tests/test_blackboard.py`
+- Izvedba: [`workflow/src/wattleflow/concrete/blackboard.py`](../../../../workflow/src/wattleflow/concrete/blackboard.py)
+- Testovi: [`workflow/tests/test_blackboard.py`](../../../../workflow/tests/test_blackboard.py)
 
 ## 17. Change history
 

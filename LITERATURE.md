@@ -6,7 +6,7 @@
 |---|---|
 | **Version** | Draft v0.3.1 |
 | **Parent documents** | `PHILOSOPHY.md`, `METHODOLOGY.md`, `DOCTRINE.md`, `POSTULATE.md` |
-| **Related artefacts** | [`POSTULATE.md`](POSTULATE.md) (the claims), [`dictionary.yaml`](dictionary.yaml) (the terms), `workflow/Analiza.md` (the paper that uses the table) |
+| **Related artefacts** | [`POSTULATE.md`](POSTULATE.md) (the claims), [`dictionary.yaml`](dictionary.yaml) (the terms), `TOOLS.md` (the paper that uses the table) |
 | **Management** | entries are added, changed, or declared obsolete exclusively with a documented change; see §Maintenance |
 
 

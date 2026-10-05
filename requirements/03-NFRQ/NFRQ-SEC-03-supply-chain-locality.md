@@ -147,7 +147,7 @@ nothing if the package `__init__.py` undoes it with an eager re-export.
 | Occam / DRY | chain integrity rests on **standards** (SBOM / lock / attestations), not on a bespoke mechanism |
 | PEP 420 / PEP 660 | namespace packages plus editable installs replace symlinks without losing live development |
 
-Scientific basis: `workflow/Analiza.md` §5.5 (correlated breaches over transitive dependencies) — **the cited sections do not exist** in that file, which carries §1, §2 and §7 only (declared gap, D-11; checked 2026-09-19). Until they do, this criterion rests on a source the reader cannot open (D-05).
+Scientific basis: `TOOLS.md` §5.5 (correlated breaches over transitive dependencies).
 
 ## Change history
 

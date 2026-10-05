@@ -50,7 +50,7 @@ No telemetry exists today — criterion 2 is an aspiration (D-05), not a measure
 | Compliance budget (Beautement–Sasse–Wonham 2008) | exceeding the effort budget produces **bypass**, not resistance |
 | Psychological acceptability (Saltzer–Schroeder; Adams–Sasse 1999) | the user is not the adversary; bypass is a signal of a **bad operating point** |
 
-Scientific basis: `workflow/Analiza.md` §5.4 — **the cited sections do not exist** in that file, which carries §1, §2 and §7 only (declared gap, D-11; checked 2026-09-19). Until they do, this criterion rests on a source the reader cannot open (D-05).
+Scientific basis: `TOOLS.md` §5.4.
 
 ## Change history
 

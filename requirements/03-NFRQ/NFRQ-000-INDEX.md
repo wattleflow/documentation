@@ -45,6 +45,7 @@ Every NFR carries a **statement**, **acceptance criteria**, a **verification met
 | `NFRQ-ORG-11` | The class is the unit of code; a module function only when exported and with a declared reason (`pep562`, `decorator`, `entry-point`, `standard-signature`) | AST; **not automated** — proposal | [entry](NFRQ-ORG-11-classes-over-module-functions.md) |
 | `NFRQ-ORG-12` | Constants and enumerations live in their designated modules (`constants/`, `enums/`) | AST; **not automated** — accepted | [entry](NFRQ-ORG-12-constants-and-enumerations.md) |
 | `NFRQ-ORG-13` | The public surface of a contract class is its interface — everything else is `_`-prefixed *(proposal, 2026-09-29; raised by `HLRQ-24`)* | introspection; **not in lint**, baseline in `06-ANALYSIS` | [entry](NFRQ-ORG-13-public-surface-is-the-interface.md) |
+| `NFRQ-ORG-14` | A consumer reaches a converter only through its interface — never its parser or an engine parser for the same format *(proposal, 2026-10-05; raised by `FRQ-CNV-24.9`; identifier provisional)* | import graph and AST; **not in lint**, baseline in `06-ANALYSIS` | [entry](NFRQ-ORG-14-consumer-reaches-the-interface.md) |
 
 ## OBS — audit-record observability
 

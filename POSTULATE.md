@@ -24,9 +24,7 @@ definira rječnik. Ukratko: postulat se **koristi** (kaže *zašto*), hipoteza s
 
 Format natuknice: **P-NN — Iskaz** / *Podrijetlo* / *Primjena* / `[ključ]`.
 
-`Analiza.md` u primjenama označava istraživački rad `workflow/Analiza.md`,
-koji od 2026-09-19 postoji (dotad `TOOLS.md`), ali nosi samo **§1, §2 i §7**. Pozivi na §3–§6
-i dalje su pozivi na tekst koji čitatelj ne može otvoriti — deklarirana rupa (`DOCUMENTATION.md` §3.1).
+`TOOLS.md` u primjenama označava istraživački rad WEM-LINT-ANALIZA, `documentation/TOOLS.md` (§1–§7).
 
 ---
 
@@ -57,7 +55,7 @@ analiza rastavlja, sinteza objašnjava.**
 sustav pojmova [49]; pionirska OR tradicija (prvi udžbenik operacijskih
 istraživanja: Churchman, Ackoff & Arnoff, 1957) [54].
 *Primjena:* argument publike dokumentacije (iz hrpe pojedinačnih zapisa ne
-može se izvesti integracijsko svojstvo); `Analiza.md` §5 — particije i njihova
+može se izvesti integracijsko svojstvo); `TOOLS.md` §5 — particije i njihova
 neslaganja kao interakcijska svojstva.
 `[49][54]`
 
@@ -86,7 +84,7 @@ vektorskog nalaza kao raznolikost instrumenta.
 kanalom može prenijeti, neovisno o značenju poruke.**
 *Podrijetlo:* Shannon 1948 [36].
 *Primjena:* granica formalizma — Shannon mjeri prijenos, ne značenje; zato
-semantika treba vlastite instrumente (P-07, P-08) i zato `Analiza.md` §3.3
+semantika treba vlastite instrumente (P-07, P-08) i zato `TOOLS.md` §3.3
 (nesumjerljivost) stoji.
 `[36]`
 
@@ -144,7 +142,7 @@ umjesto big-banga.
 **P-13 — Esencijalna složenost se ne uklanja, nego premješta; alat koji
 tvrdi da ju je uklonio mjeri njezino premještanje.**
 *Podrijetlo:* Brooks 1987 [29]; kibernetički oblik istog uvida: Ashby [30].
-*Primjena:* granice onoga što lint i indeksi smiju tvrditi (`Analiza.md` §3.2);
+*Primjena:* granice onoga što lint i indeksi smiju tvrditi (`TOOLS.md` §3.2);
 stupac „što alat ne može mjeriti".
 `[29][30]`
 
@@ -193,11 +191,11 @@ prema P-11: Separation of Concerns određuje *koje su* brige, information hiding
 
 **P-17 [S] — Modularnost uvodi rizik istim potezom kojim daje korist:
 granica koja skriva odluku skriva i podrijetlo.**
-*Podrijetlo:* vlastita inverzija Parnasa (središnja teza, `Analiza.md` §2).
+*Podrijetlo:* vlastita inverzija Parnasa (središnja teza, `TOOLS.md` §2).
 *Primjena:* supply-chain analiza; particija povjerenja naspram
 arhitektonske particije.
 *Status:* konceptualna — nema Hn; put obrane: mjerenja
-`Analiza.md` §4–5, odjeljaka kojih u toj datoteci nema (rupa, `DOCUMENTATION.md` §3.1).
+`TOOLS.md` §4–5.
 
 **P-18 [S] — Povratna petlja testira samo ono što promatra unutar svoje
 latencije: signali s latencijom duljom od ciklusa strukturno su nevidljivi
@@ -266,5 +264,5 @@ oborio bi postulat sam (nije zabilježen).
 3. Sukob postulata razrješava se eksplicitno (dokumentiranom odlukom), nikad prešutnim
    biranjem u tekstu.
 4. Registar hrani `PHILOSOPHY.md` (Znanstveni temelji), `METHODOLOGY.md` §5
-   (Znanstveni temelji) i `Analiza.md` §5; ti dokumenti citiraju P-oznake gdje
+   (Znanstveni temelji) i `TOOLS.md` §5; ti dokumenti citiraju P-oznake gdje
    tvrdnju koriste.

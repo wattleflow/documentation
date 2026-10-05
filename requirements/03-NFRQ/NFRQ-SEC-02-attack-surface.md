@@ -47,7 +47,7 @@ diagnostics.
 | MDL mirror (Rissanen; Cilibrasi–Vitányi) | `L(modules) + L(interfaces)`: the optimum minimises total description length |
 | Information Hiding (Parnas) | internal specifics do not cross the boundary |
 
-Scientific basis: `workflow/Analiza.md` §4.5, §5.5 — **the cited sections do not exist** in that file, which carries §1, §2 and §7 only (declared gap, D-11; checked 2026-09-19). Until they do, this criterion rests on a source the reader cannot open (D-05).
+Scientific basis: `TOOLS.md` §4.5, §5.5.
 
 ## Change history
 

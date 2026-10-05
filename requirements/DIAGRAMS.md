@@ -58,7 +58,7 @@ i svaki `.puml` koji nijedan zapis ne prisvaja.
 
 ## `03-NFRQ` — NFRQ
 
-42 zapisa, 0 s barem jednim dijagramom.
+43 zapisa, 0 s barem jednim dijagramom.
 
 | Zapis | Naslov | Imamo | Nedostaje |
 |---|---|---|---|
@@ -85,6 +85,7 @@ i svaki `.puml` koji nijedan zapis ne prisvaja.
 | [NFRQ-ORG-11](03-NFRQ/NFRQ-ORG-11-classes-over-module-functions.md) | The class is the unit of code; a module function is a declared exception | — | — |
 | [NFRQ-ORG-12](03-NFRQ/NFRQ-ORG-12-constants-and-enumerations.md) | Constants and enumerations live in their designated modules | — | — |
 | [NFRQ-ORG-13](03-NFRQ/NFRQ-ORG-13-public-surface-is-the-interface.md) | The public surface of a contract class is its interface | — | — |
+| [NFRQ-ORG-14](03-NFRQ/NFRQ-ORG-14-consumer-reaches-the-interface.md) | A consumer reaches a converter only through its interface | — | — |
 | [NFRQ-PRF-01](03-NFRQ/NFRQ-PRF-01-work-proportional-to-input.md) | Work proportional to input | — | — |
 | [NFRQ-PRF-02](03-NFRQ/NFRQ-PRF-02-measurement-speed.md) | Measurement speed: the cost of measuring is bounded by the work measured | — | — |
 | [NFRQ-SEC-01](03-NFRQ/NFRQ-SEC-01-blast-radius.md) | Blast-radius containment | — | — |

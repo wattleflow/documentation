@@ -48,7 +48,7 @@ only with a documented change.** Criterion 3 is measured indirectly today, throu
 | Correlated breaches (log4j) | `Blast` over **transitive** dependencies, including shared third-party ones |
 | Interior optimum (MDL mirror / Manadhata–Wing) | excessive decomposition ↑ interface count ↑ attack surface |
 
-Scientific basis: `workflow/Analiza.md` §5.5 (structure as a risk multiplier) — **the cited sections do not exist** in that file, which carries §1, §2 and §7 only (declared gap, D-11; checked 2026-09-19). Until they do, this criterion rests on a source the reader cannot open (D-05).
+Scientific basis: `TOOLS.md` §5.5 (structure as a risk multiplier).
 
 ## Change history
 
