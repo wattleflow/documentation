@@ -58,7 +58,7 @@ i svaki `.puml` koji nijedan zapis ne prisvaja.
 
 ## `03-NFRQ` — NFRQ
 
-43 zapisa, 0 s barem jednim dijagramom.
+45 zapisa, 0 s barem jednim dijagramom.
 
 | Zapis | Naslov | Imamo | Nedostaje |
 |---|---|---|---|
@@ -66,6 +66,8 @@ i svaki `.puml` koji nijedan zapis ne prisvaja.
 | [NFRQ-DEF-01](03-NFRQ/NFRQ-DEF-01-common-definitions.md) | Common definitions | — | — |
 | [NFRQ-DEF-02](03-NFRQ/NFRQ-DEF-02-measurement-charter.md) | Charter for measurable [M] criteria | — | — |
 | [NFRQ-DEF-03](03-NFRQ/NFRQ-DEF-03-comparison-and-boundary-values.md) | Comparison and boundary-value definitions | — | — |
+| [NFRQ-DEF-04](03-NFRQ/NFRQ-DEF-04-zoned-datetime-helper.md) | ZonedDateTimeHelper | — | — |
+| [NFRQ-DEF-05](03-NFRQ/NFRQ-DEF-05-datetime-helper.md) | DateTimeHelper | — | — |
 | [NFRQ-FUN-01](03-NFRQ/NFRQ-FUN-01-conversion-fidelity.md) | Conversion fidelity: nothing lost silently, the round trip is a fixed point | — | — |
 | [NFRQ-FUN-02](03-NFRQ/NFRQ-FUN-02-recognition-accuracy.md) | Recognition accuracy is measured per engine on a declared reference set | — | — |
 | [NFRQ-MEM-01](03-NFRQ/NFRQ-MEM-01-memory.md) | Instance memory: classes that inherit Wattleflow declare __slots__ | — | — |

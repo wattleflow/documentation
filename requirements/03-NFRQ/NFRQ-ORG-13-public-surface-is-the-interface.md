@@ -8,7 +8,7 @@
 | **Quality (25010)** | Maintainability — modularity, modifiability |
 | **Enforcement** | **not measured** — `wem_lint` has no rule for it; declared blind spot (D-11). Baseline: `2026-09-29-converter-contract-verification` |
 | **Reference frame** | Parnas, information hiding [P-11]; ISO/IEC 25010 modularity |
-| **Raised by** | `HLRQ-24` `BR-24-03` — documented rule of 2026-09-29 |
+| **Raised by** | `HLRQ-CNV` `BR-CNV-03` — documented rule of 2026-09-29 |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
 
 ## 1. Statement
@@ -28,7 +28,7 @@ as API.
    *(machine-checkable — AST)*
 3. **Class-level declarations** (`CONFIG`, `PARSER`, `FORMATTERS`, …) are constants of the
    contract, not methods, and are not counted. *(by definition)*
-4. **The interface is written down** in the requirement of the contract (`FRQ-CNV-24.1`,
+4. **The interface is written down** in the requirement of the contract (`FRQ-CNV`,
    `FRQ-CNV-24.2`), not derived from the code. *(by review)*
 
 ## 3. Verification

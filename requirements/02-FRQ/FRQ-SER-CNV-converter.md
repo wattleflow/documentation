@@ -258,7 +258,7 @@ Slijedi. Zatečeni dokument nema ovog odjeljka.
 | NFR | posljedica |
 |---|---|
 | [`NFRQ-SEC-03`](../03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md) | opći sloj ne uvozi treću stranu i ne poznaje motor |
-| [`NFRQ-ORG-13`](../03-NFRQ/NFRQ-ORG-13-public-surface-is-the-interface.md) | javna površina je sučelje (`BR-24-03`) |
+| [`NFRQ-ORG-13`](../03-NFRQ/NFRQ-ORG-13-public-surface-is-the-interface.md) | javna površina je sučelje (`BR-CNV-03`) |
 | [`NFRQ-FUN-01`](../03-NFRQ/NFRQ-FUN-01-conversion-fidelity.md) | vjernost pretvorbe mjeri se u strategijama |
 | [`NFRQ-MEM-01`](../03-NFRQ/NFRQ-MEM-01-memory.md) | `BR-PTN-07`: klasa deklarira `__slots__` ili ima zapisanu iznimku; vidi odjeljak 15 |
 

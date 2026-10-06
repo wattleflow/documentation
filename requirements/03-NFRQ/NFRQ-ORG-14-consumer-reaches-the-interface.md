@@ -24,7 +24,7 @@ converter is out of scope; its factory parsers and formatters remain the way in.
 1. **No parser past the boundary.** No module outside `converters/` imports the `PARSER` of any
    converter, or an engine parser for a format that has a converter. *(machine-checkable — import graph)*
 2. **Interface calls only.** Calls on a converter instance outside `converters/` are limited to the
-   interface of `FRQ-CNV-24.1` and the API named in the converter's requirement.
+   interface of `FRQ-CNV` and the API named in the converter's requirement.
    *(machine-checkable — [AST](../../GLOSSARY.md#abbr-ast), where the instance's type is statically known)*
 3. **Collaborators through the strategy.** A collaborator (for example, a converter for images) is
    handed to the converter's strategy at construction, never called by the consumer. *(by review)*
@@ -43,7 +43,7 @@ statically known (criterion 2), dynamic imports, and callers outside `src/`.
 |---|---|
 | A module is a boundary around a [decision](../../GLOSSARY.md#odluka) that may change (P-11) | a consumer that calls the parser binds itself to the decision the converter was meant to hide |
 | One way to a format (`NFRQ-ORG-08`) | two consumers of the same format through two parsers drift apart in limits, errors and output |
-| A collaborator belongs to the conversion, not the caller (`HLRQ-24` `BR-24-05`) | a consumer that bypasses the strategy also bypasses the collaborator, so a scanned page loses its text |
+| A collaborator belongs to the conversion, not the caller (`HLRQ-CNV` `BR-CNV-05`) | a consumer that bypasses the strategy also bypasses the collaborator, so a scanned page loses its text |
 
 ## 5. Open
 

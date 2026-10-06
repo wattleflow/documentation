@@ -31,7 +31,7 @@ The port to C++ is what makes an undeclared bound visible; it is not what makes 
 | **Unit** | Seconds or milliseconds; bytes or characters; KiB or KB | A text limit of 255 met in Python and exceeded in C++ (§3.2) |
 | **Precision** | The smallest distinguishable step, and what happens to finer input | A nanosecond file time compared with a microsecond bound |
 | **Inclusivity** | Is the bound itself inside: `[a, b]`, `[a, b)`, `(a, b]` | A file at exactly the end of the window |
-| **Reference** | The zone of a wall time, the encoding of a text, the base of a number | A naive date read as UTC by one side and local by the other |
+| **Reference** | The zone of a datetime without a zone, the encoding of a text, the base of a number | A naive date read as UTC by one side and local by the other |
 | **Out of range** | Reject, clamp, truncate (with a marker), or count and continue | A value silently wrapped by an unsigned integer |
 | **Absence** | Absent ≠ None ≠ empty ≠ zero — each with its meaning | An omitted `level` read as `NOTSET` resets another component's level |
 
@@ -42,11 +42,12 @@ Each default applies where the requirement does not declare otherwise. A default
 
 ### 3.1 Time
 
-1. **Two kinds, never mixed.** An *instant* (a point on the UTC line, "aware") and a *wall time*
-   (a clock reading without a zone, "naive") are different kinds. A value of the other kind is
-   **rejected where it enters**, not at the comparison that would fail later.
-2. **A wall time names its zone.** The component declares the zone a wall time is read in; the
-   system zone is a declared choice, not a fallback.
+1. **Two models, never mixed.** A *zoned datetime* (with its UTC offset or zone, "aware") is the norm
+   ([`NFRQ-DEF-04`](NFRQ-DEF-04-zoned-datetime-helper.md), `ZonedDateTimeHelper`); a *datetime without a
+   zone* ("naive") is the exception ([`NFRQ-DEF-05`](NFRQ-DEF-05-datetime-helper.md), `DateTimeHelper`).
+   A value of the other model is **rejected where it enters**, not at the comparison that would fail later.
+2. **A datetime without a zone names its zone before it is compared.** The component declares the zone it
+   is made zoned in (`DateTimeHelper.zoned`); the system zone is a declared choice, not a fallback.
 3. **Precision is the microsecond.** Finer input (a C++ file time in nanoseconds) is truncated
    toward the past before it is compared.
 4. **Intervals are half-open, `[start, end)`.** **OPEN** — the code today uses a closed interval
@@ -55,8 +56,8 @@ Each default applies where the requirement does not declare otherwise. A default
    neither overlap nor leave a gap.
 5. **A date-only bound** starts at 00:00:00 of that date; its end is 00:00:00 of the next date
    (half-open) or 23:59:59.999999 of the same date (closed), per item 4.
-6. **Daylight saving.** A wall time that occurs twice resolves to the earlier instant. A wall time
-   that does not occur is **OPEN** (§6).
+6. **Daylight saving.** A datetime without a zone that occurs twice resolves to the earlier zoned datetime.
+   One that does not occur is **OPEN** (§6).
 7. **Leap seconds are not represented** (POSIX time) — declared, not handled.
 8. **Accepted text** is the ISO 8601 subset the component lists; anything else is rejected, never
    guessed.
@@ -137,7 +138,7 @@ An FR acceptance criterion (29148) that names a bound without its facets fails r
 | O2 | Default unit of a text length | Audit truncation (§5 case 3); any field with a maximum |
 | O3 | Default rounding mode | The first component with decimal places |
 | O4 | Invalid UTF-8: reject or replace with U+FFFD | Parsers, documents from external sources |
-| O5 | A wall time that does not occur (spring forward): reject, or move to the transition | Naive bounds in a zone with daylight saving |
+| O5 | A datetime without a zone that does not occur (spring forward): reject, or move to the transition | Naive bounds in a zone with daylight saving |
 | O6 | Scope: this entry is shared, the rule sits in [`HLRQ-01`](../01-HLRQ/HLRQ-01-GENERIC-LAYER.md) where the defect was found — does a framework-wide rule need its own HLRQ | `blackwattle` specialisations |
 
 ## 7. Traceability
