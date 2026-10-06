@@ -23,7 +23,7 @@ ista granica formata ponašala različito od formata do formata. Konverter je tr
 koji pokreće strategiju čiji su parser i formater dijelovi, a nije ni uređaj ni pohrana.
 
 **Zašto.** Politika granice formata piše se jednom, u generičkoj klasi; specijalizacija piše samo
-ono što u formatu varira (`deserialise`, `serialise`, strategiju). Cijena je lagana razina: klase
+ono što u formatu varira (`_deserialise`, `serialise`, strategiju). Cijena je lagana razina: klase
 ne nose audit, logiranje ni preset, pa kvar putuje kao iznimka s uzrokom, a ne kao zapis u
 dnevniku. Mjera uspjeha je koliko malo specijalizacija mora napisati, ne koliko klasa zna.
 
@@ -39,7 +39,7 @@ specijalizacije po formatu i motoru                                         ← 
 
 | uloga | smjer | sučelje | generička klasa | što piše specijalizacija | dijete |
 |---|---|---|---|---|---|4
-| **Parser** | pohranjeni oblik → sadržaj | `IParser` | `GenericParser` | `deserialise` | [`FRQ-SER-PAR`](../02-FRQ/FRQ-SER-PAR-parser.md) |
+| **Parser** | pohranjeni oblik → sadržaj | `IParser` | `GenericParser` | `_deserialise` | [`FRQ-SER-PAR`](../02-FRQ/FRQ-SER-PAR-parser.md) |
 | **Formatter** | sadržaj → pohranjivi oblik | `IFormatter` | `GenericFormatter` | `serialise`, `SUFFIX`, po izboru `CONTENT` | [`FRQ-SER-FMT`](../02-FRQ/FRQ-SER-FMT-formatter.md) |
 | **Converter** | izvor jednog formata → teret drugog | `IStrategyContext` | `GenericConverter` | `STRATEGY`, `ERROR`, `ERRORS` | [`FRQ-SER-CNV`](../02-FRQ/FRQ-SER-CNV-converter.md) |
 
@@ -86,7 +86,7 @@ parsera, formatera i konvertera te njihovi motori.
 | oznaka | pravilo |
 |---|---|
 | **BR-PAR-01** | Parser prima **točno jedan** izvor po pozivu: `stream` (posuđen, zatvara ga vlasnik), `path` ili `payload` (otvara i zatvara baza). Nijedan ili više od jednog odbija se prije čitanja. |
-| **BR-PAR-02** | Politika izvora živi u generičkoj klasi, jednom. Specijalizacija ne otvara, ne razrješava i ne provjerava izvor; `deserialise` prima čitač i samo opcije formata. |
+| **BR-PAR-02** | Politika izvora živi u generičkoj klasi, jednom. Specijalizacija ne otvara, ne razrješava i ne provjerava izvor; `_deserialise` prima čitač i samo opcije formata. |
 | **BR-FMT-01** | Formater **vraća** teret i ništa ne zapisuje; odredište je posao pozivatelja. `stream` je pogodnost nad `render`, ne član sučelja. |
 | **BR-FMT-02** | `content` je obvezan. Tip se provjerava samo ako ga specijalizacija deklarira (`CONTENT`); formati koji prihvaćaju sve ostavljaju ga neodređenim. |
 | **BR-SER-01** | Kvar koji nije među `ERRORS` postaje `ERROR` s uzrokom (`raise … from`); iznimka iz `ERRORS` prolazi nepromijenjena ([`BR-PTN-05`](HLRQ-01-GENERIC-LAYER.md#5-poslovna-pravila)). `ERROR` i `ERRORS` su atributi klase: specijalizacija izvan korijena iznimki postavlja vlastitu taksonomiju. |
@@ -124,4 +124,5 @@ ponašanje čitano iz `serialisation.py`: točno jedan izvor, `ERROR`/`ERRORS`, 
 
 | Verzija | Datum | Promjena |
 |---|---|---|
+| v0.0.5 | 2026-10-06 | Kuka parsera je zaštićena `_deserialise` (`NFRQ-ORG-13` k.2). |
 | v0.0.5 | 2026-10-02 | `Verzija` zamjenjuje `Status`; prijašnji status: Provedeno u kodu — lagana razina |

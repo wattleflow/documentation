@@ -56,7 +56,7 @@ component's requirement; the components that hold a datetime without a zone toda
 
 1. **Components that hold a datetime without a zone today:** the date window of `CreatedWithin`
    (date bounds from the configuration, made zoned in the installation's zone before comparison),
-   the PDF date without a zone (`PdfParser.pdf_date`), mail headers with `-0000` or a printed date,
+   the PDF date without a zone (`PdfParser.pdf_date`), mail headers without a zone (outside RFC 5322) and printed dates (a `-0000`, military or unknown zone name is UTC by RFC 5322 §3.3 and §4.3, so zoned),
    RSS and W3C-DTF dates without a time, and metadata values of documents. Each needs the declaration
    of c.1 in its requirement.
 2. **Identifier.** `DEF-05` is provisional; entry into the register requires a documented change (D-03).
@@ -65,4 +65,5 @@ component's requirement; the components that hold a datetime without a zone toda
 
 | Version | Date | Change |
 |---|---|---|
+| v0.0.5 | 2026-10-06 | §5 t.1: mail headers with `-0000`, military or unknown zone names are zoned (UTC), not without a zone (`FRQ-MAIL-01-message-parser-ANL`). |
 | v0.0.5 | 2026-10-06 | First entry: the datetime without a zone defined apart from the zoned norm (`NFRQ-DEF-04`), written and read by `DateTimeHelper`, with `zoned` as the only crossing (author's decision). |

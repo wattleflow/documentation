@@ -38,7 +38,7 @@ jednom; specijalizacija ne otvara, ne razrješava i ne provjerava putanju. Lagan
 audita, logiranja i preseta; `__slots__ = ()`.
 
 
-Izvor se provjerava po vrsti, ne samo po prisutnosti: `stream` mora imati `read`, `path` mora biti `str` ili `PathLike` (cijeli broj `open` bi uzeo za deskriptor datoteke i zatvorio ga), `payload` mora biti bytes-like (`None` i tekst se odbijaju). Imena `reader`, `decode` i `deserialise` su javne kuke specijalizacije: `blackwattle` nadjačava `reader` i zove `decode`, pa preimenovanje nije dio ovog zahtjeva.
+Izvor se provjerava po vrsti, ne samo po prisutnosti: `stream` mora imati `read`, `path` mora biti `str` ili `PathLike` (cijeli broj `open` bi uzeo za deskriptor datoteke i zatvorio ga), `payload` mora biti bytes-like (`None` i tekst se odbijaju). Kuke `_reader`, `_decode` i `_deserialise` su zaštićene (`NFRQ-ORG-13` k.2): zove ih samo `parse`, a specijalizacija ih nadjačava ili koristi. Jedini javni ulaz je `parse`.
 
 ## 02. Class Diagrams
 
@@ -60,9 +60,9 @@ top to bottom direction
     {static} ERRORS : tuple[type[BaseException], ...] = (ParserError,)
     +name : str
     +parse(**kwargs) : Content
-    +reader(kwargs : dict) : Iterator[BinaryIO]
-    +decode(reader : BinaryIO, **kwargs) : str
-    {abstract} +deserialise(reader : BinaryIO, **kwargs) : Content
+    #_reader(kwargs : dict) : Iterator[BinaryIO]
+    #_decode(reader : BinaryIO, **kwargs) : str
+    {abstract} #_deserialise(reader : BinaryIO, **kwargs) : Content
   }
   class ParserError {
     +caller : object | None
@@ -93,7 +93,7 @@ System_Ext(po, "Caller", "Driver, pipeline")
 System_Ext(sp, "Specialisation", "One class per format")
 System_Ext(fs, "File system", "Source path")
 Rel_L(po, sys, "Calls parse")
-Rel_R(sp, sys, "Implements deserialise")
+Rel_R(sp, sys, "Implements _deserialise")
 Rel_U(sys, fs, "Reads path")
 @enduml
 ```
@@ -105,7 +105,7 @@ Rel_U(sys, fs, "Reads path")
 | oznaka | tko | ulazi s |
 |---|---|---|
 | **A1** | pozivatelj (driver, pipeline, strategija) | točno jedan od `stream=`, `path=`, `payload=` te opcije formata |
-| **A2** | specijalizacija (jedna klasa po formatu ili motoru) | implementira `deserialise` |
+| **A2** | specijalizacija (jedna klasa po formatu ili motoru) | implementira `_deserialise` |
 | **A3** | konfiguracija klase | `ENCODING`, `SOURCES`, `ERROR`, `ERRORS` |
 
 Dijagram korisnika: slijedi.
@@ -115,7 +115,7 @@ Dijagram korisnika: slijedi.
 | oznaka | trigger |
 |---|---|
 | **EV01** | A1 zove `parse(**kwargs)` |
-| **EV02** | A2 zove `decode(reader, **kwargs)` unutar `deserialise` (tekstni formati) |
+| **EV02** | A2 zove `_decode(reader, **kwargs)` unutar `_deserialise` (tekstni formati) |
 
 ## 06. Use Case Diagrams
 
@@ -155,10 +155,10 @@ package {
 ## 07. Constraints and Preconditions
 
 1. Zadan je **točno jedan** izvor iz `SOURCES` (ključ prisutan); vrijednost mora biti ispravne vrste (`stream` s `read`, `path` kao `str`/`PathLike`, `payload` bytes-like).
-2. Specijalizacija implementira `deserialise`; klasa je inače apstraktna.
+2. Specijalizacija implementira `_deserialise`; klasa je inače apstraktna.
 3. `stream` je otvoren i čitljiv; vlasnik ostaje pozivatelj.
-4. `reader`, `decode` i `deserialise` su kuke specijalizacije s javnim imenima (zapisana odluka; `NFRQ-ORG-13` o prefiksu `_` ne primjenjuje se na kuke koje specijalizacije u `blackwattle` već nadjačavaju).
-5. `decode` ne troši `encoding` iz pozivateljevih opcija (radi na kopiji); ključ ostaje dostupan daljnjim pozivima. Bez posljedica.
+4. Jedini javni ulaz je `parse` (`IParser`); kuke `_reader`, `_decode` i `_deserialise` su zaštićene (`NFRQ-ORG-13` k.2).
+5. `_decode` ne troši `encoding` iz pozivateljevih opcija (radi na kopiji); ključ ostaje dostupan daljnjim pozivima. Bez posljedica.
 
 ## 08. Sequence Diagrams
 
@@ -166,11 +166,11 @@ package {
 
 | korak | ponašanje |
 |---|---|
-| 1 | `reader` broji deklarirane izvore; različito od jedan → `ERROR` |
-| 2 | ključ izvora izvlači se iz `kwargs`, pa `deserialise` prima samo opcije formata |
+| 1 | `_reader` broji deklarirane izvore; različito od jedan → `ERROR` |
+| 2 | ključ izvora izvlači se iz `kwargs`, pa `_deserialise` prima samo opcije formata |
 | 3 | `stream` posuđen bez zatvaranja · `payload` omotan u `BytesIO` · `path` otvoren `rb` i zatvoren po izlasku |
-| 4 | `deserialise(reader, **opcije)` vraća sadržaj |
-| 5 | `decode` čita sve i dekodira; kodiranje redom **poziv (`encoding=`) → klasa (`ENCODING`)** |
+| 4 | `_deserialise(reader, **opcije)` vraća sadržaj |
+| 5 | `_decode` čita sve i dekodira; kodiranje redom **poziv (`encoding=`) → klasa (`ENCODING`)** |
 
 
 
@@ -190,9 +190,9 @@ title GenericParser
   activate P
   P -> G : parse(path=..., **kwargs)
   activate G
-  G -> G : reader(): exactly one source
+  G -> G : _reader(): exactly one source
   G -> G : open(path, rb)
-  G -> S : deserialise(reader, **kwargs)
+  G -> S : _deserialise(reader, **kwargs)
   activate S
   S --> G : content
   deactivate S
@@ -214,11 +214,11 @@ title GenericParser
 | nijedan ili više izvora | `ERROR` (`ParserError`) s popisom pronađenih |
 | izvor pogrešne vrste (`payload=None`, tekst, `stream` bez `read`, `path` kao broj) | `ERROR` koji imenuje izvor i njegov tip; ništa se ne otvara |
 | `path` ne postoji ili nečitljiv | iznimka otvaranja omotana u `ERROR` s uzrokom (`BR-PTN-05`) |
-| kvar u `deserialise` | omotan u `ERROR` (`raise … from e`) |
+| kvar u `_deserialise` | omotan u `ERROR` (`raise … from e`) |
 | iznimka iz `ERRORS` | prolazi nepromijenjena (vlastita greška razine) |
-| nečitljivi bajtovi u `decode` | `ERROR` s uzrokom |
+| nečitljivi bajtovi u `_decode` | `ERROR` s uzrokom |
 | specijalizacija izvan korijena iznimaka | deklarira vlastite `ERROR` i `ERRORS` |
-| proširenje izvora | specijalizacija nadjačava `reader` |
+| proširenje izvora | specijalizacija nadjačava `_reader` |
 
 ### Dijagram toka
 
@@ -250,7 +250,7 @@ elseif (payload) then
 else (path)
   :open(path, rb), closed afterwards;
 endif
-:deserialise(reader, **kwargs);
+:_deserialise(reader, **kwargs);
 if (exception?) then (yes)
   if (exception in ERRORS?) then (yes)
     :<b><color:red>FAILED: propagates unchanged</color></b>;
@@ -293,6 +293,7 @@ jedna klasa iznimke s uzrokom.
 5. `encoding=` poziva ima prednost pred `ENCODING` razreda, a ovaj pred `utf-8`; nečitljivi bajtovi su `ERROR`. ✅
 6. Ne nasljeđuje `Wattleflow`; nema audita; `__slots__ = ()`. ✅
 7. Nema third-party uvoza ([`NFRQ-SEC-03`](../03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md)). ✅
+8. Jedini javni ulaz je `parse`; kuke `_reader`, `_decode` i `_deserialise` su zaštićene ([`NFRQ-ORG-13`](../03-NFRQ/NFRQ-ORG-13-public-surface-is-the-interface.md) k.2). ✅
 
 ## 14. Verification
 
@@ -300,9 +301,10 @@ jedna klasa iznimke s uzrokom.
 |---|---|---|
 | 1, 2 | `workflow/tests/test_serialisation.py` (`ParserSourceTest`) | nula i dva izvora odbijeni; tok nije zatvoren, putanja jest, `payload` iz memorije; izvor se troši, opcije se prosljeđuju |
 | 3 | `ParserSourceTest` | `None`, tekst, broj, lista kao `payload`; `None`/tekst/broj kao `stream`; `None`/broj/bytes kao `path`; cijeli broj nije deskriptor (deskriptor ostaje otvoren) |
-| 4 | `ParserFailureTest` | uzrok i poruka; `ERRORS` prolazi; vlastiti `ERROR`; `deserialise` apstraktan |
+| 4 | `ParserFailureTest` | uzrok i poruka; `ERRORS` prolazi; vlastiti `ERROR`; `_deserialise` apstraktan |
 | 5 | `DecodeTest` | zadano, razred, poziv; nečitljivi bajtovi |
 | 6, 7 | `SlotsTest`; pregled uvoza | prazni slotovi; `stdlib` + `wattleflow.core` |
+| 8 | `PublicSurfaceTest` | javni su samo `parse` i `name` |
 | mutacije | ručno | bez provjere izvora, putanja neprovjerena, iznimke iz `ERRORS` omotane — svaka ruši test |
 
 **Trojka reproducibilnosti (D-10):** alat — `unittest`; kriterij — odjeljak 13; platforma — CPython 3.12.14, Linux/WSL2, okruženje `workflow`.
@@ -322,8 +324,9 @@ Nema otvorenih stavki.
 
 | Version | Date | Change |
 |---|---|---|
+| v0.0.5 | 2026-10-06 | Kuke `reader`, `decode` i `deserialise` postaju zaštićene (`_reader`, `_decode`, `_deserialise`): iznimka od `NFRQ-ORG-13` k.2 uklonjena (odluka autora: jedini javni ulaz parsera je `parse`); kriterij 8. |
 | v0.0.5 | 2026-10-04 | Dijagrami izrađeni iznova prema `wattleflow-uml`; dijagram toka iz odjeljka 08 uklonjen (nosi ga odjeljak 09). |
-| v0.0.5 | 2026-10-04 | Prvi put izvršeno (`test_serialisation.py`, 40 testova za sva tri dokumenta), svi defekti zatvoreni: Izvor se provjerava po vrsti (`DEF-PAR-01`: `payload=None` je davao prazan čitač; **dodatno: cijeli broj kao `path` `open` je uzimao za deskriptor datoteke i zatvarao ga**); `-02` javna imena kuka zapisana kao odluka (`blackwattle` ih nadjačava); `-03` docstring više ne spominje nepostojeću audit razinu; `-04` `decode` i `encoding` zapisano kao bez posljedica; `-05` `__slots__ = ()` bez učinka na `__dict__` zapisano. Kriteriji 3 i 5, mutacije. |
+| v0.0.5 | 2026-10-04 | Prvi put izvršeno (`test_serialisation.py`, 40 testova za sva tri dokumenta), svi defekti zatvoreni: Izvor se provjerava po vrsti (`DEF-PAR-01`: `payload=None` je davao prazan čitač; **dodatno: cijeli broj kao `path` `open` je uzimao za deskriptor datoteke i zatvarao ga**); `-02` javna imena kuka zapisana kao odluka (`blackwattle` ih nadjačava); `-03` docstring više ne spominje nepostojeću audit razinu; `-04` `_decode` i `encoding` zapisano kao bez posljedica; `-05` `__slots__ = ()` bez učinka na `__dict__` zapisano. Kriteriji 3 i 5, mutacije. |
 | v0.0.5 | 2026-10-03 | Odjeljci preuređeni u standardnu strukturu FRQ dokumenta 01–17 (`wattleflow-docs` §3e); unutarnje reference preusmjerene. |
 | v0.0.5 | 2026-10-03 | Vrijednosti u dijagramima provjerene prema kodu: tipovi i potpisi, SOURCES kao tuple nizova. |
 | v0.0.5 | 2026-10-02 | Dodane aktivacije u dijagram slijeda. |
