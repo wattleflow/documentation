@@ -51,6 +51,8 @@ na kojem je poziv nastao.
 (`_AUDIT_KEYS`): pozivatelj ih **ne smije** postaviti, jer bi time falsificirao povijest izmjene
 dokumenta. Piše ih isključivo `update_metadata`/`update_content`, iznutra.
 
+<p style="color:#c62828"><b>Napomena:</b> <code>Document</code> pri uklanjanju iz memorije prazni svoje metapodatke (<code>__del__</code> zove <code>clean()</code>). Proxy metapodataka (<code>metadata</code>, <code>MappingProxyType</code>) koji nadživi dokument zato je prazan. U testu to rješava kopija (<code>dict(document.metadata)</code>). U kodu to dosad nije stvaralo problem, ali vrijedi znati (§15).</p>
+
 **Tip sadržaja se zaključava.** Prvi dodijeljeni sadržaj određuje `_expected_type`; svaka sljedeća
 izmjena mora biti istog tipa. Dokument koji je počeo kao tekst ne postaje binaran usput.
 
@@ -413,6 +415,7 @@ Nema otvorenih stavki.
 
 | Version | Date | Change |
 |---|---|---|
+| v0.0.5 | 2026-10-07 | Crvena napomena (zahtjev autora): proxy metapodataka koji nadživi dokument je prazan, jer `__del__` zove `clean()`. |
 | v0.0.5 | 2026-10-07 | Jedina ruta do vremena je `MomentAwareHelper.now()`; `created_at` i `last_change_time` su `Moment` (odluka autora: `Moment` zamjenjuje `dtime`, D1). |
 | v0.0.5 | 2026-10-04 | Dijagrami izrađeni iznova prema `wattleflow-uml` (bez `frame`, `package`, `partition` i `System_Boundary`, `Caption`/`title` po pravilu, bez stereotipa i legende, sučelja na vrhu; crvene strelice stanja i akcija neuspjeha podebljane); renderirani s PlantUML 1.2026.8 i pregledani. |
 | v0.0.5 | 2026-10-04 | DEF-DOC-07 premješten u `blackwattle` (`HLRQ-17` §6 t.8): problem je u `DocumentRecords`, ne u generičkoj klasi; kriterij 11 zadovoljen u `workflow`. Odjeljak 15 prazan: svi defekti `FRQ-DOC` zatvoreni ili premješteni. |
