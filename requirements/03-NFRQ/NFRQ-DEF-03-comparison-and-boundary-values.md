@@ -42,12 +42,13 @@ Each default applies where the requirement does not declare otherwise. A default
 
 ### 3.1 Time
 
-1. **Two models, never mixed.** A *zoned datetime* (with its UTC offset or zone, "aware") is the norm
-   ([`NFRQ-DEF-04`](NFRQ-DEF-04-zoned-datetime-helper.md), `ZonedDateTimeHelper`); a *datetime without a
-   zone* ("naive") is the exception ([`NFRQ-DEF-05`](NFRQ-DEF-05-datetime-helper.md), `DateTimeHelper`).
+1. **Two models, never mixed.** An *aware moment* is the norm
+   ([`NFRQ-DEF-04`](NFRQ-DEF-04-moment-aware-helper.md), `MomentAwareHelper`); a *wall time* ("naive")
+   is the exception ([`NFRQ-DEF-05`](NFRQ-DEF-05-moment-naive-helper.md), `MomentNaiveHelper`).
    A value of the other model is **rejected where it enters**, not at the comparison that would fail later.
-2. **A datetime without a zone names its zone before it is compared.** The component declares the zone it
-   is made zoned in (`DateTimeHelper.zoned`); the system zone is a declared choice, not a fallback.
+2. **A wall time names its zone before it is compared.** The component localizes it in a named zone
+   (`MomentNaiveHelper.localize`): the workflow zone for an operator's value, the source zone for a
+   source's value (`HLRQ-MMN` `BR-MMN-13`, `BR-MMN-14`); nothing falls back to a zone.
 3. **Precision is the microsecond.** Finer input (a C++ file time in nanoseconds) is truncated
    toward the past before it is compared.
 4. **Intervals are half-open, `[start, end)`.** **OPEN** — the code today uses a closed interval
@@ -134,7 +135,7 @@ An FR acceptance criterion (29148) that names a bound without its facets fails r
 
 | # | Question | Where it bites first |
 |---|---|---|
-| O1 | Interval closure default: half-open `[start, end)` or closed as the code is today | `CreatedWithin`; any window, schedule or retention period |
+| O1 | Interval closure default: half-open `[start, end)` or closed as the code is today | `CreatedWindow` (formerly `CreatedWithin`); any window, schedule or retention period |
 | O2 | Default unit of a text length | Audit truncation (§5 case 3); any field with a maximum |
 | O3 | Default rounding mode | The first component with decimal places |
 | O4 | Invalid UTF-8: reject or replace with U+FFFD | Parsers, documents from external sources |
@@ -146,3 +147,10 @@ An FR acceptance criterion (29148) that names a bound without its facets fails r
 [`HLRQ-01`](../01-HLRQ/HLRQ-01-GENERIC-LAYER.md) `BR-PTN-06` · [`NFRQ-DEF-01`](NFRQ-DEF-01-common-definitions.md) (common definitions) ·
 [`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md) (a bound that is measured is an `[M]`
 criterion) · ISO/IEC 25010 functional correctness · `METHODOLOGY.md` §6 (traceability is a graph).
+
+## Change history
+
+| Version | Date | Change |
+|---|---|---|
+| v0.0.5 | 2026-10-07 | §3.1 t.1–2 restated over `Moment` (`MomentAwareHelper`, `MomentNaiveHelper.localize`). |
+| v0.0.5 | 2026-10-07 | O1: the date window is now `CreatedWindow` over `Moment` (`HLRQ-MMN`); evidence §5 t.1 kept as measured. |

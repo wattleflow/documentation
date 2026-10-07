@@ -27,8 +27,11 @@ never prevents the import of a module that does not use it.
 2. **Aggregates defer too.** A package that holds a module with a third-party import exposes its
    public names through `__getattr__` + `_EXPORTS`; importing one name loads one module.
    *(masking test)*
-3. **Availability without loading.** A component that depends on a library answers `available()`
-   through `importlib.util.find_spec`, without importing the library. *(unit test)*
+3. **Availability is not a parser's concern.** A parser or converter does not ask whether its
+   library is present: the first use imports it, and an absent one raises the named error of
+   criterion 4. Where a caller needs to know in advance (a test, a diagnosis), a helper class of
+   the engine's own module answers it (`TikaApp.available()`), once — when the workflow or processor
+   starts or the library is first instantiated — never on every call. *(unit test with the library masked)*
 4. **A failed import is caught as it is, not as `ImportError`.** Loading a library may fail with any
    exception (a native library of the wrong version raises `AttributeError`, not `ImportError`); the
    guard covers what the library can raise, and the outcome is a **named** absence, not a bare
@@ -46,7 +49,7 @@ Masking test per module (remove the package from `sys.modules` and from the impo
 module, exercise the guarded use), plus a grep for module-level third-party imports until an AST rule
 exists. **Blind spots (D-11):** a library that starts work in its own import (side effects at load)
 is deferred by this criterion but not made cheap; a transitive import inside a third-party package
-is out of reach; `wem_lint` does not read `find_spec` (criterion 3).
+is out of reach.
 
 ## 4. Rationale
 
@@ -67,4 +70,7 @@ is out of reach; `wem_lint` does not read `find_spec` (criterion 3).
 
 | Version | Date | Change |
 |---|---|---|
+| v0.0.5 | 2026-10-06 | Criterion 3: a helper's check runs once (start or first instantiation), never per call; no parser carries an availability method (author's decision). |
+| v0.0.5 | 2026-10-06 | Criterion 3: an advance answer, where one is needed, belongs to a helper class of the engine's module, never to the parser (author's decision). |
+| v0.0.5 | 2026-10-06 | Criterion 3: `available()` withdrawn (author's decision: an advance check costs time and decides nothing the named failure at first use does not). |
 | v0.0.5 | 2026-10-02 | `Version` replaces `Status`; previous status: Proposal (Draft, 2026-09-30) — **the identifier is provisional**; entry into the register requires a documented change (D-03) |

@@ -33,8 +33,9 @@ absent, the first start may fetch it into that location and nowhere else (docume
    there on first start and into no other place; a different location already loaded in the
    process is refused. A network transfer of **code** is never made. *(unit test with a fake
    engine; by review for the fetch itself)*
-4. **A missing dependency fails early and named.** `available()` states whether the component can
-   start, including models and data it needs, without starting it. *(by review; unit test)*
+4. **A missing dependency fails early and named.** The first use of the component raises a named
+   error that says what is missing, models and data included, and how to provide it; nothing is
+   checked in advance (`NFRQ-SEC-17` criterion 3). *(unit test)*
 5. **A container installs at build, not at start.** A `Dockerfile` may install pinned packages; an
    entrypoint, compose command or workflow does not. *(machine-checkable — text)*
 6. **No waiver.** The criterion carries no `declared` or `documented` waiver; a finding is
@@ -70,4 +71,5 @@ use, `FRQ-OCR-23.2` §6 c) — the AST cannot see the last two.
 
 | Version | Date | Change |
 |---|---|---|
+| v0.0.5 | 2026-10-06 | Criterion 4: the named failure at first use replaces the advance `available()` check (author's decision). |
 | v0.0.5 | 2026-10-02 | `Version` replaces `Status`; previous status: Proposal (Draft, 2026-09-29) — **the identifier is provisional**; entry into the register requires a documented change (D-03) |

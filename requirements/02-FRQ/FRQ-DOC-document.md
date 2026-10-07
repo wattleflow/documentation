@@ -213,7 +213,7 @@ package {
 ### Normalan tok
 
 1. **EV01** — identitet je `uuid4()`, dodijeljen pri konstrukciji i **nepromjenjiv** izvana
-   (`BR-PTN-01`). Metapodaci kreću praznim rječnikom, pa se upisuje `created_at` iz `Now.utc()`,
+   (`BR-PTN-01`). Metapodaci kreću praznim rječnikom, pa se upisuje `created_at` iz `MomentAwareHelper.now()` (`Moment` u zoni workflowa),
    pa prvi sadržaj.
 2. **EV02** — fasada gradi adapter **s istom konfiguracijom** koju je sama dobila: adapter je
    njezin implementacijski detalj i ne smije padati na zadane postavke zapisa.
@@ -370,7 +370,7 @@ promjena tipa dokumenta ne dira nijedan od njih.
 9. Dokument se može staviti u `set` ili koristiti kao ključ rječnika; hash slaže se s `__eq__` (isti tip i identifikator). ✅
 10. `content` ne diže iznimku u stanju koje je klasa sama proglasila legalnim: dokument uvijek drži sadržaj do `clean()`, a `None` se ne prima. ✅
 11. Podaci su u sadržaju, a metapodaci ih samo opisuju: generička klasa `Document` metapodatke samo opisuje (audit ključevi, `filename`). Odstupanje u `blackwattle` (zapisi u metapodacima) vodi se u `HLRQ-17` §6 t.8. ✅
-12. Postoji jedna ruta do vremena, `Now.utc()`: `Document` nema vlastiti sat (`utc_time_stamp` je uklonjen), a audit ključevi `created_at` i `last_change_time` dolaze iz nje; nijedan kod ne traži vrijeme od dokumenta. ✅
+12. Postoji jedna ruta do vremena, `MomentAwareHelper.now()` ([`FRQ-MMN`](FRQ-MMN-moment.md)): `Document` nema vlastiti sat, a audit ključevi `created_at` i `last_change_time` su `Moment` s trenutkom u zoni workflowa; nijedan kod ne traži vrijeme od dokumenta.
 13. Adapter i fasada odbijaju objekt koji nije `IAdaptee` prije svake bazne inicijalizacije (`TypeError`), pa odbijen objekt ne ostavlja ništa napola izgrađeno. ✅
 14. Fasada delegira atribut adaptee-u jednim pristupom (svojstvo se izračuna jednom) i adaptee razrješava pri svakom promašaju, bez predmemorije. ✅
 15. `FileDocument` je deklariran kao `Document[str]`, što izvršavanje već nameće (preduvjet 5). ✅
@@ -389,7 +389,7 @@ promjena tipa dokumenta ne dira nijedan od njih.
 | 8 | pregled modula | `__all__` = 4 imena; uvozi `abc`, `datetime`, `typing`, `collections.abc`, `types`, `uuid` + `wattleflow.*` |
 | 9 | `workflow/tests/test_document_hash.py` (7 testova) | prije ispravka 6 testova pada s `TypeError: unhashable type`; nakon njega 97/97 u `workflow/tests`, `ruff check` čist; mutacija `id(self)` ruši test jednakih dokumenata |
 | 10 | `workflow/tests/test_document_content.py` (8 testova) | prije ispravka 3 testa padaju (konstrukcija s `None`, `update_content(None)`, nepromijenjeno stanje nakon odbijanja); nakon njega 105/105 u `workflow/tests`, `ruff check` čist |
-| 12 | `workflow/tests/test_document_clock.py` (6 testova); `blackwattle/tests/documents/test_clock_route.py` (2 testa); izmjena 13 datoteka | prije izmjene pada 2 testa u workflowu (dokument još ima sat) i test `blackwattle` koji je nalazio pozive u 13 datoteka; zamijenjeno 19 poziva `x.utc_time_stamp()` s `Now.utc()` (2 u `document.py`, 4 u `rdf.py`, 13 u strategijama; uvoz dodan samo u `postgres.py`); nakon izmjene workflow 156/156, blackwattle 308 testova s istih 4 neovisnih padova (`tests/metrics`) i 34 grešaka učitavanja (okolina bez `PIL`, `docx`, `numpy`, `pyspark`). `rdf.py` i `graph.py` nije moguće uvesti bez `rdflib`, pa su provjereni samo lintom. Raniji kriterij o `@staticmethod` (DEF-DOC-03) time je nadomješten |
+| 12 | `workflow/tests/test_document_clock.py` (6 testova): jedina ruta je `MomentAwareHelper.now()`, audit ključevi su `Moment` u zoni workflowa | prolazi |
 | 13 | `workflow/tests/test_document_facade.py` (7 testova) | prije ispravka pada test fasade (bazna inicijalizacija pozvana 1 put prije odbijanja, očekivano 0); nakon njega 118/118 u `workflow/tests`, `ruff check` čist; mutacija (stari redoslijed) ruši isti test |
 | 14 | `workflow/tests/test_document_facade.py` (`DelegationTest`, 4 testa); mjerenje `bench_facade.py` | prije ispravka pada test (svojstvo izračunato 2 puta, očekivano 1); nakon njega 122/122 u `workflow/tests`, `ruff check` čist; mutacija (vraćen `hasattr`) ruši isti test. Cijena delegiranog pristupa ~200 ns naspram ~40 ns izravno, neizmijenjena |
 | 15 | `blackwattle/tests/documents/test_file_document.py` (8 testova) | prije izmjene pada 2 testa deklaracije (`str \| Path` ≠ `str`); nakon nje prolazi svih 8; cijeli skup `blackwattle` uspoređen bez i s izmjenom: razlika je točno ta 2 testa (failures 6 → 4) |
@@ -413,6 +413,7 @@ Nema otvorenih stavki.
 
 | Version | Date | Change |
 |---|---|---|
+| v0.0.5 | 2026-10-07 | Jedina ruta do vremena je `MomentAwareHelper.now()`; `created_at` i `last_change_time` su `Moment` (odluka autora: `Moment` zamjenjuje `dtime`, D1). |
 | v0.0.5 | 2026-10-04 | Dijagrami izrađeni iznova prema `wattleflow-uml` (bez `frame`, `package`, `partition` i `System_Boundary`, `Caption`/`title` po pravilu, bez stereotipa i legende, sučelja na vrhu; crvene strelice stanja i akcija neuspjeha podebljane); renderirani s PlantUML 1.2026.8 i pregledani. |
 | v0.0.5 | 2026-10-04 | DEF-DOC-07 premješten u `blackwattle` (`HLRQ-17` §6 t.8): problem je u `DocumentRecords`, ne u generičkoj klasi; kriterij 11 zadovoljen u `workflow`. Odjeljak 15 prazan: svi defekti `FRQ-DOC` zatvoreni ili premješteni. |
 | v0.0.5 | 2026-10-04 | DEF-DOC-07: analiza koda (nositelj `DocumentRecords`, tri korisnika, uzrok u tipu `FileDocument`), poveznice na premještene dokumente, opcije; čeka odluku. |

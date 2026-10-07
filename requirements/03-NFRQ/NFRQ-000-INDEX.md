@@ -26,8 +26,8 @@ Every NFR carries a **statement**, **acceptance criteria**, a **verification met
 | `NFRQ-DEF-01` | Common definitions — domain, helper, canonical subject | [entry](NFRQ-DEF-01-common-definitions.md) |
 | `NFRQ-DEF-02` | Charter for measurable `[M]` criteria | [entry](NFRQ-DEF-02-measurement-charter.md) |
 | `NFRQ-DEF-03` | Comparison and boundary values — the facets every compared or bounded value declares *(proposal, 2026-09-13)* | [entry](NFRQ-DEF-03-comparison-and-boundary-values.md) |
-| `NFRQ-DEF-04` | ZonedDateTimeHelper — the zoned datetime is the norm; one writer and reader of RFC 3339 text; default form an installation setting (zone from `WATTLEFLOW_TIME_ZONE`, else the system zone; microseconds; UTC as `Z`) *(proposal, 2026-10-06; identifier provisional)* | [entry](NFRQ-DEF-04-zoned-datetime-helper.md) |
-| `NFRQ-DEF-05` | DateTimeHelper — a datetime without a zone is not the norm: permitted only where the source gives no zone, written and read apart, made zoned only through `zoned` with a named zone *(proposal, 2026-10-06; identifier provisional)* | [entry](NFRQ-DEF-05-datetime-helper.md) |
+| `NFRQ-DEF-04` | MomentAwareHelper — the aware moment is the norm; one writer and reader of RFC 3339 text; default form in the moment's zone, microseconds, UTC as `Z`; `now` carries the workflow zone (`runtime.time_zone`, else `WATTLEFLOW_TIME_ZONE`, else the system zone) *(proposal, 2026-10-07; identifier provisional)* | [entry](NFRQ-DEF-04-moment-aware-helper.md) |
+| `NFRQ-DEF-05` | MomentNaiveHelper — a wall time is not the norm: permitted only where an operator writes it or a source gives no zone; made aware only through `localize` with a named zone (workflow zone or source zone); no RFC 5322 form *(proposal, 2026-10-07; identifier provisional)* | [entry](NFRQ-DEF-05-moment-naive-helper.md) |
 | `NFRQ-APX-01` | Appendix A — facet order in class nomenclature | [entry](NFRQ-APX-01-facet-order.md) |
 
 ## ORG — organisation and structure

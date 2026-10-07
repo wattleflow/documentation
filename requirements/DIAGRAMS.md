@@ -18,16 +18,17 @@ i svaki `.puml` koji nijedan zapis ne prisvaja.
 
 ## `01-HLRQ` — HLRQ
 
-2 zapisa, 1 s barem jednim dijagramom.
+3 zapisa, 2 s barem jednim dijagramom.
 
 | Zapis | Naslov | Imamo | Nedostaje |
 |---|---|---|---|
 | [HLRQ-01](01-HLRQ/HLRQ-01-GENERIC-LAYER.md) | Cjevovodna obrada kroz zamjenjive primitive (generički sloj) | — | `HLRQ-01-decomposition.puml` |
 | [HLRQ-10](01-HLRQ/HLRQ-10-SERIALISATION.md) | Granica formata: parser, formater i konverter (generički sloj) | [class (inline)](01-HLRQ/HLRQ-10-SERIALISATION.md) | `HLRQ-10-decomposition.puml` |
+| [HLRQ-MMN](01-HLRQ/HLRQ-MMN-moment.md) | Moment: vrijeme kao broj nanosekundi | [component (inline)](01-HLRQ/HLRQ-MMN-moment.md) | `HLRQ-MMN-decomposition.puml` |
 
 ## `02-FRQ` — FRQ
 
-24 zapisa, 24 s barem jednim dijagramom.
+25 zapisa, 25 s barem jednim dijagramom.
 
 | Zapis | Naslov | Imamo | Nedostaje |
 |---|---|---|---|
@@ -40,6 +41,7 @@ i svaki `.puml` koji nijedan zapis ne prisvaja.
 | [FRQ-ITR](02-FRQ/FRQ-ITR-lazy-iterators.md) | Lijeni iteratori | [class (inline)](02-FRQ/FRQ-ITR-lazy-iterators.md) · [context (inline)](02-FRQ/FRQ-ITR-lazy-iterators.md) · [usecase (inline)](02-FRQ/FRQ-ITR-lazy-iterators.md) · [sequence (inline)](02-FRQ/FRQ-ITR-lazy-iterators.md) · [activity (inline)](02-FRQ/FRQ-ITR-lazy-iterators.md) | — |
 | [FRQ-MEM](02-FRQ/FRQ-MEM-memento.md) | Snimka stanja (memento) | [class (inline)](02-FRQ/FRQ-MEM-memento.md) · [context (inline)](02-FRQ/FRQ-MEM-memento.md) · [usecase (inline)](02-FRQ/FRQ-MEM-memento.md) · [sequence (inline)](02-FRQ/FRQ-MEM-memento.md) · [sequence (inline)](02-FRQ/FRQ-MEM-memento.md) · [activity (inline)](02-FRQ/FRQ-MEM-memento.md) | — |
 | [FRQ-MGR](02-FRQ/FRQ-MGR-managers.md) | Upravitelji konekcija, drivera i procesora | [class (inline)](02-FRQ/FRQ-MGR-managers.md) · [context (inline)](02-FRQ/FRQ-MGR-managers.md) · [usecase (inline)](02-FRQ/FRQ-MGR-managers.md) · [sequence (inline)](02-FRQ/FRQ-MGR-managers.md) · [activity (inline)](02-FRQ/FRQ-MGR-managers.md) | — |
+| [FRQ-MMN](02-FRQ/FRQ-MMN-moment.md) | Moment | [class (inline)](02-FRQ/FRQ-MMN-moment.md) · [context (inline)](02-FRQ/FRQ-MMN-moment.md) · [usecase (inline)](02-FRQ/FRQ-MMN-moment.md) · [sequence (inline)](02-FRQ/FRQ-MMN-moment.md) · [activity (inline)](02-FRQ/FRQ-MMN-moment.md) | — |
 | [FRQ-OBS](02-FRQ/FRQ-OBS-observable.md) | Promatrani objekt (nit-siguran) | [class (inline)](02-FRQ/FRQ-OBS-observable.md) · [context (inline)](02-FRQ/FRQ-OBS-observable.md) · [usecase (inline)](02-FRQ/FRQ-OBS-observable.md) · [sequence (inline)](02-FRQ/FRQ-OBS-observable.md) · [activity (inline)](02-FRQ/FRQ-OBS-observable.md) | — |
 | [FRQ-ORC](02-FRQ/FRQ-ORC-orchestrator.md) | Orkestrator | [class (inline)](02-FRQ/FRQ-ORC-orchestrator.md) · [context (inline)](02-FRQ/FRQ-ORC-orchestrator.md) · [usecase (inline)](02-FRQ/FRQ-ORC-orchestrator.md) · [sequence (inline)](02-FRQ/FRQ-ORC-orchestrator.md) · [activity (inline)](02-FRQ/FRQ-ORC-orchestrator.md) | — |
 | [FRQ-PIP](02-FRQ/FRQ-PIP-pipeline.md) | Generički pipeline | [class (inline)](02-FRQ/FRQ-PIP-pipeline.md) · [context (inline)](02-FRQ/FRQ-PIP-pipeline.md) · [usecase (inline)](02-FRQ/FRQ-PIP-pipeline.md) · [sequence (inline)](02-FRQ/FRQ-PIP-pipeline.md) · [activity (inline)](02-FRQ/FRQ-PIP-pipeline.md) | — |
@@ -66,8 +68,8 @@ i svaki `.puml` koji nijedan zapis ne prisvaja.
 | [NFRQ-DEF-01](03-NFRQ/NFRQ-DEF-01-common-definitions.md) | Common definitions | — | — |
 | [NFRQ-DEF-02](03-NFRQ/NFRQ-DEF-02-measurement-charter.md) | Charter for measurable [M] criteria | — | — |
 | [NFRQ-DEF-03](03-NFRQ/NFRQ-DEF-03-comparison-and-boundary-values.md) | Comparison and boundary-value definitions | — | — |
-| [NFRQ-DEF-04](03-NFRQ/NFRQ-DEF-04-zoned-datetime-helper.md) | ZonedDateTimeHelper | — | — |
-| [NFRQ-DEF-05](03-NFRQ/NFRQ-DEF-05-datetime-helper.md) | DateTimeHelper | — | — |
+| [NFRQ-DEF-04](03-NFRQ/NFRQ-DEF-04-moment-aware-helper.md) | MomentAwareHelper | — | — |
+| [NFRQ-DEF-05](03-NFRQ/NFRQ-DEF-05-moment-naive-helper.md) | MomentNaiveHelper | — | — |
 | [NFRQ-FUN-01](03-NFRQ/NFRQ-FUN-01-conversion-fidelity.md) | Conversion fidelity: nothing lost silently, the round trip is a fixed point | — | — |
 | [NFRQ-FUN-02](03-NFRQ/NFRQ-FUN-02-recognition-accuracy.md) | Recognition accuracy is measured per engine on a declared reference set | — | — |
 | [NFRQ-MEM-01](03-NFRQ/NFRQ-MEM-01-memory.md) | Instance memory: classes that inherit Wattleflow declare __slots__ | — | — |

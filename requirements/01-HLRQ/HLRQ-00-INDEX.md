@@ -26,9 +26,11 @@ the FR the *what*, the design and code the *how*.
 |---|---|---|---|---|
 | [`HLRQ-01-GENERIC-LAYER`](HLRQ-01-GENERIC-LAYER.md) | Pipelined processing through substitutable primitives — the generic layer that fulfils the `core/` contracts | the *FRQ* column of the table in §3 | `wattleflow-workflow` (`concrete/`) | in code |
 | [`HLRQ-10-SERIALISATION`](HLRQ-10-SERIALISATION.md) | Format boundary — parser, formatter and converter of the generic layer | [`FRQ-SER-PAR`](../02-FRQ/FRQ-SER-PAR-parser.md) · [`FRQ-SER-FMT`](../02-FRQ/FRQ-SER-FMT-formatter.md) · [`FRQ-SER-CNV`](../02-FRQ/FRQ-SER-CNV-converter.md) | `wattleflow-workflow` — clean core tier | in code, recorded |
+| [`HLRQ-MMN`](HLRQ-MMN-moment.md) | Time as nanoseconds since 1970: two kinds (a moment, a wall time) that never mix; years 1–9999 — provisional category | [`FRQ-MMN`](../02-FRQ/FRQ-MMN-moment.md) | `wattleflow-workflow` — clean core tier | proposal; in code, tested |
 
 ## Traceability to the NFRs
 
 | HLRQ | Key NFRs |
 |---|---|
 | [`HLRQ-01-GENERIC-LAYER`](HLRQ-01-GENERIC-LAYER.md) | [`NFRQ-ORG-04`](../03-NFRQ/NFRQ-ORG-04-crosscutting-capability.md) · [`NFRQ-SEC-01`](../03-NFRQ/NFRQ-SEC-01-blast-radius.md) · [`NFRQ-SEC-02`](../03-NFRQ/NFRQ-SEC-02-attack-surface.md) · [`NFRQ-SEC-03`](../03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md) · [`NFRQ-SEC-06`](../03-NFRQ/NFRQ-SEC-06-audit-confidentiality.md) · [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md)…[`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md) · [`NFRQ-ORG-05`](../03-NFRQ/NFRQ-ORG-05-self-referencing-helpers.md) · [`NFRQ-ORG-08`](../03-NFRQ/NFRQ-ORG-08-deduplication.md) · [`NFRQ-DEF-03`](../03-NFRQ/NFRQ-DEF-03-comparison-and-boundary-values.md) |
+| [`HLRQ-MMN`](HLRQ-MMN-moment.md) | [`NFRQ-DEF-03`](../03-NFRQ/NFRQ-DEF-03-comparison-and-boundary-values.md) · [`NFRQ-DEF-04`](../03-NFRQ/NFRQ-DEF-04-moment-aware-helper.md) · [`NFRQ-DEF-05`](../03-NFRQ/NFRQ-DEF-05-moment-naive-helper.md) · [`NFRQ-SEC-03`](../03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md) · [`NFRQ-ORG-09`](../03-NFRQ/NFRQ-ORG-09-external-standard.md) |

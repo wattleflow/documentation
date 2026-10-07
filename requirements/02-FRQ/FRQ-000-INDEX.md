@@ -70,6 +70,7 @@ infrastructure that is not a primitive.
 | `FRQ-REP` | Generic repository and the driver-backed variant — persistent storage of items; the driver variant only adds the driver to the strategy context. | [REP](FRQ-REP-repository.md) | in code, recorded |
 | `FRQ-DOC` | Document, adapter and facade — the unit of data that travels the flow. | [DOC](FRQ-DOC-document.md) | in code, recorded |
 | `FRQ-MEM` | Memento — the snapshot a processor resumes from. | [MEM](FRQ-MEM-memento.md) | in code, recorded |
+| `FRQ-MMN` | Moment — nanoseconds since 1970 in two kinds that never mix, years 1–9999 checked on creation, one bridge to int64 ns columns; provisional category `MMN`. | [MMN](FRQ-MMN-moment.md) | proposal; in code, tested |
 | `FRQ-PTN` | Root base of every framework object. | [PTN](FRQ-PTN-root-base.md) | in code, recorded |
 | `FRQ-ORC` | Orchestrator — runs a set of processors sequentially or in parallel and tells listeners; two collaborators are held but unused. | [ORC](FRQ-ORC-orchestrator.md) | in code, recorded; defects listed in the entry |
 | `FRQ-SCH` | Scheduler — event source that sets up, starts and stops one orchestrator; a skeleton until a specialisation supplies it. | [SCH](FRQ-SCH-scheduler.md) | in code, recorded; defects listed in the entry |

@@ -223,8 +223,9 @@ package {
 3. **EV03** — klasa workflowa se razriješi kroz `_resolve_section`, koji kvar obogaćuje **sekcijom
    i imenom unosa** — poruka kaže *gdje* je u konfiguraciji problem, ne samo *koje* ime fali.
 4. **EV04** — `runtime:` blok se preslikava u varijable okoline: poznati ključevi kroz
-   `_RUNTIME_KEY_TO_ENV` (`tika_server_jar` → `TIKA_SERVER_JAR`, `java_home` → `JAVA_HOME`…),
-   ostatak iz `runtime.env` doslovno.
+   `_RUNTIME_KEY_TO_ENV` (`tika_server_jar` → `TIKA_SERVER_JAR`, `java_home` → `JAVA_HOME`,
+   `time_zone` → `WATTLEFLOW_TIME_ZONE`…), ostatak iz `runtime.env` doslovno. Nakon toga tvornica
+   jednom postavlja zonu workflowa (`MomentHelper.configure`, [`FRQ-MMN`](FRQ-MMN-moment.md)).
 5. Globalne postavke zapisa iz `logging:`: `handler` i `format` (kao `formatting`) čitaju se jednom i
    prosljeđuju svakom izgrađenom objektu; svaki unos ih smije nadjačati kroz `_audit`. `level` se
    ne prosljeđuje: postavlja razinu korijenskog loggera i loggera tvornice, a unos smije zadati
@@ -388,6 +389,7 @@ gradnju prije obrade (`BR-WFL-02`).
 12. `memento:` blok gradi pohranu (`memory`, `file`, registrirani razred) i predaje je procesorima; neispravan blok ili ime procesora koje nije obično ime je pogreška konfiguracije. ✅
 13. Registar drži samo klase; zamjena imena drugom klasom je vidljiva. ✅
 14. Nepoznat driver procesora izlazi kao `WorkflowFactoryException` s sekcijom i unosom, kao i za spremište. ✅
+15. `runtime.time_zone` postaje `WATTLEFLOW_TIME_ZONE`, a zona workflowa razrješava se jednom nakon bloka `runtime:`; bez ključa vrijedi globalna postavka ili zona sustava (`BR-MMN-12`).
 
 ## 14. Verification
 
@@ -405,6 +407,7 @@ gradnju prije obrade (`BR-WFL-02`).
 | 10 | `RuntimeEnvTest` | poznati ključ upisan i praćen putanjom; `API_TOKEN` upisan u okolinu, ime u zapisu, vrijednost nikad |
 | 13 | `RegistrationTest` | `42`, tekst, `None` i instanca odbijeni; ista klasa tiha; druga klasa upozorenje; bliska imena u poruci |
 | 14 | `DriverLookupTest` | poruka nosi ime drivera i unosa; registrirani driver stiže do procesora |
+| 15 | `RuntimeEnvTest.test_time_zone_sets_the_workflow_zone_once` | `runtime.time_zone` upisan u `WATTLEFLOW_TIME_ZONE`; `now()` nosi tu zonu |
 | 11–12 | `workflow/tests/test_workflow_memento.py` (13 testova) | zadani memento i tvornica; probni prolaz kroz izmijenjen primjer `blackwattle/examples/workflows/05_markdown` ([`FRQ-MEM`](FRQ-MEM-memento.md) §14) |
 
 **Trojka reproducibilnosti (D-10):** alat — `unittest`; kriterij — odjeljak 13; platforma — CPython 3.12.14, Linux/WSL2, okruženje `workflow`. Mutacije (svaka ruši test): bilo koji objekt se registrira, tiha zamjena, razina se ne prati, vrijednost `runtime.env` u zapisu, nepoznati ključevi neprijavljeni, `ManagerException` nepreslikan.
@@ -426,6 +429,7 @@ Zapisana svojstva (ne defekti): upis `runtime:` u `os.environ` je **procesni** n
 
 | Version | Date | Change |
 |---|---|---|
+| v0.0.5 | 2026-10-07 | `runtime.time_zone` (→ `WATTLEFLOW_TIME_ZONE`) i jedno postavljanje zone workflowa pri gradnji; kriterij 15 (`HLRQ-MMN` `BR-MMN-12`). |
 | v0.0.5 | 2026-10-04 | Dijagrami izrađeni iznova prema `wattleflow-uml`; class, sequence i flow chart prema kodu (memento, razina, prijava ključeva). |
 | v0.0.5 | 2026-10-04 | Prvi put izvršeno u cjelini (`test_workflow_factory.py`, 16 testova), svi defekti zatvoreni: `DEF-WFL-01` bez `logging.level` tvornica slijedi razinu korijenskog loggera (prije je `INFO` gradnje bio nevidljiv); `-02` inline ključ koji se ne troši prijavljuje se sa sekcijom i unosom (spajanje inline ključeva ostaje samo za blackboard); `-03` slotovi (ranije); `-04` vrijednosti `runtime.env` ne ulaze u zapis (`value="<set>"`), poznati ključevi (putanje) ulaze; upis u `os.environ` zapisan kao procesno svojstvo; `-05` nepoznat driver procesora je `WorkflowFactoryException` sa sekcijom i unosom (kao za spremište); `-06` mrtva `_strategy_defaults` obrisana; `-07` `fmt` (ranije); `-08` tipfeler u komentaru. **Novo:** `register` je prihvaćao bilo koji objekt i tiho prepisivao ime drugom klasom — sada klasa je obvezna, a zamjena se prijavljuje. Kriteriji 7–8, 10, 13–14, mutacije. |
 | v0.0.5 | 2026-10-03 | Odjeljci preuređeni u standardnu strukturu FRQ dokumenta 01–17 (`wattleflow-docs` §3e); unutarnje reference preusmjerene. |
