@@ -1,11 +1,5 @@
 # Wattleflow documentation — publication scope.
 #
-# Purpose of the public edition: presenting the project (marketing). Published are the
-# doctrinal layer and the requirement registers (HLRQ, FRQ, NFRQ) with the styles their
-# diagrams include. Not published: analyses (*-ANL.md, 06-ANALYSIS), method documents
-# (05-METHODS), alignment records (07-CHANGES), the policy cascade that steers the agent
-# (CLAUDE.md, POLICY.md, STANDARDS.md, DOCUMENTATION.md, ARCHITECTURE.md, DECISIONS.md,
-# CONFORMANCE.md), tools, generated glossary, per-distribution trees and dockers.
 #
 # Rule: everything is ignored unless listed below. A document enters publication by adding
 # its own `!` line; links from published texts to unlisted files are written as plain code
@@ -16,18 +10,11 @@
 
 # --- Repository essentials -------------------------------------------------
 !/.gitignore
-!/LICENSE
 !/README.md
-!/images/
-/images/*
-!/images/wattleflow.png
-!/images/FRQ-BBD-1.png
-!/images/FRQ-BBD-class-diagram.png
-!/images/FRQ-BBD-sequence-diagram.png
-!/images/FRQ-BBD-state-machine-diagram.png
-!/images/FRQ-DRV-class-diagram.png
-!/images/NFRQ-000-INDEX.png
-!/images/NFRQ-APX-01.png
+# .cl*
+# .ruff_cache
+# .vscode
+# a*
 
 # --- Doctrinal layer and vocabulary ---------------------------------------
 !/PHILOSOPHY.md
@@ -35,17 +22,12 @@
 !/METHODOLOGY.md
 !/POSTULATE.md
 !/LITERATURE.md
-!/DICTIONARY.md
 !/dictionary.yaml
 
 # --- Requirement registers -------------------------------------------------
-!/requirements/
-/requirements/*
-
-!/requirements/01-HLRQ/
-!/requirements/02-FRQ/
-!/requirements/03-NFRQ/
-!/requirements/DIAGRAMS.md
+requirements/02-FRQ/
+requirements/03-NFRQ/
+requirements/DIAGRAMS.md
 
 # Analyses stay in the working tree only.
 *-ANL.md
@@ -62,3 +44,5 @@ __pycache__/
 *.pyc
 .*
 !.gitignore
+tools/digest.py
+!requirements/01-StRS/
