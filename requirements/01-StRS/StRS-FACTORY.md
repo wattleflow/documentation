@@ -4,12 +4,12 @@
 
 | | |
 |---|---|
-| **Verzija** | v0.0.4 |
+| **Verzija** | v0.0.6 |
 | **Razred** | Specifikacija zahtjeva dionika (StRS) — nosi narativ i poslovna pravila; ne opisuje korake |
 | **Norma** | ISO/IEC/IEEE 29148:2018 — StRS; zahtjevi sustava (SyRS) su u djeci |
 | **Predmet** | `concrete/factory.py`: `WorkflowFactory`, `WorkflowFactoryException` |
 | **Djeca (SyRS)** | odrediti (§6) |
-| **Povezano** | [`StRS-WORKFLOW`](StRS-WORKFLOW.md) — tok koji Workflow Factory sastavlja · [`StRS-MANAGER`](StRS-MANAGER.md) — upravitelji koje Workflow Factory puni · [`StRS-PROCESSOR`](StRS-PROCESSOR.md), [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md), [`StRS-REPOSITORY`](StRS-REPOSITORY.md), [`StRS-PIPELINE`](StRS-PIPELINE.md), [`StRS-DRIVER`](StRS-DRIVER.md), [`StRS-CONNECTION`](StRS-CONNECTION.md), [`StRS-STRATEGY`](StRS-STRATEGY.md), [`StRS-MEMENTO-STORE`](StRS-MEMENTO-STORE.md) — komponente koje Workflow Factory stvara · [`StRS-MEMENTO`](StRS-MEMENTO.md) — snimka koju procesori bilježe kao kontrolnu točku |
+| **Povezano** | [`StRS-WORKFLOW`](StRS-WORKFLOW.md) — tok koji Workflow Factory sastavlja · [`StRS-MANAGER`](StRS-MANAGER.md) — upravitelji koje Workflow Factory puni · [`StRS-PROCESSOR`](StRS-PROCESSOR.md), [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md), [`StRS-REPOSITORY`](StRS-REPOSITORY.md), [`StRS-PIPELINE`](StRS-PIPELINE.md), [`StRS-DRIVER`](StRS-DRIVER.md), [`StRS-CONNECTION`](StRS-CONNECTION.md), [`StRS-STRATEGY`](StRS-STRATEGY.md), [`StRS-MEMENTO-STORE`](StRS-MEMENTO-STORE.md) — komponente koje Workflow Factory stvara |
 | **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine (D-13) |
 
 ## 1. Uvod
@@ -44,7 +44,7 @@ Zapis je pisan za široku publiku, od poslovnog korisnika do arhitekta sustava. 
 | kontrolna točka | checkpoint | zabilježen napredak procesora iz kojeg se prekinuta obrada može nastaviti; čuva se u pohrani snimki ([`StRS-MEMENTO-STORE`](StRS-MEMENTO-STORE.md)) |
 | monitor | Monitor | dio koji mjeri rad toka; neobvezan |
 | postavke bilježenja | audit settings | razina, izlaz i oblik zapisnika koje komponenta nasljeđuje od toka ili ih navede sama |
-| pokretač | Initiator | dio sustava ili osoba koja traži sastavljanje toka, npr. raspoređivač |
+| pokretač | Runner | dio sustava ili osoba koja traži sastavljanje toka, npr. raspoređivač |
 | StRS | — | specifikacija zahtjeva dionika: što dionici trebaju i zašto; ovaj zapis |
 | SyRS | — | specifikacija zahtjeva sustava: što sustav mora raditi i kako se to provjerava |
 
@@ -69,7 +69,7 @@ Pokretač (npr. raspoređivač) traži od Workflow Factoryja workflow i predaje 
 title "Workflow Factory: Data flow"
 caption "Context Diagram"
 
-actor "Initiator" as Initiator
+actor "Runner" as Runner
 actor "Programmer" as Programmer
 component "Config adapter" as Config
 component "Managers" as Managers
@@ -82,13 +82,13 @@ rectangle "Workflow Factory" as Boundary <<system boundary>> {
 }
 
 Programmer ..> Factory : registers types
-Initiator ..> Factory : asks for Workflow
+Runner ..> Factory : asks for Workflow
 Config --> Factory : configuration
 Factory ..> Components : creates, wires
 Factory ..> Managers : fills; gets drivers\nby name
 Factory ..> Workflow : assembles
 Factory ..> Monitor : creates, attaches
-Factory --> Initiator : Workflow / error
+Factory --> Runner : Workflow / error
 @enduml
 ```
 
@@ -162,7 +162,7 @@ skinparam nodesep 10
 skinparam ranksep 20
 
 actor Programmer
-actor Initiator
+actor Runner
 actor "Config adapter" as Config
 actor "Configuration author" as Author
 
@@ -174,7 +174,7 @@ rectangle "Workflow Factory" as Boundary <<system boundary>> {
 }
 
 Programmer -- UC1
-Initiator -- UC2
+Runner -- UC2
 UC2 -- Config
 Author -- UC3
 Author -- UC4
@@ -195,45 +195,45 @@ title "Workflow Factory: Data flow"
 caption "Flow Chart"
 
 start
-:Initiator asks for a Workflow;
+:Runner asks for a Workflow;
 if (Config adapter valid\nand section given?) then (no)
   :<b><color:red>WorkflowFactoryException</color></b>;
-  :error returned to Initiator;
+  :error returned to Runner;
   stop
 endif
 if (workflow found in configuration?) then (no)
   :<b><color:red>WorkflowFactoryException</color></b>;
-  :error returned to Initiator;
+  :error returned to Runner;
   stop
 endif
 :environment and logging level set;
 :create connections, then drivers;
 if (every type registered\nand every driver found?) then (no)
   :<b><color:red>WorkflowFactoryException</color></b>\n(section, entry, cause);
-  :error returned to Initiator;
+  :error returned to Runner;
   stop
 endif
 if (at least one processor,\nentries valid?) then (no)
   :<b><color:red>WorkflowFactoryException</color></b>;
-  :error returned to Initiator;
+  :error returned to Runner;
   stop
 endif
 :create processors with Pipelines,\nBlackboard and Repositories;
 if (a component fails\nwhile being created?) then (yes)
   :error of the component;
-  :error returned to Initiator;
+  :error returned to Runner;
   stop
 endif
 :create Workflow from three Managers;
 if (monitoring switched on?) then (yes)
   if (monitoring section valid?) then (no)
     :<b><color:red>WorkflowFactoryException</color></b>;
-    :error returned to Initiator;
+    :error returned to Runner;
     stop
   endif
   :Monitor attached;
 endif
-:Workflow returned to Initiator;
+:Workflow returned to Runner;
 stop
 @enduml
 ```
@@ -278,7 +278,7 @@ Workflow Factory bilježi početak i završetak sastavljanja (s brojem konekcija
 | **BR-FAC-14** | Kontrolne točke uključuju se odjeljkom u konfiguraciji toka; ključ točke je ime procesora; neispravan odjeljak prekida sastavljanje. |
 | **BR-FAC-15** | Monitor se stvara samo ako je praćenje zadano i razina nije isključena; inače ga nema. |
 | **BR-FAC-16** | Postavke okruženja zadane u konfiguraciji postavljaju se prije stvaranja komponenti. |
-| **BR-FAC-17** | Neuspjelo sastavljanje ne vraća workflow; greška nosi odjeljak, ime unosa i izvorni uzrok. |
+| **BR-FAC-17** | Neuspjelo sastavljanje ne vraća workflow. Greška koju otkrije sam Workflow Factory nosi odjeljak, ime unosa i izvorni uzrok; greška koju javi komponenta prosljeđuje se kakva jest, jer pravila komponente posjeduje komponenta ([`NFRQ-ORG-15`](../03-NFRQ/NFRQ-ORG-15-separation-of-concerns.md)). |
 
 ## 4. Nefunkcionalni zahtjevi
 
@@ -288,6 +288,7 @@ Kakvoće proizlaze iz narativa i koda; za njih još nema poveznice na zapise zah
 |---|---|
 | podesivost | tok se mijenja izmjenom konfiguracije, ne koda (BR-FAC-01) |
 | rano otkrivanje grešaka | neispravna konfiguracija javlja se pri sastavljanju, a ne usred izvedbe (BR-FAC-17) |
+| razdvajanje odgovornosti | Workflow Factory provjerava samo ono što komponenta deklarira; pravila i greške komponente pripadaju komponenti ([`NFRQ-ORG-15`](../03-NFRQ/NFRQ-ORG-15-separation-of-concerns.md)) |
 | razumljivost grešaka | poruka navodi odjeljak i ime unosa te predlaže slična imena vrsta (BR-FAC-03) |
 | odvojenost | Workflow Factory ne zna konkretne komponente, pa se one dodaju bez njegove izmjene (BR-FAC-02) |
 | praćenje | Workflow Factory bilježi sastavljanje i greške konfiguracije |
@@ -337,6 +338,8 @@ Matrica se popunjava kad se odrede djeca (§6).
 
 | Verzija | Datum | Promjena |
 |---|---|---|
+| v0.0.6 | 2026-10-11 | Naziv uloge *pokretač* u dijagramima: *Runner* umjesto *Initiator*. |
+| v0.0.5 | 2026-10-11 | Odluka 2026-10-11 (razdvajanje odgovornosti, NFRQ-ORG-15): BR-FAC-17 razlikuje grešku koju otkrije Workflow Factory (s odjeljkom, imenom unosa i uzrokom) od greške komponente (prosljeđuje se kakva jest); time je usklađen s UC2 A6 i tablicom grešaka. Kakvoća razdvajanja odgovornosti u §4. |
 | v0.0.4 | 2026-10-11 | Poveznice na StRS-MEMENTO-STORE. |
 | v0.0.3 | 2026-10-11 | Povezani zapisi (StRS-DRIVER, StRS-MANAGER, StRS-REPOSITORY, StRS-PROCESSOR, StRS-PIPELINE, StRS-BLACKBOARD) usklađeni s ovim kodom; stavka o ispravcima uklonjena iz *Otvoreno*. |
 | v0.0.2 | 2026-10-11 | Nazivlje usklađeno s ostalim zapisima: posvuda *Workflow Factory* (umjesto *tvornica workflowa*); zastarjela stavka o nazivlju uklonjena. Prema kodu: driver komponentama dohvaća Workflow Factory od upravitelja drivera (BR-FAC-08, UC2, kontekst); Blackboard je obvezan za svaki procesor (BR-FAC-10, A3); Blackboard prima i ključeve uz unos (BR-FAC-12); izlaz monitora dobiva driver od upravitelja (UC4); Workflow Factory drivere ne spaja (§2.6). *Otvoreno*: oznaka zapisa više nije prijedlog; dodana pitanja o tome tko spaja drivere i o ispravcima StRS-DRIVER, StRS-MANAGER i StRS-REPOSITORY. |

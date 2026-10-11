@@ -4,8 +4,8 @@
 
 | | |
 |---|---|
-| **Version** | v0.0.5 |
-| **Quality (25010)** | Maintainability (analysability) · Reliability (recoverability) · Usability (for the operator as the record's reader) |
+| **Version** | v1.0.0 *(documented change 2026-10-11, D-03)* |
+| **Quality (25010)** | Maintainability (analysability) · Reliability (recoverability) · Interaction capability (for the operator as the record's reader) |
 | **Enforcement** | `wem_lint` ≥ 1.13.0 — `audit_level_vs_propagation`, `audit_failure_trace`; both `severity: warning` |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
 
@@ -29,7 +29,7 @@ Five normative rules follow:
 * **`INFO`** carries **two** kinds of record: the **work-unit boundary**, written
   by that unit's owner, and the **entry into an operation on a document**, written by a step in
   the persistence chain. Their demarcation, order and volume are governed by
-  [`NFRQ-OBS-03`](NFRQ-OBS-03-audit-ownership-volume.md). **Document boundary (proposal, in code
+  [`NFRQ-OBS-03`](NFRQ-OBS-03-audit-ownership-volume.md). **Document boundary (accepted 2026-10-11; in code
   since 2026-09-09):** a document is itself a work unit owned by the **processor**, so its closing
   record is of the first kind, not the second; and the **pipeline layer** leaves the second kind
   entirely — its record keeps its fields and position but drops to `DEBUG`.
@@ -52,7 +52,7 @@ component carries its own `level`, `handler` and `formatting` (`WorkflowFactory.
 ## 2. Acceptance criteria
 
 1. No `except` branch both emits `error()`/`critical()`/`exception()` **and** re-raises (`raise`)
-   in the same branch. The rule holds for every path ending in a raise, including a `raise` from
+   in the same branch, except at the **framework boundary** (see *Exception to c.1* below). The rule holds for every path ending in a raise, including a `raise` from
    the `try` body; that wider form is **not machine-decidable** and is checked by review.
 2. An `except` branch that re-raises leaves **exactly one** trace at `debug()` level, with
    `step=Event.Failed.name` and the key `error=`.
@@ -63,13 +63,21 @@ component carries its own `level`, `handler` and `formatting` (`WorkflowFactory.
 6. Every class that catches an exception **leaves a trace**: either `error()`/`critical()` if it
    handles it, or `debug()` + `raise` if it propagates it. **Silent swallowing is a violation.**
 
-**Three exceptions to c.6**, all machine-recognisable:
+**Four exceptions to c.6**; the first three are machine-recognisable, the fourth by the layer's declaration:
 
 | Exception | Reason |
 |---|---|
 | **No `self` in scope** — a branch at module level or in a module function | there is nothing to write through; the exception message is the sole carrier of context |
 | **Bare pass-through** — `except <Exception>: raise` with no modification | the layer that raised it already left a trace; a second record would be the duplicate c.1 forbids |
 | **Guarded optional dependency** — an `except ImportError` raising a domain error with installation guidance | the failure is configurational, not data-borne: the exception carries the whole story, and the boundary records it once |
+| **Lightweight layer** — a class of a layer declared free of audit (serialisation: `BR-SRL-03`) that wraps an exception into its own error type with `raise … from` | the layer has no audit by design; the `__cause__` chain carries the whole story, and the owner that handles the error records it once |
+
+**Exception to c.1 — the framework boundary.** The owner of the main process (the workflow) is the
+last framework layer before an external caller (a runner such as `cron`). It records a **cardinal**
+error once, at `ERROR`, and passes it on to the caller. The rule's intent — one cause, one `ERROR` —
+holds because every layer below leaves only the `DEBUG` trace of c.2 and no layer above it is inside
+the framework. The exception applies **solely** to the owner of the main process; when the runner
+becomes a framework process, the runner does not record the same error again.
 
 The list of guarded types is **criterion data** (`tools/dictionary.json → audit.import_guard`).
 
@@ -107,10 +115,14 @@ The `strategies` layer is aligned; the reference pattern is
 
 Record fields — [`NFRQ-OBS-02`](NFRQ-OBS-02-audit-fields.md).
 Volume and ownership — [`NFRQ-OBS-03`](NFRQ-OBS-03-audit-ownership-volume.md).
-Content confidentiality — [`NFRQ-SEC-06`](NFRQ-SEC-06-audit-confidentiality.md).
+Content confidentiality — [`NFRQ-SCR-06`](NFRQ-SCR-06-audit-confidentiality.md).
+Error ownership — [`NFRQ-ORG-15`](NFRQ-ORG-15-separation-of-concerns.md) c.3; the owner of the main
+process — [`StRS-WORKFLOW`](../01-StRS/StRS-WORKFLOW.md) (BR-WRK-11 to BR-WRK-16).
+Error-handling policy of a component — [`NFRQ-DFN-06`](NFRQ-DFN-06-error-handling-policy.md).
 
 ## Change history
 
 | Version | Date | Change |
 |---|---|---|
+| v1.0.0 | 2026-10-11 | Documented change (author's decisions 4, 5, 17): exception to c.1 at the framework boundary; fourth exception to c.6 for the lightweight layer; the document-boundary amendment of 2026-09-09 accepted (no longer a proposal); quality anchor named after ISO/IEC 25010:2023. |
 | v0.0.5 | 2026-10-02 | `Version` replaces `Status`; previous status: Accepted (2026-08-23; amended 2026-08-24; §1 `INFO` rule amended 2026-09-09 — **proposal**, marked inline) |
