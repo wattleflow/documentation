@@ -7,7 +7,7 @@
 | **Version** | v0.0.5 |
 | **Quality (25010)** | Functional correctness · Maintainability — modularity, analysability · Interoperability |
 | **Enforcement** | c.2–c.6 **by test** ([`test_moment.py`](../../../workflow/tests/test_moment.py)); c.1 **by review** |
-| **Reference frame** | [ISO](../../GLOSSARY.md#abbr-iso) 8601-1:2019 (local time, no UTC offset) · [`HLRQ-MMN`](../01-HLRQ/HLRQ-MMN-moment.md) `BR-MMN-13`, `BR-MMN-14` · [`NFRQ-DEF-03`](NFRQ-DEF-03-comparison-and-boundary-values.md) §3.1 · [`NFRQ-DEF-04`](NFRQ-DEF-04-moment-aware-helper.md) (aware moment, the norm) |
+| **Reference frame** | [ISO](../../GLOSSARY.md#abbr-iso) 8601-1:2019 (local time, no UTC offset) · `HLRQ-MMN` `BR-MMN-13`, `BR-MMN-14` · [`NFRQ-DEF-03`](NFRQ-DEF-03-comparison-and-boundary-values.md) §3.1 · [`NFRQ-DEF-04`](NFRQ-DEF-04-moment-aware-helper.md) (aware moment, the norm) |
 | **Implementation** | [`wattleflow.helpers.moment`](../../../workflow/src/wattleflow/helpers/moment/helper.py): `MomentNaiveHelper`; `MomentHelper.text` and `MomentHelper.parse_iso` for a value whose kind its source decides |
 | **Raised by** | author's decision 2026-10-06: a datetime without a zone is not the norm and is defined apart from it |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |

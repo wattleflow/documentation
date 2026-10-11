@@ -1,39 +1,59 @@
 # Registar dijagrama — sloj zahtjeva
 
-<!-- Generated from the register tree by tools/diagrams.py; do not edit. -->
+<!-- Generated from the register tree by tools/scripts/diagrams.py; do not edit. -->
 
 Što je nacrtano i što je **rezervirano**: stupac *Nedostaje* nosi ime datoteke koje će
 poveznica dobiti kad dijagram bude generiran. Dijagram je **pogled** s deklariranim
 gledištem i publikom, nikad izvor istine (D-13, ISO/IEC/IEEE 42010).
 
 > **Očekivani skup pogleda je prijedlog, ne prihvaćena norma** (D-03). Danas glasi:
-> `HLRQ` — dekompozicija na svoju djecu; `FRQ` — struktura (class) i tok (sequence ili
-> activity); `NFRQ` — nijedan obavezno, jer su njegovi kriteriji mjerni, a ne strukturni.
-> Kriterij živi u `tools/diagrams.py` (`EXPECTED`); proširenje ide uz dokumentiranu izmjenu.
+> `StRS` — kontekst (context), korisnički slučajevi (usecase) i tok (activity); `HLRQ` —
+> dekompozicija na svoju djecu (samo u stablu `blackwattle`); `FRQ` — struktura (class) i tok
+> (sequence ili activity); `NFRQ` — nijedan obavezno, jer su njegovi kriteriji mjerni, a ne strukturni.
+> Kriterij živi u `tools/scripts/diagrams.py` (`EXPECTED`); proširenje ide uz dokumentiranu izmjenu.
 > Dijagram je ili `.puml` datoteka u `uml/`, ili blok `plantuml` unutar samog zapisa (*inline*);
 > registar čita oba, a zapis smije imati oba.
 
-Provjera: `python3 tools/diagrams.py check` — javlja razilaženje ovog prikaza sa stablom
+Provjera: `python3 tools/scripts/diagrams.py check` — javlja razilaženje ovog prikaza sa stablom
 i svaki `.puml` koji nijedan zapis ne prisvaja.
 
-## `01-HLRQ` — HLRQ
+## `01-StRS` — StRS
 
-3 zapisa, 2 s barem jednim dijagramom.
+15 zapisa, 15 s barem jednim dijagramom.
 
 | Zapis | Naslov | Imamo | Nedostaje |
 |---|---|---|---|
-| [HLRQ-01](01-HLRQ/HLRQ-01-GENERIC-LAYER.md) | Cjevovodna obrada kroz zamjenjive primitive (generički sloj) | — | `HLRQ-01-decomposition.puml` |
-| [HLRQ-10](01-HLRQ/HLRQ-10-SERIALISATION.md) | Granica formata: parser, formater i konverter (generički sloj) | [class (inline)](01-HLRQ/HLRQ-10-SERIALISATION.md) | `HLRQ-10-decomposition.puml` |
-| [HLRQ-MMN](01-HLRQ/HLRQ-MMN-moment.md) | Moment: vrijeme kao broj nanosekundi | [component (inline)](01-HLRQ/HLRQ-MMN-moment.md) | `HLRQ-MMN-decomposition.puml` |
+| [StRS-BLACKBOARD](01-StRS/StRS-BLACKBOARD.md) | Blackboard: privremena pohrana dokumenata tijekom obrade | [context (inline)](01-StRS/StRS-BLACKBOARD.md) · [usecase (inline)](01-StRS/StRS-BLACKBOARD.md) · [state (inline)](01-StRS/StRS-BLACKBOARD.md) · [activity (inline)](01-StRS/StRS-BLACKBOARD.md) | — |
+| [StRS-CONNECTION](01-StRS/StRS-CONNECTION.md) | Generička konekcija: jedina granica prema vanjskom sustavu | [context (inline)](01-StRS/StRS-CONNECTION.md) · [usecase (inline)](01-StRS/StRS-CONNECTION.md) · [state (inline)](01-StRS/StRS-CONNECTION.md) · [activity (inline)](01-StRS/StRS-CONNECTION.md) | — |
+| [StRS-DOCUMENT](01-StRS/StRS-DOCUMENT.md) | Dokument: jedinica podataka koja putuje tokom | [context (inline)](01-StRS/StRS-DOCUMENT.md) · [usecase (inline)](01-StRS/StRS-DOCUMENT.md) · [activity (inline)](01-StRS/StRS-DOCUMENT.md) | — |
+| [StRS-DRIVER](01-StRS/StRS-DRIVER.md) | Driver: jedinstven pristup vanjskim resursima | [context (inline)](01-StRS/StRS-DRIVER.md) · [usecase (inline)](01-StRS/StRS-DRIVER.md) · [state (inline)](01-StRS/StRS-DRIVER.md) · [activity (inline)](01-StRS/StRS-DRIVER.md) | — |
+| [StRS-FACTORY](01-StRS/StRS-FACTORY.md) | Workflow Factory: sastavljanje toka iz konfiguracije | [context (inline)](01-StRS/StRS-FACTORY.md) · [usecase (inline)](01-StRS/StRS-FACTORY.md) · [activity (inline)](01-StRS/StRS-FACTORY.md) | — |
+| [StRS-MANAGER](01-StRS/StRS-MANAGER.md) | Upravitelji: evidencija konekcija, drivera i procesora po imenu | [context (inline)](01-StRS/StRS-MANAGER.md) · [usecase (inline)](01-StRS/StRS-MANAGER.md) · [activity (inline)](01-StRS/StRS-MANAGER.md) | — |
+| [StRS-MEMENTO-STORE](01-StRS/StRS-MEMENTO-STORE.md) | Pohrana snimki: čuvanje stanja između pokretanja | [context (inline)](01-StRS/StRS-MEMENTO-STORE.md) · [usecase (inline)](01-StRS/StRS-MEMENTO-STORE.md) · [activity (inline)](01-StRS/StRS-MEMENTO-STORE.md) | — |
+| [StRS-MEMENTO](01-StRS/StRS-MEMENTO.md) | Snimka stanja: nepromjenjiv zapis stanja komponente | [context (inline)](01-StRS/StRS-MEMENTO.md) · [usecase (inline)](01-StRS/StRS-MEMENTO.md) · [activity (inline)](01-StRS/StRS-MEMENTO.md) | — |
+| [StRS-PIPELINE](01-StRS/StRS-PIPELINE.md) | Generički pipeline: jedna transformacija nad jednim dokumentom | [context (inline)](01-StRS/StRS-PIPELINE.md) · [usecase (inline)](01-StRS/StRS-PIPELINE.md) · [activity (inline)](01-StRS/StRS-PIPELINE.md) | — |
+| [StRS-PROCESSOR](01-StRS/StRS-PROCESSOR.md) | Generički procesor: obrada dokumenta kroz pipelineove | [context (inline)](01-StRS/StRS-PROCESSOR.md) · [usecase (inline)](01-StRS/StRS-PROCESSOR.md) · [state (inline)](01-StRS/StRS-PROCESSOR.md) · [activity (inline)](01-StRS/StRS-PROCESSOR.md) | — |
+| [StRS-REPOSITORY](01-StRS/StRS-REPOSITORY.md) | Repozitorij: trajna pohrana dokumenata kroz strategije | [context (inline)](01-StRS/StRS-REPOSITORY.md) · [usecase (inline)](01-StRS/StRS-REPOSITORY.md) · [activity (inline)](01-StRS/StRS-REPOSITORY.md) | — |
+| [StRS-SERIALISATION](01-StRS/StRS-SERIALISATION.md) | Granica formata: parser, formater i konverter (generički sloj) | [context (inline)](01-StRS/StRS-SERIALISATION.md) · [usecase (inline)](01-StRS/StRS-SERIALISATION.md) · [activity (inline)](01-StRS/StRS-SERIALISATION.md) | — |
+| [StRS-STATE-MACHINE](01-StRS/StRS-STATE-MACHINE.md) | Stroj stanja: dopušteni prijelazi između stanja | [context (inline)](01-StRS/StRS-STATE-MACHINE.md) · [usecase (inline)](01-StRS/StRS-STATE-MACHINE.md) · [activity (inline)](01-StRS/StRS-STATE-MACHINE.md) | — |
+| [StRS-STRATEGY](01-StRS/StRS-STRATEGY.md) | Strategija: zamjenjiv način da se obavi jedan posao | [context (inline)](01-StRS/StRS-STRATEGY.md) · [usecase (inline)](01-StRS/StRS-STRATEGY.md) · [activity (inline)](01-StRS/StRS-STRATEGY.md) | — |
+| [StRS-WORKFLOW](01-StRS/StRS-WORKFLOW.md) | Workflow: tok koji pokreće procesore i drži njihove upravitelje | [context (inline)](01-StRS/StRS-WORKFLOW.md) · [usecase (inline)](01-StRS/StRS-WORKFLOW.md) · [activity (inline)](01-StRS/StRS-WORKFLOW.md) | — |
 
 ## `02-FRQ` — FRQ
 
-25 zapisa, 25 s barem jednim dijagramom.
+32 zapisa, 27 s barem jednim dijagramom.
 
 | Zapis | Naslov | Imamo | Nedostaje |
 |---|---|---|---|
 | [FRQ-AUD-01](02-FRQ/FRQ-AUD-01-audit-record-path.md) | Put audit zapisa od komponente do spremišta | [class (inline)](02-FRQ/FRQ-AUD-01-audit-record-path.md) · [context (inline)](02-FRQ/FRQ-AUD-01-audit-record-path.md) · [usecase (inline)](02-FRQ/FRQ-AUD-01-audit-record-path.md) · [sequence (inline)](02-FRQ/FRQ-AUD-01-audit-record-path.md) · [activity (inline)](02-FRQ/FRQ-AUD-01-audit-record-path.md) | — |
 | [FRQ-BBD](02-FRQ/FRQ-BBD-blackboard.md) | GenericBlackboard | [class (inline)](02-FRQ/FRQ-BBD-blackboard.md) · [context (inline)](02-FRQ/FRQ-BBD-blackboard.md) · [usecase (inline)](02-FRQ/FRQ-BBD-blackboard.md) · [sequence (inline)](02-FRQ/FRQ-BBD-blackboard.md) · [activity (inline)](02-FRQ/FRQ-BBD-blackboard.md) · [activity (inline)](02-FRQ/FRQ-BBD-blackboard.md) · [state (inline)](02-FRQ/FRQ-BBD-blackboard.md) | — |
+| [FRQ-CNV-01](02-FRQ/FRQ-CNV-01-binary.md) | ConverterBinary | — | `FRQ-CNV-01-class.puml` · `FRQ-CNV-01-sequence.puml` |
+| [FRQ-CNV-02](02-FRQ/FRQ-CNV-02-lexicaly.md) | ConverterLexical | — | `FRQ-CNV-02-class.puml` · `FRQ-CNV-02-sequence.puml` |
+| [FRQ-CNV-03](02-FRQ/FRQ-CNV-03-mail.md) | ConverterMail | — | `FRQ-CNV-03-class.puml` · `FRQ-CNV-03-sequence.puml` |
+| [FRQ-CNV-04](02-FRQ/FRQ-CNV-04-pdf.md) | ConverterPdf | — | `FRQ-CNV-04-class.puml` · `FRQ-CNV-04-sequence.puml` |
+| [FRQ-CNV-05](02-FRQ/FRQ-CNV-05-rss.md) | ConverterRSS | [class (inline)](02-FRQ/FRQ-CNV-05-rss.md) · [context (inline)](02-FRQ/FRQ-CNV-05-rss.md) · [usecase (inline)](02-FRQ/FRQ-CNV-05-rss.md) · [sequence (inline)](02-FRQ/FRQ-CNV-05-rss.md) · [activity (inline)](02-FRQ/FRQ-CNV-05-rss.md) | — |
+| [FRQ-CNV-06](02-FRQ/FRQ-CNV-06-text.md) | ConverterText | — | `FRQ-CNV-06-class.puml` · `FRQ-CNV-06-sequence.puml` |
+| [FRQ-CNV-07](02-FRQ/FRQ-CNV-07-xml.md) | ConverterXml | [class (inline)](02-FRQ/FRQ-CNV-07-xml.md) · [context (inline)](02-FRQ/FRQ-CNV-07-xml.md) · [usecase (inline)](02-FRQ/FRQ-CNV-07-xml.md) · [sequence (inline)](02-FRQ/FRQ-CNV-07-xml.md) · [activity (inline)](02-FRQ/FRQ-CNV-07-xml.md) | — |
 | [FRQ-CON](02-FRQ/FRQ-CON-connection.md) | GenericConnection | [class (inline)](02-FRQ/FRQ-CON-connection.md) · [context (inline)](02-FRQ/FRQ-CON-connection.md) · [usecase (inline)](02-FRQ/FRQ-CON-connection.md) · [sequence (inline)](02-FRQ/FRQ-CON-connection.md) · [activity (inline)](02-FRQ/FRQ-CON-connection.md) · [state (inline)](02-FRQ/FRQ-CON-connection.md) | — |
 | [FRQ-DOC](02-FRQ/FRQ-DOC-document.md) | Dokument, adapter i fasada | [class (inline)](02-FRQ/FRQ-DOC-document.md) · [context (inline)](02-FRQ/FRQ-DOC-document.md) · [usecase (inline)](02-FRQ/FRQ-DOC-document.md) · [sequence (inline)](02-FRQ/FRQ-DOC-document.md) · [activity (inline)](02-FRQ/FRQ-DOC-document.md) | — |
 | [FRQ-DRV](02-FRQ/FRQ-DRV-driver.md) | Generički driver i odgođeni proxy | [class (inline)](02-FRQ/FRQ-DRV-driver.md) · [context (inline)](02-FRQ/FRQ-DRV-driver.md) · [usecase (inline)](02-FRQ/FRQ-DRV-driver.md) · [sequence (inline)](02-FRQ/FRQ-DRV-driver.md) · [activity (inline)](02-FRQ/FRQ-DRV-driver.md) · [state (inline)](02-FRQ/FRQ-DRV-driver.md) | — |
@@ -50,7 +70,7 @@ i svaki `.puml` koji nijedan zapis ne prisvaja.
 | [FRQ-PTN](02-FRQ/FRQ-PTN-root-base.md) | Korijenska baza Wattleflow | [class (inline)](02-FRQ/FRQ-PTN-root-base.md) · [context (inline)](02-FRQ/FRQ-PTN-root-base.md) · [usecase (inline)](02-FRQ/FRQ-PTN-root-base.md) · [sequence (inline)](02-FRQ/FRQ-PTN-root-base.md) · [activity (inline)](02-FRQ/FRQ-PTN-root-base.md) | — |
 | [FRQ-REP](02-FRQ/FRQ-REP-repository.md) | Generičko spremište i varijanta s driverom | [class (inline)](02-FRQ/FRQ-REP-repository.md) · [context (inline)](02-FRQ/FRQ-REP-repository.md) · [usecase (inline)](02-FRQ/FRQ-REP-repository.md) · [sequence (inline)](02-FRQ/FRQ-REP-repository.md) · [activity (inline)](02-FRQ/FRQ-REP-repository.md) | — |
 | [FRQ-SCH](02-FRQ/FRQ-SCH-scheduler.md) | Raspoređivač | [class (inline)](02-FRQ/FRQ-SCH-scheduler.md) · [context (inline)](02-FRQ/FRQ-SCH-scheduler.md) · [usecase (inline)](02-FRQ/FRQ-SCH-scheduler.md) · [sequence (inline)](02-FRQ/FRQ-SCH-scheduler.md) · [activity (inline)](02-FRQ/FRQ-SCH-scheduler.md) | — |
-| [FRQ-SER-CNV](02-FRQ/FRQ-SER-CNV-converter.md) | Generički konverter | [class (inline)](02-FRQ/FRQ-SER-CNV-converter.md) · [context (inline)](02-FRQ/FRQ-SER-CNV-converter.md) · [usecase (inline)](02-FRQ/FRQ-SER-CNV-converter.md) · [sequence (inline)](02-FRQ/FRQ-SER-CNV-converter.md) · [activity (inline)](02-FRQ/FRQ-SER-CNV-converter.md) | — |
+| [FRQ-SER-CNV](02-FRQ/FRQ-SER-CNV-converter.md) | Generički konverter | [usecase (inline)](02-FRQ/FRQ-SER-CNV-converter.md) · [class (inline)](02-FRQ/FRQ-SER-CNV-converter.md) · [class (inline)](02-FRQ/FRQ-SER-CNV-converter.md) · [context (inline)](02-FRQ/FRQ-SER-CNV-converter.md) · [usecase (inline)](02-FRQ/FRQ-SER-CNV-converter.md) · [sequence (inline)](02-FRQ/FRQ-SER-CNV-converter.md) · [activity (inline)](02-FRQ/FRQ-SER-CNV-converter.md) | — |
 | [FRQ-SER-FMT](02-FRQ/FRQ-SER-FMT-formatter.md) | Generički formater | [class (inline)](02-FRQ/FRQ-SER-FMT-formatter.md) · [context (inline)](02-FRQ/FRQ-SER-FMT-formatter.md) · [usecase (inline)](02-FRQ/FRQ-SER-FMT-formatter.md) · [sequence (inline)](02-FRQ/FRQ-SER-FMT-formatter.md) · [activity (inline)](02-FRQ/FRQ-SER-FMT-formatter.md) | — |
 | [FRQ-SER-PAR](02-FRQ/FRQ-SER-PAR-parser.md) | Generički parser | [class (inline)](02-FRQ/FRQ-SER-PAR-parser.md) · [context (inline)](02-FRQ/FRQ-SER-PAR-parser.md) · [usecase (inline)](02-FRQ/FRQ-SER-PAR-parser.md) · [sequence (inline)](02-FRQ/FRQ-SER-PAR-parser.md) · [activity (inline)](02-FRQ/FRQ-SER-PAR-parser.md) | — |
 | [FRQ-SGT](02-FRQ/FRQ-SGT-singleton.md) | Singleton | [class (inline)](02-FRQ/FRQ-SGT-singleton.md) · [context (inline)](02-FRQ/FRQ-SGT-singleton.md) · [usecase (inline)](02-FRQ/FRQ-SGT-singleton.md) · [sequence (inline)](02-FRQ/FRQ-SGT-singleton.md) · [activity (inline)](02-FRQ/FRQ-SGT-singleton.md) | — |

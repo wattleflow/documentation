@@ -8,8 +8,8 @@
 | **Version** | Draft v0.2 (split out 2026-08-24) |
 | **Quality anchor** | ISO/IEC 25010 (ISO/IEC 25012 for data) |
 | **Parents** | [PHILOSOPHY](../../PHILOSOPHY.md) · [METHODOLOGY](../../METHODOLOGY.md) §6 *Traceability* · [DOCTRINE](../../DOCTRINE.md) |
-| **Sibling registers** | [HLRQ](../01-HLRQ/HLRQ-00-INDEX.md) · [FRQ](../02-FRQ/FRQ-000-INDEX.md) |
-| **Language** | EN only — see4 *Language* below |
+| **Sibling registers** | [StRS](../01-StRS/StRS-000-INDEX.md) · [FRQ](../02-FRQ/FRQ-000-INDEX.md) |
+| **Language** | EN only — see *Language* below |
 
 This document is an **index**, not a register: each requirement lives in its own file
 (`category-number-slug-EN.md`). The rendering is not the source of truth (D-13) — finding
@@ -117,6 +117,10 @@ Every NFR carries a **statement**, **acceptance criteria**, a **verification met
 
 > `MEM` is also the requirement category of the Memento role on the FRQ axis (`FRQ-MEM`); the prefix
 > `FRQ-` or `NFRQ-` tells them apart. The quality-axis category is provisional until a documented change admits it.
+
+## Language
+
+The non-functional requirement entries are written in English only; there is no Croatian edition.
 
 ## Verification and scope
 Verification is "machine-checkable" means **lint on demand**: `python tools/wem_lint.py --snapshot`. 

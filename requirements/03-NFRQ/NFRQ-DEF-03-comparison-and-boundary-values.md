@@ -6,7 +6,7 @@
 |---|---|
 | **Version** | 0.1 (2026-09-13) — status changes with a documented change (D-03); §6 lists what needs a documented decision |
 | **Role** | What every compared or bounded value must declare before it reaches code; the definitions live here, requirements reference them |
-| **Parent rule** | [`HLRQ-01`](../01-HLRQ/HLRQ-01-GENERIC-LAYER.md) `BR-PTN-06` |
+| **Parent rule** | `HLRQ-01` `BR-PTN-06` |
 | **Register** | [`0-NFRQ`](NFRQ-000-INDEX.md) |
 | **Anchor** | ISO/IEC/IEEE 29119-4 (boundary value analysis) · ISO/IEC/IEEE 29148 (verifiable acceptance criteria) · ISO 8601 · IEEE 754 · The Unicode Standard (UTF-8, UAX #29) |
 
@@ -140,11 +140,11 @@ An FR acceptance criterion (29148) that names a bound without its facets fails r
 | O3 | Default rounding mode | The first component with decimal places |
 | O4 | Invalid UTF-8: reject or replace with U+FFFD | Parsers, documents from external sources |
 | O5 | A datetime without a zone that does not occur (spring forward): reject, or move to the transition | Naive bounds in a zone with daylight saving |
-| O6 | Scope: this entry is shared, the rule sits in [`HLRQ-01`](../01-HLRQ/HLRQ-01-GENERIC-LAYER.md) where the defect was found — does a framework-wide rule need its own HLRQ | `blackwattle` specialisations |
+| O6 | Scope: this entry is shared, the rule sits in `HLRQ-01` where the defect was found — does a framework-wide rule need its own HLRQ | `blackwattle` specialisations |
 
 ## 7. Traceability
 
-[`HLRQ-01`](../01-HLRQ/HLRQ-01-GENERIC-LAYER.md) `BR-PTN-06` · [`NFRQ-DEF-01`](NFRQ-DEF-01-common-definitions.md) (common definitions) ·
+`HLRQ-01` `BR-PTN-06` · [`NFRQ-DEF-01`](NFRQ-DEF-01-common-definitions.md) (common definitions) ·
 [`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md) (a bound that is measured is an `[M]`
 criterion) · ISO/IEC 25010 functional correctness · `METHODOLOGY.md` §6 (traceability is a graph).
 

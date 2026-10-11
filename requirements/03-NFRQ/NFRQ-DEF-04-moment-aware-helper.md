@@ -7,7 +7,7 @@
 | **Version** | v0.0.5 |
 | **Quality (25010)** | Functional correctness · Maintainability — modularity, analysability · Interoperability |
 | **Enforcement** | c.3, c.5–c.7 **by test** ([`test_moment.py`](../../../workflow/tests/test_moment.py)); c.1, c.2 **not measured** — [AST](../../GLOSSARY.md#abbr-ast) candidate (calls of `isoformat`, `strftime`, `fromisoformat`, `strptime` outside `wattleflow.helpers.moment`); declared [blind spot](../../GLOSSARY.md#slijepa-pjega) (D-11); c.4 **by review** |
-| **Reference frame** | [ISO](../../GLOSSARY.md#abbr-iso) 8601-1:2019 · RFC 3339 (the Internet profile of ISO 8601) · [`HLRQ-MMN`](../01-HLRQ/HLRQ-MMN-moment.md) · [`NFRQ-DEF-03`](NFRQ-DEF-03-comparison-and-boundary-values.md) §3.1 · [`NFRQ-DEF-05`](NFRQ-DEF-05-moment-naive-helper.md) (wall time) · [`NFRQ-ORG-08`](NFRQ-ORG-08-deduplication.md) · [`NFRQ-ORG-09`](NFRQ-ORG-09-external-standard.md) |
+| **Reference frame** | [ISO](../../GLOSSARY.md#abbr-iso) 8601-1:2019 · RFC 3339 (the Internet profile of ISO 8601) · `HLRQ-MMN` · [`NFRQ-DEF-03`](NFRQ-DEF-03-comparison-and-boundary-values.md) §3.1 · [`NFRQ-DEF-05`](NFRQ-DEF-05-moment-naive-helper.md) (wall time) · [`NFRQ-ORG-08`](NFRQ-ORG-08-deduplication.md) · [`NFRQ-ORG-09`](NFRQ-ORG-09-external-standard.md) |
 | **Implementation** | [`wattleflow.helpers.moment`](../../../workflow/src/wattleflow/helpers/moment/helper.py): `MomentAwareHelper`; `MomentHelper.text` and `MomentHelper.parse_iso` for a value whose kind its source decides |
 | **Raised by** | review of the converters' formatters, 2026-10-06: several written forms of one datetime across converters, metrics and mail |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |

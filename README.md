@@ -26,9 +26,9 @@ built to last and grow.
 |---|---|---|
 | I | Foundations | [PHILOSOPHY](PHILOSOPHY.md) · [DOCTRINE](DOCTRINE.md) · [METHODOLOGY](METHODOLOGY.md) · [POSTULATE](POSTULATE.md) · [LITERATURE](LITERATURE.md) |
 | II | Architectural Principles | *(planned)* |
-| III | Decisions | carried by the requirement documentation (`requirements/01-HLRQ/`–`03-NFRQ/`) |
+| III | Decisions | carried by the requirement documentation (`requirements/01-StRS/`–`03-NFRQ/`) |
 | IV | System Design | *(planned)* |
-| V | Development Standards | [`requirements/01-HLRQ/`](requirements/01-HLRQ/HLRQ-00-INDEX.md) · [`requirements/02-FRQ/`](requirements/02-FRQ/FRQ-000-INDEX.md) · [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md) *(in progress)* |
+| V | Development Standards | [`requirements/01-StRS/`](requirements/01-StRS/StRS-000-INDEX.md) · [`requirements/02-FRQ/`](requirements/02-FRQ/FRQ-000-INDEX.md) · [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md) *(in progress)* |
 | VI | Quality Assurance | *(planned)* |
 | VII | AI-Assisted Software Engineering | *(planned)* |
 | VIII | Governance, Compliance and Information Science | *(planned)* |
@@ -44,7 +44,7 @@ built to last and grow.
 | Method (Volume I) | [METHODOLOGY.md](METHODOLOGY.md) · `requirements/05-METHODS/` |
 | Policy (cascade) | `CLAUDE.md` (= `POLICY.md`) → `STANDARDS.md` · `DOCUMENTATION.md` · `ARCHITECTURE.md` · `DECISIONS.md` · `CONFORMANCE.md` |
 | Discourse vocabulary | [dictionary.yaml](dictionary.yaml) → [DICTIONARY.md](DICTIONARY.md) · `GLOSSARY.md` (en-AU, generated) |
-| Requirements | [`requirements/01-HLRQ/`](requirements/01-HLRQ/HLRQ-00-INDEX.md) · [`requirements/02-FRQ/`](requirements/02-FRQ/FRQ-000-INDEX.md) · [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md) |
+| Requirements | [`requirements/01-StRS/`](requirements/01-StRS/StRS-000-INDEX.md) · [`requirements/02-FRQ/`](requirements/02-FRQ/FRQ-000-INDEX.md) · [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md) |
 | Analyses · change records | `requirements/06-ANALYSIS/` · `requirements/07-CHANGES/` |
 | Diagram register (drawn · reserved) | [`requirements/DIAGRAMS.md`](requirements/DIAGRAMS.md) |
 | Per-distribution documentation | `core/` · `workflow/` · `blackwattle/` |
@@ -133,5 +133,5 @@ research-based rationale.
 
 - [Functional requirements register](requirements/02-FRQ/FRQ-000-INDEX.md)
 - [Non-functional requirements register](requirements/03-NFRQ/NFRQ-000-INDEX.md)
-- [High-level requirements](requirements/01-HLRQ/HLRQ-00-INDEX.md)
+- [Stakeholder requirements (StRS)](requirements/01-StRS/StRS-000-INDEX.md)
 - [Philosophy](PHILOSOPHY.md) · [Doctrine](DOCTRINE.md) · [Methodology](METHODOLOGY.md)

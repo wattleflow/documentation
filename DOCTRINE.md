@@ -14,7 +14,7 @@ Proza u [PHILOSOPHY.md](PHILOSOPHY.md) i [METHODOLOGY.md](METHODOLOGY.md)
 citira norme D-oznakama i obrazlaže ih; normativni teret nosi ovaj registar.
 
 **Status: registar je na početku životnog ciklusa i namjerno je malen.** Primat
-u dokumentiranju ima sloj zahtjeva ([`requirements/01-HLRQ/`](requirements/01-HLRQ/HLRQ-00-INDEX.md),
+u dokumentiranju ima sloj zahtjeva ([`requirements/01-StRS/`](requirements/01-StRS/StRS-000-INDEX.md),
 [`requirements/02-FRQ/`](requirements/02-FRQ/FRQ-000-INDEX.md), [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md)), jer je kod
 zreliji od svojeg zapisa. Doktrina se dopunjuje kad taj sloj bude konsolidiran.
 

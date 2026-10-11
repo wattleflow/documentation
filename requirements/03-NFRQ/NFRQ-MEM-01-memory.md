@@ -8,7 +8,7 @@
 | **Quality (25010)** | Performance efficiency — resource utilisation (memory) |
 | **Enforcement** | **not measured** by `wem_lint`; a static check over the class tree is proposed, not implemented — declared blind spot (D-11) |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
-| **Raised by** | [`HLRQ-01-GENERIC-LAYER`](../01-HLRQ/HLRQ-01-GENERIC-LAYER.md) `BR-PTN-07` · analysis `2026-10-01-slots-in-wattleflow-children` |
+| **Raised by** | `HLRQ-01-GENERIC-LAYER` `BR-PTN-07` · analysis `2026-10-01-slots-in-wattleflow-children` |
 
 ## 1. Statement
 
