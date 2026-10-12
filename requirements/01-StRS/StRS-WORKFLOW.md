@@ -315,11 +315,11 @@ Workflow bilježi početak izvedbe (s imenima procesora) i završetak (s brojem 
 | ujednačenost | svi tokovi se pokreću, prate i vraćaju na isti način | — |
 | čitljivost zapisa | jedna greška daje jedan zapis greške; razina zapisa kaže je li posao obavljen (BR-WFL-11 do BR-WFL-15) | [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md), [`NFRQ-OBS-02`](../03-NFRQ/NFRQ-OBS-02-audit-fields.md) |
 | vlasništvo i opseg zapisa | workflow kao vlasnik glavnog procesa bilježi njegove granice s brojačima (BR-WFL-06) | [`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md) |
-| otpornost | neispravna snimka ne mijenja nijedan procesor (BR-WFL-08); prekinuta izvedba ne ostavlja monitor uključen (BR-WFL-05); praćenje ne može srušiti tok (BR-WFL-14) | [`NFRQ-SCR-12`](../03-NFRQ/NFRQ-SCR-12-instance-availability.md) |
+| otpornost | neispravna snimka ne mijenja nijedan procesor (BR-WFL-08); prekinuta izvedba ne ostavlja monitor uključen (BR-WFL-05); praćenje ne može srušiti tok (BR-WFL-14) | [`NFRQ-SCR-12`](../03-NFRQ/NFRQ-SEC-12-instance-availability.md) |
 | razdvajanje odgovornosti | workflow provjerava samo vlastite ulaze (UC1); greške koje procesor obradi ostaju procesorove | [`NFRQ-ORG-15`](../03-NFRQ/NFRQ-ORG-15-separation-of-concerns.md) |
-| povjerljivost zapisa | zapisi o greškama nose identitet i uzrok, ne sadržaj dokumenata ni vjerodajnice | [`NFRQ-SCR-06`](../03-NFRQ/NFRQ-SCR-06-audit-confidentiality.md), [`NFRQ-SCR-10`](../03-NFRQ/NFRQ-SCR-10-secrets-enter-at-the-process-boundary.md) |
+| povjerljivost zapisa | zapisi o greškama nose identitet i uzrok, ne sadržaj dokumenata ni vjerodajnice | [`NFRQ-SCR-06`](../03-NFRQ/NFRQ-SEC-06-audit-confidentiality.md), [`NFRQ-SCR-10`](../03-NFRQ/NFRQ-SEC-10-secrets-enter-at-the-process-boundary.md) |
 | proširivost | novi tok nastaje konfiguracijom; programer proširuje procesore, pipelineove i drivere, a ne workflow | — |
-| cjelovitost ponašanja | workflow je konačan razred, pa nijedna podvrsta ne može zaobići pravila o greškama (BR-WFL-17); zabrana je zaštita od pogreške, ne sigurnosna granica | [`NFRQ-SCR-05`](../03-NFRQ/NFRQ-SCR-05-adversary-model.md) |
+| cjelovitost ponašanja | workflow je konačan razred, pa nijedna podvrsta ne može zaobići pravila o greškama (BR-WFL-17); zabrana je zaštita od pogreške, ne sigurnosna granica | [`NFRQ-SCR-05`](../03-NFRQ/NFRQ-SEC-05-adversary-model.md) |
 
 ## 5. Verifikacija
 
@@ -367,7 +367,7 @@ Matrica se popunjava kad se odrede djeca (§6).
 | [`StRS-CONNECTION`](StRS-CONNECTION.md) | konekcije u upravitelju konekcija |
 | [`StRS-MEMENTO`](StRS-MEMENTO.md) | snimka u kojoj se bilježi stanje toka |
 | [`StRS-MEMENTO-STORE`](StRS-MEMENTO-STORE.md) | pohrana kontrolnih točaka procesora |
-| [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md), [`NFRQ-OBS-02`](../03-NFRQ/NFRQ-OBS-02-audit-fields.md), [`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md), [`NFRQ-SCR-06`](../03-NFRQ/NFRQ-SCR-06-audit-confidentiality.md), [`NFRQ-SCR-10`](../03-NFRQ/NFRQ-SCR-10-secrets-enter-at-the-process-boundary.md), [`NFRQ-SCR-12`](../03-NFRQ/NFRQ-SCR-12-instance-availability.md), [`NFRQ-ORG-15`](../03-NFRQ/NFRQ-ORG-15-separation-of-concerns.md) | kakvoće |
+| [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md), [`NFRQ-OBS-02`](../03-NFRQ/NFRQ-OBS-02-audit-fields.md), [`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md), [`NFRQ-SCR-06`](../03-NFRQ/NFRQ-SEC-06-audit-confidentiality.md), [`NFRQ-SCR-10`](../03-NFRQ/NFRQ-SEC-10-secrets-enter-at-the-process-boundary.md), [`NFRQ-SCR-12`](../03-NFRQ/NFRQ-SEC-12-instance-availability.md), [`NFRQ-ORG-15`](../03-NFRQ/NFRQ-ORG-15-separation-of-concerns.md) | kakvoće |
 | `concrete/workflow.py` | modul, predmet zapisa |
 
 ## Povijest promjena

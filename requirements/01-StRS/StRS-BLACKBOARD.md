@@ -269,24 +269,24 @@ start
 :Workflow Factory reads configuration;
 :assemble Blackboard\nwith create strategy;
 if (create strategy valid?) then (no)
-  :<b><color:red>BlackboardException</color></b>;
+  :BlackboardException; <<#red>>
   stop
 endif
 :Workflow Factory registers Blackboard\nwith Processor;
 if (Processor accepts Blackboard?) then (no)
-  :<b><color:red>ProcessorException</color></b>;
+  :ProcessorException; <<#red>>
   stop
 endif
 :Workflow Factory registers repositories;
 if (repository valid?) then (no)
-  :<b><color:red>BlackboardException</color></b>;
+  :BlackboardException; <<#red>>
   stop
 endif
 repeat
   :Processor calls Blackboard\nto create document;
   :pipelines read / write documents;
   if (action allowed in current state?) then (no)
-    :<b><color:red>BlackboardException</color></b>;
+    :BlackboardException; <<#red>>
     :content unchanged;
     stop
   endif
@@ -296,9 +296,9 @@ repeat
   endif
 repeat while (more documents?) is (yes)
 -> no;
-:flush to repositories (if deferred);
-:report outcome to Processor;
-:clean Blackboard;
+:flush to repositories (if deferred); <<#green>>
+:report outcome to Processor; <<#green>>
+:clean Blackboard; <<#green>>
 stop
 @enduml
 ```

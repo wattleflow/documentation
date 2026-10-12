@@ -8,7 +8,7 @@
 | **Class** | **in use but not in the register** — introducing it requires a documented change (D-12) |
 | **Standard** | ISO/IEC/IEEE 29148:2018 — Stakeholder Requirements Specification (StRS); the system requirements (SyRS) are its children |
 | **Parents** | [PHILOSOPHY](../../PHILOSOPHY.md) · [METHODOLOGY](../../METHODOLOGY.md) §4 *Requirement ontology* · [DOCTRINE](../../DOCTRINE.md) |
-| **Sibling registers** | [FRQ](../02-FRQ/FRQ-000-INDEX.md) · [NFRQ](../03-NFRQ/NFRQ-000-INDEX.md) |
+| **Sibling registers** | [FRQ](../02-SyRS/SyRS-000-INDEX.md) · [NFRQ](../03-NFRQ/NFRQ-000-INDEX.md) |
 | **Language** | Index EN; the entries are Croatian (source, `DOCUMENTATION.md` §3.2) |
 
 This document is an **index**, not a register: each component lives in its own file.
@@ -29,21 +29,21 @@ Each entry has a use case diagram, a context diagram, a flow chart and, where th
 
 | StRS | Component | Classes | Module (`concrete/`) | Children (FRQ) |
 |---|---|---|---|---|
-| [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md) | Blackboard: temporary storage of documents during processing | `GenericBlackboard` | `blackboard.py` | [`FRQ-BBD`](../02-FRQ/FRQ-BBD-blackboard.md) |
-| [`StRS-CONNECTION`](StRS-CONNECTION.md) | Connection: the single boundary towards an external system | `GenericConnection`, `ConnectionObserverInterface` | `connection.py` | [`FRQ-CON`](../02-FRQ/FRQ-CON-connection.md) |
-| [`StRS-DOCUMENT`](StRS-DOCUMENT.md) | Document: the unit of data travelling through the flow | `Document`, `DocumentAdapter`, `DocumentFacade` | `document.py` | [`FRQ-DOC`](../02-FRQ/FRQ-DOC-document.md) |
-| [`StRS-DRIVER`](StRS-DRIVER.md) | Driver: uniform access to external resources | `GenericDriver`, `LazyDriverProxy` | `driver.py` | [`FRQ-DRV`](../02-FRQ/FRQ-DRV-driver.md) |
-| [`StRS-FACTORY`](StRS-FACTORY.md) | Workflow factory: assembling a flow from configuration | `WorkflowFactory` | `factory.py` | [`FRQ-WFL`](../02-FRQ/FRQ-WFL-workflow.md) |
-| [`StRS-MANAGER`](StRS-MANAGER.md) | Managers: registries of connections, drivers and processors by name | `ConnectionManager`, `DriverManager`, `ProcessorManager` | `manager.py` | [`FRQ-MGR`](../02-FRQ/FRQ-MGR-managers.md) |
-| [`StRS-MEMENTO`](StRS-MEMENTO.md) | Memento: an immutable snapshot of a component state | `GenericMemento` | `memento.py` | [`FRQ-MEM`](../02-FRQ/FRQ-MEM-memento.md) |
-| [`StRS-MEMENTO-STORE`](StRS-MEMENTO-STORE.md) | Memento store: keeping snapshots between runs | `MementoStore`, `MemoryMementoStore`, `FileMementoStore` | `memento_store.py` | [`FRQ-MEM`](../02-FRQ/FRQ-MEM-memento.md) |
-| [`StRS-PIPELINE`](StRS-PIPELINE.md) | Pipeline: one transformation of one document | `GenericPipeline` | `pipeline.py` | [`FRQ-PIP`](../02-FRQ/FRQ-PIP-pipeline.md) |
-| [`StRS-PROCESSOR`](StRS-PROCESSOR.md) | Processor: runs records through the pipelines | `GenericProcessor` | `processor.py` | [`FRQ-PRC`](../02-FRQ/FRQ-PRC-processor.md) · [`FRQ-PRC-01.22`](../02-FRQ/FRQ-PRC-01.22-document-flow.md) |
-| [`StRS-REPOSITORY`](StRS-REPOSITORY.md) | Repository: permanent storage of documents through strategies | `GenericRepository`, `RepositoryWithDriver` | `repository.py` | [`FRQ-REP`](../02-FRQ/FRQ-REP-repository.md) |
-| [`StRS-SERIALISATION`](StRS-SERIALISATION.md) | Format boundary: parser, formatter and converter | `GenericParser`, `GenericFormatter`, `GenericConverter`, `ConversionStrategy` | `serialisation.py` | [`FRQ-SER-PAR`](../02-FRQ/FRQ-SER-PAR-parser.md) · [`FRQ-SER-FMT`](../02-FRQ/FRQ-SER-FMT-formatter.md) · [`FRQ-SER-CNV`](../02-FRQ/FRQ-SER-CNV-converter.md) · converters [`FRQ-CNV-01…07`](../02-FRQ/FRQ-000-INDEX.md) |
-| [`StRS-STATE-MACHINE`](StRS-STATE-MACHINE.md) | State machine: permitted transitions between states | `StateMachine`, `GuardedStateMachine` | `state_machine.py` | [`FRQ-SMC`](../02-FRQ/FRQ-SMC-state-machine.md) |
-| [`StRS-STRATEGY`](StRS-STRATEGY.md) | Strategy: a replaceable way of doing one job | `Strategy`, `StrategyCreate`, `StrategyGenerate`, `StrategyRead`, `StrategyWrite` | `strategy.py` | [`FRQ-STR`](../02-FRQ/FRQ-STR-strategy.md) |
-| [`StRS-WORKFLOW`](StRS-WORKFLOW.md) | Workflow: the assembled flow that runs the processors | `Workflow` | `workflow.py` | [`FRQ-WFL`](../02-FRQ/FRQ-WFL-workflow.md) |
+| [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md) | Blackboard: temporary storage of documents during processing | `GenericBlackboard` | `blackboard.py` | [`FRQ-BBD`](../02-SyRS/SyRS-BBD-blackboard.md) |
+| [`StRS-CONNECTION`](StRS-CONNECTION.md) | Connection: the single boundary towards an external system | `GenericConnection`, `ConnectionObserverInterface` | `connection.py` | [`FRQ-CON`](../02-SyRS/SyRS-CNC-connection.md) |
+| [`StRS-DOCUMENT`](StRS-DOCUMENT.md) | Document: the unit of data travelling through the flow | `Document`, `DocumentAdapter`, `DocumentFacade` | `document.py` | [`FRQ-DOC`](../02-SyRS/SyRS-DCM-document.md) |
+| [`StRS-DRIVER`](StRS-DRIVER.md) | Driver: uniform access to external resources | `GenericDriver`, `LazyDriverProxy` | `driver.py` | [`FRQ-DRV`](../02-SyRS/SyRS-DRV-driver.md) |
+| [`StRS-FACTORY`](StRS-FACTORY.md) | Workflow factory: assembling a flow from configuration | `WorkflowFactory` | `factory.py` | [`FRQ-WFL`](../02-SyRS/SyRS-WRK-workflow.md) |
+| [`StRS-MANAGER`](StRS-MANAGER.md) | Managers: registries of connections, drivers and processors by name | `ConnectionManager`, `DriverManager`, `ProcessorManager` | `manager.py` | [`FRQ-MGR`](../02-SyRS/SyRS-MGR-managers.md) |
+| [`StRS-MEMENTO`](StRS-MEMENTO.md) | Memento: an immutable snapshot of a component state | `GenericMemento` | `memento.py` | [`FRQ-MEM`](../02-SyRS/SyRS-MMN-memento.md) |
+| [`StRS-MEMENTO-STORE`](StRS-MEMENTO-STORE.md) | Memento store: keeping snapshots between runs | `MementoStore`, `MemoryMementoStore`, `FileMementoStore` | `memento_store.py` | [`FRQ-MEM`](../02-SyRS/SyRS-MMN-memento.md) |
+| [`StRS-PIPELINE`](StRS-PIPELINE.md) | Pipeline: one transformation of one document | `GenericPipeline` | `pipeline.py` | [`FRQ-PIP`](../02-SyRS/SyRS-PPL-pipeline.md) |
+| [`StRS-PROCESSOR`](StRS-PROCESSOR.md) | Processor: runs records through the pipelines | `GenericProcessor` | `processor.py` | [`FRQ-PRC`](../02-SyRS/SyRS-PRC-processor.md) · [`FRQ-PRC-01.22`](../02-SyRS/SyRS-PRC-processor.md) |
+| [`StRS-REPOSITORY`](StRS-REPOSITORY.md) | Repository: permanent storage of documents through strategies | `GenericRepository`, `RepositoryWithDriver` | `repository.py` | [`FRQ-REP`](../02-SyRS/SyRS-RPS-repository.md) |
+| [`StRS-SERIALISATION`](StRS-SERIALISATION.md) | Format boundary: parser, formatter and converter | `GenericParser`, `GenericFormatter`, `GenericConverter`, `ConversionStrategy` | `serialisation.py` | [`FRQ-SER-PAR`](../02-SyRS/SyRS-SRL-PAR-parser.md) · [`FRQ-SER-FMT`](../02-SyRS/SyRS-SRL-FMT-formatter.md) · [`FRQ-SER-CNV`](../02-SyRS/SyRS-SRL-CNV-converter.md) · converters [`FRQ-CNV-01…07`](../02-SyRS/SyRS-000-INDEX.md) |
+| [`StRS-STATE-MACHINE`](StRS-STATE-MACHINE.md) | State machine: permitted transitions between states | `StateMachine`, `GuardedStateMachine` | `state_machine.py` | [`FRQ-SMC`](../02-SyRS/SyRS-SMC-state-machine.md) |
+| [`StRS-STRATEGY`](StRS-STRATEGY.md) | Strategy: a replaceable way of doing one job | `Strategy`, `StrategyCreate`, `StrategyGenerate`, `StrategyRead`, `StrategyWrite` | `strategy.py` | [`FRQ-STR`](../02-SyRS/SyRS-STR-strategy.md) |
+| [`StRS-WORKFLOW`](StRS-WORKFLOW.md) | Workflow: the assembled flow that runs the processors | `Workflow` | `workflow.py` | [`FRQ-WFL`](../02-SyRS/SyRS-WRK-workflow.md) |
 
 ### Components without a StRS yet
 
@@ -51,14 +51,14 @@ Their requirements are carried by the FRQ alone until a StRS is written.
 
 | Component | Classes | Module | FRQ |
 |---|---|---|---|
-| Root base class | `Wattleflow` | `concrete/base.py` | [`FRQ-PTN`](../02-FRQ/FRQ-PTN-root-base.md) |
-| Helpers | `Attribute`, `NameHelper` | `concrete/helper.py` | [`FRQ-HLP`](../02-FRQ/FRQ-HLP-helpers.md) |
-| Lazy iterators | `LazyIterator`, `LazyAsyncIterator`, `ThreadSafeLazyIterator` | `concrete/iterator.py` | [`FRQ-ITR`](../02-FRQ/FRQ-ITR-lazy-iterators.md) |
-| Observable | `ThreadSafeObservable` | `concrete/observable.py` | [`FRQ-OBS`](../02-FRQ/FRQ-OBS-observable.md) |
-| Orchestrator | `Orchestrator` | `concrete/orchestrator.py` | [`FRQ-ORC`](../02-FRQ/FRQ-ORC-orchestrator.md) |
-| Scheduler | `Scheduler` | `concrete/scheduler.py` | [`FRQ-SCH`](../02-FRQ/FRQ-SCH-scheduler.md) |
-| Singleton | `Singleton` | `concrete/singleton.py` | [`FRQ-SGT`](../02-FRQ/FRQ-SGT-singleton.md) |
-| Moment (time) | — | `helpers/moment` | [`FRQ-MMN`](../02-FRQ/FRQ-MMN-moment.md) |
+| Root base class | `Wattleflow` | `concrete/base.py` | [`FRQ-PTN`](../02-SyRS/SyRS-PTN-root-base.md) |
+| Helpers | `Attribute`, `NameHelper` | `concrete/helper.py` | [`FRQ-HLP`](../02-SyRS/SyRS-HLP-helpers.md) |
+| Lazy iterators | `LazyIterator`, `LazyAsyncIterator`, `ThreadSafeLazyIterator` | `concrete/iterator.py` | [`FRQ-ITR`](../02-SyRS/SyRS-ITR-lazy-iterators.md) |
+| Observable | `ThreadSafeObservable` | `concrete/observable.py` | [`FRQ-OBS`](../02-SyRS/SyRS-OBS-observable.md) |
+| Orchestrator | `Orchestrator` | `concrete/orchestrator.py` | [`FRQ-ORC`](../02-SyRS/SyRS-ORC-orchestrator.md) |
+| Scheduler | `Scheduler` | `concrete/scheduler.py` | [`FRQ-SCH`](../02-SyRS/SyRS-SCH-scheduler.md) |
+| Singleton | `Singleton` | `concrete/singleton.py` | [`FRQ-SGT`](../02-SyRS/SyRS-SGT-singleton.md) |
+| Moment (time) | — | `helpers/moment` | [`FRQ-MMN`](../02-SyRS/SyRS-MMN-memento.md) |
 
 ## Cross-cutting rules (`BR-PTN`)
 

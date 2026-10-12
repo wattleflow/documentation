@@ -10,7 +10,7 @@
 | **Norma** | ISO/IEC/IEEE 29148:2018 — StRS; zahtjevi sustava (SyRS) su u djeci |
 | **Distribucija** | `wattleflow-workflow` — clean core tier |
 | **Predmet** | `workflow/src/wattleflow/concrete/serialisation.py` |
-| **Djeca (SyRS)** | [`FRQ-SER-PAR`](../02-FRQ/FRQ-SER-PAR-parser.md) · [`FRQ-SER-FMT`](../02-FRQ/FRQ-SER-FMT-formatter.md) · [`FRQ-SER-CNV`](../02-FRQ/FRQ-SER-CNV-converter.md) |
+| **Djeca (SyRS)** | [`SyRS-SER-PAR`](../02-SyRS/SyRS-SRL-PAR-parser.md) · [ `SyRS-SER-FMT`](../02-SyRS/SyRS-SRL-FMT-formatter.md) · [`SyRS-SER-CNV`](../02-SyRS/SyRS-SRL-CNV-converter.md) |
 | **Sljedivost** | [`NFRQ-ORG-04`](../03-NFRQ/NFRQ-ORG-04-crosscutting-capability.md) · [`NFRQ-ORG-08`](../03-NFRQ/NFRQ-ORG-08-deduplication.md) · [`NFRQ-ORG-13`](../03-NFRQ/NFRQ-ORG-13-public-surface-is-the-interface.md) · [`NFRQ-SEC-03`](../03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md) · [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md) |
 | **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine (D-13) |
 
@@ -24,7 +24,7 @@ Ovaj zapis objašnjava zašto framework ima zajednički mehanizam za pretvorbu p
 
 **U opsegu:** zajednički mehanizam pretvorbe — tri uloge (parser, formater, konverter), strategija pretvorbe i greške koje mogu javiti.
 
-**Izvan opsega:** pretvorbe za pojedine formate (opisane u [`FRQ-CNV-01…07`](../02-FRQ/FRQ-000-INDEX.md)) i tehnički detalji izvedbe (opisani u zahtjevima sustava, SyRS).
+**Izvan opsega:** pretvorbe za pojedine formate (opisane u [`SyRS-CNV-01…07`](../02-SyRS/SyRS-000-INDEX.md)) i tehnički detalji izvedbe (opisani u zahtjevima sustava, SyRS).
 
 ### 1.3 Publika
 
@@ -55,7 +55,7 @@ Zapis je pisan za široku publiku, od poslovnog korisnika do arhitekta sustava. 
 
 **Rješenje** `workflow` framework treba modularan i proširiv mehanizam serijalizacije i deserijalizacije. Mehanizam se temelji na generičkom konverteru koji je agnostičan prema strategiji konverzije. Pozivatelj konverteru zadaje željenu strategiju; strategija sadrži odgovarajući par `parser`–`formater` zadužen za pretvorbu danih podataka u traženi oblik. Svi parovi koriste ujednačeno sučelje i zajedničku taksonomiju formata.
 
-**Smjer** Mehanizam se rastavlja na tri uloge, svaku s jednom zadaćom: parser čita i provjerava izvor, formater oblikuje izlaz, a konverter ih povezuje odabranom strategijom. Novi format dodaje se specijalizacijom parsera i formatera, bez izmjene pozivatelja, čime jezgra ostaje čista (*clean core*): generički sloj propisuje ugovor, a specijalizacije po formatima obrađuje [`FRQ-CNV-01…07`](../02-FRQ/FRQ-000-INDEX.md).
+**Smjer** Mehanizam se rastavlja na tri uloge, svaku s jednom zadaćom: parser čita i provjerava izvor, formater oblikuje izlaz, a konverter ih povezuje odabranom strategijom. Novi format dodaje se specijalizacijom parsera i formatera, bez izmjene pozivatelja, čime jezgra ostaje čista (*clean core*): generički sloj propisuje ugovor, a specijalizacije po formatima obrađuje [`SyRS-CNV-01…07`](../02-SyRS/SyRS-000-INDEX.md).
 
 Rješenje se oslanja na postojeća sučelja frameworka **wattleflow**, pa nije potrebno graditi novu osnovu. Jednostavan dizajn ujednačuje pretvorbu podataka i jamči:
 
@@ -70,9 +70,9 @@ Mehanizam se sastoji od tri uloge. Svaku detaljno opisuje zaseban zapis zahtjeva
 
 | dijete | uloga | zadaća |
 |---|---|---|
-| [`FRQ-SER-PAR`](../02-FRQ/FRQ-SER-PAR-parser.md) | parser | čita i provjerava izvorne podatke |
-| [`FRQ-SER-FMT`](../02-FRQ/FRQ-SER-FMT-formatter.md) | formater | oblikuje podatke u traženi format |
-| [`FRQ-SER-CNV`](../02-FRQ/FRQ-SER-CNV-converter.md) | konverter | izvodi strategiju i vraća rezultat pozivatelju |
+| [ `SyRS-SER-PAR`](../02-SyRS/SyRS-SRL-PAR-parser.md) | parser | čita i provjerava izvorne podatke |
+| [ `SyRS-SER-FMT`](../02-SyRS/SyRS-SRL-FMT-formatter.md) | formater | oblikuje podatke u traženi format |
+| [ `SyRS-SER-CNV`](../02-SyRS/SyRS-SRL-CNV-converter.md) | konverter | izvodi strategiju i vraća rezultat pozivatelju |
 
 **Kontekst.** Pozivatelj iz toka zadaje konverteru strategiju i predaje mu izvorne podatke. Konverter izvodi strategiju, a strategija svojim parom parser–formater daje rezultat. Konverter rezultat vraća pozivatelju, koji ga sam pohranjuje gdje treba.
 
@@ -252,7 +252,7 @@ Ovaj zapis nema vlastite kriterije provjere. Poslovna pravila provjeravaju se kr
 
 ### 5.2 Sljedivost prema zahtjevima sustava (SyRS)
 
-| oznaka | `FRQ-SER-PAR` | `FRQ-SER-FMT` | `FRQ-SER-CNV` |
+| oznaka |  `SyRS-SER-PAR` |  `SyRS-SER-FMT` |  `SyRS-SER-CNV` |
 |---|:-:|:-:|:-:|
 | UC1 | ✔ | ✔ | ✔ |
 | UC2 | | | ✔ |
@@ -266,20 +266,18 @@ Ovaj zapis nema vlastite kriterije provjere. Poslovna pravila provjeravaju se kr
 ## 6. Otvoreno
 
 1. Narativ jamči zadanu brzinu i ponovljive rezultate, a nijedan nefunkcionalni zahtjev (§4) to još ne pokriva.
-2. **Taksonomija formata.** Narativ kaže da svi parovi koriste zajedničku taksonomiju formata, a generički sloj je ne sadrži. Treba odlučiti gdje se taksonomija vodi (generički sloj ili [`FRQ-CNV-01…07`](../02-FRQ/FRQ-000-INDEX.md)).
+2. **Taksonomija formata.** Narativ kaže da svi parovi koriste zajedničku taksonomiju formata, a generički sloj je ne sadrži. Treba odlučiti gdje se taksonomija vodi (generički sloj ili [`SyRS-CNV-01…07`](../02-SyRS/SyRS-000-INDEX.md)).
 3. **Provjera vrste podataka u formateru ne radi.** Formater kojem je propisana vrsta podataka (BR-FMT-02) trenutačno uvijek javlja grešku, jer provjeru ne može pokrenuti. Kod treba ispraviti (SyRS).
 4. **Pravilo BR-SER-05** generički sloj ne nameće: strategija ne mora sadržavati par parser–formater, nego samo izvesti pretvorbu. Treba potvrditi je li pravilo obveza za sve strategije ili preporuka.
 5. Naziv sloja u naslovima dijagrama („Data conversion") je prijedlog.
-6. Nadređeni zapis `HLRQ-01-GENERIC-LAYER` je obrisan; poveznice na njega (nadređeni zapis i pravila `BR-PTN-05`, `BR-DRV-01`) uklonjene su iz ovog zapisa. Treba odrediti novi nadređeni zapis, ako postoji.
-7. Povezani zapisi (`HLRQ-CNV`, `FRQ-SER-*`) još nose stare oznake. Poveznice vode na postojeće datoteke dok se ti zapisi ne preimenuju u StRS i SyRS.
 
 ## 7. Reference
 
 | oznaka | izvor |
 |---|---|
 | ISO/IEC/IEEE 29148:2018 | *Systems and software engineering — Life cycle processes — Requirements engineering* |
-| [`FRQ-CNV-01…07`](../02-FRQ/FRQ-000-INDEX.md) | pretvorbe za pojedine formate |
-| [`FRQ-SER-PAR`](../02-FRQ/FRQ-SER-PAR-parser.md) · [`FRQ-SER-FMT`](../02-FRQ/FRQ-SER-FMT-formatter.md) · [`FRQ-SER-CNV`](../02-FRQ/FRQ-SER-CNV-converter.md) | zahtjevi sustava (SyRS) |
+| [ `SyRS-CNV-01…07`](../02-SyRS/SyRS-000-INDEX.md) | pretvorbe za pojedine formate |
+| [ `SyRS-SER-PAR`](../02-SyRS/SyRS-SRL-PAR-parser.md) · [ `SyRS-SER-FMT`](../02-SyRS/SyRS-SRL-FMT-formatter.md) · [ `SyRS-SER-CNV`](../02-SyRS/SyRS-SRL-CNV-converter.md) | zahtjevi sustava (SyRS) |
 | `workflow/src/wattleflow/concrete/serialisation.py` | modul, predmet zapisa |
 
 ## Povijest promjena
@@ -287,7 +285,7 @@ Ovaj zapis nema vlastite kriterije provjere. Poslovna pravila provjeravaju se kr
 | Verzija | Datum | Promjena |
 |---|---|---|
 | v0.0.9 | 2026-10-11 | Oznaka bez broja (`StRS-SERIALISATION`). Usklađeno s kodom: pozivatelj uvijek prima grešku konvertera, a greške parsera, formatera i strategije stižu kao uzrok (UC1, BR-SER-01, tok, tablica grešaka); dodana greška strategije; izvor mora biti upotrebljiv (BR-PAR-01). Dijagrami: naslov „Serialisation: Data conversion", alias granice sustava. Uklonjene poveznice na obrisani HLRQ-01. *Otvoreno*: taksonomija formata, provjera vrste podataka u formateru, obveznost BR-SER-05, novi nadređeni zapis. |
-| v0.0.8 | 2026-10-10 | Oznake usklađene s ISO/IEC/IEEE 29148: zapis `HLRQ-10` postaje `StRS-10` (specifikacija zahtjeva dionika), a djeca `FRQ-SER-*` su zahtjevi sustava (SyRS). Sadržaj nepromijenjen. |
+| v0.0.8 | 2026-10-10 | Oznake usklađene s ISO/IEC/IEEE 29148: zapis `HLRQ-10` postaje `StRS-10` (specifikacija zahtjeva dionika), a djeca  `SyRS-SER-*` su zahtjevi sustava (SyRS). Sadržaj nepromijenjen. |
 | v0.0.7 | 2026-10-10 | Zapis pročišćen za široku publiku: tehnički detalji (nazivi iz koda, komponentni dijagram, tablice formata, stanje testova i odstupanja koda od dizajna) premješteni u zahtjeve sustava; poslovna pravila preformulirana jednostavnim jezikom; dodani okidači i alternativni tokovi korisničkih slučajeva te tablica praćenja grešaka. |
 | v0.0.6 | 2026-10-10 | Struktura usklađena s ISO/IEC/IEEE 29148; dodana pravila `BR-SER-05`, `BR-SER-06`, `BR-FMT-03`; ispravljeni dijagrami. |
 | v0.0.5 | 2026-10-10 | Zapis prepisan: narativ kao Problem · Rješenje · Smjer, dekompozicija s dijagramima konteksta, slučajeva korištenja, komponenti i toka (`wattleflow-docs` §3h). |

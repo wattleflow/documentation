@@ -15,7 +15,7 @@ citira norme D-oznakama i obrazlaže ih; normativni teret nosi ovaj registar.
 
 **Status: registar je na početku životnog ciklusa i namjerno je malen.** Primat
 u dokumentiranju ima sloj zahtjeva ([`requirements/01-StRS/`](requirements/01-StRS/StRS-000-INDEX.md),
-[`requirements/02-FRQ/`](requirements/02-FRQ/FRQ-000-INDEX.md), [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md)), jer je kod
+[`requirements/02-SyRS/`](requirements/02-SyRS/SyRS-000-INDEX.md), [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md)), jer je kod
 zreliji od svojeg zapisa. Doktrina se dopunjuje kad taj sloj bude konsolidiran.
 
 **Kriterij ulaska (v0.2).** Članak stoji u registru samo ako ima **stvaran

@@ -8,7 +8,7 @@
 | **Version** | Draft v0.2 (split out 2026-08-24) |
 | **Quality anchor** | ISO/IEC 25010 (ISO/IEC 25012 for data) |
 | **Parents** | [PHILOSOPHY](../../PHILOSOPHY.md) · [METHODOLOGY](../../METHODOLOGY.md) §6 *Traceability* · [DOCTRINE](../../DOCTRINE.md) |
-| **Sibling registers** | [StRS](../01-StRS/StRS-000-INDEX.md) · [FRQ](../02-FRQ/FRQ-000-INDEX.md) |
+| **Sibling registers** | [StRS](../01-StRS/StRS-000-INDEX.md) · [SyRS](../02-SyRS/SyRS-000-INDEX.md) |
 | **Language** | EN only — see *Language* below |
 
 This document is an **index**, not a register: each requirement lives in its own file

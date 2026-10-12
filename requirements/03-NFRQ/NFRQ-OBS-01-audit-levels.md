@@ -77,9 +77,14 @@ last framework layer before an external caller (a runner such as `cron`). It rec
 error once, at `ERROR`, and passes it on to the caller. The rule's intent — one cause, one `ERROR` —
 holds because every layer below leaves only the `DEBUG` trace of c.2 and no layer above it is inside
 the framework. The exception applies **solely** to the owner of the main process; when the runner
-becomes a framework process, the runner does not record the same error again.
+becomes a framework process, the runner does not record the same error again. At the boundary the
+`ERROR` record **is** the layer's trace of the failure, so c.2 (a `DEBUG` trace before re-raising) does
+not apply there either.
 
-The list of guarded types is **criterion data** (`tools/dictionary.json → audit.import_guard`).
+Two lists are **criterion data**: the guarded types of the c.6 exception
+(`tools/dictionary.json → audit.import_guard`) and the owners of the main process at the framework
+boundary (`tools/dictionary.json → audit.framework_boundary`; today `["Workflow"]`). A class enters the
+second list only with a documented change (D-03).
 
 ## 3. Verification
 
@@ -87,6 +92,7 @@ The list of guarded types is **criterion data** (`tools/dictionary.json → audi
 |---|---|---|
 | 1 | `audit_level_vs_propagation` | `warning` |
 | 2, 6 | `audit_failure_trace` | `warning` |
+| 1, 2 at the framework boundary | `audit_level_vs_propagation`, `audit_failure_trace` — a class in `audit.framework_boundary` gives no finding for `ERROR` with `raise` | — |
 | 3 | `audit_level_vs_propagation` (`exception()` ∈ escalating levels) | `warning` |
 | 4, 5 | — | **not machine-decidable** — declared blind spot (D-11) |
 
@@ -115,7 +121,7 @@ The `strategies` layer is aligned; the reference pattern is
 
 Record fields — [`NFRQ-OBS-02`](NFRQ-OBS-02-audit-fields.md).
 Volume and ownership — [`NFRQ-OBS-03`](NFRQ-OBS-03-audit-ownership-volume.md).
-Content confidentiality — [`NFRQ-SCR-06`](NFRQ-SCR-06-audit-confidentiality.md).
+Content confidentiality — [`NFRQ-SCR-06`](NFRQ-SEC-06-audit-confidentiality.md).
 Error ownership — [`NFRQ-ORG-15`](NFRQ-ORG-15-separation-of-concerns.md) c.3; the owner of the main
 process — [`StRS-WORKFLOW`](../01-StRS/StRS-WORKFLOW.md) (BR-WRK-11 to BR-WRK-16).
 Error-handling policy of a component — [`NFRQ-DFN-06`](NFRQ-DFN-06-error-handling-policy.md).
@@ -124,5 +130,6 @@ Error-handling policy of a component — [`NFRQ-DFN-06`](NFRQ-DFN-06-error-handl
 
 | Version | Date | Change |
 |---|---|---|
+| v1.0.0 | 2026-10-11 | Criterion data: `audit.framework_boundary` (`["Workflow"]`) added beside `audit.import_guard`; the exception to c.1 also lifts c.2 at the boundary; the verification table names the exemption in `audit_level_vs_propagation` and `audit_failure_trace` (`wem_lint` changed accordingly, 2026-10-11). |
 | v1.0.0 | 2026-10-11 | Documented change (author's decisions 4, 5, 17): exception to c.1 at the framework boundary; fourth exception to c.6 for the lightweight layer; the document-boundary amendment of 2026-09-09 accepted (no longer a proposal); quality anchor named after ISO/IEC 25010:2023. |
 | v0.0.5 | 2026-10-02 | `Version` replaces `Status`; previous status: Accepted (2026-08-23; amended 2026-08-24; §1 `INFO` rule amended 2026-09-09 — **proposal**, marked inline) |

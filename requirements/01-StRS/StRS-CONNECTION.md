@@ -271,39 +271,39 @@ caption "Flow Chart"
 start
 :Workflow Factory assembles connection\nfrom configuration;
 if (name given?) then (no)
-  :<b><color:red>ConnectionException</color></b>;
+  :ConnectionException;
   :error returned to Workflow Factory;
   stop
 endif
 if (lazy loading off?) then (yes)
   :create link;
   if (link built?) then (no)
-    :<b><color:red>error of the connection type</color></b>;
-    :connection not assembled,\nerror returned to Workflow Factory;
+    :error of the connection type; <<#red>>
+    :connection not assembled,\nerror returned to Workflow Factory; <<#red>>>
     stop
   endif
 endif
 :Driver gets connection from manager;
 :Driver requests connect directly\n(only if link is missing);
 if (creation allowed in current state?) then (no)
-  :<b><color:red>ManagerException</color></b>;
-  :error returned to Driver;
+  :ManagerException; <<#red>>
+  :error returned to Driver; <<#red>>
   stop
 endif
 :open session;
 if (session opened?) then (no)
   :state CREATED;
-  :<b><color:red>error of the connection type</color></b>;
-  :error returned to Driver;
+  :error of the connection type; <<#red>>
+  :error returned to Driver; <<#red>>
   stop
 endif
 :Driver works with external system;
 :close session, state CREATED;
 :manager closes connection\n(on removal or shutdown);
 if (link torn down?) then (no)
-  :state FAILED;
-  :<b><color:red>error of the connection type</color></b>;
-  :error returned to caller;
+  :state FAILED; <<#red>>
+  :error of the connection type; <<#red>>
+  :error returned to caller; <<#red>>
   stop
 endif
 :state CLOSED;

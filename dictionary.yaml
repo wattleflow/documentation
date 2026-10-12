@@ -16,7 +16,7 @@
 # Upravljanje: natuknica se dodaje/mijenja/deprecira iskljucivo uz dokumentiranu izmjenu.
 
 registry: wattleflow-rjecnik
-registry_version: "0.8.0"   # 0.2.0: apsorbiran vokabular koda (blok `code:`)
+registry_version: "0.9.0"   # 0.2.0: apsorbiran vokabular koda (blok `code:`)
                             # 0.2.1: kategorija OSCAL
                             # 0.3.0: blok `code:` uklonjen — kriterij koda je
                             # tools/dictionary.json
@@ -30,6 +30,8 @@ registry_version: "0.8.0"   # 0.2.0: apsorbiran vokabular koda (blok `code:`)
                             # HLP, SER; oznake FRQ generickih klasa bez numeracije; isti akronim
                             # smije imati vise znacenja
                             # 0.8.0: natuknica `modeli-procesa-organizacije`; kratice SSP, POAM
+                            # 0.9.0: blackwattle: 01-HLRQ -> 01-StRS i 02-FRQ -> 02-SyRS (2026-10-12);
+                            # kratice StRS, SyRS, UC, QR, NVML; HLRQ, FRQ, BR, FR usmjerene na nove registre
 languages: [hr, en]
 source_of_truth: true
 generated_views:
@@ -1038,7 +1040,7 @@ acronyms:
   - {id: MRO,  expansion: "method resolution order (Python C3)", definition_en: "The order in which Python resolves an attribute across base classes (the C3 linearisation) — what decides which implementation a class actually inherits."}
   - {id: NCD,  expansion: "normalized compression distance", references: [14], definition_en: "A similarity measure derived from how much two artefacts compress together compared with separately."}
   - {id: NFRQ, expansion: "non-functional requirement", note: "registar requirements/03-NFRQ/; oznaka NFRQ-<KAT>-NN (preimenovano iz NFR 2026-08-27, bez zapisane odluke)", definition_en: "A requirement stating how well the system works, under ISO/IEC 25010, carried in the register requirements/03-NFRQ/. See [functional / non-functional requirement](#fr-nfr)."}
-  - {id: FRQ,  expansion: "functional requirement", note: "registar requirements/02-FRQ/; oznaka FRQ-<KAT>-NN[.M] (preimenovano iz FR 2026-08-27, bez zapisane odluke)", definition_en: "A requirement stating what the system does, carried in the register requirements/02-FRQ/. See [functional / non-functional requirement](#fr-nfr)."}
+  - {id: FRQ,  expansion: "functional requirement", note: "stariji oblik; registar requirements/02-FRQ/ (generički sloj); u stablu blackwattle zamijenjen registrom 02-SyRS/ 2026-10-12, oznaka FR-<KAT>-NN", definition_en: "A requirement stating what the system does, carried in the register requirements/02-FRQ/ of the generic layer and, in the blackwattle tree, replaced by the system requirements specification (SyRS) in 02-SyRS/. See [functional / non-functional requirement](#fr-nfr)."}
   - {id: NMI,  expansion: "normalized mutual information", references: [20], definition_en: "The mutual information between two partitions, normalised to [0, 1]; one of the few quantities here with the properties of a true percentage."}
   - {id: ORG,  expansion: "kategorija organizacijskih NFR-ova (NFRQ-ORG-NN)", definition_en: "The organisational category of non-functional requirements — module layout, naming, locality of dependencies (NFRQ-ORG-NN)."}
   - {id: OSCAL, expansion: "Open Security Controls Assessment Language (NIST)", note: "ujedno kategorija zahtjeva za OSCAL sloj u blackwattle (FRQ-OSCAL-NN.M)", definition_en: "NIST's machine-readable format for security controls, and here also the requirement category for the compliance layer in blackwattle (FRQ-OSCAL-NN.M)."}
@@ -1078,11 +1080,16 @@ acronyms:
   - {id: EXC,  expansion: "exclusions (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: declared exclusions, so what the tool did not measure stays visible ([blind spot](#slijepa-pjega))."}
 
   # kratice iz zapisa zahtjeva i dizajna; definition_en u en-AU
-  - {id: BR,    expansion: "business rule", note: "oznaka BR-NN u HLRQ", definition_en: "A rule of a capability stated in a high-level requirement and cited by its functional requirements."}
+  - {id: BR,    expansion: "business rule", note: "oznaka BR-<PREFIKS>-NN u StRS (u starim HLRQ zapisima BR-NN)", definition_en: "A rule of a capability stated in a stakeholder requirements specification and cited by the system requirements that implement it."}
   - {id: SSP,   expansion: "System Security Plan (OSCAL)", note: "OSCAL model; spada u modele procesa organizacije", definition_en: "The OSCAL model describing a concrete system: its boundary, roles and how each control is implemented in it."}
   - {id: POAM,  expansion: "Plan of Action and Milestones (OSCAL)", note: "OSCAL model POA&M; spada u modele procesa organizacije", definition_en: "The OSCAL model recording deficiencies and the plan, owners and dates for remediating them."}
   - {id: EV,    expansion: "event", note: "oznaka EVnn okidaca u FRQ", definition_en: "A trigger that starts a flow in a functional requirement."}
-  - {id: HLRQ,  expansion: "high-level requirement", note: "registar requirements/01-HLRQ/ (generički sloj, HLRQ-01) i blackwattle/requirements/01-HLRQ/ (paket blackwattle)", definition_en: "A requirement that carries the narrative, business rules and scope of one capability."}
+  - {id: HLRQ,  expansion: "high-level requirement", note: "stariji oblik; HLRQ-01 generičkog sloja; u stablu blackwattle zamijenjen registrom 01-StRS/ 2026-10-12", definition_en: "A requirement that carries the narrative, business rules and scope of one capability."}
+  - {id: StRS,  expansion: "stakeholder requirements specification", note: "ISO/IEC/IEEE 29148; registar 01-StRS/ (generički sloj i blackwattle); piše se vještinom wattleflow-strs", definition_en: "A specification that states why a component exists, who uses it, which rules bind it and how its failures are traced, in terms a business reader can follow."}
+  - {id: SyRS,  expansion: "system requirements specification", note: "ISO/IEC/IEEE 29148; registar 02-SyRS/ (generički sloj i blackwattle); piše se vještinom wattleflow-syrs; zamjenjuje FRQ", definition_en: "A specification, child of a stakeholder requirements specification, that states what the system must do and how each criterion is verified."}
+  - {id: UC,    expansion: "use case", note: "oznaka UCn u StRS", definition_en: "A scenario of use with a trigger, a precondition, a main and alternative flow and an outcome, written in a stakeholder requirements specification."}
+  - {id: QR,    expansion: "quality requirement", note: "oznaka QR-<PREFIKS>-NN u SyRS; veza na NFRQ zapis", definition_en: "A measurable non-functional requirement of one system component, written in a system requirements specification and linked to its NFRQ record."}
+  - {id: NVML,  expansion: "NVIDIA Management Library", note: "vlastito ime; izvor mjerenja GPU-a u SyRS-RESOURCE-NVML-GPU", definition_en: "The NVIDIA library that reports utilisation and memory of a graphics processor, used for GPU measurement."}
   - {id: NFR,   expansion: "non-functional requirement", note: "stariji oblik; oznaka je NFRQ", status: zastarjelo, definition_en: "The older spelling of the non-functional requirement identifier; the register writes NFRQ. See [functional / non-functional requirement](#fr-nfr)."}
   - {id: SEC, expansion: "security", note: "kategorija NFRQ-SEC-NN", definition_en: "The security category of non-functional requirements (NFRQ-SEC-NN)."}
   - {id: FUN,   expansion: "functional suitability", note: "provizorna kategorija NFRQ-FUN-NN; ceka dokumentiranu izmjenu", status: privremeno, definition_en: "The functional-suitability quality category of ISO/IEC 25010, used provisionally for NFRQ-FUN-NN while its admission awaits a documented change."}

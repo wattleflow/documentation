@@ -9,7 +9,7 @@
 | **Norma** | ISO/IEC/IEEE 29148:2018 — StRS; zahtjevi sustava (SyRS) su u djeci |
 | **Predmet** | `concrete/strategy.py`: `Strategy`, `StrategyGenerate`, `StrategyCreate`, `StrategyRead`, `StrategyWrite` |
 | **Djeca (SyRS)** | odrediti (§6) |
-| **Povezano** | [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md) — izvodi strategiju stvaranja · [`StRS-REPOSITORY`](StRS-REPOSITORY.md) — izvodi strategije čitanja i pisanja · [`StRS-DOCUMENT`](StRS-DOCUMENT.md) — dokument koji strategije stvaraju, čitaju i zapisuju · [`StRS-DRIVER`](StRS-DRIVER.md) — driver koji strategije koriste · [`FRQ-STR`](../02-FRQ/FRQ-STR-strategy.md) — prethodni zapis iste komponente · [`StRS-FACTORY`](StRS-FACTORY.md) — Workflow Factory koja sastavlja strategije |
+| **Povezano** | [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md) — izvodi strategiju stvaranja · [`StRS-REPOSITORY`](StRS-REPOSITORY.md) — izvodi strategije čitanja i pisanja · [`StRS-DOCUMENT`](StRS-DOCUMENT.md) — dokument koji strategije stvaraju, čitaju i zapisuju · [`StRS-DRIVER`](StRS-DRIVER.md) — driver koji strategije koriste · [`SyRS-STR`](../02-SyRS/SyRS-STR-strategy.md) — prethodni zapis iste komponente · [`StRS-FACTORY`](StRS-FACTORY.md) — Workflow Factory koja sastavlja strategije |
 | **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine (D-13) |
 
 ## 1. Uvod
@@ -230,8 +230,7 @@ Matrica se popunjava kad se odrede djeca (§6).
 2. Odlomak *Problem* u §2.1 je prijedlog autora zapisa i treba ga potvrditi.
 3. Strategija generiranja: u pregledanom kodu nitko je ne izvodi. Procesor zapise preuzima vlastitim generatorom, a ne ovom strategijom. Treba odrediti čemu služi i tko je izvodi, ili je ukloniti iz okvira.
 4. Usklađenost s [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md): ondje se kaže da strategiju stvaranja izvodi Blackboard na zahtjev procesora; ovdje je Blackboard naveden kao njezin pozivatelj. Treba potvrditi da se opisi poklapaju.
-5. Prethodni zapis [`FRQ-STR`](../02-FRQ/FRQ-STR-strategy.md) još nosi staru oznaku; njegove poveznice na obrisani `HLRQ-01-GENERIC-LAYER` treba provjeriti.
-6. Kakvoće iz §4 (osim bilježenja) treba povezati s postojećim NFRQ zapisima ili otvoriti nove.
+5. Kakvoće iz §4 (osim bilježenja) treba povezati s postojećim NFRQ zapisima ili otvoriti nove.
 
 ## 7. Reference
 
@@ -242,7 +241,7 @@ Matrica se popunjava kad se odrede djeca (§6).
 | [`StRS-REPOSITORY`](StRS-REPOSITORY.md) | repozitorij koji izvodi strategije čitanja i pisanja |
 | [`StRS-DOCUMENT`](StRS-DOCUMENT.md) | dokument koji strategije stvaraju, čitaju i zapisuju |
 | [`StRS-DRIVER`](StRS-DRIVER.md) | driver koji strategije koriste |
-| [`FRQ-STR`](../02-FRQ/FRQ-STR-strategy.md) | prethodni zapis iste komponente |
+| [`FRQ-STR`](../02-SyRS/SyRS-STR-strategy.md) | prethodni zapis iste komponente |
 | [`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md) | opseg bilježenja |
 | `concrete/strategy.py` | modul, predmet zapisa |
 

@@ -40,7 +40,7 @@ lint raises it as `error`.
    The list is closed: a legacy spelling is not added to it.
 6. **Dependency key `driver`.** A component that declares `driver` in `ALLOWED` takes a driver, and
    takes it as **required**: the workflow factory resolves `configuration.driver` (a name) to the
-   driver object and fails when it is missing ([`FRQ-WFL`](../02-FRQ/FRQ-WFL-workflow.md) §5). A
+   driver object and fails when it is missing ([`FRQ-WFL`](../02-SyRS/SyRS-WRK-workflow.md) §5). A
    component that can run without a driver does not declare it. This is the only reading of
    `ALLOWED` outside the decorator that is not input validation (`_driver_context`).
 

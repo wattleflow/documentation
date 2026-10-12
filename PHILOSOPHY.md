@@ -34,7 +34,7 @@ The document is accordingly an **anti-manifesto**: a manifesto declares values w
 
 The guiding operational principle is **measurability**: a load-bearing doctrinal claim comes in falsifiable form, or it remains unverified (section *Hypotheses*). This applies to the premises of this document as well.
 
-Architecture and functionality are derived from requirements that live in [`02-FRQ`](requirements/02-FRQ/FRQ-000-INDEX.md) (functional, with [`01-StRS`](requirements/01-StRS/StRS-000-INDEX.md) above them) and [`03-NFRQ`](requirements/03-NFRQ/NFRQ-000-INDEX.md) (non-functional); the foundations of the methodology are set out in Volume I ([`METHODOLOGY.md`](METHODOLOGY.md)).
+Architecture and functionality are derived from requirements that live in [`02-FRQ`](requirements/02-SyRS/SyRS-000-INDEX.md) (functional, with [`01-StRS`](requirements/01-StRS/StRS-000-INDEX.md) above them) and [`03-NFRQ`](requirements/03-NFRQ/NFRQ-000-INDEX.md) (non-functional); the foundations of the methodology are set out in Volume I ([`METHODOLOGY.md`](METHODOLOGY.md)).
 
 ## Contents (volumes)
 
@@ -44,7 +44,7 @@ Architecture and functionality are derived from requirements that live in [`02-F
 | II | Architectural principles | *(planned)* |
 | III | Decisions | carried by the requirement documentation (`requirements/01-StRS/`–`03-NFRQ/`) |
 | IV | System design | *(planned)* |
-| V | Development Standards | [`requirements/01-StRS/`](requirements/01-StRS/StRS-000-INDEX.md) · [`requirements/02-FRQ/`](requirements/02-FRQ/FRQ-000-INDEX.md) · [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md) *(in progress)* |
+| V | Development Standards | [`requirements/01-StRS/`](requirements/01-StRS/StRS-000-INDEX.md) · [`requirements/02-FRQ/`](requirements/02-SyRS/SyRS-000-INDEX.md) · [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md) *(in progress)* |
 | VI | Quality assurance | *(planned)* |
 | VII | AI-assisted software engineering | *(planned)* |
 | VIII | Governance, compliance and information science | *(planned)* |
@@ -228,7 +228,7 @@ The form of recording is a replaceable sub-method of the doctrinal function of r
 
 ## Functional requirements
 
-ISO/IEC/IEEE 29148 defines functional requirements as those describing system behaviour, the services it provides, its inputs and outputs, and its responses to external events. In Wattleflow that idea lives in [`requirements/02-FRQ/`](requirements/02-FRQ/FRQ-000-INDEX.md), where functional requirements are given unique identifiers, acceptance criteria, and traceability to business objectives and architecture.
+ISO/IEC/IEEE 29148 defines functional requirements as those describing system behaviour, the services it provides, its inputs and outputs, and its responses to external events. In Wattleflow that idea lives in [`requirements/02-FRQ/`](requirements/02-SyRS/SyRS-000-INDEX.md), where functional requirements are given unique identifiers, acceptance criteria, and traceability to business objectives and architecture.
 
 The main disciplines from 29148 that this document follows:
 

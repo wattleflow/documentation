@@ -7,7 +7,7 @@
 | **Version** | v0.0.5 |
 | **Quality (25010)** | Functional correctness · Maintainability — modularity, analysability · Interoperability |
 | **Enforcement** | c.2–c.6 **by test** ([`test_moment.py`](../../../workflow/tests/test_moment.py)); c.1 **by review** |
-| **Reference frame** | [ISO](../../GLOSSARY.md#abbr-iso) 8601-1:2019 (local time, no UTC offset) · `HLRQ-MMN` `BR-MMN-13`, `BR-MMN-14` · [`NFRQ-DEF-03`](NFRQ-DEF-03-comparison-and-boundary-values.md) §3.1 · [`NFRQ-DEF-04`](NFRQ-DEF-04-moment-aware-helper.md) (aware moment, the norm) |
+| **Reference frame** | [ISO](../../GLOSSARY.md#abbr-iso) 8601-1:2019 (local time, no UTC offset) · `SyRS-MMN` `BR-MMN-13`, `BR-MMN-14` · [`NFRQ-DEF-03`](NFRQ-DEF-03-comparison-and-boundary-values.md) §3.1 · [`NFRQ-DEF-04`](NFRQ-DEF-04-moment-aware-helper.md) (aware moment, the norm) |
 | **Implementation** | [`wattleflow.helpers.moment`](../../../workflow/src/wattleflow/helpers/moment/helper.py): `MomentNaiveHelper`; `MomentHelper.text` and `MomentHelper.parse_iso` for a value whose kind its source decides |
 | **Raised by** | author's decision 2026-10-06: a datetime without a zone is not the norm and is defined apart from it |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
@@ -26,7 +26,7 @@ crossing** into the norm is `localize(m, zone)`, and the zone is always named by
 workflow zone for a value an operator wrote (`BR-MMN-13`), the zone a source declares for its values
 (`BR-MMN-14`). Nothing assumes a zone, and a wall time is never compared, sorted or ordered with an aware
 moment; a component that must compare first localizes the value in a named zone. A wall time has no
-RFC 5322 form: its `-0000` means UTC (`HLRQ-MMN` `BR-MMN-09`).
+RFC 5322 form: its `-0000` means UTC (`StRS-MMN` `BR-MMN-09`).
 
 ## 2. Acceptance criteria
 
@@ -69,6 +69,6 @@ requirement; the components that hold a wall time today are listed in §5.
 
 | Version | Date | Change |
 |---|---|---|
-| v0.0.5 | 2026-10-07 | Restated over `Moment` (`HLRQ-MMN`; author's decision: `Moment` replaces `helpers/dtime.py`): the wall time is a naive `Moment` handled by `MomentNaiveHelper`; the one crossing is `localize` with the workflow zone (operator) or the source zone (source); no RFC 5322 form; §5 updated. File renamed `NFRQ-DEF-05-moment-naive-helper.md`. |
-| v0.0.5 | 2026-10-06 | §5 t.1: mail headers with `-0000`, military or unknown zone names are zoned (UTC), not without a zone (`FRQ-MAIL-01-message-parser-ANL`). |
+| v0.0.5 | 2026-10-07 | Restated over `Moment` (`StRS-MMN`; author's decision: `Moment` replaces `helpers/dtime.py`): the wall time is a naive `Moment` handled by `MomentNaiveHelper`; the one crossing is `localize` with the workflow zone (operator) or the source zone (source); no RFC 5322 form; §5 updated. File renamed `NFRQ-DEF-05-moment-naive-helper.md`. |
+| v0.0.5 | 2026-10-06 | §5 t.1: mail headers with `-0000`, military or unknown zone names are zoned (UTC), not without a zone. |
 | v0.0.5 | 2026-10-06 | First entry: the datetime without a zone defined apart from the zoned norm (`NFRQ-DEF-04`), written and read by `DateTimeHelper`, with `zoned` as the only crossing (author's decision). |
