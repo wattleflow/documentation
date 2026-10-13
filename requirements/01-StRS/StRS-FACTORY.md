@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/factory.py`: `WorkflowFactory`, `WorkflowFactoryException` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-WORKFLOW`](StRS-WORKFLOW.md) — tok koji Workflow Factory sastavlja · [`StRS-MANAGER`](StRS-MANAGER.md) — upravitelji koje Workflow Factory puni · [`StRS-PROCESSOR`](StRS-PROCESSOR.md), [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md), [`StRS-REPOSITORY`](StRS-REPOSITORY.md), [`StRS-PIPELINE`](StRS-PIPELINE.md), [`StRS-DRIVER`](StRS-DRIVER.md), [`StRS-CONNECTION`](StRS-CONNECTION.md), [`StRS-STRATEGY`](StRS-STRATEGY.md), [`StRS-MEMENTO-STORE`](StRS-MEMENTO-STORE.md) — komponente koje Workflow Factory stvara |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 
@@ -262,23 +262,23 @@ Workflow Factory bilježi početak i završetak sastavljanja (s brojem konekcija
 
 | oznaka | pravilo |
 |---|---|
-| **BR-FAC-01** | Tok se sastavlja samo iz konfiguracije; vrste komponenti navode se imenom, a ime mora biti registrirano. |
-| **BR-FAC-02** | U registar se može upisati samo razred; zamjena imena drugim razredom bilježi se upozorenjem. |
-| **BR-FAC-03** | Nedostajuće ili neregistrirano ime vrste prekida sastavljanje; poruka predlaže slična imena i navodi registrirana. |
-| **BR-FAC-04** | Čitač konfiguracije mora biti ispravne vrste i mora biti zadan dio konfiguracije u kojem je tok; inače se tok ne sastavlja. |
-| **BR-FAC-05** | Ako konfiguracija ima više tokova, traženi se bira po imenu, a jedini se uzima sam; ako traženog nema, tok se ne sastavlja. |
-| **BR-FAC-06** | Redoslijed stvaranja: konekcije, driveri, procesori. |
-| **BR-FAC-07** | Driver koji navede ime konekcije dobiva upravitelja konekcija, da je sam nađe pri spajanju. |
-| **BR-FAC-08** | Komponenta koja traži driver mora ga imenom navesti u konfiguraciji, a driver mora biti registriran; Workflow Factory ga dohvaća od upravitelja drivera i predaje komponenti. Inače se tok ne sastavlja. |
-| **BR-FAC-09** | Tok mora imati barem jedan procesor. |
-| **BR-FAC-10** | Svaki procesor dobiva svoje pipelineove i obvezno svoj Blackboard sa strategijom stvaranja; Blackboard dobiva svoje repozitorije. Workflow Factory ih registrira (pipelineove i Blackboard kod procesora, repozitorije kod Blackboarda). |
-| **BR-FAC-11** | Repozitorij mora imati strategiju pisanja, a strategija čitanja nije obvezna. |
-| **BR-FAC-12** | Postavke komponente dolaze iz njezina odjeljka u konfiguraciji; ključ koji Workflow Factory ne koristi odbacuje se uz upozorenje i uputu da ga se stavi u postavke komponente. Iznimka je Blackboard, kojem se i ključevi uz unos predaju kao postavke. |
-| **BR-FAC-13** | Postavke bilježenja komponenta nasljeđuje od toka, osim ako ih navede sama. |
-| **BR-FAC-14** | Kontrolne točke uključuju se odjeljkom u konfiguraciji toka; ključ točke je ime procesora; neispravan odjeljak prekida sastavljanje. |
-| **BR-FAC-15** | Monitor se stvara samo ako je praćenje zadano i razina nije isključena; inače ga nema. |
-| **BR-FAC-16** | Postavke okruženja zadane u konfiguraciji postavljaju se prije stvaranja komponenti. |
-| **BR-FAC-17** | Neuspjelo sastavljanje ne vraća workflow. Greška koju otkrije sam Workflow Factory nosi odjeljak, ime unosa i izvorni uzrok; greška koju javi komponenta prosljeđuje se kakva jest, jer pravila komponente posjeduje komponenta ([`NFRQ-ORG-15`](../03-NFRQ/NFRQ-ORG-15-separation-of-concerns.md)). |
+| **BR-FCT-01** | Tok se sastavlja samo iz konfiguracije; vrste komponenti navode se imenom, a ime mora biti registrirano. |
+| **BR-FCT-02** | U registar se može upisati samo razred; zamjena imena drugim razredom bilježi se upozorenjem. |
+| **BR-FCT-03** | Nedostajuće ili neregistrirano ime vrste prekida sastavljanje; poruka predlaže slična imena i navodi registrirana. |
+| **BR-FCT-04** | Čitač konfiguracije mora biti ispravne vrste i mora biti zadan dio konfiguracije u kojem je tok; inače se tok ne sastavlja. |
+| **BR-FCT-05** | Ako konfiguracija ima više tokova, traženi se bira po imenu, a jedini se uzima sam; ako traženog nema, tok se ne sastavlja. |
+| **BR-FCT-06** | Redoslijed stvaranja: konekcije, driveri, procesori. |
+| **BR-FCT-07** | Driver koji navede ime konekcije dobiva upravitelja konekcija, da je sam nađe pri spajanju. |
+| **BR-FCT-08** | Komponenta koja traži driver mora ga imenom navesti u konfiguraciji, a driver mora biti registriran; Workflow Factory ga dohvaća od upravitelja drivera i predaje komponenti. Inače se tok ne sastavlja. |
+| **BR-FCT-09** | Tok mora imati barem jedan procesor. |
+| **BR-FCT-10** | Svaki procesor dobiva svoje pipelineove i obvezno svoj Blackboard sa strategijom stvaranja; Blackboard dobiva svoje repozitorije. Workflow Factory ih registrira (pipelineove i Blackboard kod procesora, repozitorije kod Blackboarda). |
+| **BR-FCT-11** | Repozitorij mora imati strategiju pisanja, a strategija čitanja nije obvezna. |
+| **BR-FCT-12** | Postavke komponente dolaze iz njezina odjeljka u konfiguraciji; ključ koji Workflow Factory ne koristi odbacuje se uz upozorenje i uputu da ga se stavi u postavke komponente. Iznimka je Blackboard, kojem se i ključevi uz unos predaju kao postavke. |
+| **BR-FCT-13** | Postavke bilježenja komponenta nasljeđuje od toka, osim ako ih navede sama. |
+| **BR-FCT-14** | Kontrolne točke uključuju se odjeljkom u konfiguraciji toka; ključ točke je ime procesora; neispravan odjeljak prekida sastavljanje. |
+| **BR-FCT-15** | Monitor se stvara samo ako je praćenje zadano i razina nije isključena; inače ga nema. |
+| **BR-FCT-16** | Postavke okruženja zadane u konfiguraciji postavljaju se prije stvaranja komponenti. |
+| **BR-FCT-17** | Neuspjelo sastavljanje ne vraća workflow. Greška koju otkrije sam Workflow Factory nosi odjeljak, ime unosa i izvorni uzrok; greška koju javi komponenta prosljeđuje se kakva jest, jer pravila komponente posjeduje komponenta ([`NFRQ-ORG-15`](../03-NFRQ/NFRQ-ORG-15-separation-of-concerns.md)). |
 
 ## 4. Nefunkcionalni zahtjevi
 
@@ -286,11 +286,11 @@ Kakvoće proizlaze iz narativa i koda; za njih još nema poveznice na zapise zah
 
 | kakvoća | što znači za Workflow Factory |
 |---|---|
-| podesivost | tok se mijenja izmjenom konfiguracije, ne koda (BR-FAC-01) |
-| rano otkrivanje grešaka | neispravna konfiguracija javlja se pri sastavljanju, a ne usred izvedbe (BR-FAC-17) |
+| podesivost | tok se mijenja izmjenom konfiguracije, ne koda (BR-FCT-01) |
+| rano otkrivanje grešaka | neispravna konfiguracija javlja se pri sastavljanju, a ne usred izvedbe (BR-FCT-17) |
 | razdvajanje odgovornosti | Workflow Factory provjerava samo ono što komponenta deklarira; pravila i greške komponente pripadaju komponenti ([`NFRQ-ORG-15`](../03-NFRQ/NFRQ-ORG-15-separation-of-concerns.md)) |
-| razumljivost grešaka | poruka navodi odjeljak i ime unosa te predlaže slična imena vrsta (BR-FAC-03) |
-| odvojenost | Workflow Factory ne zna konkretne komponente, pa se one dodaju bez njegove izmjene (BR-FAC-02) |
+| razumljivost grešaka | poruka navodi odjeljak i ime unosa te predlaže slična imena vrsta (BR-FCT-03) |
+| odvojenost | Workflow Factory ne zna konkretne komponente, pa se one dodaju bez njegove izmjene (BR-FCT-02) |
 | praćenje | Workflow Factory bilježi sastavljanje i greške konfiguracije |
 
 ## 5. Verifikacija
@@ -308,7 +308,7 @@ Matrica se popunjava kad se odrede djeca (§6).
 1. Djeca ovog zapisa (SyRS) nisu određena. Oznake `BR-FAC-*` i naziv sloja u naslovima dijagrama („Data flow", kao u [`StRS-WORKFLOW`](StRS-WORKFLOW.md)) su prijedlog.
 2. Odlomak *Problem* u §2.1 je prijedlog autora zapisa i treba ga potvrditi.
 3. **Tko spaja drivere.** Workflow Factory drivere stvara i predaje komponentama, ali ih ne spaja, a generički driver se pri čitanju ili pisanju ne spaja sam ([`BR-DRV-04`](StRS-DRIVER.md#3-poslovna-pravila)). Nije određeno tko drivere spaja prije rada toka.
-4. Pipelineove procesoru registrira Workflow Factory (BR-FAC-10); [`StRS-PROCESSOR`](StRS-PROCESSOR.md) i [`StRS-PIPELINE`](StRS-PIPELINE.md) su usklađeni. Ostaje odlučiti je li registracija pipelineova ondje zaseban korisnički slučaj.
+4. Pipelineove procesoru registrira Workflow Factory (BR-FCT-10); [`StRS-PROCESSOR`](StRS-PROCESSOR.md) i [`StRS-PIPELINE`](StRS-PIPELINE.md) su usklađeni. Ostaje odlučiti je li registracija pipelineova ondje zaseban korisnički slučaj.
 5. **Autor konfiguracije.** Uloga je izvedena iz načina na koji konfiguracija služi (UC3, UC4); treba potvrditi da je to zasebna uloga i tko je.
 6. **Pokretač.** Samo raspoređivač je potvrđen kao pozivatelj Workflow Factoryja; ostale pokretače treba odrediti.
 7. **Čitanje konfiguracije.** Čitač konfiguracije nema zapis; treba odlučiti treba li ga zasebni StRS.
@@ -339,8 +339,8 @@ Matrica se popunjava kad se odrede djeca (§6).
 | Verzija | Datum | Promjena |
 |---|---|---|
 | v0.0.6 | 2026-10-11 | Naziv uloge *pokretač* u dijagramima: *Runner* umjesto *Initiator*. |
-| v0.0.5 | 2026-10-11 | Odluka 2026-10-11 (razdvajanje odgovornosti, NFRQ-ORG-15): BR-FAC-17 razlikuje grešku koju otkrije Workflow Factory (s odjeljkom, imenom unosa i uzrokom) od greške komponente (prosljeđuje se kakva jest); time je usklađen s UC2 A6 i tablicom grešaka. Kakvoća razdvajanja odgovornosti u §4. |
+| v0.0.5 | 2026-10-11 | Odluka 2026-10-11 (razdvajanje odgovornosti, NFRQ-ORG-15): BR-FCT-17 razlikuje grešku koju otkrije Workflow Factory (s odjeljkom, imenom unosa i uzrokom) od greške komponente (prosljeđuje se kakva jest); time je usklađen s UC2 A6 i tablicom grešaka. Kakvoća razdvajanja odgovornosti u §4. |
 | v0.0.4 | 2026-10-11 | Poveznice na StRS-MEMENTO-STORE. |
 | v0.0.3 | 2026-10-11 | Povezani zapisi (StRS-DRIVER, StRS-MANAGER, StRS-REPOSITORY, StRS-PROCESSOR, StRS-PIPELINE, StRS-BLACKBOARD) usklađeni s ovim kodom; stavka o ispravcima uklonjena iz *Otvoreno*. |
-| v0.0.2 | 2026-10-11 | Nazivlje usklađeno s ostalim zapisima: posvuda *Workflow Factory* (umjesto *tvornica workflowa*); zastarjela stavka o nazivlju uklonjena. Prema kodu: driver komponentama dohvaća Workflow Factory od upravitelja drivera (BR-FAC-08, UC2, kontekst); Blackboard je obvezan za svaki procesor (BR-FAC-10, A3); Blackboard prima i ključeve uz unos (BR-FAC-12); izlaz monitora dobiva driver od upravitelja (UC4); Workflow Factory drivere ne spaja (§2.6). *Otvoreno*: oznaka zapisa više nije prijedlog; dodana pitanja o tome tko spaja drivere i o ispravcima StRS-DRIVER, StRS-MANAGER i StRS-REPOSITORY. |
+| v0.0.2 | 2026-10-11 | Nazivlje usklađeno s ostalim zapisima: posvuda *Workflow Factory* (umjesto *tvornica workflowa*); zastarjela stavka o nazivlju uklonjena. Prema kodu: driver komponentama dohvaća Workflow Factory od upravitelja drivera (BR-FCT-08, UC2, kontekst); Blackboard je obvezan za svaki procesor (BR-FCT-10, A3); Blackboard prima i ključeve uz unos (BR-FCT-12); izlaz monitora dobiva driver od upravitelja (UC4); Workflow Factory drivere ne spaja (§2.6). *Otvoreno*: oznaka zapisa više nije prijedlog; dodana pitanja o tome tko spaja drivere i o ispravcima StRS-DRIVER, StRS-MANAGER i StRS-REPOSITORY. |
 | v0.0.1 | 2026-10-11 | Prvi zapis, izveden iz koda `concrete/factory.py`. |

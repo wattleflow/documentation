@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/repository.py`: `GenericRepository`, `RepositoryWithDriver` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md) — predaje dokumente repozitorijima · [`StRS-PROCESSOR`](StRS-PROCESSOR.md) — objavljuje pravila pohrane · [`StRS-DRIVER`](StRS-DRIVER.md) — driver kroz koji strategije dolaze do vanjskog resursa · [`StRS-DOCUMENT`](StRS-DOCUMENT.md) — dokument koji se pohranjuje · [`StRS-FACTORY`](StRS-FACTORY.md) — sastavlja repozitorij i predaje mu driver |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 
@@ -130,7 +130,7 @@ Repository --> Reader : document / error
 | **Alternativni tok** | A1. Predan Blackboard nije Blackboard ili fasada nije fasada: pisanje se ne izvodi, greška repozitorija. A2. Strategija javi da dokument nije zapisan: brojač se ne mijenja, Blackboardu se javlja da dokument nije potvrđen (nije greška). A3. Zapisivanje ne uspije: greška repozitorija s uzrokom i podacima o strategiji, dokumentu i Blackboardu. |
 | **Ishod** | Dokument zapisan u vanjski resurs uz potvrdu, ili Blackboard zna da potvrde nema |
 
-Potvrda repozitorija po dokumentu ista je potvrda koju Blackboard prikuplja pri predaji: predaja je potvrđena samo ako su svi repozitoriji potvrdili sve dokumente ([`BR-BB-06`](StRS-BLACKBOARD.md#3-poslovna-pravila)).
+Potvrda repozitorija po dokumentu ista je potvrda koju Blackboard prikuplja pri predaji: predaja je potvrđena samo ako su svi repozitoriji potvrdili sve dokumente ([`BR-BLC-06`](StRS-BLACKBOARD.md#3-poslovna-pravila)).
 
 #### UC3 — Pročitaj dokument
 
@@ -262,17 +262,17 @@ Repozitorij za grešku ostavlja samo trag za detaljnu analizu; grešku bilježi 
 
 | oznaka | pravilo |
 |---|---|
-| **BR-REP-01** | Repozitorij dokument zapisuje samo kroz strategiju pisanja i čita samo kroz strategiju čitanja; sam ne zna kamo ni kako se pohranjuje. |
-| **BR-REP-02** | Strategija pisanja je obvezna, strategija čitanja nije. |
-| **BR-REP-03** | Repozitorij se ne sastavlja ako strategija nije ispravne vrste. |
-| **BR-REP-04** | Repozitorij koji radi preko drivera ne sastavlja se bez drivera ispravne vrste. Driver mu pri sastavljanju predaje Workflow Factory ([`BR-FAC-08`](StRS-FACTORY.md#3-poslovna-pravila)), a repozitorij ga predaje svakoj svojoj strategiji. |
-| **BR-REP-05** | Pisanje prima samo od Blackboarda i samo dokument predan kroz fasadu; inače je greška. |
-| **BR-REP-06** | Repozitorij javlja je li strategija dokument potvrdila; nepotvrđen dokument nije greška, ali se ne broji. |
-| **BR-REP-07** | Repozitorij broji potvrđena pisanja; brojač se može vratiti na nulu. |
-| **BR-REP-08** | Neuspjelo pisanje ili čitanje javlja se kao greška repozitorija s izvornim uzrokom; greška pisanja imenuje strategiju, dokument i Blackboard. |
-| **BR-REP-09** | Čitanje bez strategije čitanja ne diže grešku: ne vraća ništa i bilježi upozorenje. |
-| **BR-REP-10** | Pravila pohrane koja objavi procesor ([`BR-PRC-11`](StRS-PROCESSOR.md#3-poslovna-pravila)), a Blackboard preda uz dokument ([`BR-BB-12`](StRS-BLACKBOARD.md#3-poslovna-pravila)), repozitorij prosljeđuje strategiji pisanja. |
-| **BR-REP-11** | Posebna vrsta repozitorija dodaje strategijama samo ono što im treba (npr. driver); čitanje i pisanje ostaju isti. |
+| **BR-RPS-01** | Repozitorij dokument zapisuje samo kroz strategiju pisanja i čita samo kroz strategiju čitanja; sam ne zna kamo ni kako se pohranjuje. |
+| **BR-RPS-02** | Strategija pisanja je obvezna, strategija čitanja nije. |
+| **BR-RPS-03** | Repozitorij se ne sastavlja ako strategija nije ispravne vrste. |
+| **BR-RPS-04** | Repozitorij koji radi preko drivera ne sastavlja se bez drivera ispravne vrste. Driver mu pri sastavljanju predaje Workflow Factory ([`BR-FCT-08`](StRS-FACTORY.md#3-poslovna-pravila)), a repozitorij ga predaje svakoj svojoj strategiji. |
+| **BR-RPS-05** | Pisanje prima samo od Blackboarda i samo dokument predan kroz fasadu; inače je greška. |
+| **BR-RPS-06** | Repozitorij javlja je li strategija dokument potvrdila; nepotvrđen dokument nije greška, ali se ne broji. |
+| **BR-RPS-07** | Repozitorij broji potvrđena pisanja; brojač se može vratiti na nulu. |
+| **BR-RPS-08** | Neuspjelo pisanje ili čitanje javlja se kao greška repozitorija s izvornim uzrokom; greška pisanja imenuje strategiju, dokument i Blackboard. |
+| **BR-RPS-09** | Čitanje bez strategije čitanja ne diže grešku: ne vraća ništa i bilježi upozorenje. |
+| **BR-RPS-10** | Pravila pohrane koja objavi procesor ([`BR-PRC-11`](StRS-PROCESSOR.md#3-poslovna-pravila)), a Blackboard preda uz dokument ([`BR-BLC-12`](StRS-BLACKBOARD.md#3-poslovna-pravila)), repozitorij prosljeđuje strategiji pisanja. |
+| **BR-RPS-11** | Posebna vrsta repozitorija dodaje strategijama samo ono što im treba (npr. driver); čitanje i pisanje ostaju isti. |
 
 ## 4. Nefunkcionalni zahtjevi
 
@@ -280,9 +280,9 @@ Kakvoće proizlaze iz narativa i koda; osim ondje gdje je poveznica navedena, jo
 
 | kakvoća | što znači za repozitorij |
 |---|---|
-| zamjenjivost odredišta | promjena odredišta pohrane mijenja strategije, ne tok (BR-REP-01) |
+| zamjenjivost odredišta | promjena odredišta pohrane mijenja strategije, ne tok (BR-RPS-01) |
 | proširivost | programer može izraditi repozitorije za nova odredišta (UC4) |
-| razumljivost grešaka | greška pisanja nosi strategiju, dokument i Blackboard (BR-REP-08) |
+| razumljivost grešaka | greška pisanja nosi strategiju, dokument i Blackboard (BR-RPS-08) |
 | razmjerno bilježenje | uzrok se bilježi jednom, na mjestu gdje se obrada zaustavi ([`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md)) |
 
 ## 5. Verifikacija
@@ -322,7 +322,7 @@ Matrica se popunjava kad se odrede djeca (§6).
 | Verzija | Datum | Promjena |
 |---|---|---|
 | v0.0.5 | 2026-10-11 | Uklonjene poveznice na prethodni zapis iste komponente i pripadna stavka iz *Otvoreno*: zapis ga zamjenjuje, pa upućuje samo na važeće dokumente. |
-| v0.0.4 | 2026-10-11 | Prema kodu Workflow Factoryja: driver repozitoriju dohvaća Workflow Factory od upravitelja drivera i predaje ga pri sastavljanju (UC1, BR-REP-04, dionici). *Otvoreno*: pitanje o putu do drivera zamijenjeno pitanjem tko spaja driver. Poveznica na StRS-FACTORY. |
+| v0.0.4 | 2026-10-11 | Prema kodu Workflow Factoryja: driver repozitoriju dohvaća Workflow Factory od upravitelja drivera i predaje ga pri sastavljanju (UC1, BR-RPS-04, dionici). *Otvoreno*: pitanje o putu do drivera zamijenjeno pitanjem tko spaja driver. Poveznica na StRS-FACTORY. |
 | v0.0.3 | 2026-10-11 | Uklonjeno pitanje o odgođenom driveru: odgođeno stvaranje drivera služi paketu *blackwattle* i izvan je opsega. |
-| v0.0.2 | 2026-10-11 | Repozitorij sastavlja i kod Blackboarda registrira Workflow Factory. Potvrda po dokumentu povezana s BR-BB-06 (zatvoreno pitanje o pojmu potvrde); izvor pravila pohrane povezan s BR-PRC-11 i BR-BB-12; čitatelj dodan na kontekstni dijagram; „brojač zapisa" postaje „brojač zapisanih dokumenata"; odlomak o bilježenju grešaka pojednostavljen. *Otvoreno*: dodana pitanja o tome kako strategije dolaze do drivera i o odgođenom driveru. |
+| v0.0.2 | 2026-10-11 | Repozitorij sastavlja i kod Blackboarda registrira Workflow Factory. Potvrda po dokumentu povezana s BR-BLC-06 (zatvoreno pitanje o pojmu potvrde); izvor pravila pohrane povezan s BR-PRC-11 i BR-BLC-12; čitatelj dodan na kontekstni dijagram; „brojač zapisa" postaje „brojač zapisanih dokumenata"; odlomak o bilježenju grešaka pojednostavljen. *Otvoreno*: dodana pitanja o tome kako strategije dolaze do drivera i o odgođenom driveru. |
 | v0.0.1 | 2026-10-11 | Prvi zapis, izveden iz koda `concrete/repository.py`. |

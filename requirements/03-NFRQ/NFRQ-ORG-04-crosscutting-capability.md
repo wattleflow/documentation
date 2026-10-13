@@ -42,7 +42,7 @@ modelled as a **callable helper capability**, **not** as a specialisation of a d
 
 Criterion 3 — `wem_lint` (`prohibited_standalone`); the build fails.
 Criteria 1 and 4 — **by review** (inheritance base, and term vocabulary respectively); full
-automation is planned, and until then this is a declared blind spot (D-11).
+automation is planned, and until then this is a declared blind spot ([D-11](../../DOCTRINE.md#d-11)).
 Criterion 2 inherits its enforcement from ORG-01 (acyclicity for placement).
 
 ## 4. Holders
@@ -62,7 +62,7 @@ The register gains a `capabilities:` list (currently `routing`) and an extended
 | GRASP — Pure Fabrication, High Cohesion | a cross-cutting responsibility with no home domain → a fabricated cohesive helper |
 | SRP / Separation of Concerns (Parnas, Dijkstra) | "where it is addressed" separated from "how it is persisted" |
 | DIP / Stable Abstractions | an abstract contract plus per-transport concretes |
-| Open–Closed [69] | a new transport is a new implementation, with no change to consumers |
+| Open–Closed [[69](../../LITERATURE.md#ref-69)] | a new transport is a new implementation, with no change to consumers |
 | Information Hiding (Parnas) | the neutral datum hides transport specifics |
 
 ## Change history

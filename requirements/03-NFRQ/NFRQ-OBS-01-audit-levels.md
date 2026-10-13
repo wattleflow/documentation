@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **Version** | v1.0.0 *(documented change 2026-10-11, D-03)* |
+| **Version** | v1.0.0 *(documented change 2026-10-11, [D-03](../../DOCTRINE.md#d-03))* |
 | **Quality (25010)** | Maintainability (analysability) · Reliability (recoverability) · Interaction capability (for the operator as the record's reader) |
 | **Enforcement** | `wem_lint` ≥ 1.13.0 — `audit_level_vs_propagation`, `audit_failure_trace`; both `severity: warning` |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
@@ -94,7 +94,7 @@ second list only with a documented change (D-03).
 | 2, 6 | `audit_failure_trace` | `warning` |
 | 1, 2 at the framework boundary | `audit_level_vs_propagation`, `audit_failure_trace` — a class in `audit.framework_boundary` gives no finding for `ERROR` with `raise` | — |
 | 3 | `audit_level_vs_propagation` (`exception()` ∈ escalating levels) | `warning` |
-| 4, 5 | — | **not machine-decidable** — declared blind spot (D-11) |
+| 4, 5 | — | **not machine-decidable** — declared blind spot ([D-11](../../DOCTRINE.md#d-11)) |
 
 The current state is a **worklist**; the build does not fail. Raising to `error` requires a documented change.
 
@@ -103,14 +103,14 @@ The current state is a **worklist**; the build does not fail. Raising to `error`
 The `strategies` layer is aligned; the reference pattern is
 `strategies/documents/*.py` — entry `debug`, outcome `debug`, degradation `warning`, failure
 `debug` + `raise`. The other packages are a worklist; **that state is not transcribed here**
-(D-13) but read from the conformance snapshot in
+([D-13](../../DOCTRINE.md#d-13)) but read from the conformance snapshot in
 `../workflow/conformance/`.
 
 ## 5. Justification
 
 | Principle | Implication |
 |---|---|
-| Signal detection theory; base rate (same anchor as [`NFRQ-SEC-04`](NFRQ-SEC-04-detection-operating-point.md)) | false alarms wreck the operating point: an `ERROR` that is not a failure spends the attention a real failure needs |
+| Signal detection theory; base rate (same anchor as [`NFRQ-SCR-04`](NFRQ-SCR-04-detection-operating-point.md)) | false alarms wreck the operating point: an `ERROR` that is not a failure spends the attention a real failure needs |
 | Shannon's measure of information | a level whose record is always present conveys no information; a repeated record of the same cause has zero entropy |
 | RFC 5424 §6.2.1 (Syslog severity) | the scale is **ordinal and operational**, not an expression of a particular concern |
 | Fail-fast + exception context (PEP 3134 `raise … from`) | failure context belongs to the **exception** (the `__cause__` chain), not to a second log record |
@@ -121,7 +121,7 @@ The `strategies` layer is aligned; the reference pattern is
 
 Record fields — [`NFRQ-OBS-02`](NFRQ-OBS-02-audit-fields.md).
 Volume and ownership — [`NFRQ-OBS-03`](NFRQ-OBS-03-audit-ownership-volume.md).
-Content confidentiality — [`NFRQ-SCR-06`](NFRQ-SEC-06-audit-confidentiality.md).
+Content confidentiality — [`NFRQ-SCR-06`](NFRQ-SCR-06-audit-confidentiality.md).
 Error ownership — [`NFRQ-ORG-15`](NFRQ-ORG-15-separation-of-concerns.md) c.3; the owner of the main
 process — [`StRS-WORKFLOW`](../01-StRS/StRS-WORKFLOW.md) (BR-WRK-11 to BR-WRK-16).
 Error-handling policy of a component — [`NFRQ-DFN-06`](NFRQ-DFN-06-error-handling-policy.md).

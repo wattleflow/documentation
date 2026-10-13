@@ -6,10 +6,10 @@
 |---|---|
 | **Version** | v0.0.5 |
 | **Quality (25010)** | Functional correctness (completeness) · Maintainability — modularity, analysability |
-| **Enforcement** | **not measured** — review; c.5 is AST-observable but not implemented (D-11) |
+| **Enforcement** | **not measured** — review; c.5 is AST-observable but not implemented ([D-11](../../DOCTRINE.md#d-11)) |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
 
-> **Entered without a recorded decision** (decision of 2026-08-28), against the default in D-03. The register
+> **Entered without a recorded decision** (decision of 2026-08-28), against the default in [D-03](../../DOCTRINE.md#d-03). The register
 > is held to be sufficient justification for a norm of this kind; exceptions to it are
 > decided by the documentation. The deviation is recorded here rather than left silent.
 
@@ -39,7 +39,7 @@ boundary to metadata).
 5. **`[M]`** Public methods of the wrapper having exactly **one** call site — **diagnostic, not a
    gate**. It is the earliest visible sign that the model is not exposed and the consumer's need
    is being met by accretion. Charter:
-   [`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md).
+   [`NFRQ-DFN-02`](NFRQ-DFN-02-measurement-charter.md).
 
 ## 3. Verification
 
@@ -50,7 +50,7 @@ not coverage.
 
 The residue is legitimate and this requirement does not forbid it: an implementation may be
 absent, may not cover a clause, or may sit outside the distribution's tier
-([`NFRQ-SEC-03`](NFRQ-SEC-03-supply-chain-locality.md)). What the requirement forbids is
+([`NFRQ-SCR-03`](NFRQ-SCR-03-supply-chain-locality.md)). What the requirement forbids is
 **undeclared** residue.
 
 Equally, the wrapper is not the home for what the standard does not decide — output naming,
@@ -80,7 +80,7 @@ Decisive for this register: that reader **passed every existing gate** — `ORG-
 |---|---|
 | `IParser` / `IFormatter` — a Strategy specialisation at the I/O boundary | the contract belongs to the standard; the wrapper owns only the crossing. `IAdapter` is **not** this role: its contract is to expose an `IAdaptee`, and it has no implementations |
 | Conformance is not re-implementation | a standard's clause re-derived by hand is a second, unversioned implementation of it |
-| MDL mirror ([`NFRQ-SEC-02`](NFRQ-SEC-02-attack-surface.md)) | a projection hides the model, so each new need adds surface instead of reading it |
+| MDL mirror ([`NFRQ-SCR-02`](NFRQ-SCR-02-attack-surface.md)) | a projection hides the model, so each new need adds surface instead of reading it |
 | Reachability over usage | a pipeline's present need is not the domain's extent; the next need must not require a code change in the adapter |
 
 ## Change history

@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/processor.py`: `GenericProcessor`, `ProcessorState`, `ProcessorAction` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md) — procesor je vlasnik Blackboarda · [`StRS-PIPELINE`](StRS-PIPELINE.md) — procesor pokreće pipelineove · [`StRS-MANAGER`](StRS-MANAGER.md) — procesorima upravlja upravitelj procesora · [`StRS-FACTORY`](StRS-FACTORY.md) — sastavlja procesor · [`StRS-STATE-MACHINE`](StRS-STATE-MACHINE.md) — stroj stanja · [`StRS-MEMENTO`](StRS-MEMENTO.md), [`StRS-MEMENTO-STORE`](StRS-MEMENTO-STORE.md) — snimka i pohrana kontrolnih točaka · [`StRS-DOCUMENT`](StRS-DOCUMENT.md) — dokument koji procesor obrađuje · [`StRS-DRIVER`](StRS-DRIVER.md) — driver koji procesor može koristiti · [`StRS-REPOSITORY`](StRS-REPOSITORY.md) — repozitoriji u koje završavaju obrađeni dokumenti · [`StRS-WORKFLOW`](StRS-WORKFLOW.md) — workflow koji pokreće procesore |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5, §2.6) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5, §2.6) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 
@@ -339,9 +339,9 @@ Matrica se popunjava kad se odrede djeca (§6).
 
 1. Djeca ovog zapisa (SyRS) nisu određena. Oznake `BR-PRC-*` su prijedlog.
 2. Naziv sloja u naslovima dijagrama („Data processing") je prijedlog.
-3. Pipelineove procesoru registrira Workflow Factory ([`BR-FAC-10`](StRS-FACTORY.md#3-poslovna-pravila)); ovdje je to korak sastavljanja (UC1). Treba odlučiti je li registracija pipelineova zaseban korisnički slučaj, kao registracija Blackboarda (UC2).
+3. Pipelineove procesoru registrira Workflow Factory ([`BR-FCT-10`](StRS-FACTORY.md#3-poslovna-pravila)); ovdje je to korak sastavljanja (UC1). Treba odlučiti je li registracija pipelineova zaseban korisnički slučaj, kao registracija Blackboarda (UC2).
 4. Kakvoće iz §4 treba povezati s postojećim NFRQ zapisima ili otvoriti nove.
-5. Zadana predaja: procesor zadano nalaže predaju nakon svakog dokumenta (BR-PRC-05), a Blackboard je zadano odgađa ([`BR-BB-07`](StRS-BLACKBOARD.md#3-poslovna-pravila)). Treba potvrditi koje pravilo vrijedi kad nijedno nije posebno podešeno.
+5. Zadana predaja: procesor zadano nalaže predaju nakon svakog dokumenta (BR-PRC-05), a Blackboard je zadano odgađa ([`BR-BLC-07`](StRS-BLACKBOARD.md#3-poslovna-pravila)). Treba potvrditi koje pravilo vrijedi kad nijedno nije posebno podešeno.
 
 ## 7. Reference
 

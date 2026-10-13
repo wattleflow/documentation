@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/connection.py`: `GenericConnection`, `ConnectionState`, `ConnectionAction`, `ConnectionObserverInterface` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-DRIVER`](StRS-DRIVER.md) — driver radi kroz konekciju · [`StRS-MANAGER`](StRS-MANAGER.md) — upravitelj konekcija · [`StRS-FACTORY`](StRS-FACTORY.md) — sastavlja konekciju · [`StRS-STATE-MACHINE`](StRS-STATE-MACHINE.md) — stroj stanja |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5, §2.6) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5, §2.6) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 
@@ -148,7 +148,7 @@ Zahtjev za povezivanje ne otvara sesiju: osigurava samo vezu. Ako ona već posto
 | **Alternativni tok** | A1. Konekcija je već zatvorena ili veza nikad nije stvorena: ništa se ne događa. A2. Zatvaranje veze ne uspije: konekcija prelazi u FAILED, greška se vraća onome tko je zatvaranje zatražio. |
 | **Ishod** | Konekcija u stanju CLOSED; iz njega se veza može ponovno stvoriti |
 
-Pri uklanjanju i gašenju upravitelj zatvara svaku konekciju, bez obzira na to je li sesija u tom trenutku otvorena (BR-CON-17). Zatvaranje je moguće iz svakog stanja osim NEW i CLOSED, pa i iz FAILED. Kad konekcija prestane postojati, zatvara se sama; kvar pri tom zatvaranju ne prekida rad nikoga drugog.
+Pri uklanjanju i gašenju upravitelj zatvara svaku konekciju, bez obzira na to je li sesija u tom trenutku otvorena (BR-CNC-17). Zatvaranje je moguće iz svakog stanja osim NEW i CLOSED, pa i iz FAILED. Kad konekcija prestane postojati, zatvara se sama; kvar pri tom zatvaranju ne prekida rad nikoga drugog.
 
 #### UC5 — Prati događaje konekcije
 
@@ -339,23 +339,23 @@ Konekcija bilježi svoje događaje: sastavljanje, stvaranje i zatvaranje veze, o
 
 | oznaka | pravilo |
 |---|---|
-| **BR-CON-01** | Konekcija je jedina granica prema vanjskom sustavu: ostali dijelovi sustava poznaju njezino ponašanje, a ne protokol vanjskog sustava. |
-| **BR-CON-02** | Svaka konekcija ima ime; bez imena se ne sastavlja. |
-| **BR-CON-03** | Veza se stvara jednom i služi za više sesija; zatvaranje sesije ne zatvara vezu. |
-| **BR-CON-04** | Veza se stvara pri sastavljanju konekcije, osim ako je uključeno odgođeno stvaranje; tada se stvara na prvi zahtjev. |
-| **BR-CON-05** | Konekcija mijenja stanje samo propisanim prijelazima (§2.5). |
-| **BR-CON-06** | Otvorena sesija dostupna je samo dok traje. |
-| **BR-CON-07** | Zahtjev za povezivanje osigurava samo vezu; sesiju otvara onaj tko vezu koristi. |
-| **BR-CON-08** | Neuspjeh stvaranja ili zatvaranja veze stavlja konekciju u stanje FAILED; iz njega se konekcija može samo zatvoriti ili vratiti u početno stanje, a ne izravno ponovno povezati. |
-| **BR-CON-09** | Neuspjeh otvaranja sesije ne zatvara vezu: konekcija se vraća u stanje u kojem je sesija mogla početi. |
-| **BR-CON-10** | Zatvorena ili neuspjela konekcija može se vratiti u početno stanje i ponovno stvoriti. |
-| **BR-CON-11** | Kad konekcija prestane postojati, zatvara se sama; kvar pri tome ne smije prekinuti rad drugih. |
-| **BR-CON-12** | Pretplatiti se mogu samo promatrači; promatrač s već pretplaćenim imenom ne pretplaćuje se ponovno. |
-| **BR-CON-13** | Kvar jednog promatrača ne sprječava obavještavanje ostalih ni rad konekcije; bilježi se kao upozorenje. |
-| **BR-CON-14** | Konekcija prima samo zahtjeve za povezivanje i odspajanje; svaku drugu radnju odbija. |
-| **BR-CON-15** | Verziju vanjskog sustava konekcija navodi samo ako ju je sam vanjski sustav prijavio; inače je nepoznata. |
-| **BR-CON-16** | Konekcija se sama ne pokušava oporaviti iz stanja FAILED: oporavak (zatvaranje ili povratak u početno stanje, pa ponovno stvaranje veze) pokreće netko izvana. |
-| **BR-CON-17** | Kad se konekcija uklanja iz upravitelja ili se upravitelj gasi, upravitelj je zatvara, bez obzira na to je li sesija u tom trenutku otvorena. |
+| **BR-CNC-01** | Konekcija je jedina granica prema vanjskom sustavu: ostali dijelovi sustava poznaju njezino ponašanje, a ne protokol vanjskog sustava. |
+| **BR-CNC-02** | Svaka konekcija ima ime; bez imena se ne sastavlja. |
+| **BR-CNC-03** | Veza se stvara jednom i služi za više sesija; zatvaranje sesije ne zatvara vezu. |
+| **BR-CNC-04** | Veza se stvara pri sastavljanju konekcije, osim ako je uključeno odgođeno stvaranje; tada se stvara na prvi zahtjev. |
+| **BR-CNC-05** | Konekcija mijenja stanje samo propisanim prijelazima (§2.5). |
+| **BR-CNC-06** | Otvorena sesija dostupna je samo dok traje. |
+| **BR-CNC-07** | Zahtjev za povezivanje osigurava samo vezu; sesiju otvara onaj tko vezu koristi. |
+| **BR-CNC-08** | Neuspjeh stvaranja ili zatvaranja veze stavlja konekciju u stanje FAILED; iz njega se konekcija može samo zatvoriti ili vratiti u početno stanje, a ne izravno ponovno povezati. |
+| **BR-CNC-09** | Neuspjeh otvaranja sesije ne zatvara vezu: konekcija se vraća u stanje u kojem je sesija mogla početi. |
+| **BR-CNC-10** | Zatvorena ili neuspjela konekcija može se vratiti u početno stanje i ponovno stvoriti. |
+| **BR-CNC-11** | Kad konekcija prestane postojati, zatvara se sama; kvar pri tome ne smije prekinuti rad drugih. |
+| **BR-CNC-12** | Pretplatiti se mogu samo promatrači; promatrač s već pretplaćenim imenom ne pretplaćuje se ponovno. |
+| **BR-CNC-13** | Kvar jednog promatrača ne sprječava obavještavanje ostalih ni rad konekcije; bilježi se kao upozorenje. |
+| **BR-CNC-14** | Konekcija prima samo zahtjeve za povezivanje i odspajanje; svaku drugu radnju odbija. |
+| **BR-CNC-15** | Verziju vanjskog sustava konekcija navodi samo ako ju je sam vanjski sustav prijavio; inače je nepoznata. |
+| **BR-CNC-16** | Konekcija se sama ne pokušava oporaviti iz stanja FAILED: oporavak (zatvaranje ili povratak u početno stanje, pa ponovno stvaranje veze) pokreće netko izvana. |
+| **BR-CNC-17** | Kad se konekcija uklanja iz upravitelja ili se upravitelj gasi, upravitelj je zatvara, bez obzira na to je li sesija u tom trenutku otvorena. |
 
 ## 4. Nefunkcionalni zahtjevi
 
@@ -363,12 +363,12 @@ Povezivanje s NFRQ zapisima je otvoreno (§6). Iz narativa i koda proizlaze ove 
 
 | kakvoća | što znači za konekciju |
 |---|---|
-| pouzdanost | kvar pri stvaranju ili zatvaranju veze vidljiv je u stanju FAILED, a kvar sesije ne zatvara vezu (BR-CON-08, BR-CON-09) |
-| učinkovitost | veza se stvara jednom i dijeli među sesijama (BR-CON-03) |
-| urednost | pri uklanjanju i gašenju ne ostaju otvorene veze (BR-CON-17) |
+| pouzdanost | kvar pri stvaranju ili zatvaranju veze vidljiv je u stanju FAILED, a kvar sesije ne zatvara vezu (BR-CNC-08, BR-CNC-09) |
+| učinkovitost | veza se stvara jednom i dijeli među sesijama (BR-CNC-03) |
+| urednost | pri uklanjanju i gašenju ne ostaju otvorene veze (BR-CNC-17) |
 | praćenje | konekcija bilježi sastavljanje, stanja, sesije i greške te obavještava promatrače |
 | proširivost | programer može izraditi novu vrstu konekcije za svaki vanjski sustav (UC6) |
-| odvojenost | zamjena vanjskog sustava ne dira ostatak toka jer on ne poznaje protokol (BR-CON-01) |
+| odvojenost | zamjena vanjskog sustava ne dira ostatak toka jer on ne poznaje protokol (BR-CNC-01) |
 
 ## 5. Verifikacija
 
@@ -384,12 +384,12 @@ Matrica se popunjava kad se odrede djeca (§6).
 
 1. Djeca ovog zapisa (SyRS) nisu određena. Oznake `BR-CON-*` i naziv sloja u naslovima dijagrama („External access") su prijedlog.
 2. Odlomak *Problem* u §2.1 je prijedlog autora zapisa i treba ga potvrditi.
-3. Zadano ponašanje: konekcija vezu stvara odmah pri sastavljanju (BR-CON-04), osim uz odgođeno stvaranje. Treba potvrditi da je to željeno zadano ponašanje.
+3. Zadano ponašanje: konekcija vezu stvara odmah pri sastavljanju (BR-CNC-04), osim uz odgođeno stvaranje. Treba potvrditi da je to željeno zadano ponašanje.
 4. **Vrste grešaka.** Konekcija javlja tri vrste grešaka: vlastitu, grešku upravitelja (kad stvaranje veze nije dopušteno u trenutnom stanju) i izvornu grešku vrste konekcije. Treba potvrditi je li to željeno.
-5. Oporavak iz FAILED nema vlasnika: ponovni pokušaj se ne događa sam, a nije određeno tko ga pokreće, kada, ni što FAILED znači za posao toka. Isto vrijedi za povratak iz CLOSED u početno stanje (BR-CON-10, BR-CON-16). Treba odrediti akter i okidač, pa po potrebi dodati korisnički slučaj.
+5. Oporavak iz FAILED nema vlasnika: ponovni pokušaj se ne događa sam, a nije određeno tko ga pokreće, kada, ni što FAILED znači za posao toka. Isto vrijedi za povratak iz CLOSED u početno stanje (BR-CNC-10, BR-CNC-16). Treba odrediti akter i okidač, pa po potrebi dodati korisnički slučaj.
 6. Zamjena konekcije u hodu: pokretač zamjene nije određen; isto pitanje otvoreno je u [`StRS-MANAGER`](StRS-MANAGER.md) i [`StRS-DRIVER`](StRS-DRIVER.md).
 7. Sloj: nije odlučeno pripada li konekcija sloju „Data persistence" ili zasebnom sloju (infrastruktura). Naziv „External access" u naslovima dijagrama je privremen; isto pitanje otvoreno je u [`StRS-MANAGER`](StRS-MANAGER.md).
-8. **Zatvaranje pri uklanjanju i gašenju.** BR-CON-17 traži da upravitelj zatvori svaku konekciju, a upravitelj trenutačno zatvara samo konekcije s otvorenom sesijom; ostale se zatvaraju tek kad same prestanu postojati. Kod treba uskladiti s pravilom (SyRS).
+8. **Zatvaranje pri uklanjanju i gašenju.** BR-CNC-17 traži da upravitelj zatvori svaku konekciju, a upravitelj trenutačno zatvara samo konekcije s otvorenom sesijom; ostale se zatvaraju tek kad same prestanu postojati. Kod treba uskladiti s pravilom (SyRS).
 9. Kakvoće iz §4 treba povezati s postojećim NFRQ zapisima ili otvoriti nove.
 
 ## 7. Reference
@@ -409,5 +409,5 @@ Matrica se popunjava kad se odrede djeca (§6).
 |---|---|---|
 | v0.0.4 | 2026-10-11 | Uklonjene poveznice na prethodni zapis iste komponente i pripadna stavka iz *Otvoreno*: zapis ga zamjenjuje, pa upućuje samo na važeće dokumente. |
 | v0.0.3 | 2026-10-11 | Poveznice na StRS-FACTORY i StRS-STATE-MACHINE. |
-| v0.0.2 | 2026-10-11 | Usklađeno s kodom i povezanim StRS-ovima: konekciju sastavlja Workflow Factory; driver povezivanje traži izravno od konekcije (UC2, UC3); obavijest o zamjeni šalje nova konekcija (UC5); neuspjelo stvaranje veze pri sastavljanju znači da se konekcija ne sastavlja (UC1). Novo pravilo BR-CON-17: upravitelj pri uklanjanju i gašenju zatvara sve konekcije. Jedinstveni naslovi dijagrama; poveznice na StRS-MANAGER umjesto FRQ-MGR; ispravljen red riječi („veza se stvara"); BR-CON-06 bez ponavljanja. *Otvoreno* očišćeno od zastarjelih stavki, a pitanje o vrstama grešaka postavljeno na razini StRS-a. |
+| v0.0.2 | 2026-10-11 | Usklađeno s kodom i povezanim StRS-ovima: konekciju sastavlja Workflow Factory; driver povezivanje traži izravno od konekcije (UC2, UC3); obavijest o zamjeni šalje nova konekcija (UC5); neuspjelo stvaranje veze pri sastavljanju znači da se konekcija ne sastavlja (UC1). Novo pravilo BR-CNC-17: upravitelj pri uklanjanju i gašenju zatvara sve konekcije. Jedinstveni naslovi dijagrama; poveznice na StRS-MANAGER; ispravljen red riječi („veza se stvara"); BR-CNC-06 bez ponavljanja. *Otvoreno* očišćeno od zastarjelih stavki, a pitanje o vrstama grešaka postavljeno na razini StRS-a. |
 | v0.0.1 | 2026-10-10 | Prvi zapis, izveden iz koda `concrete/connection.py`. |

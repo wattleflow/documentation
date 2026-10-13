@@ -6,7 +6,7 @@
 |---|---|
 | **Version** | v0.0.5 |
 | **Quality (25010)** | Maintainability — modularity, analysability, reusability |
-| **Enforcement** | AST; **not in `wem_lint` yet** — declared blind spot (D-11). Candidate rule: `constant_placement` |
+| **Enforcement** | AST; **not in `wem_lint` yet** — declared blind spot ([D-11](../../DOCTRINE.md#d-11)). Candidate rule: `constant_placement` |
 | **Policy** | `STANDARDS.md` §2.6, §2.9 · complements [`NFRQ-ORG-05`](NFRQ-ORG-05-self-referencing-helpers.md) and [`NFRQ-ORG-11`](NFRQ-ORG-11-classes-over-module-functions.md) |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
 
@@ -45,7 +45,7 @@ Either moves to `constants/` or `enums/` when a second owner appears.
    specialisations of that unit only — otherwise it belongs in `enums/`. *(AST derives the reader
    set; the verdict is by review, per §2 t.2)*
 2. No module-level `UPPER_SNAKE` assignment read by more than one module is defined outside
-   `constants/`. *(machine-checkable — AST, reader count derived, D-13)*
+   `constants/`. *(machine-checkable — AST, reader count derived, [D-13](../../DOCTRINE.md#d-13))*
 3. A value that belongs to an enumerated set is referenced through its member, not as a literal.
    *(by review; a literal equal to a member value is a candidate, not a verdict)*
 4. `enums/` and `constants/` are PEP 420 namespaces shared across distributions, so a module name
@@ -70,7 +70,7 @@ cleanliness (D-11, `CONFORMANCE.md` §9). Migration of existing sites is tracked
 | Single source of truth ([`NFRQ-ORG-08`](NFRQ-ORG-08-deduplication.md)) | a vocabulary written in two places drifts; the second copy is the one nobody updates |
 | Cohesion (Parnas, [`NFRQ-ORG-01`](NFRQ-ORG-01-helper-locality.md)) | what changes together lives together: a state machine's states, actions and transitions are one decision, and a central `enums/` would split it for no reader's benefit |
 | Analysability | the set of values a field may take is read in one file, not reconstructed from call sites |
-| Controlled vocabulary (D-12) | a new member is a visible edit to a designated module, reviewable as such |
+| Controlled vocabulary ([D-12](../../DOCTRINE.md#d-12)) | a new member is a visible edit to a designated module, reviewable as such |
 | Reference standard: ISO/IEC 25010 — Maintainability (modularity, analysability, reusability) | |
 
 ## Change history

@@ -28,7 +28,7 @@ built to last and grow.
 | II | Architectural Principles | *(planned)* |
 | III | Decisions | carried by the requirement documentation (`requirements/01-StRS/`–`03-NFRQ/`) |
 | IV | System Design | *(planned)* |
-| V | Development Standards | [`requirements/01-StRS/`](requirements/01-StRS/StRS-000-INDEX.md) · [`requirements/02-FRQ/`](requirements/02-SyRS/SyRS-000-INDEX.md) · [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md) *(in progress)* |
+| V | Development Standards | [`requirements/01-StRS/`](requirements/01-StRS/StRS-000-INDEX.md) · [`requirements/02-SyRS/`](requirements/02-SyRS/SyRS-000-INDEX.md) · [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md) *(in progress)* |
 | VI | Quality Assurance | *(planned)* |
 | VII | AI-Assisted Software Engineering | *(planned)* |
 | VIII | Governance, Compliance and Information Science | *(planned)* |
@@ -44,10 +44,10 @@ built to last and grow.
 | Method (Volume I) | [METHODOLOGY.md](METHODOLOGY.md) · `requirements/05-METHODS/` |
 | Policy (cascade) | `CLAUDE.md` (= `POLICY.md`) → `STANDARDS.md` · `DOCUMENTATION.md` · `ARCHITECTURE.md` · `DECISIONS.md` · `CONFORMANCE.md` |
 | Discourse vocabulary | [dictionary.yaml](dictionary.yaml) → [DICTIONARY.md](DICTIONARY.md) · `GLOSSARY.md` (en-AU, generated) |
-| Requirements | [`requirements/01-StRS/`](requirements/01-StRS/StRS-000-INDEX.md) · [`requirements/02-FRQ/`](requirements/02-SyRS/SyRS-000-INDEX.md) · [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md) |
+| Requirements | [`requirements/01-StRS/`](requirements/01-StRS/StRS-000-INDEX.md) · [`requirements/02-SyRS/`](requirements/02-SyRS/SyRS-000-INDEX.md) · [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md) |
 | Analyses · change records | `requirements/06-ANALYSIS/` · `requirements/07-CHANGES/` |
 | Diagram register (drawn · reserved) | [`requirements/DIAGRAMS.md`](requirements/DIAGRAMS.md) |
-| Per-distribution documentation | `core/` · `workflow/` · `blackwattle/` |
+| Per-distribution documentation | `core/` · `workflow/` · [`blackwattle/`](requirements/blackwattle/README.md) |
 | Conformance snapshots | `workflow/conformance/` |
 | Worklist (state of work, not norm) | `workflow/TODO.md` · `workflow/DONE.md` |
 
@@ -57,7 +57,7 @@ registers** only. Deliberately not published: the dated analyses
 (`requirements/06-ANALYSIS/`), the alignment records (`requirements/07-CHANGES/`), the method documents (`requirements/05-METHODS/`) and
 the worklist.
 
-**Declared consequence (D-11).** Links in the published texts that point into those
+**Declared consequence ([D-11](DOCTRINE.md#d-11)).** Links in the published texts that point into those
 unpublished trees do not resolve here. This is stated rather than hidden: an unresolvable
 reference is a known cost of the publication scope, not an error in the text, and the traceability
 it records still holds in the full tree.
@@ -83,11 +83,11 @@ records below are the working documents of the framework.
 ### One record, from page to diagram
 
 Every functional record has the same shape, so a reader who knows one knows them all. The record
-for the shared canvas between pipelines and repositories (`FRQ-BBD`) opens with its parent
+for the shared canvas between pipelines and repositories (`SyRS-BLC-blackboard`) opens with its parent
 requirement, its subject and its siblings, then a seventeen-section index.
 
 <p align="center">
-  <img src="images/FRQ-BBD-1.png" alt="FRQ-BBD record: header table, index of seventeen sections and the interface section" width="860">
+  <img src="images/SyRS-BLC-1.png" alt="SyRS-BLC-blackboard record: header table, index of seventeen sections and the interface section" width="860">
 </p>
 
 ### Structure, behaviour, life cycle
@@ -96,12 +96,12 @@ The same record explains the component three ways: **what it is made of**, **who
 and in what order**, and **which states it can be in and what moves it between them**.
 
 <p align="center">
-  <img src="images/FRQ-BBD-class-diagram.png" alt="Class diagram of GenericBlackboard" width="420">
-  <img src="images/FRQ-BBD-state-machine-diagram.png" alt="State diagram of GenericBlackboard" width="360">
+  <img src="images/SyRS-BLC-class-diagram.png" alt="Class diagram of GenericBlackboard" width="420">
+  <img src="images/SyRS-BLC-state-machine-diagram.png" alt="State diagram of GenericBlackboard" width="360">
 </p>
 
 <p align="center">
-  <img src="images/FRQ-BBD-sequence-diagram.png" alt="Sequence diagram: processor, pipeline, blackboard and repository" width="640">
+  <img src="images/SyRS-BLC-sequence-diagram.png" alt="Sequence diagram: processor, pipeline, blackboard and repository" width="640">
 </p>
 
 The sequence shows the contract in one view: pipelines only write to the canvas; the processor
@@ -114,19 +114,19 @@ Drivers reach external systems through a lazy proxy with a guarded life cycle, s
 swap one backend for another without touching the processing code.
 
 <p align="center">
-  <img src="images/FRQ-DRV-class-diagram.png" alt="Class diagram of GenericDriver and LazyDriverProxy" width="560">
+  <img src="images/SyRS-DRV-class-diagram.png" alt="Class diagram of GenericDriver and LazyDriverProxy" width="560">
 </p>
 
 ### Quality is a register, not an afterthought
 
 Security, observability, performance and organisation rules are written as numbered, individually
-verifiable records (`NFRQ-SEC-01` … `NFRQ-SEC-17`, `NFRQ-OBS-01` … `04`, and more) and are cited
+verifiable records (`NFRQ-SCR-01` … `NFRQ-SCR-17`, `NFRQ-OBS-01` … `04`, and more) and are cited
 by the functional records that must satisfy them. Even the naming of classes has a documented,
 research-based rationale.
 
 <p align="center">
   <img src="images/NFRQ-000-INDEX.png" alt="NFRQ register index" width="460">
-  <img src="images/NFRQ-APX-01.png" alt="NFRQ-APX-01: the scientific basis for facet order in class names" width="560">
+  <img src="images/NFRQ-APN-01.png" alt="NFRQ-APN-01: the scientific basis for facet order in class names" width="560">
 </p>
 
 ### Start reading

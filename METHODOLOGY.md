@@ -2,7 +2,7 @@
 
 ## Svezak I — Temelji
 
-**Verzija:** Draft v0.4 — *prijedlog*; dokumentirana odluka o izmjeni nije donesena (D-03)
+**Verzija:** Draft v0.4 — *prijedlog*; dokumentirana odluka o izmjeni nije donesena ([D-03](DOCTRINE.md#d-03))
 **Zadnja izmjena:** 2026-10-01
 **Nadređeni dokument:** [PHILOSOPHY.md](PHILOSOPHY.md) — filozofija je kišobran, metodologija je iz nje izvedena
 **Pratioci:** [NFR registar](requirements/03-NFRQ/NFRQ-000-INDEX.md), [DOCTRINE.md](DOCTRINE.md), [POSTULATE.md](POSTULATE.md), [dictionary.yaml](dictionary.yaml)
@@ -42,8 +42,8 @@ Odnos slojeva je jednosmjeran: niži ne nadjačava viši. Odstupanje je izvod iz
 Metodologija je alat za odgovor na jasno postavljeno pitanje. Iz toga slijedi šest načela.
 
 1. **Polazi od pitanja.** Mjeri, izlaže ili razrješava nejasnoću, otvoreno pitanje ili informacijsku prazninu. Bez pitanja ostaje procedura.
-2. **Ponovljiva je.** Isti ulaz pod istim uvjetima daje isti rezultat. Postupak je opisan tako da ga čovjek ili stroj može reproducirati i osporiti (oborivost, *falsifiability*). Nalaz vrijedi samo uz trojku: verzija alata + verzija kriterija/registra + verzija platforme (D-10). Bez nje se rezultat ne može ponoviti, samo prepričati.
-3. **Radije promatra nego zadire.** Mjerenje ne mijenja predmet ni ne zaustavlja tok; rezultat putuje s njim kao metapodatak. Razlog je P-10: pokazatelj koji postane cilj upravljanja prestaje mjeriti ono što je mjerio. Zadana uporaba mjere je dijagnostička. Upravljačka uporaba (*gate*) dopuštena je uz izričitu deklaraciju i ograničen opseg (§5.1, V6); nedeklarirani gate pretvara dijagnostiku u metu.
+2. **Ponovljiva je.** Isti ulaz pod istim uvjetima daje isti rezultat. Postupak je opisan tako da ga čovjek ili stroj može reproducirati i osporiti (oborivost, *falsifiability*). Nalaz vrijedi samo uz trojku: verzija alata + verzija kriterija/registra + verzija platforme ([D-10](DOCTRINE.md#d-10)). Bez nje se rezultat ne može ponoviti, samo prepričati.
+3. **Radije promatra nego zadire.** Mjerenje ne mijenja predmet ni ne zaustavlja tok; rezultat putuje s njim kao metapodatak. Razlog je [P-10](POSTULATE.md#p-10): pokazatelj koji postane cilj upravljanja prestaje mjeriti ono što je mjerio. Zadana uporaba mjere je dijagnostička. Upravljačka uporaba (*gate*) dopuštena je uz izričitu deklaraciju i ograničen opseg (§5.1, V6); nedeklarirani gate pretvara dijagnostiku u metu.
 4. **Ne izmišlja toplu vodu.** Priznati standardi preuzimaju se kao pod-metode (Occam, DRY; §7).
 5. **Mjeri i prosuđuje.** Kvaliteta se provjerava brojem (indeks, prag, varijanca) i prosudbom (koja su pravila prekršena, gdje, s kojim neto učinkom). Oba su valjani ishodi ako prilože dokaz vlastite valjanosti (§5.1).
 6. **Ostavlja trag.** Rezultat se veže na pitanje, na standard koji mu je pod-metoda i na načelo koje ga opravdava (§6). Ako hrani doktrinarnu hipotezu, veže se i na nju (§2).
@@ -87,7 +87,7 @@ Informacijska ◄────────┼────────► Programs
 
 | Disciplina | Predmet | Teorijski temelj |
 |---|---|---|
-| Informacijska znanost | ontologija, taksonomija, metapodaci, provenijencija, semantička interoperabilnost, životni ciklus informacije | teorija informacije (P-06), kibernetika (P-05), semiotika (P-08), infološka tradicija (P-07) |
+| Informacijska znanost | ontologija, taksonomija, metapodaci, provenijencija, semantička interoperabilnost, životni ciklus informacije | teorija informacije ([P-06](POSTULATE.md#p-06)), kibernetika ([P-05](POSTULATE.md#p-05)), semiotika ([P-08](POSTULATE.md#p-08)), infološka tradicija ([P-07](POSTULATE.md#p-07)) |
 | Programsko inženjerstvo | arhitektura, životni ciklus, osiguranje kvalitete, testiranje, evolucija, obrasci dizajna | §5 |
 | Računarstvo | algoritmi, složenost, formalni jezici, automati, teorija grafova, optimizacija | §5 |
 
@@ -113,8 +113,8 @@ Posljedice:
 
 - FR i NFR su artefakti razine rješenja. Sljeduju se prema gore do zahtjeva dionika i poslovnih zahtjeva.
 - Poslovno pravilo je zaseban artefakt: izvor i ograničenje zahtjeva. Definicijsko se preslikava u modelsko ograničenje (OCL invarijanta). Bihevioralno nosi deontičku modalnost i provodi se *enforcement* logikom.
-- *Prijedlog:* svako pravilo `BR-<NN>-<nn>` u HLRQ-u deklarira vrstu (definicijsko / bihevioralno) i, za bihevioralno, razinu provođenja. Zatečeni `BR-WFL-01…02`, `BR-PTN-01…06`, `BR-PRC-01`, `BR-DRV-01` to ne nose (§11 t.4).
-- Zahtjev dionika i prijelazni zahtjev nemaju oznaku ni registar. Ulaze uz dokumentiranu izmjenu (D-12); do tada su *prijedlog*.
+- *Prijedlog:* svako pravilo `BR-<NN>-<nn>` u StRS-u deklarira vrstu (definicijsko / bihevioralno) i, za bihevioralno, razinu provođenja. Zatečeni `BR-WRK-01…02`, `BR-PTR-01…06`, `BR-PRC-01`, `BR-DRV-01` to ne nose (§11 t.4).
+- Zahtjev dionika i prijelazni zahtjev nemaju oznaku ni registar. Ulaze uz dokumentiranu izmjenu ([D-12](DOCTRINE.md#d-12)); do tada su *prijedlog*.
 
 ---
 
@@ -124,10 +124,10 @@ Arhitektonske odluke moraju biti sljedive do priznatog inženjerskog znanja, ne 
 
 | Područje | Izvori |
 |---|---|
-| Teorija dizajna | SOLID, GRASP, GoF, Information Hiding (Parnas [1]), Separation of Concerns (Dijkstra), Law of Demeter, Stable Dependencies / Stable Abstractions |
-| Inženjerska načela | KISS, DRY, YAGNI, Principle of Least Astonishment, Open–Closed [69], Liskov Substitution [67][68], Occamova britva |
-| Teorija sustava | Simon (P-12), Conway, Gall, Lehman, Brooks (P-13); kibernetika: povratna petlja, regulacija, zakon nužne raznolikosti (P-05); sinteza naspram analize (P-03, P-04) |
-| Teorija mjerenja | reprezentacijski uvjet i tipovi skala (P-09) [15][16]; aksiomatsko vrednovanje metrika [17][18]; valjanost i vanjski kriterij [19]; erozija mjere pod upravljanjem (P-10); višekriterijska usporedba umjesto nelegalnog skalara [35]. Nosive tvrdnje s podrijetlom vodi [POSTULATE.md](POSTULATE.md) |
+| Teorija dizajna | SOLID, GRASP, GoF, Information Hiding (Parnas [[1](LITERATURE.md#ref-1)]), Separation of Concerns (Dijkstra), Law of Demeter, Stable Dependencies / Stable Abstractions |
+| Inženjerska načela | KISS, DRY, YAGNI, Principle of Least Astonishment, Open–Closed [[69](LITERATURE.md#ref-69)], Liskov Substitution [67][68], Occamova britva |
+| Teorija sustava | Simon ([P-12](POSTULATE.md#p-12)), Conway, Gall, Lehman, Brooks ([P-13](POSTULATE.md#p-13)); kibernetika: povratna petlja, regulacija, zakon nužne raznolikosti (P-05); sinteza naspram analize ([P-03](POSTULATE.md#p-03), [P-04](POSTULATE.md#p-04)) |
+| Teorija mjerenja | reprezentacijski uvjet i tipovi skala ([P-09](POSTULATE.md#p-09)) [15][16]; aksiomatsko vrednovanje metrika [17][18]; valjanost i vanjski kriterij [[19](LITERATURE.md#ref-19)]; erozija mjere pod upravljanjem (P-10); višekriterijska usporedba umjesto nelegalnog skalara [[35](LITERATURE.md#ref-35)]. Nosive tvrdnje s podrijetlom vodi [POSTULATE.md](POSTULATE.md) |
 | Matematičko rezoniranje | od više valjanih rješenja prednost ima najjednostavnije koje zadovoljava zahtjeve; numerička stabilnost i složenost algoritma su prvorazredni kriteriji (Welford; §11 t.2) |
 
 ### 5.1 Valjanost mjere kao opći zahtjev
@@ -141,11 +141,11 @@ Nijedna mjera ne ulazi u metodologiju bez statusa po protokolu V1–V6. Protokol
 | **V3 Sadržajna pokrivenost** | Mjere li pravila ono što tvrde? | Preslikavanje pravilo → dimenzija; dimenzija bez pravila iskazuje se kao *nemjerena*, nikad kao savršena. |
 | **V4 Prediktivna valjanost** | Znači li broj išta izvan sebe? | Povezanost s vanjskim kriterijem na uzorku različitom od kalibracijskog [19]. |
 | **V5 Osjetljivost i stabilnost** | Ovisi li zaključak o proizvoljnom? | Perturbacija parametara; gdje poredak ovisi o njima, odluka se vraća na vektor i Pareto analizu [35]. |
-| **V6 Erozija pod upravljanjem** | Što kad mjera postane cilj? | Deklarirana granica: indeks je dijagnostički, gate stoji na binarnim pravilima [22]. |
+| **V6 Erozija pod upravljanjem** | Što kad mjera postane cilj? | Deklarirana granica: indeks je dijagnostički, gate stoji na binarnim pravilima [[22](LITERATURE.md#ref-22)]. |
 
 Minimum za svaku mjeru: V2, V3 i V6. V1, V4 i V5 smiju ostati otvoreni, ali tada je mjera *konformna* (relativna na deklarirani kriterij), ne deskriptivna tvrdnja o svijetu. To je operacionalizacija doktrine: „osobna preferencija nije opravdanje" vrijedi i za formule.
 
-Isto vrijedi za popise tema (PESTLE, SWOT; §6): oni daju pokrivenost (V3), ne vrijednost. Tema bez posljedice za zahtjev iskazuje se kao *nije primjenjivo* (D-11), ne prešućuje.
+Isto vrijedi za popise tema (PESTLE, SWOT; §6): oni daju pokrivenost (V3), ne vrijednost. Tema bez posljedice za zahtjev iskazuje se kao *nije primjenjivo* ([D-11](DOCTRINE.md#d-11)), ne prešućuje.
 
 ---
 
@@ -184,9 +184,9 @@ Znanstvena teorija + Inženjersko načelo + Poslovni cilj
 
 **Ulazni sloj** (*prijedlog*). Svaki čimbenik strateške analize zapisuje se kao propozicija: „ako vrijedi P, sustav mora Q". Propozicija postaje ograničenje, poslovno pravilo ili NFR. Čimbenik bez posljedice za zahtjev izostavlja se; nerelevantan se označava *nije primjenjivo* (D-11). Prijelazni zahtjevi (§4) nastaju iz analize jaza.
 
-**Smjer.** Primarni zahtjevi prethode odlukama i ograničavaju ih. Izvedeni zahtjevi nastaju iz odluka: zero-trust → `NFRQ-SEC-01/02/03`; clean-core → `NFRQ-ORG-01`. Primjer primarnog: `NFRQ-ORG-02` prethodio je odluci o korijenu i bio joj kriterij. Rečenica iz `PHILOSOPHY.md` („arhitektonske odluke generiraju mjerljive NFR-ove") odnosi se na izvedene.
+**Smjer.** Primarni zahtjevi prethode odlukama i ograničavaju ih. Izvedeni zahtjevi nastaju iz odluka: zero-trust → `NFRQ-SCR-01/02/03`; clean-core → `NFRQ-ORG-01`. Primjer primarnog: `NFRQ-ORG-02` prethodio je odluci o korijenu i bio joj kriterij. Rečenica iz `PHILOSOPHY.md` („arhitektonske odluke generiraju mjerljive NFR-ove") odnosi se na izvedene.
 
-**Oblik.** Sljedivost je graf, ne lanac. Čvorovi su načela, ciljevi, dionici, pravila, zahtjevi, odluke, artefakti i mjerenja. Bridovi su imenovane relacije: `derivedFrom`, `realises`, `constrains`, `generates`, `supersedes`. Dokumentacija zahtjeva i registri su serijalizacije čvorova. Vizualni prikaz grafa je legitiman primarni pogled (§7.1), ne izvor istine (D-13).
+**Oblik.** Sljedivost je graf, ne lanac. Čvorovi su načela, ciljevi, dionici, pravila, zahtjevi, odluke, artefakti i mjerenja. Bridovi su imenovane relacije: `derivedFrom`, `realises`, `constrains`, `generates`, `supersedes`. Dokumentacija zahtjeva i registri su serijalizacije čvorova. Vizualni prikaz grafa je legitiman primarni pogled (§7.1), ne izvor istine ([D-13](DOCTRINE.md#d-13)).
 
 ---
 
@@ -208,7 +208,7 @@ Metodologija dopunjuje standarde, ne zamjenjuje ih (§1 t.4). Usvajanje standard
 | OMG OCL | formalna ograničenja na razini modela | modelska ograničenja |
 | NIST OSCAL | strojno čitljive sigurnosne kontrole | compliance |
 | W3C RDF / OWL / PROV-O | ontologija, semantika, provenijencija | informacijski sloj; graf sljedivosti (§6) |
-| SPDX / CycloneDX *(budući)* | software bill of materials | supply-chain (`NFRQ-SEC-03`) |
+| SPDX / CycloneDX *(budući)* | software bill of materials | supply-chain (`NFRQ-SCR-03`) |
 
 
 **Pojasnjenje za SPDX/CycloneDX**
@@ -223,7 +223,7 @@ Metodologija dopunjuje standarde, ne zamjenjuje ih (§1 t.4). Usvajanje standard
 
 ### 7.1 Evidencija odluka kao funkcija; dokumentacija kao zamjenjiva pod-metoda
 
-Doktrina zahtijeva **funkciju**: svaka značajna odluka evidentira se s kontekstom, alternativama, cijenom i svjedočanstvom, provjerljivo i opozivo. **Format evidencije je metoda, ne doktrina.** Trenutna pod-metoda je dokumentacija zahtjeva (HLRQ, FRQ, NFRQ), koja kontekst, odluku, cijenu i svjedočanstvo nosi u istom zapisu (genealogija [44][45][46]). Zatečena je, funkcionalna i zamjenjiva istom prosudbom kao svaki standard iz §7.
+Doktrina zahtijeva **funkciju**: svaka značajna odluka evidentira se s kontekstom, alternativama, cijenom i svjedočanstvom, provjerljivo i opozivo. **Format evidencije je metoda, ne doktrina.** Trenutna pod-metoda je dokumentacija zahtjeva (StRS, SyRS, NFRQ), koja kontekst, odluku, cijenu i svjedočanstvo nosi u istom zapisu (genealogija [44][45][46]). Zatečena je, funkcionalna i zamjenjiva istom prosudbom kao svaki standard iz §7.
 
 Kriteriji za nasljednika (funkcijski, ne formatski):
 
@@ -233,7 +233,7 @@ Kriteriji za nasljednika (funkcijski, ne formatski):
 - vezanje na strojno provjeriv kriterij (Registar);
 - revizibilna povijest, uključujući povučene odluke.
 
-Kandidat-nasljednik: **odluka kao čvor grafa sljedivosti** (§6) s relacijama omogućuje / sprječava / nadomješta [45], serijaliziran strojno čitljivo (RDF / PROV-O iz §7). Zapis zahtjeva tada postaje generirani pogled na čvor, ne izvor istine. Prijelaz, kad za njega bude dokaza, ide kroz dokumentiranu reviziju ove sekcije.
+Kandidat-nasljednik: **odluka kao čvor grafa sljedivosti** (§6) s relacijama omogućuje / sprječava / nadomješta [[45](LITERATURE.md#ref-45)], serijaliziran strojno čitljivo (RDF / PROV-O iz §7). Zapis zahtjeva tada postaje generirani pogled na čvor, ne izvor istine. Prijelaz, kad za njega bude dokaza, ide kroz dokumentiranu reviziju ove sekcije.
 
 ---
 
@@ -257,7 +257,7 @@ Kritičko razmišljanje vrijedi jednako za čovjeka i AI-agenta: nijedna odluka 
 
 ## 10. Nefunkcionalni zahtjevi i konformnost
 
-Zahtjevi su primarni (iz ciljeva i načela) ili izvedeni (iz odluka). Svaki NFR usidren je na karakteristiku iz ISO/IEC 25010, nosi oznaku `NFRQ-<KAT>-<NN>` (prijedlog), kriterije prihvaćanja, metodu verifikacije i sljedivost prema gore (§6). Registar: [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md), zapis po zahtjevu, uz zajedničke definicije (`NFRQ-DEF-01`), povelju `[M]` (`NFRQ-DEF-02`) i Dodatak A o redoslijedu faceta (`NFRQ-APX-01`). Opseg kategorija vodi indeks registra, ne ovaj tekst (D-13).
+Zahtjevi su primarni (iz ciljeva i načela) ili izvedeni (iz odluka). Svaki NFR usidren je na karakteristiku iz ISO/IEC 25010, nosi oznaku `NFRQ-<KAT>-<NN>` (prijedlog), kriterije prihvaćanja, metodu verifikacije i sljedivost prema gore (§6). Registar: [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md), zapis po zahtjevu, uz zajedničke definicije (`NFRQ-DFN-01`), povelju `[M]` (`NFRQ-DFN-02`) i Dodatak A o redoslijedu faceta (`NFRQ-APN-01`). Opseg kategorija vodi indeks registra, ne ovaj tekst (D-13).
 
 Verifikacija konformnosti je **statička provjera nad izvornim kodom**, po anatomiji iz §2:
 
@@ -276,12 +276,12 @@ Alat, prekidači, opseg i ključevi registra: `tools/README.md`. Obveze koje ver
 1. **Svesci.** Zapisan je samo Svezak I. Postoje li ili su planirani drugi svesci, nije zapisano.
 2. **Welford.** Ranije upućivanje „§3" bilo je krivo (§3 opisuje discipline). Ispravno odredište nije utvrđeno; kandidat je dokument DQI metode (`requirements/05-METHODS/dqi.md`), neprovjereno.
 3. **Rječnik.** Pratioci navode `dictionary.yaml`; vještina `wattleflow-docs` §7 navodi `tools/dictionary.json` (vlasnik `wattleflow-tools-wem`). Odnos dviju datoteka nije zapisan.
-4. **Ontologija zahtjeva (§4).** Zahtjev dionika, prijelazni zahtjev i vrsta poslovnog pravila su *prijedlog* i čekaju dokumentirana izmjena (D-03, D-12). Zatečeni `BR-WFL-01…02`, `BR-PTN-01…06`, `BR-PRC-01`, `BR-DRV-01` (`HLRQ-01` §5) ne deklariraju vrstu ni razinu provođenja.
+4. **Ontologija zahtjeva (§4).** Zahtjev dionika, prijelazni zahtjev i vrsta poslovnog pravila su *prijedlog* i čekaju dokumentirana izmjena (D-03, D-12). Zatečeni `BR-WRK-01…02`, `BR-PTR-01…06`, `BR-PRC-01`, `BR-DRV-01` ne deklariraju vrstu ni razinu provođenja.
 5. **Imenovanje (§8).** Je li prefiks `Generic` domenska kvalifikacija ili gola imenica s prefiksom, nije odlučeno. Ovisi o `NFRQ-ORG-02` i dokumentiranoj odluci.
 6. **Akronimi.** pending (§8).
-7. **Ulazni sloj sljedivosti (§6) i BABOK (§7).** Prijedlog; čeka dokumentiranu izmjenu (D-12). PMESII nije uključen: prikladniji je za analizu sustava i prijetnji (`NFRQ-SEC-*`) nego za poslovno okruženje.
-8. **Numerirane reference.** Oznake [1], [15]–[19], [22], [35], [44]–[46], [67]–[69] nemaju popis literature u ovom dokumentu. Mjesto razrješenja nije navedeno.
-9. **Usklađenost s mlađim odlukama.** Odluke su referirane po vještini `wattleflow-docs` i `HLRQ-01-GENERIC-LAYER`, ne po zasebnim zapisima. Neprovjereno.
+7. **Ulazni sloj sljedivosti (§6) i BABOK (§7).** Prijedlog; čeka dokumentiranu izmjenu (D-12). PMESII nije uključen: prikladniji je za analizu sustava i prijetnji (`NFRQ-SCR-*`) nego za poslovno okruženje.
+8. **Numerirane reference.** Oznake [1], [[15](LITERATURE.md#ref-15)]–[19], [22], [35], [[44](LITERATURE.md#ref-44)]–[[46](LITERATURE.md#ref-46)], [[67](LITERATURE.md#ref-67)]–[69] nemaju popis literature u ovom dokumentu. Mjesto razrješenja nije navedeno.
+9. **Usklađenost s mlađim odlukama.** Odluke su referirane po vještini `wattleflow-docs`, ne po zasebnim zapisima. Neprovjereno.
 
 ---
 
@@ -293,4 +293,4 @@ Metodologija je most između filozofije i koda. Filozofija postavlja pitanje i m
 
 ## Bilješka o sintezi
 
-Trag racionalizacije (P-14) vodi tablica *Povijest izmjena*; pojedinačne intervencije nose git i dokumentacija. Prikaz koji se raziđe s izvorom je nalaz, ne povijest (D-13).
+Trag racionalizacije ([P-14](POSTULATE.md#p-14)) vodi tablica *Povijest izmjena*; pojedinačne intervencije nose git i dokumentacija. Prikaz koji se raziđe s izvorom je nalaz, ne povijest (D-13).

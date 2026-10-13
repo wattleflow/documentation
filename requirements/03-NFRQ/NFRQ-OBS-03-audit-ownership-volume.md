@@ -7,13 +7,13 @@
 | **Version** | v0.0.5 |
 | **Quality (25010)** | Maintainability (analysability) · Performance efficiency (resource utilisation) |
 | **Enforcement** | `wem_lint` — `audit_info_placement` (`warning`); c.5 carries `[M]` |
-| **`[M]` charter** | [`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md) |
+| **`[M]` charter** | [`NFRQ-DFN-02`](NFRQ-DFN-02-measurement-charter.md) |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
 
 > **The linter's criterion lags this text.** The `audit_info_placement` and
 > `audit_event_vocabulary` rules still measure against and report the
 > shape as a finding. Until tool and criterion are aligned, those findings **are not
-> violations**; declared blind spot (D-11), not coverage. No conformance snapshot exists for
+> violations**; declared blind spot ([D-11](../../DOCTRINE.md#d-11)), not coverage. No conformance snapshot exists for
 > `OBS-01/02/03` until then.
 
 ## 1. Statement
@@ -41,7 +41,7 @@ Two kinds of record follow:
 > not the pipeline — owns the work over a document. Consequence for the **pipeline layer only**:
 > its entry record drops to `DEBUG`, so a pipeline no longer appears in the `INFO` stream. Every
 > other chain step keeps the regime below. Until the proposal is accepted, this register carries
-> **both** readings and marks which is which (D-05).
+> **both** readings and marks which is which ([D-05](../../DOCTRINE.md#d-05)).
 
 **The order is the call order.** The chain's entry records line up in the order the layers are
 called: `Pipeline.transform → Blackboard.write → Repository.write → Strategy.write →
@@ -102,7 +102,7 @@ abstract, or delegates), so there the record sits **per class**.
 | Criterion | Method |
 |---|---|
 | 1–3 | `wem_lint` — `audit_info_placement`; the list of step classes, unit owners and exceptions is criterion data (`tools/dictionary.json → audit`). **The rule still measures against**, so it is aligned with neither nor — see the banner. |
-| 5 | measurement over a run (records / units); **diagnostic**. Promotion to a gate requires a documented change with a validation dossier ([`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md) item 5). |
+| 5 | measurement over a run (records / units); **diagnostic**. Promotion to a gate requires a documented change with a validation dossier ([`NFRQ-DFN-02`](NFRQ-DFN-02-measurement-charter.md) item 5). |
 | 6 | **not automated** — telling a "decision" from a "pass-through" requires judgement; declared blind spot |
 | 4, 7, 8 | review |
 
@@ -111,7 +111,7 @@ abstract, or delegates), so there the record sits **per class**.
 The chain measured for a single document (2026-08-23): pipeline + repository + strategy + driver
 produce on the order of **ten** `DEBUG` records per document. At 10,000 documents that is on the
 order of 10⁵ records — which is why `DEBUG` is not free. Exact figures are not transcribed here
-(D-13); they are re-measured.
+([D-13](../../DOCTRINE.md#d-13)); they are re-measured.
 
 The canonical example of c.4: `WriteAttachmentDocument.info(TaskCompleted)` fires once per
 attachment, while the same information already exists aggregated in `WriteMailBundle`
@@ -131,9 +131,9 @@ witness records five `INFO` records per document; the code does not produce them
 | driver (`DriverLocalStorage`) | entry `INFO`, per class | present |
 
 Only the first row is a consequence of. The other three are **pre-existing
-divergence** between and the code — a finding under D-02, declared here rather than
+divergence** between and the code — a finding under [D-02](../../DOCTRINE.md#d-02), declared here rather than
 silently written out of the text (D-11). Resolution — implement t.7, or amend to
-admit that the chain reports partially — requires a decision (D-03) and is carried in
+admit that the chain reports partially — requires a decision ([D-03](../../DOCTRINE.md#d-03)) and is carried in
 `workflow/TODO.md`.
 
 Introducing a template method in `GenericBlackboard.write` / `GenericDriver.write` changes the

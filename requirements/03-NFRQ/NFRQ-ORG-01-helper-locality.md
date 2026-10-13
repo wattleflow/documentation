@@ -7,7 +7,7 @@
 | **Version** | v0.0.5 |
 | **Quality (25010)** | Maintainability — modularity, reusability, analysability |
 | **Enforcement** | `wem_lint` — `domain_acyclicity` (**error**), `helper_fan_in` (`info`, `report` per distribution) |
-| **Definitions** | [`NFRQ-DEF-01`](NFRQ-DEF-01-common-definitions.md) |
+| **Definitions** | [`NFRQ-DFN-01`](NFRQ-DFN-01-common-definitions.md) |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
 
 ## 1. Statement
@@ -41,7 +41,7 @@ Import-graph analysis (`wem_lint`, later a CI gate).
 |---|---|---|---|
 | 3 | `domain_acyclicity` | **error** | build fails |
 | 1 | `helper_fan_in` | `info` | report shape comes from the distribution's `rules[].report` |
-| 2, 4 | — | — | **not automated** — declared blind spot (D-11), not coverage |
+| 2, 4 | — | — | **not automated** — declared blind spot ([D-11](../../DOCTRINE.md#d-11)), not coverage |
 
 ## 4. Fan-in is a diagnostic, not a verdict
 
@@ -76,7 +76,7 @@ The consumer in criterion 1 is counted over **packages**, not sub-packages: a he
 ## 6. Traceability
 
 Extended across the distribution boundary by
-[`NFRQ-SEC-03`](NFRQ-SEC-03-supply-chain-locality.md). Placement of cross-cutting capabilities:
+[`NFRQ-SCR-03`](NFRQ-SCR-03-supply-chain-locality.md). Placement of cross-cutting capabilities:
 [`NFRQ-ORG-04`](NFRQ-ORG-04-crosscutting-capability.md). Module and class names:
 [`NFRQ-ORG-02`](NFRQ-ORG-02-class-nomenclature.md).
 

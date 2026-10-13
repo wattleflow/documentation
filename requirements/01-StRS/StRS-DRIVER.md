@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/driver.py`: `GenericDriver`, `DriverState`, `DriverAction`, `DriverMetadata` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-PROCESSOR`](StRS-PROCESSOR.md), [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md) — korisnici podataka do kojih driver omogućuje pristup · [`StRS-MANAGER`](StRS-MANAGER.md) — upravitelji drivera i konekcija · [`StRS-FACTORY`](StRS-FACTORY.md) — Workflow Factory predaje driver komponentama · [`StRS-STATE-MACHINE`](StRS-STATE-MACHINE.md) — stroj stanja · [`StRS-REPOSITORY`](StRS-REPOSITORY.md) — repozitorij čije strategije koriste driver · [`StRS-CONNECTION`](StRS-CONNECTION.md) — konekcija preko koje driver radi · [`StRS-STRATEGY`](StRS-STRATEGY.md) — strategije koje koriste driver · [`StRS-WORKFLOW`](StRS-WORKFLOW.md) — workflow koji traži izvješće o driverima |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5, §2.6) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5, §2.6) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 
@@ -118,7 +118,7 @@ Driver --> Resource : reads / writes
 | **Preduvjet** | Konfiguracija navodi driver, njegove metapodatke i konekcije |
 | **Glavni tijek** | 1. Workflow Factory iz konfiguracije čita driver. 2. Stvara ga s metapodacima (naziv, verzija, protokol, sposobnosti). 3. Registrira njegove konekcije. |
 | **Alternativni tok** | Metapodaci nisu ispravni (nepoznata, ponovljena ili neispravno zadana sposobnost): greška, driver se ne stvara. |
-| **Ishod** | Driver stvoren, u stanju PENDING, registriran kod Driver Managera; Workflow Factory ga predaje komponentama koje ga navode ([`BR-FAC-08`](StRS-FACTORY.md#3-poslovna-pravila)) |
+| **Ishod** | Driver stvoren, u stanju PENDING, registriran kod Driver Managera; Workflow Factory ga predaje komponentama koje ga navode ([`BR-FCT-08`](StRS-FACTORY.md#3-poslovna-pravila)) |
 
 #### UC2 — Spoji driver
 
@@ -388,5 +388,5 @@ Matrica se popunjava kad se odrede djeca (§6).
 | v0.0.5 | 2026-10-11 | Prema kodu Workflow Factoryja: driver komponentama (repozitorij, procesor, izlaz monitora) dohvaća Workflow Factory od Driver Managera, a strategije ga dobivaju od repozitorija (BR-DRV-02, UC1, UC3, dionici, kontekst, tok). Uklonjena zaostala rečenica o samostalnom spajanju. *Otvoreno*: pitanje o putu do drivera zamijenjeno pitanjem tko spaja drivere. Poveznice na StRS-FACTORY i StRS-STATE-MACHINE. |
 | v0.0.4 | 2026-10-11 | Odgođeno stvaranje drivera (`LazyDriverProxy`) izvan opsega: služi specijalizacijama u paketu *blackwattle*. Uklonjeno pravilo BR-DRV-05 (oznaka se ne koristi ponovno); BR-DRV-04 kaže da driver spaja Driver Manager; UC2, UC3, UC5, dijagram korisničkih slučajeva i dijagram toka usklađeni; uklonjene dvije stavke iz *Otvoreno*. |
 | v0.0.3 | 2026-10-11 | Samostalno spajanje pri čitanju ili pisanju vrijedi samo za odgođeni driver (BR-DRV-04, UC3). *Otvoreno*: dodana pitanja o tome kako strategije dolaze do drivera i o odgođenom driveru u repozitoriju; dodane poveznice na StRS-REPOSITORY. |
-| v0.0.2 | 2026-10-11 | Usklađeno sa StRS-MANAGER: *veza* je posvuda *konekcija*; driver se dohvaća samo po imenu (ne i po tipu), i u narativu; zamjenu konekcije pokreće pokretač zamjene, a izvodi Connection Manager (UC5, dionici, dijagrami). Uklonjena stavka o sukobu prefiksa s obrisanim `HLRQ-01`. Dodane poveznice na StRS-MANAGER i StRS-CONNECTION. |
+| v0.0.2 | 2026-10-11 | Usklađeno sa StRS-MANAGER: *veza* je posvuda *konekcija*; driver se dohvaća samo po imenu (ne i po tipu), i u narativu; zamjenu konekcije pokreće pokretač zamjene, a izvodi Connection Manager (UC5, dionici, dijagrami). Dodane poveznice na StRS-MANAGER i StRS-CONNECTION. |
 | v0.0.1 | 2026-10-10 | Prvi zapis, izveden iz koda `concrete/driver.py` i autorovih odgovora na ključna pitanja. |

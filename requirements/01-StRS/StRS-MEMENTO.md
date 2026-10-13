@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/memento.py`: `GenericMemento` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-PROCESSOR`](StRS-PROCESSOR.md) — bilježi i vraća snimku kao kontrolnu točku · [`StRS-WORKFLOW`](StRS-WORKFLOW.md) — bilježi i vraća snimku stanja svih procesora · [`StRS-STATE-MACHINE`](StRS-STATE-MACHINE.md) — stanje koje snimka nosi · [`StRS-FACTORY`](StRS-FACTORY.md) — uključuje kontrolne točke · [`StRS-MEMENTO-STORE`](StRS-MEMENTO-STORE.md) — čuva snimke između pokretanja |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 
@@ -93,7 +93,7 @@ Store --> Originator : latest Memento
 | **Okidač** | Vlasnik želi sačuvati svoje stanje | Vlasnik se vraća iz snimke, ili je pohrana treba zapisati | Komponenta treba moći sačuvati i vratiti stanje, ili njezino snimanje treba izmjenu |
 | **Preduvjet** | — | Snimka postoji (UC1) | — |
 | **Glavni tijek** | 1. Vlasnik predaje imenovane vrijednosti. 2. Snimka prepisuje popis vrijednosti i dalje ga ne mijenja. 3. Vlasnik, po potrebi, snimku predaje pohrani. | 1. Čitatelj traži vrijednost po imenu, glavno stanje ili cijeli popis vrijednosti, ili pita postoji li vrijednost. 2. Snimka ih izdaje. | 1. Programer određuje koje vrijednosti vlasnik snima i kako ih provjerava pri povratku. 2. Vlasnik postaje sposoban sačuvati i vratiti stanje. |
-| **Alternativni tok** | — | A1. Tražena vrijednost ne postoji: greška. A2. Glavnog stanja nema: izdaje se prazan odgovor, bez greške. A3. Ime vrijednosti poklapa se sa svojstvom same snimke (npr. ime ili postavke bilježenja): čitanjem po imenu dobiva se svojstvo snimke, pa se takva vrijednost čita iz cijelog popisa (BR-MEM-09). | — |
+| **Alternativni tok** | — | A1. Tražena vrijednost ne postoji: greška. A2. Glavnog stanja nema: izdaje se prazan odgovor, bez greške. A3. Ime vrijednosti poklapa se sa svojstvom same snimke (npr. ime ili postavke bilježenja): čitanjem po imenu dobiva se svojstvo snimke, pa se takva vrijednost čita iz cijelog popisa (BR-MMT-09). | — |
 | **Ishod** | Snimka s vrijednostima koje se više ne mijenjaju | Čitatelj ima tražene vrijednosti; snimka je nepromijenjena | Vlasnik koji može sačuvati i vratiti stanje |
 
 ```plantuml
@@ -174,15 +174,15 @@ Snimka ne bilježi događaje. Prikaz snimke navodi samo imena vrijednosti.
 
 | oznaka | pravilo |
 |---|---|
-| **BR-MEM-01** | Snimka je nepromjenjiva: nakon stvaranja njezin se popis vrijednosti ne mijenja. |
-| **BR-MEM-02** | Snimka nosi proizvoljan skup imenovanih vrijednosti i čuva ih kakve su primljene; ako je vrijednost promjenjiva, vlasnik odgovara za njezinu cjelovitost. |
-| **BR-MEM-03** | Vrijednost pod imenom „state" je glavno stanje snimke; kad je nema, glavno stanje je prazno, a ne greška. |
-| **BR-MEM-04** | Tražena vrijednost kojoj ime snimka nema je greška; snimka je ne zamjenjuje praznom vrijednošću. |
-| **BR-MEM-05** | Prikaz snimke navodi samo imena vrijednosti, nikad same vrijednosti, jer mogu biti osjetljive. |
-| **BR-MEM-06** | Nijedno ime vrijednosti nije rezervirano: i ime koje se inače koristi za podešavanje bilježenja ostaje u cijelom popisu snimke. |
-| **BR-MEM-07** | Snimka ne zna kako se trajno čuva; to radi pohrana snimki. |
-| **BR-MEM-08** | Vlasnik sam određuje što stavlja u snimku i provjerava je pri povratku. |
-| **BR-MEM-09** | Vrijednost čije se ime poklapa sa svojstvom same snimke (npr. ime ili postavke bilježenja) pouzdano se čita samo iz cijelog popisa; čitanjem po imenu dobiva se svojstvo snimke. |
+| **BR-MMT-01** | Snimka je nepromjenjiva: nakon stvaranja njezin se popis vrijednosti ne mijenja. |
+| **BR-MMT-02** | Snimka nosi proizvoljan skup imenovanih vrijednosti i čuva ih kakve su primljene; ako je vrijednost promjenjiva, vlasnik odgovara za njezinu cjelovitost. |
+| **BR-MMT-03** | Vrijednost pod imenom „state" je glavno stanje snimke; kad je nema, glavno stanje je prazno, a ne greška. |
+| **BR-MMT-04** | Tražena vrijednost kojoj ime snimka nema je greška; snimka je ne zamjenjuje praznom vrijednošću. |
+| **BR-MMT-05** | Prikaz snimke navodi samo imena vrijednosti, nikad same vrijednosti, jer mogu biti osjetljive. |
+| **BR-MMT-06** | Nijedno ime vrijednosti nije rezervirano: i ime koje se inače koristi za podešavanje bilježenja ostaje u cijelom popisu snimke. |
+| **BR-MMT-07** | Snimka ne zna kako se trajno čuva; to radi pohrana snimki. |
+| **BR-MMT-08** | Vlasnik sam određuje što stavlja u snimku i provjerava je pri povratku. |
+| **BR-MMT-09** | Vrijednost čije se ime poklapa sa svojstvom same snimke (npr. ime ili postavke bilježenja) pouzdano se čita samo iz cijelog popisa; čitanjem po imenu dobiva se svojstvo snimke. |
 
 ## 4. Nefunkcionalni zahtjevi
 
@@ -190,10 +190,10 @@ Kakvoće proizlaze iz narativa i koda; osim ondje gdje je poveznica navedena, jo
 
 | kakvoća | što znači za snimku |
 |---|---|
-| nepromjenjivost | snimka se ne može nehotice promijeniti nakon stvaranja (BR-MEM-01) |
-| povjerljivost | prikaz snimke ne otkriva vrijednosti (BR-MEM-05; [`NFRQ-SEC-06`](../03-NFRQ/NFRQ-SEC-06-audit-confidentiality.md)) |
-| općenitost | isti oblik snimke služi procesoru i workflowu (BR-MEM-02) |
-| jednostavnost | snimka ne zna za pohranu ni povrat, pa se lako koristi (BR-MEM-07) |
+| nepromjenjivost | snimka se ne može nehotice promijeniti nakon stvaranja (BR-MMT-01) |
+| povjerljivost | prikaz snimke ne otkriva vrijednosti (BR-MMT-05; [`NFRQ-SCR-06`](../03-NFRQ/NFRQ-SCR-06-audit-confidentiality.md)) |
+| općenitost | isti oblik snimke služi procesoru i workflowu (BR-MMT-02) |
+| jednostavnost | snimka ne zna za pohranu ni povrat, pa se lako koristi (BR-MMT-07) |
 
 ## 5. Verifikacija
 
@@ -210,7 +210,7 @@ Matrica se popunjava kad se odrede djeca (§6).
 1. Djeca ovog zapisa (SyRS) nisu određena. Oznake `BR-MEM-*` i naziv sloja u naslovima dijagrama („Checkpointing") su prijedlog.
 2. Odlomak *Problem* u §2.1 je prijedlog autora zapisa i treba ga potvrditi.
 3. Odnos snimke toka ([`StRS-WORKFLOW`](StRS-WORKFLOW.md), UC3 i UC4) i kontrolne točke procesora ([`StRS-PROCESSOR`](StRS-PROCESSOR.md), UC4) nije određen: oba koriste istu snimku, ali nije jasno čemu služi stanje toka, kad za nastavak koristi kontrolna točka. Ista stavka otvorena je u `StRS-WORKFLOW`.
-4. **Imena koja se poklapaju sa svojstvima snimke.** Vrijednost s imenom kao što su ime ili postavke bilježenja čuva se, ali se ne može čitati po imenu (BR-MEM-09), a postavke bilježenja usput podešavaju i samu snimku. Treba odlučiti jesu li takva imena dopuštena ili ih vlasnici trebaju izbjegavati.
+4. **Imena koja se poklapaju sa svojstvima snimke.** Vrijednost s imenom kao što su ime ili postavke bilježenja čuva se, ali se ne može čitati po imenu (BR-MMT-09), a postavke bilježenja usput podešavaju i samu snimku. Treba odlučiti jesu li takva imena dopuštena ili ih vlasnici trebaju izbjegavati.
 5. Kakvoće iz §4 (osim povjerljivosti) treba povezati s postojećim NFRQ zapisima ili otvoriti nove.
 
 ## 7. Reference
@@ -223,7 +223,7 @@ Matrica se popunjava kad se odrede djeca (§6).
 | [`StRS-STATE-MACHINE`](StRS-STATE-MACHINE.md) | stroj stanja čije stanje snimka nosi |
 | [`StRS-FACTORY`](StRS-FACTORY.md) | Workflow Factory, koji uključuje kontrolne točke |
 | [`StRS-MEMENTO-STORE`](StRS-MEMENTO-STORE.md) | pohrana snimki |
-| [`NFRQ-SEC-06`](../03-NFRQ/NFRQ-SEC-06-audit-confidentiality.md) | povjerljivost zapisa |
+| [`NFRQ-SCR-06`](../03-NFRQ/NFRQ-SCR-06-audit-confidentiality.md) | povjerljivost zapisa |
 | `concrete/memento.py` | modul, predmet zapisa |
 
 ## Povijest promjena
@@ -232,5 +232,5 @@ Matrica se popunjava kad se odrede djeca (§6).
 |---|---|---|
 | v0.0.4 | 2026-10-11 | Uklonjene poveznice na prethodni zapis iste komponente i pripadna stavka iz *Otvoreno*: zapis ga zamjenjuje, pa upućuje samo na važeće dokumente. |
 | v0.0.3 | 2026-10-11 | Pohrana snimki opisana je u StRS-MEMENTO-STORE: poveznice u opsegu, pojmovima i referencama; stavka o pohrani uklonjena iz *Otvoreno*. |
-| v0.0.2 | 2026-10-11 | Prema kodu: vrijednost čije se ime poklapa sa svojstvom snimke čita se samo iz cijelog popisa (novo pravilo BR-MEM-09, UC2 A3, BR-MEM-06 preciziran); dodana provjera postoji li vrijednost (UC2, opseg); pojam *cijeli popis*. Poveznica na StRS-FACTORY. *Otvoreno*: pitanje o imenima koja se poklapaju sa svojstvima snimke. |
+| v0.0.2 | 2026-10-11 | Prema kodu: vrijednost čije se ime poklapa sa svojstvom snimke čita se samo iz cijelog popisa (novo pravilo BR-MMT-09, UC2 A3, BR-MMT-06 preciziran); dodana provjera postoji li vrijednost (UC2, opseg); pojam *cijeli popis*. Poveznica na StRS-FACTORY. *Otvoreno*: pitanje o imenima koja se poklapaju sa svojstvima snimke. |
 | v0.0.1 | 2026-10-11 | Prvi zapis, izveden iz koda `concrete/memento.py`. |

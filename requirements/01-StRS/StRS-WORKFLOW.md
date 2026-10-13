@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/workflow.py`: `Workflow` (konačan razred), `WorkflowException` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-FACTORY`](StRS-FACTORY.md) — Workflow Factory koja sastavlja workflow · [`StRS-MANAGER`](StRS-MANAGER.md) — upravitelji koje workflow drži · [`StRS-PROCESSOR`](StRS-PROCESSOR.md) — procesori koje workflow pokreće · [`StRS-DRIVER`](StRS-DRIVER.md) — driveri o kojima workflow izvješćuje · [`StRS-CONNECTION`](StRS-CONNECTION.md) — konekcije u upravitelju · [`StRS-MEMENTO`](StRS-MEMENTO.md) — snimka u kojoj se bilježi stanje toka |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda i odluka o dizajnu, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda i odluka o dizajnu, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 
@@ -178,7 +178,7 @@ Sastavljanje nije dio glavnog procesa: glavni proces počinje pokretanjem (UC2).
 | **Alternativni tok** | — |
 | **Ishod** | Vrsta workflowa koju Workflow Factory može sastaviti iz konfiguracije |
 
-*Ukinut 2026-10-11:* workflow je konačan razred (BR-WFL-17), pa vrste workflowa ne postoje. Novi tok nastaje konfiguracijom; programer razvija procesore, pipelineove i drivere (njihovi zapisi). Oznaka UC6 se ne koristi ponovno.
+*Ukinut 2026-10-11:* workflow je konačan razred (BR-WRK-17), pa vrste workflowa ne postoje. Novi tok nastaje konfiguracijom; programer razvija procesore, pipelineove i drivere (njihovi zapisi). Oznaka UC6 se ne koristi ponovno.
 
 ```plantuml
 @startuml use-case-diagram
@@ -290,36 +290,36 @@ Workflow bilježi početak izvedbe (s imenima procesora) i završetak (s brojem 
 
 | oznaka | pravilo |
 |---|---|
-| **BR-WFL-01** | Workflow se sastavlja iz konfiguracije i triju upravitelja (konekcije, driveri, procesori); bez njih ispravne vrste se ne sastavlja. |
-| **BR-WFL-02** | Workflow sam ne stvara konekcije, drivere ni procesore: dobiva ih od Workflow Factory. |
-| **BR-WFL-03** | Workflow pokreće procesore jedan po jedan, redom upisa, i svaki mora završiti prije sljedećeg. |
-| **BR-WFL-04** | Greška procesora je kardinalna: prekida izvedbu cijelog workflowa, a preostali procesori se ne pokreću. |
-| **BR-WFL-05** | Ako je priključen monitor, pokreće se prije izvedbe i zaustavlja nakon nje, i kad izvedba završi greškom. |
-| **BR-WFL-06** | Workflow bilježi početak izvedbe i završetak (broj procesora i ukupan broj obrađenih ciklusa); to su granice glavnog procesa. |
-| **BR-WFL-07** | Stanje toka obuhvaća samo procesore koji se mogu spremiti. |
-| **BR-WFL-08** | Vraćanje stanja provjerava cijelu snimku i priprema povrat svakog procesora prije nego što išta vrati: neispravna snimka ne mijenja nijedan procesor. |
-| **BR-WFL-09** | Snimka stanja smije sadržavati samo procesore koje workflow ima i koji se mogu vratiti. |
-| **BR-WFL-10** | Izvješće o driverima traži se od svakog drivera; driver koji ne zna izvijestiti ili čije izvješće ne uspije ne prekida izvješćivanje ostalih. |
-| **BR-WFL-11** | Workflow je vlasnik glavnog procesa i svih podprocesa: svaku grešku koja do njega stigne evidentira točno jednom. |
-| **BR-WFL-12** | Kardinalna greška je ona zbog koje glavni proces ili zatraženi zahtjev ne može biti obavljen; workflow je evidentira kao grešku i prosljeđuje pokretaču. |
-| **BR-WFL-13** | Manja greška je ona uz koju posao ostaje obavljen, s lošijim ishodom; workflow je evidentira kao upozorenje i nastavlja. Pokretač je ne dobiva kao grešku. |
-| **BR-WFL-14** | Neuspjeh monitora ili izlaza uvijek je manja greška: workflow ne ovisi o praćenju, a greška praćenja ne prekriva grešku procesora. |
-| **BR-WFL-15** | Podproces grešku koju predaje workflowu ne evidentira kao grešku; ostavlja samo trag za detaljnu analizu. Greška ulazi u zapise frameworka kod workflowa, jednom. |
-| **BR-WFL-16** | Pokretač kardinalnu grešku ne evidentira ponovno u zapise frameworka: ona je u njima već kod workflowa. |
-| **BR-WFL-17** | Workflow je konačan razred: ne smije se nasljeđivati. Tokovi se razlikuju samo konfiguracijom, a pravila o pokretanju i greškama (BR-WFL-03 do BR-WFL-16) ne može promijeniti nijedna podvrsta. |
+| **BR-WRK-01** | Workflow se sastavlja iz konfiguracije i triju upravitelja (konekcije, driveri, procesori); bez njih ispravne vrste se ne sastavlja. |
+| **BR-WRK-02** | Workflow sam ne stvara konekcije, drivere ni procesore: dobiva ih od Workflow Factory. |
+| **BR-WRK-03** | Workflow pokreće procesore jedan po jedan, redom upisa, i svaki mora završiti prije sljedećeg. |
+| **BR-WRK-04** | Greška procesora je kardinalna: prekida izvedbu cijelog workflowa, a preostali procesori se ne pokreću. |
+| **BR-WRK-05** | Ako je priključen monitor, pokreće se prije izvedbe i zaustavlja nakon nje, i kad izvedba završi greškom. |
+| **BR-WRK-06** | Workflow bilježi početak izvedbe i završetak (broj procesora i ukupan broj obrađenih ciklusa); to su granice glavnog procesa. |
+| **BR-WRK-07** | Stanje toka obuhvaća samo procesore koji se mogu spremiti. |
+| **BR-WRK-08** | Vraćanje stanja provjerava cijelu snimku i priprema povrat svakog procesora prije nego što išta vrati: neispravna snimka ne mijenja nijedan procesor. |
+| **BR-WRK-09** | Snimka stanja smije sadržavati samo procesore koje workflow ima i koji se mogu vratiti. |
+| **BR-WRK-10** | Izvješće o driverima traži se od svakog drivera; driver koji ne zna izvijestiti ili čije izvješće ne uspije ne prekida izvješćivanje ostalih. |
+| **BR-WRK-11** | Workflow je vlasnik glavnog procesa i svih podprocesa: svaku grešku koja do njega stigne evidentira točno jednom. |
+| **BR-WRK-12** | Kardinalna greška je ona zbog koje glavni proces ili zatraženi zahtjev ne može biti obavljen; workflow je evidentira kao grešku i prosljeđuje pokretaču. |
+| **BR-WRK-13** | Manja greška je ona uz koju posao ostaje obavljen, s lošijim ishodom; workflow je evidentira kao upozorenje i nastavlja. Pokretač je ne dobiva kao grešku. |
+| **BR-WRK-14** | Neuspjeh monitora ili izlaza uvijek je manja greška: workflow ne ovisi o praćenju, a greška praćenja ne prekriva grešku procesora. |
+| **BR-WRK-15** | Podproces grešku koju predaje workflowu ne evidentira kao grešku; ostavlja samo trag za detaljnu analizu. Greška ulazi u zapise frameworka kod workflowa, jednom. |
+| **BR-WRK-16** | Pokretač kardinalnu grešku ne evidentira ponovno u zapise frameworka: ona je u njima već kod workflowa. |
+| **BR-WRK-17** | Workflow je konačan razred: ne smije se nasljeđivati. Tokovi se razlikuju samo konfiguracijom, a pravila o pokretanju i greškama (BR-WRK-03 do BR-WRK-16) ne može promijeniti nijedna podvrsta. |
 
 ## 4. Nefunkcionalni zahtjevi
 
 | kakvoća | što znači za workflow | NFRQ |
 |---|---|---|
 | ujednačenost | svi tokovi se pokreću, prate i vraćaju na isti način | — |
-| čitljivost zapisa | jedna greška daje jedan zapis greške; razina zapisa kaže je li posao obavljen (BR-WFL-11 do BR-WFL-15) | [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md), [`NFRQ-OBS-02`](../03-NFRQ/NFRQ-OBS-02-audit-fields.md) |
-| vlasništvo i opseg zapisa | workflow kao vlasnik glavnog procesa bilježi njegove granice s brojačima (BR-WFL-06) | [`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md) |
-| otpornost | neispravna snimka ne mijenja nijedan procesor (BR-WFL-08); prekinuta izvedba ne ostavlja monitor uključen (BR-WFL-05); praćenje ne može srušiti tok (BR-WFL-14) | [`NFRQ-SCR-12`](../03-NFRQ/NFRQ-SEC-12-instance-availability.md) |
+| čitljivost zapisa | jedna greška daje jedan zapis greške; razina zapisa kaže je li posao obavljen (BR-WRK-11 do BR-WRK-15) | [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md), [`NFRQ-OBS-02`](../03-NFRQ/NFRQ-OBS-02-audit-fields.md) |
+| vlasništvo i opseg zapisa | workflow kao vlasnik glavnog procesa bilježi njegove granice s brojačima (BR-WRK-06) | [`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md) |
+| otpornost | neispravna snimka ne mijenja nijedan procesor (BR-WRK-08); prekinuta izvedba ne ostavlja monitor uključen (BR-WRK-05); praćenje ne može srušiti tok (BR-WRK-14) | [`NFRQ-SCR-12`](../03-NFRQ/NFRQ-SCR-12-instance-availability.md) |
 | razdvajanje odgovornosti | workflow provjerava samo vlastite ulaze (UC1); greške koje procesor obradi ostaju procesorove | [`NFRQ-ORG-15`](../03-NFRQ/NFRQ-ORG-15-separation-of-concerns.md) |
-| povjerljivost zapisa | zapisi o greškama nose identitet i uzrok, ne sadržaj dokumenata ni vjerodajnice | [`NFRQ-SCR-06`](../03-NFRQ/NFRQ-SEC-06-audit-confidentiality.md), [`NFRQ-SCR-10`](../03-NFRQ/NFRQ-SEC-10-secrets-enter-at-the-process-boundary.md) |
+| povjerljivost zapisa | zapisi o greškama nose identitet i uzrok, ne sadržaj dokumenata ni vjerodajnice | [`NFRQ-SCR-06`](../03-NFRQ/NFRQ-SCR-06-audit-confidentiality.md), [`NFRQ-SCR-10`](../03-NFRQ/NFRQ-SCR-10-secrets-enter-at-the-process-boundary.md) |
 | proširivost | novi tok nastaje konfiguracijom; programer proširuje procesore, pipelineove i drivere, a ne workflow | — |
-| cjelovitost ponašanja | workflow je konačan razred, pa nijedna podvrsta ne može zaobići pravila o greškama (BR-WFL-17); zabrana je zaštita od pogreške, ne sigurnosna granica | [`NFRQ-SCR-05`](../03-NFRQ/NFRQ-SEC-05-adversary-model.md) |
+| cjelovitost ponašanja | workflow je konačan razred, pa nijedna podvrsta ne može zaobići pravila o greškama (BR-WRK-17); zabrana je zaštita od pogreške, ne sigurnosna granica | [`NFRQ-SCR-05`](../03-NFRQ/NFRQ-SCR-05-adversary-model.md) |
 
 ## 5. Verifikacija
 
@@ -337,23 +337,23 @@ Matrica se popunjava kad se odrede djeca (§6).
 
 1. Djeca ovog zapisa (SyRS) nisu određena. Naziv sloja u naslovima dijagrama („Data flow") je prijedlog.
 2. Odlomak *Problem* u §2.1 je prijedlog autora zapisa i treba ga potvrditi.
-3. **Iznimka granice frameworka u NFRQ-OBS-01.** OBS-01 c.1 zabranjuje da isti sloj evidentira grešku i proslijedi je. Workflow je zadnji sloj frameworka prije pokretača, pa evidentira kardinalnu grešku i prosljeđuje je (BR-WFL-12); jedan uzrok i dalje daje jedan zapis greške (BR-WFL-15, BR-WFL-16). Iznimku treba unijeti u OBS-01 dokumentiranom izmjenom.
+3. **Iznimka granice frameworka u NFRQ-OBS-01.** OBS-01 c.1 zabranjuje da isti sloj evidentira grešku i proslijedi je. Workflow je zadnji sloj frameworka prije pokretača, pa evidentira kardinalnu grešku i prosljeđuje je (BR-WRK-12); jedan uzrok i dalje daje jedan zapis greške (BR-WRK-15, BR-WRK-16). Iznimku treba unijeti u OBS-01 dokumentiranom izmjenom.
 4. **Tko traži stanje i izvješće.** Pokretač je vanjski program (npr. cron), u budućnosti i proces frameworka. Nije određeno tko traži bilježenje i vraćanje stanja te izvješće o driverima, ni kada.
 5. **Povrat koji ne uspije nakon početka** (UC4 A4): ako primjena povrata padne usred niza, dio procesora je već vraćen. Treba odlučiti kako se postupa (npr. vraćanje prethodnog stanja ili oznaka da je stanje toka nedosljedno).
 6. Stanje toka (UC3, UC4) odvojeno je od kontrolne točke koju svaki procesor može zapisivati sam ([`StRS-PROCESSOR`](StRS-PROCESSOR.md), [`StRS-MEMENTO-STORE`](StRS-MEMENTO-STORE.md)). Treba potvrditi odnos ta dva mehanizma i čemu služi stanje toka.
 7. Praćenje rada (monitor) u ovom je zapisu opisano samo koliko ga workflow pokreće i zaustavlja. Treba odlučiti treba li zaseban zapis za monitor.
-8. **Razgraničenje s procesorom.** Koje greške procesor obradi sam (manje greške na razini dokumenta), a koje predaje workflowu, propisuje [`StRS-PROCESSOR`](StRS-PROCESSOR.md); taj zapis treba uskladiti s BR-WFL-11 i BR-WFL-15.
+8. **Razgraničenje s procesorom.** Koje greške procesor obradi sam (manje greške na razini dokumenta), a koje predaje workflowu, propisuje [`StRS-PROCESSOR`](StRS-PROCESSOR.md); taj zapis treba uskladiti s BR-WRK-11 i BR-WRK-15.
 9. **Zamrzavanje sastava.** Konačan razred sprječava podvrste, ali ne i zamjenu dijelova postojećeg workflowa (upravitelja, monitora) nakon sastavljanja. Treba odlučiti zamrzava li se i sastav: monitor bi se tada predavao pri sastavljanju ili priključivao najviše jednom, prije prvog pokretanja; zaključavanje sadržaja upravitelja odluka je za [`StRS-MANAGER`](StRS-MANAGER.md).
 10. **Vrsta workflowa u konfiguraciji.** Konfiguracija toka navodi `type`, a Workflow Factory po njemu bira razred. Uz konačan razred `type` može imenovati samo `Workflow`; treba odlučiti ostaje li ključ (radi dosljednosti s ostalim unosima) ili se uklanja.
 
 **Neostvareno ili neusklađeno** (razlika između koda i ovog dizajna; izrada zapisa kod ne mijenja)
 
-11. **Evidencija kardinalne greške.** Kod (`execute`, `run`) grešku procesora ne hvata i ne evidentira, nego je samo prosljeđuje; BR-WFL-11 i BR-WFL-12 traže jedan zapis greške kod workflowa.
-12. **Monitor izvan zaštite.** Pokretanje monitora je izvan bloka koji štiti izvedbu, pa njegov neuspjeh prekida tok; zaustavljanje je u završnom bloku, pa njegova greška može prekriti grešku procesora ili srušiti uspješnu izvedbu (BR-WFL-14).
-13. **Putanja za mjerenje.** Neuspjelo određivanje putanje koju monitor mjeri guta se bez traga (BR-WFL-13: manja greška se evidentira).
-14. **Izvješće drivera.** Driver bez izvješća bilježi se na razini koja je rezervirana za granice radnih jedinica i ulaz u lanac; neuspjelo izvješće prekida izvješćivanje ostalih drivera (BR-WFL-10, BR-WFL-13).
-15. **Podprocesi.** Treba provjeriti bilježe li procesor, pipeline i ostali slojevi grešku kao grešku prije nego što je predaju workflowu (BR-WFL-15).
-16. **Workflow nije konačan razred.** U kodu je `Workflow` apstraktni razred (`ABC`) bez dekoratora `@final`, pa se može nasljeđivati (BR-WFL-17).
+11. **Evidencija kardinalne greške.** Kod (`execute`, `run`) grešku procesora ne hvata i ne evidentira, nego je samo prosljeđuje; BR-WRK-11 i BR-WRK-12 traže jedan zapis greške kod workflowa.
+12. **Monitor izvan zaštite.** Pokretanje monitora je izvan bloka koji štiti izvedbu, pa njegov neuspjeh prekida tok; zaustavljanje je u završnom bloku, pa njegova greška može prekriti grešku procesora ili srušiti uspješnu izvedbu (BR-WRK-14).
+13. **Putanja za mjerenje.** Neuspjelo određivanje putanje koju monitor mjeri guta se bez traga (BR-WRK-13: manja greška se evidentira).
+14. **Izvješće drivera.** Driver bez izvješća bilježi se na razini koja je rezervirana za granice radnih jedinica i ulaz u lanac; neuspjelo izvješće prekida izvješćivanje ostalih drivera (BR-WRK-10, BR-WRK-13).
+15. **Podprocesi.** Treba provjeriti bilježe li procesor, pipeline i ostali slojevi grešku kao grešku prije nego što je predaju workflowu (BR-WRK-15).
+16. **Workflow nije konačan razred.** U kodu je `Workflow` apstraktni razred (`ABC`) bez dekoratora `@final`, pa se može nasljeđivati (BR-WRK-17).
 
 ## 7. Reference
 
@@ -367,14 +367,14 @@ Matrica se popunjava kad se odrede djeca (§6).
 | [`StRS-CONNECTION`](StRS-CONNECTION.md) | konekcije u upravitelju konekcija |
 | [`StRS-MEMENTO`](StRS-MEMENTO.md) | snimka u kojoj se bilježi stanje toka |
 | [`StRS-MEMENTO-STORE`](StRS-MEMENTO-STORE.md) | pohrana kontrolnih točaka procesora |
-| [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md), [`NFRQ-OBS-02`](../03-NFRQ/NFRQ-OBS-02-audit-fields.md), [`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md), [`NFRQ-SCR-06`](../03-NFRQ/NFRQ-SEC-06-audit-confidentiality.md), [`NFRQ-SCR-10`](../03-NFRQ/NFRQ-SEC-10-secrets-enter-at-the-process-boundary.md), [`NFRQ-SCR-12`](../03-NFRQ/NFRQ-SEC-12-instance-availability.md), [`NFRQ-ORG-15`](../03-NFRQ/NFRQ-ORG-15-separation-of-concerns.md) | kakvoće |
+| [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md), [`NFRQ-OBS-02`](../03-NFRQ/NFRQ-OBS-02-audit-fields.md), [`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md), [`NFRQ-SCR-06`](../03-NFRQ/NFRQ-SCR-06-audit-confidentiality.md), [`NFRQ-SCR-10`](../03-NFRQ/NFRQ-SCR-10-secrets-enter-at-the-process-boundary.md), [`NFRQ-SCR-12`](../03-NFRQ/NFRQ-SCR-12-instance-availability.md), [`NFRQ-ORG-15`](../03-NFRQ/NFRQ-ORG-15-separation-of-concerns.md) | kakvoće |
 | `concrete/workflow.py` | modul, predmet zapisa |
 
 ## Povijest promjena
 
 | Verzija | Datum | Promjena |
 |---|---|---|
-| v0.0.4 | 2026-10-11 | Workflow je konačan razred (`@final`, BR-WFL-17): nema podvrsta, tokovi se razlikuju samo konfiguracijom. UC6 ukinut; programer razvija procesore, pipelineove i drivere. Nova kakvoća *cjelovitost ponašanja* (SCR-05: zaštita od pogreške, ne sigurnosna granica). *Otvoreno*: zamrzavanje sastava, ključ `type` u konfiguraciji toka, neusklađenost koda (`ABC` bez `@final`). |
-| v0.0.3 | 2026-10-11 | Dizajn prema odluci autora: workflow je vlasnik glavnog procesa i svih podprocesa, svaku grešku koja do njega stigne evidentira jednom i razvrstava na kardinalne (evidentira i prosljeđuje pokretaču) i manje (evidentira i nastavlja). Nova pravila BR-WFL-11 do BR-WFL-16; BR-WFL-04, -06, -08 i -10 preformulirani; UC2 do UC5 dopunjeni alternativnim tokovima; tablica grešaka s vrstom greške; dijagrami ažurirani. Uloga *Runner* (vanjski program, npr. cron) umjesto *Initiator*. Sastavljanje nije dio glavnog procesa. §4 povezan s NFRQ zapisima. Uklonjene poveznice na prethodni zapis. *Otvoreno*: iznimka granice frameworka u OBS-01, djelomičan povrat stanja, razgraničenje s procesorom, pet neusklađenosti koda. |
+| v0.0.4 | 2026-10-11 | Workflow je konačan razred (`@final`, BR-WRK-17): nema podvrsta, tokovi se razlikuju samo konfiguracijom. UC6 ukinut; programer razvija procesore, pipelineove i drivere. Nova kakvoća *cjelovitost ponašanja* (SCR-05: zaštita od pogreške, ne sigurnosna granica). *Otvoreno*: zamrzavanje sastava, ključ `type` u konfiguraciji toka, neusklađenost koda (`ABC` bez `@final`). |
+| v0.0.3 | 2026-10-11 | Dizajn prema odluci autora: workflow je vlasnik glavnog procesa i svih podprocesa, svaku grešku koja do njega stigne evidentira jednom i razvrstava na kardinalne (evidentira i prosljeđuje pokretaču) i manje (evidentira i nastavlja). Nova pravila BR-WRK-11 do BR-WRK-16; BR-WRK-04, -06, -08 i -10 preformulirani; UC2 do UC5 dopunjeni alternativnim tokovima; tablica grešaka s vrstom greške; dijagrami ažurirani. Uloga *Runner* (vanjski program, npr. cron) umjesto *Initiator*. Sastavljanje nije dio glavnog procesa. §4 povezan s NFRQ zapisima. Uklonjene poveznice na prethodni zapis. *Otvoreno*: iznimka granice frameworka u OBS-01, djelomičan povrat stanja, razgraničenje s procesorom, pet neusklađenosti koda. |
 | v0.0.2 | 2026-10-11 | Obnovljen: datoteka je sadržavala kopiju zapisa `StRS-FACTORY`, pa je tekst o workflowu ponovno napisan prema kodu `concrete/workflow.py`. Nazivlje *Workflow Factory* usklađeno s ostalim zapisima; snimka umjesto bilješke; poveznica na `StRS-MEMENTO` i `StRS-MEMENTO-STORE`. |
 | v0.0.1 | 2026-10-11 | Prvi zapis, izveden iz koda `concrete/workflow.py`. |

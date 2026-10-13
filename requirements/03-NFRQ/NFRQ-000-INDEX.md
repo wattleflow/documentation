@@ -12,23 +12,23 @@
 | **Language** | EN only — see *Language* below |
 
 This document is an **index**, not a register: each requirement lives in its own file
-(`category-number-slug-EN.md`). The rendering is not the source of truth (D-13) — finding
+(`category-number-slug-EN.md`). The rendering is not the source of truth ([D-13](../../DOCTRINE.md#d-13)) — finding
 counts are not quoted here; cite the conformance snapshot in
 `../workflow/conformance/` instead.
 
 Every NFR carries a **statement**, **acceptance criteria**, a **verification method**, its
-**justification**, and **traceability** upwards. Changing a criterion needs a documented change (D-03).
+**justification**, and **traceability** upwards. Changing a criterion needs a documented change ([D-03](../../DOCTRINE.md#d-03)).
 
 ## Shared
 
 | Id | Subject | Entry |
 |---|---|---|
-| `NFRQ-DEF-01` | Common definitions — domain, helper, canonical subject | [entry](NFRQ-DEF-01-common-definitions.md) |
-| `NFRQ-DEF-02` | Charter for measurable `[M]` criteria | [entry](NFRQ-DEF-02-measurement-charter.md) |
-| `NFRQ-DEF-03` | Comparison and boundary values — the facets every compared or bounded value declares *(proposal, 2026-09-13)* | [entry](NFRQ-DEF-03-comparison-and-boundary-values.md) |
-| `NFRQ-DEF-04` | MomentAwareHelper — the aware moment is the norm; one writer and reader of RFC 3339 text; default form in the moment's zone, microseconds, UTC as `Z`; `now` carries the workflow zone (`runtime.time_zone`, else `WATTLEFLOW_TIME_ZONE`, else the system zone) *(proposal, 2026-10-07; identifier provisional)* | [entry](NFRQ-DEF-04-moment-aware-helper.md) |
-| `NFRQ-DEF-05` | MomentNaiveHelper — a wall time is not the norm: permitted only where an operator writes it or a source gives no zone; made aware only through `localize` with a named zone (workflow zone or source zone); no RFC 5322 form *(proposal, 2026-10-07; identifier provisional)* | [entry](NFRQ-DEF-05-moment-naive-helper.md) |
-| `NFRQ-APX-01` | Appendix A — facet order in class nomenclature | [entry](NFRQ-APX-01-facet-order.md) |
+| `NFRQ-DFN-01` | Common definitions — domain, helper, canonical subject | [entry](NFRQ-DFN-01-common-definitions.md) |
+| `NFRQ-DFN-02` | Charter for measurable `[M]` criteria | [entry](NFRQ-DFN-02-measurement-charter.md) |
+| `NFRQ-DFN-03` | Comparison and boundary values — the facets every compared or bounded value declares *(proposal, 2026-09-13)* | [entry](NFRQ-DFN-03-comparison-and-boundary-values.md) |
+| `NFRQ-DFN-04` | MomentAwareHelper — the aware moment is the norm; one writer and reader of RFC 3339 text; default form in the moment's zone, microseconds, UTC as `Z`; `now` carries the workflow zone (`runtime.time_zone`, else `WATTLEFLOW_TIME_ZONE`, else the system zone) *(proposal, 2026-10-07; identifier provisional)* | [entry](NFRQ-DFN-04-moment-aware-helper.md) |
+| `NFRQ-DFN-05` | MomentNaiveHelper — a wall time is not the norm: permitted only where an operator writes it or a source gives no zone; made aware only through `localize` with a named zone (workflow zone or source zone); no RFC 5322 form *(proposal, 2026-10-07; identifier provisional)* | [entry](NFRQ-DFN-05-moment-naive-helper.md) |
+| `NFRQ-APN-01` | Appendix A — facet order in class nomenclature | [entry](NFRQ-APN-01-facet-order.md) |
 
 ## ORG — organisation and structure
 
@@ -46,14 +46,14 @@ Every NFR carries a **statement**, **acceptance criteria**, a **verification met
 | `NFRQ-ORG-10` | A learned artefact as a decision criterion — deterministic first, manifest, declared opacity | `clean_core_imports` for c.7; rest **by review** | [entry](NFRQ-ORG-10-learned-artefact.md) |
 | `NFRQ-ORG-11` | The class is the unit of code; a module function only when exported and with a declared reason (`pep562`, `decorator`, `entry-point`, `standard-signature`) | AST; **not automated** — proposal | [entry](NFRQ-ORG-11-classes-over-module-functions.md) |
 | `NFRQ-ORG-12` | Constants and enumerations live in their designated modules (`constants/`, `enums/`) | AST; **not automated** — accepted | [entry](NFRQ-ORG-12-constants-and-enumerations.md) |
-| `NFRQ-ORG-13` | The public surface of a contract class is its interface — everything else is `_`-prefixed *(proposal, 2026-09-29; raised by `HLRQ-CNV`)* | introspection; **not in lint**, baseline in `06-ANALYSIS` | [entry](NFRQ-ORG-13-public-surface-is-the-interface.md) |
-| `NFRQ-ORG-14` | A consumer reaches a converter only through its interface — never its parser or an engine parser for the same format *(proposal, 2026-10-05; raised by `FRQ-CNV-24.9`; identifier provisional)* | import graph and AST; **not in lint**, baseline in `06-ANALYSIS` | [entry](NFRQ-ORG-14-consumer-reaches-the-interface.md) |
+| `NFRQ-ORG-13` | The public surface of a contract class is its interface — everything else is `_`-prefixed *(proposal, 2026-09-29; raised by `StRS-CONVERTER`)* | introspection; **not in lint**, baseline in `06-ANALYSIS` | [entry](NFRQ-ORG-13-public-surface-is-the-interface.md) |
+| `NFRQ-ORG-14` | A consumer reaches a converter only through its interface — never its parser or an engine parser for the same format *(proposal, 2026-10-05; raised by `SyRS-CONVERTER-CONSUMER`; identifier provisional)* | import graph and AST; **not in lint**, baseline in `06-ANALYSIS` | [entry](NFRQ-ORG-14-consumer-reaches-the-interface.md) |
 
 ## OBS — audit-record observability
 
 > Category introduced by (2026-08-23), amended by (2026-08-24). Every
 > rule is `warning` — the current state is a worklist, not a build-breaking violation.
-> Demarcation: `NFRQ-SEC-06` governs the **confidentiality** of the record, `NFRQ-OBS-*` its
+> Demarcation: `NFRQ-SCR-06` governs the **confidentiality** of the record, `NFRQ-OBS-*` its
 > **readability and cost**.
 
 | Id | Subject | Enforcement | Entry |
@@ -68,36 +68,36 @@ Every NFR carries a **statement**, **acceptance criteria**, a **verification met
 > Zero-trust is the founding concept; SEC breaks it into bounded and/or measurable parts. The
 > structural `ORG-*` requirements and packaging are its **mechanism**, not its requirement.
 >
-> `SEC-09`…`SEC-14` form the **CIA suite** for a deployed instance (`HLRQ-20`): each names the
-> triad member it serves and references postulate **P-23** (`POSTULATE.md`), introduced by
+> `SEC-09`…`SEC-14` form the **CIA suite** for a deployed instance (`StRS-DOCKER-INSTANCES`): each names the
+> triad member it serves and references postulate **[P-23](../../POSTULATE.md#p-23)** (`POSTULATE.md`), introduced by
 >.
 
 | Id | Subject | Enforcement | Entry |
 |---|---|---|---|
-| `NFRQ-SEC-01` | Blast-radius containment (compartmentalisation) | `[M]` diagnostic | [entry](NFRQ-SEC-01-blast-radius.md) |
-| `NFRQ-SEC-02` | Attack-surface minimality | `[M]` diagnostic | [entry](NFRQ-SEC-02-attack-surface.md) |
-| `NFRQ-SEC-03` | Supply-chain trust and distribution locality | `clean_core_imports` **error** · `distribution_manifest` warning | [entry](NFRQ-SEC-03-supply-chain-locality.md) |
-| `NFRQ-SEC-04` | Detection operating point and psychological acceptability | by review | [entry](NFRQ-SEC-04-detection-operating-point.md) |
-| `NFRQ-SEC-05` | Adversary model and investment discipline | by review | [entry](NFRQ-SEC-05-adversary-model.md) |
-| `NFRQ-SEC-06` | Audit-record confidentiality | review + AST for c.1; **not measured** | [entry](NFRQ-SEC-06-audit-confidentiality.md) |
-| `NFRQ-SEC-07` | Emission is an authorised act, not a configuration key | by review; `[M]` c.6 is a **gate candidate**, not measured | [entry](NFRQ-SEC-07-emission-authorisation.md) |
-| `NFRQ-SEC-08` | Emitted-document confidentiality: a declared marking, no residue *(proposal, 2026-09-13)* | by review; **not measured** | [entry](NFRQ-SEC-08-emitted-document-confidentiality.md) |
-| `NFRQ-SEC-09` | No secret in version control — tree and history clean, ignore by pattern, placeholders closed *(proposal, 2026-09-19; **P-23**)* | on-demand scanner; **not in lint** | [entry](NFRQ-SEC-09-no-secret-in-version-control.md) |
-| `NFRQ-SEC-10` | A secret enters at the process boundary and never leaves through a record — no credential default, no value in records *(proposal, 2026-09-19; **P-23**)* | AST candidate `credential_default`; **not in lint** | [entry](NFRQ-SEC-10-secrets-enter-at-the-process-boundary.md) |
-| `NFRQ-SEC-11` | Integrity of a deployed instance — pinned images, read-only provisioning, repository as the only change path *(proposal, 2026-09-19; **P-23**)* | text checks; **not in lint** | [entry](NFRQ-SEC-11-instance-integrity.md) |
-| `NFRQ-SEC-12` | Availability of a supporting instance — volumes, bounded retention, restart policy, workflow never depends on it *(proposal, 2026-09-19; **P-23**)* | text checks + `test_exporters.py` | [entry](NFRQ-SEC-12-instance-availability.md) |
-| `NFRQ-SEC-13` | Network exposure and least privilege of an instance — loopback by default, widening defaults off, no privilege escalation *(proposal, 2026-09-19; **P-23**)* | text checks; **not in lint** | [entry](NFRQ-SEC-13-network-exposure-and-least-privilege.md) |
-| `NFRQ-SEC-14` | Telemetry confidentiality at the export boundary — closed label vocabulary, no identifier leaves the process *(proposal, 2026-09-19; **P-23**)* | label listing; `path` label is a standing finding | [entry](NFRQ-SEC-14-telemetry-confidentiality.md) |
-| `NFRQ-SEC-15` | Data-plane operation authorisation is declared configuration, not a call-time flag *(proposal, 2026-09-27; raised by `HLRQ-21`)* | by review; `[M]` c.6 is a **gate candidate**, not measured | [entry](NFRQ-SEC-15-operation-authorisation.md) |
-| `NFRQ-SEC-16` | Nothing is installed or acquired from code at run time — a missing dependency is named, never a command; models are provisioned *(proposal, 2026-09-29; raised by `HLRQ-23`)* | AST scan; **not in lint**, baseline in `06-ANALYSIS` | [entry](NFRQ-SEC-16-no-runtime-installation.md) |
-| `NFRQ-SEC-17` | Third-party code is loaded at use, never at import — in a module, in an aggregate, an absent library is named *(proposal, 2026-09-30; raised by `HLRQ-26`)* | masking test; **not in lint** | [entry](NFRQ-SEC-17-deferred-third-party-loading.md) |
+| `NFRQ-SCR-01` | Blast-radius containment (compartmentalisation) | `[M]` diagnostic | [entry](NFRQ-SCR-01-blast-radius.md) |
+| `NFRQ-SCR-02` | Attack-surface minimality | `[M]` diagnostic | [entry](NFRQ-SCR-02-attack-surface.md) |
+| `NFRQ-SCR-03` | Supply-chain trust and distribution locality | `clean_core_imports` **error** · `distribution_manifest` warning | [entry](NFRQ-SCR-03-supply-chain-locality.md) |
+| `NFRQ-SCR-04` | Detection operating point and psychological acceptability | by review | [entry](NFRQ-SCR-04-detection-operating-point.md) |
+| `NFRQ-SCR-05` | Adversary model and investment discipline | by review | [entry](NFRQ-SCR-05-adversary-model.md) |
+| `NFRQ-SCR-06` | Audit-record confidentiality | review + AST for c.1; **not measured** | [entry](NFRQ-SCR-06-audit-confidentiality.md) |
+| `NFRQ-SCR-07` | Emission is an authorised act, not a configuration key | by review; `[M]` c.6 is a **gate candidate**, not measured | [entry](NFRQ-SCR-07-emission-authorisation.md) |
+| `NFRQ-SCR-08` | Emitted-document confidentiality: a declared marking, no residue *(proposal, 2026-09-13)* | by review; **not measured** | [entry](NFRQ-SCR-08-emitted-document-confidentiality.md) |
+| `NFRQ-SCR-09` | No secret in version control — tree and history clean, ignore by pattern, placeholders closed *(proposal, 2026-09-19; **P-23**)* | on-demand scanner; **not in lint** | [entry](NFRQ-SCR-09-no-secret-in-version-control.md) |
+| `NFRQ-SCR-10` | A secret enters at the process boundary and never leaves through a record — no credential default, no value in records *(proposal, 2026-09-19; **P-23**)* | AST candidate `credential_default`; **not in lint** | [entry](NFRQ-SCR-10-secrets-enter-at-the-process-boundary.md) |
+| `NFRQ-SCR-11` | Integrity of a deployed instance — pinned images, read-only provisioning, repository as the only change path *(proposal, 2026-09-19; **P-23**)* | text checks; **not in lint** | [entry](NFRQ-SCR-11-instance-integrity.md) |
+| `NFRQ-SCR-12` | Availability of a supporting instance — volumes, bounded retention, restart policy, workflow never depends on it *(proposal, 2026-09-19; **P-23**)* | text checks + `test_exporters.py` | [entry](NFRQ-SCR-12-instance-availability.md) |
+| `NFRQ-SCR-13` | Network exposure and least privilege of an instance — loopback by default, widening defaults off, no privilege escalation *(proposal, 2026-09-19; **P-23**)* | text checks; **not in lint** | [entry](NFRQ-SCR-13-network-exposure-and-least-privilege.md) |
+| `NFRQ-SCR-14` | Telemetry confidentiality at the export boundary — closed label vocabulary, no identifier leaves the process *(proposal, 2026-09-19; **P-23**)* | label listing; `path` label is a standing finding | [entry](NFRQ-SCR-14-telemetry-confidentiality.md) |
+| `NFRQ-SCR-15` | Data-plane operation authorisation is declared configuration, not a call-time flag *(proposal, 2026-09-27; raised by `StRS-SPARK-AUTHORISATION`)* | by review; `[M]` c.6 is a **gate candidate**, not measured | [entry](NFRQ-SCR-15-operation-authorisation.md) |
+| `NFRQ-SCR-16` | Nothing is installed or acquired from code at run time — a missing dependency is named, never a command; models are provisioned *(proposal, 2026-09-29; raised by `StRS-OCR`)* | AST scan; **not in lint**, baseline in `06-ANALYSIS` | [entry](NFRQ-SCR-16-no-runtime-installation.md) |
+| `NFRQ-SCR-17` | Third-party code is loaded at use, never at import — in a module, in an aggregate, an absent library is named *(proposal, 2026-09-30; raised by `StRS-DEFERRED-LOADING`)* | masking test; **not in lint** | [entry](NFRQ-SCR-17-deferred-third-party-loading.md) |
 
 ## FUN — functional suitability *(provisional category)*
 
 | Id | Subject | Enforcement | Entry |
 |---|---|---|---|
-| `NFRQ-FUN-01` | Conversion fidelity: nothing lost silently, the round trip is a fixed point *(proposal, 2026-09-14)* | unit tests per component; **not measured** by lint | [entry](NFRQ-FUN-01-conversion-fidelity.md) |
-| `NFRQ-FUN-02` | Recognition accuracy is measured per engine on a declared reference set — CER/WER `[M]`, no engine ranked without measurement *(proposal, 2026-09-29; raised by `HLRQ-23`)* | measurement script; **not measured** by lint | [entry](NFRQ-FUN-02-recognition-accuracy.md) |
+| `NFRQ-FNC-01` | Conversion fidelity: nothing lost silently, the round trip is a fixed point *(proposal, 2026-09-14)* | unit tests per component; **not measured** by lint | [entry](NFRQ-FNC-01-conversion-fidelity.md) |
+| `NFRQ-FNC-02` | Recognition accuracy is measured per engine on a declared reference set — CER/WER `[M]`, no engine ranked without measurement *(proposal, 2026-09-29; raised by `StRS-OCR`)* | measurement script; **not measured** by lint | [entry](NFRQ-FNC-02-recognition-accuracy.md) |
 
 ## PRF — performance efficiency *(provisional category)*
 
@@ -113,10 +113,10 @@ Every NFR carries a **statement**, **acceptance criteria**, a **verification met
 
 | Id | Subject | Enforcement | Entry |
 |---|---|---|---|
-| `NFRQ-MEM-01` | Instance memory — classes that inherit `Wattleflow` declare `__slots__` *(proposal, 2026-10-01)* | review; static check proposed; `[M]` diagnostic | [entry](NFRQ-MEM-01-memory.md) |
+| `NFRQ-MMR-01` | Instance memory — classes that inherit `Wattleflow` declare `__slots__` *(proposal, 2026-10-01)* | review; static check proposed; `[M]` diagnostic | [entry](NFRQ-MMR-01-memory.md) |
 
-> `MEM` is also the requirement category of the Memento role on the FRQ axis (`FRQ-MEM`); the prefix
-> `FRQ-` or `NFRQ-` tells them apart. The quality-axis category is provisional until a documented change admits it.
+> `MEM` is also the requirement category of the Memento role on the SyRS axis (`SyRS-MMT-memento`); the prefix
+> `SyRS-` or `NFRQ-` tells them apart. The quality-axis category is provisional until a documented change admits it.
 
 ## Language
 

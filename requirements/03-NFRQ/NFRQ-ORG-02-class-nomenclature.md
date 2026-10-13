@@ -25,7 +25,7 @@ that the name encodes the **input→output contract** rather than the internal m
 | **Qualifier** | engine, language, variant (`Spacy`, `Stanza`, `En`, `Hr`) | optional |
 
 The scientific basis for the *Subject-first* order is
-[`NFRQ-APX-01`](NFRQ-APX-01-facet-order.md).
+[`NFRQ-APN-01`](NFRQ-APN-01-facet-order.md).
 
 * The universal verb `transform()` is **not** in the name: a token predictable for every class
   carries zero discriminating information.
@@ -49,10 +49,10 @@ first implementation and accepted as the norm by a documented decision of 2026-0
 
 The convention is **referenced, not measured.** In these families `wem_lint` checks only
 criterion 6 (no standalone generic role noun); facet order and spelling are not checked — a
-declared blind spot (D-11), measured 2026-09-11 (`wem_lint` 1.17.0, criterion 0.8.0): a name
+declared blind spot ([D-11](../../DOCTRINE.md#d-11)), measured 2026-09-11 (`wem_lint` 1.17.0, criterion 0.8.0): a name
 with a misspelt facet passed with no finding. Existing departures (e.g. a connection named in
 driver order) are the state found, not renamed by this entry. The first three rows were added at
-a direction without a recorded decision and are carried in the worklist (D-03); the `scheduler` row
+a direction without a recorded decision and are carried in the worklist ([D-03](../../DOCTRINE.md#d-03)); the `scheduler` row
 carries one.
 
 ## 2. Acceptance criteria
@@ -82,7 +82,7 @@ governance. Synonym collapsing for the current catalogue:
 rule reports a `WARNING` under a declared waiver
 (`acronym_identifier_casing.status: undecided`) and **does not fail the build**. Neither side
 (`PDF` vs `Pdf`) is enforced by mass renaming — enforcing an undecided rule breaks the cascade
-(D-02). The criterion text and the severity must stay in step; a divergence is a finding, not
+([D-02](../../DOCTRINE.md#d-02)). The criterion text and the severity must stay in step; a divergence is a finding, not
 the state in force.
 
 ## 5. Justification
@@ -94,7 +94,7 @@ the state in force.
 | Information theory (Shannon) | constant tokens (`Transform`) are removed as noise |
 | Information Hiding (Parnas) | the name expresses the external contract, not the wrapped implementation |
 | Single fundamentum divisionis | one basis of classification per axis |
-| DRY | one controlled term per facet; repeating the subject in both path and name is a deliberate trade-off for collocation ([`NFRQ-APX-01`](NFRQ-APX-01-facet-order.md) §3.4) |
+| DRY | one controlled term per facet; repeating the subject in both path and name is a deliberate trade-off for collocation ([`NFRQ-APN-01`](NFRQ-APN-01-facet-order.md) §3.4) |
 
 ## 6. Traceability
 

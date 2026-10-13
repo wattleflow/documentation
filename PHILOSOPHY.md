@@ -34,7 +34,7 @@ The document is accordingly an **anti-manifesto**: a manifesto declares values w
 
 The guiding operational principle is **measurability**: a load-bearing doctrinal claim comes in falsifiable form, or it remains unverified (section *Hypotheses*). This applies to the premises of this document as well.
 
-Architecture and functionality are derived from requirements that live in [`02-FRQ`](requirements/02-SyRS/SyRS-000-INDEX.md) (functional, with [`01-StRS`](requirements/01-StRS/StRS-000-INDEX.md) above them) and [`03-NFRQ`](requirements/03-NFRQ/NFRQ-000-INDEX.md) (non-functional); the foundations of the methodology are set out in Volume I ([`METHODOLOGY.md`](METHODOLOGY.md)).
+Architecture and functionality are derived from requirements that live in [`02-SyRS`](requirements/02-SyRS/SyRS-000-INDEX.md) (functional, with [`01-StRS`](requirements/01-StRS/StRS-000-INDEX.md) above them) and [`03-NFRQ`](requirements/03-NFRQ/NFRQ-000-INDEX.md) (non-functional); the foundations of the methodology are set out in Volume I ([`METHODOLOGY.md`](METHODOLOGY.md)).
 
 ## Contents (volumes)
 
@@ -44,7 +44,7 @@ Architecture and functionality are derived from requirements that live in [`02-F
 | II | Architectural principles | *(planned)* |
 | III | Decisions | carried by the requirement documentation (`requirements/01-StRS/`–`03-NFRQ/`) |
 | IV | System design | *(planned)* |
-| V | Development Standards | [`requirements/01-StRS/`](requirements/01-StRS/StRS-000-INDEX.md) · [`requirements/02-FRQ/`](requirements/02-SyRS/SyRS-000-INDEX.md) · [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md) *(in progress)* |
+| V | Development Standards | [`requirements/01-StRS/`](requirements/01-StRS/StRS-000-INDEX.md) · [`requirements/02-SyRS/`](requirements/02-SyRS/SyRS-000-INDEX.md) · [`requirements/03-NFRQ/`](requirements/03-NFRQ/NFRQ-000-INDEX.md) *(in progress)* |
 | VI | Quality assurance | *(planned)* |
 | VII | AI-assisted software engineering | *(planned)* |
 | VIII | Governance, compliance and information science | *(planned)* |
@@ -67,14 +67,14 @@ Architecture  (reconstructed afterwards, from the code)
 
 In such a sequence architecture accumulates rather than emerges — a sediment of implementation decisions that no one made explicitly. The consequences are familiar: architectural drift, inconsistent design, mounting technical debt, poor maintainability, reduced explainability and limited educational value.
 
-This inversion is not a historical necessity. Iterative and incremental development predates the agile movement by decades; the original “waterfall” model was explicitly iterative and warned that a single one-way pass “invites failure” (P-15). The feedback loop as a scientific instrument comes from statistical process control, where it turns on *theory* — hypothesis → measurement → conclusion — and not on a backlog (P-01). Experience without theory teaches nothing (P-02).
+This inversion is not a historical necessity. Iterative and incremental development predates the agile movement by decades; the original “waterfall” model was explicitly iterative and warned that a single one-way pass “invites failure” ([P-15](POSTULATE.md#p-15)). The feedback loop as a scientific instrument comes from statistical process control, where it turns on *theory* — hypothesis → measurement → conclusion — and not on a backlog ([P-01](POSTULATE.md#p-01)). Experience without theory teaches nothing ([P-02](POSTULATE.md#p-02)).
 
 Wattleflow therefore does not discard iteration; it restores its scientific content. Scientific and engineering principles, together with business objectives, enter as **inputs**; requirements are **derived** from them; measurements close the loop:
 
 ```
 Scientific principles + Engineering principles + Business objectives
       ↓
-Functional and non-functional requirements  (02-FRQ, 03-NFRQ)
+Functional and non-functional requirements  (02-SyRS, 03-NFRQ)
       ↓
 Architecture  ⇄  Implementation   (iteration under the cascade; revision with a documented change)
       ↓
@@ -83,7 +83,7 @@ Testing + Conformance (wem_lint) + Operational metrics
 Empirical evidence → returns into the principles
 ```
 
-Architecture and documentation thereby become first-class engineering artefacts and **epistemological material**: a record of knowledge, not a work diary (P-14). Business objectives are an input that shapes requirements — not an artefact slipped in underneath them afterwards. The full traceability model and the requirements ontology are set out in Volume I (§6, §4).
+Architecture and documentation thereby become first-class engineering artefacts and **epistemological material**: a record of knowledge, not a work diary ([P-14](POSTULATE.md#p-14)). Business objectives are an input that shapes requirements — not an artefact slipped in underneath them afterwards. The full traceability model and the requirements ontology are set out in Volume I (§6, §4).
 
 ---
 
@@ -128,7 +128,7 @@ The engine of epistemological discourse is critical thinking: systematically que
 - It applies equally to people and to AI agents: where there is doubt, ask, set out cost and alternatives, and do not guess (`ARCHITECTURE.md` §5; Volume I §9).
 - It applies to the philosophy itself: a doctrinal claim that does not say what would refute it is leaning on authority — precisely what this doctrine rejects. Every load-bearing claim therefore comes in falsifiable form (next section).
 
-**Knowledge grows — and that growth drives the discourse.** Theoretical knowledge is not static: through epistemological analysis and new findings it widens, re-enters the philosophical discourse, and reshapes policies, principles and methods down the cascade. This is the operational form of the feedback loop from *Motivation*: measurements and new insights are not the end of the chain but its next input. So that the growth of knowledge stays traceable rather than arbitrary, each such shift is recorded (HLRQ, FRQ or NFRQ) with its rationale.
+**Knowledge grows — and that growth drives the discourse.** Theoretical knowledge is not static: through epistemological analysis and new findings it widens, re-enters the philosophical discourse, and reshapes policies, principles and methods down the cascade. This is the operational form of the feedback loop from *Motivation*: measurements and new insights are not the end of the chain but its next input. So that the growth of knowledge stays traceable rather than arbitrary, each such shift is recorded (StRS, SyRS or NFRQ) with its rationale.
 
 ## Hypotheses
 
@@ -139,18 +139,18 @@ The doctrine of measurability applies first to the philosophy itself. Load-beari
 *Refuted by:* a systematic fall in agreement despite the cascade being applied, or equal agreement in comparable systems without governance.
 
 **H2 — An enforced semiotic registry reduces the semantic entropy of a system.**
-A controlled vocabulary (the naming registry, ORG-02/03) acts as a semiotic stabiliser (P-08): it fixes the relation between sign and role.
+A controlled vocabulary (the naming registry, ORG-02/03) acts as a semiotic stabiliser ([P-08](POSTULATE.md#p-08)): it fixes the relation between sign and role.
 *Measure:* the trend in naming violations per version; the number of signs carrying multiple semantics (baseline: a single TypeVar `T` serving four roles, recorded in the core analysis).
 *Refuted by:* stagnation or growth in ambiguity despite the registry being enforced.
 
 **H3 — A versioned criterion preserves the validity of the instrument.**
-A measuring instrument corrodes, and does so quietly (P-10); versioning the criterion (registry + tool + platform) makes the divergence between proxy and construct visible.
+A measuring instrument corrodes, and does so quietly ([P-10](POSTULATE.md#p-10)); versioning the criterion (registry + tool + platform) makes the divergence between proxy and construct visible.
 *Measure:* detection latency for validity incidents (baseline: incident ABS-03 detected within two measurement cycles, not years).
 *Refuted by:* a validity incident that the versioned system misses for longer than an unversioned benchmark, or findings from two criterion versions that cannot be reconciled by the declared notes.
 
 **H4-DQI is a candidate, not a register entry.** The data-quality index states its own
 hypothesis in `requirements/05-METHODS/dqi.md` and declares there that it is not held
-here; until it is admitted with a documented change it binds nothing (D-05, D-11).
+here; until it is admitted with a documented change it binds nothing ([D-05](DOCTRINE.md#d-05), [D-11](DOCTRINE.md#d-11)).
 
 The list is open. A new doctrinal claim enters the document with its hypothesis — or with an explicit note that it is conceptual rather than empirical.
 
@@ -160,10 +160,10 @@ The list is open. A new doctrinal claim enters the document with its hypothesis 
 
 Large information systems live at the intersection of **computer science**, **software engineering** and **information science**. Wattleflow deliberately integrates all three, with emphasis on the third — historically pushed out of development practice, though it underpins it:
 
-- **information theory** supplies a measure of uncertainty and the limits of transmission (P-06),
-- **cybernetics** supplies the feedback loop, regulation and the law of requisite variety (P-05),
+- **information theory** supplies a measure of uncertainty and the limits of transmission ([P-06](POSTULATE.md#p-06)),
+- **cybernetics** supplies the feedback loop, regulation and the law of requisite variety ([P-05](POSTULATE.md#p-05)),
 - **semiotics** supplies the relation of sign and meaning in an organisational context (P-08),
-- **the infological tradition** supplies the distinction between data and information — information is a function of data, prior knowledge and time of interpretation (P-07).
+- **the infological tradition** supplies the distinction between data and information — information is a function of data, prior knowledge and time of interpretation ([P-07](POSTULATE.md#p-07)).
 
 Each discipline and its contribution are set out in Volume I (§3).
 
@@ -185,10 +185,10 @@ Implementation follows ontology, not the other way round. Wattleflow defines an 
 
 Every significant architectural decision is traceable to grounded knowledge:
 
-- **design theory** — Parnas [1], SOLID, GRASP, GoF, Dijkstra, Law of Demeter, Stable Dependencies/Abstractions,
-- **engineering principles** — KISS, DRY, YAGNI, Open–Closed [69], Liskov [67][68], Principle of Least Astonishment, Occam’s razor,
-- **systems theory** — Simon [2], Conway, Gall, Lehman, Brooks [29],
-- **measurement theory** — the representation condition and scale types (P-09).
+- **design theory** — Parnas [[1](LITERATURE.md#ref-1)], SOLID, GRASP, GoF, Dijkstra, Law of Demeter, Stable Dependencies/Abstractions,
+- **engineering principles** — KISS, DRY, YAGNI, Open–Closed [[69](LITERATURE.md#ref-69)], Liskov [67][68], Principle of Least Astonishment, Occam’s razor,
+- **systems theory** — Simon [[2](LITERATURE.md#ref-2)], Conway, Gall, Lehman, Brooks [[29](LITERATURE.md#ref-29)],
+- **measurement theory** — the representation condition and scale types ([P-09](POSTULATE.md#p-09)).
 
 The catalogue and its application are in Volume I (§5); load-bearing claims, with their provenance and keys, are held in the postulate registry (`POSTULATE.md`).
 
@@ -198,7 +198,7 @@ The purpose of architecture is not only to produce software but to convey engine
 
 Architecture is therefore also an educational resource. Documentation, meanwhile, is a system with several audiences — architect, implementer, tester, security analyst, integrator, business user, auditor — each of which needs its own artefact. A single format for all audiences violates the law of requisite variety (P-05).
 
-More deeply: architecture is the externalised part of the theory a team holds about the system, so its educational value lies precisely in transmitting that theory (P-16).
+More deeply: architecture is the externalised part of the theory a team holds about the system, so its educational value lies precisely in transmitting that theory ([P-16](POSTULATE.md#p-16)).
 
 ## Architectural self-description
 
@@ -214,9 +214,9 @@ Semantic consistency serves both, and the doctrine of critical thinking holds fo
 
 ## Decisions
 
-The practice of recording decisions has a clear genealogy: the decision as a first-class object of architecture and the “evaporation of knowledge” when decisions go unrecorded [45]; a rich record template [44]; and the minimal format that made the practice sustainable [46].
+The practice of recording decisions has a clear genealogy: the decision as a first-class object of architecture and the “evaporation of knowledge” when decisions go unrecorded [[45](LITERATURE.md#ref-45)]; a rich record template [[44](LITERATURE.md#ref-44)]; and the minimal format that made the practice sustainable [[46](LITERATURE.md#ref-46)].
 
-In Wattleflow the requirement documentation (HLRQ, FRQ, NFRQ and analyses) carries the decisions: context, decision, cost and testimony live in the same record as the requirement they concern. The *Testimony* separates the proven from the aspirational; a criterion ties the decision to a machine-checkable rule, at which point the record becomes a source of conformance rules. The documentation decides; an agent does not take over the design without documented direction.
+In Wattleflow the requirement documentation (StRS, SyRS, NFRQ and analyses) carries the decisions: context, decision, cost and testimony live in the same record as the requirement they concern. The *Testimony* separates the proven from the aspirational; a criterion ties the decision to a machine-checkable rule, at which point the record becomes a source of conformance rules. The documentation decides; an agent does not take over the design without documented direction.
 
 The documentation serves three complementary aims:
 
@@ -228,13 +228,13 @@ The form of recording is a replaceable sub-method of the doctrinal function of r
 
 ## Functional requirements
 
-ISO/IEC/IEEE 29148 defines functional requirements as those describing system behaviour, the services it provides, its inputs and outputs, and its responses to external events. In Wattleflow that idea lives in [`requirements/02-FRQ/`](requirements/02-SyRS/SyRS-000-INDEX.md), where functional requirements are given unique identifiers, acceptance criteria, and traceability to business objectives and architecture.
+ISO/IEC/IEEE 29148 defines functional requirements as those describing system behaviour, the services it provides, its inputs and outputs, and its responses to external events. In Wattleflow that idea lives in [`requirements/02-SyRS/`](requirements/02-SyRS/SyRS-000-INDEX.md), where functional requirements are given unique identifiers, acceptance criteria, and traceability to business objectives and architecture.
 
 The main disciplines from 29148 that this document follows:
 
 - **Stakeholder needs and expectations** — functional requirements start from stakeholder interests and business objectives, not from technology.
 - **Elicitation and analysis** — requirements are gathered, analysed, clarified and prioritised ahead of architectural decisions.
-- **Documentation** — each FR carries a unique ID, description, rationale, acceptance criteria and traceability references, consistent with the index in `requirements/02-FRQ/`.
+- **Documentation** — each FR carries a unique ID, description, rationale, acceptance criteria and traceability references, consistent with the index in `requirements/02-SyRS/`.
 - **Verification and validation** — requirements are verified as correct, complete and verifiable, and validated against real user needs.
 - **Traceability and requirements management** — changes are tracked and mapped across the full requirements life cycle.
 
@@ -263,5 +263,5 @@ In this philosophy, architecture is not software documentation.
 ---
 
 ## References
-This document keeps no bibliography of its own (P-20: a rendering is not the source of truth). Keys [n] point to the consolidated table in `LITERATURE.md`; P-NN markers point to the postulate registry `POSTULATE.md` (claim with provenance, application and key).
+This document keeps no bibliography of its own ([P-20](POSTULATE.md#p-20): a rendering is not the source of truth). Keys [n] point to the consolidated table in `LITERATURE.md`; P-NN markers point to the postulate registry `POSTULATE.md` (claim with provenance, application and key).
 Citation standard: numeric keys (IEEE style), unique across all doctrinal documents and the paper, under an **append-only** rule — a new key goes only at the end of the table, since insertion would renumber citations across every document. 

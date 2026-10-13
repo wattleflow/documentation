@@ -11,8 +11,8 @@
 | **Distribucija** | `wattleflow-workflow` — clean core tier |
 | **Predmet** | `workflow/src/wattleflow/concrete/serialisation.py` |
 | **Djeca (SyRS)** | [`SyRS-SER-PAR`](../02-SyRS/SyRS-SRL-PAR-parser.md) · [ `SyRS-SER-FMT`](../02-SyRS/SyRS-SRL-FMT-formatter.md) · [`SyRS-SER-CNV`](../02-SyRS/SyRS-SRL-CNV-converter.md) |
-| **Sljedivost** | [`NFRQ-ORG-04`](../03-NFRQ/NFRQ-ORG-04-crosscutting-capability.md) · [`NFRQ-ORG-08`](../03-NFRQ/NFRQ-ORG-08-deduplication.md) · [`NFRQ-ORG-13`](../03-NFRQ/NFRQ-ORG-13-public-surface-is-the-interface.md) · [`NFRQ-SEC-03`](../03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md) · [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md) |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Sljedivost** | [`NFRQ-ORG-04`](../03-NFRQ/NFRQ-ORG-04-crosscutting-capability.md) · [`NFRQ-ORG-08`](../03-NFRQ/NFRQ-ORG-08-deduplication.md) · [`NFRQ-ORG-13`](../03-NFRQ/NFRQ-ORG-13-public-surface-is-the-interface.md) · [`NFRQ-SCR-03`](../03-NFRQ/NFRQ-SCR-03-supply-chain-locality.md) · [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 
@@ -220,29 +220,29 @@ Neočekivani kvar u parseru ili formateru najprije postaje greška te uloge, a z
 
 | oznaka | pravilo |
 |---|---|
-| **BR-PAR-01** | Parser po svakom pozivu prima točno jedan izvor podataka. Ako izvora nema, ako ih je više ili ako izvor nije upotrebljiv, parser odbija posao prije čitanja. |
-| **BR-PAR-02** | Pravila provjere izvora definirana su jednom i vrijede za sve parsere. |
-| **BR-FMT-01** | Formater vraća rezultat i ništa ne pohranjuje; pohrana je posao pozivatelja. |
-| **BR-FMT-02** | Formater bez ulaznih podataka odbija posao. Vrstu podataka provjerava samo ako je za format propisana. |
-| **BR-FMT-03** | Izgled izlaza određuje isključivo formater. |
+| **BR-PRS-01** | Parser po svakom pozivu prima točno jedan izvor podataka. Ako izvora nema, ako ih je više ili ako izvor nije upotrebljiv, parser odbija posao prije čitanja. |
+| **BR-PRS-02** | Pravila provjere izvora definirana su jednom i vrijede za sve parsere. |
+| **BR-FRM-01** | Formater vraća rezultat i ništa ne pohranjuje; pohrana je posao pozivatelja. |
+| **BR-FRM-02** | Formater bez ulaznih podataka odbija posao. Vrstu podataka provjerava samo ako je za format propisana. |
+| **BR-FRM-03** | Izgled izlaza određuje isključivo formater. |
 | **BR-CNV-01** | Konverter u svakom trenutku izvodi jednu strategiju. Bez strategije ili s neprikladnom strategijom odbija posao. |
 | **BR-CNV-02** | Konverter samo izvodi strategiju; ne upravlja uređajima ni pohranom. |
-| **BR-SER-01** | Neočekivani kvar prijavljuje se kao greška uloge u kojoj je nastao, uz sačuvan uzrok. Pozivatelj konvertera uvijek prima grešku konvertera, a uzrok pokazuje ulogu u kojoj je kvar nastao. |
-| **BR-SER-02** | Kodiranje znakova u tekstu može zadati pozivatelj; inače vrijedi zadano kodiranje formata. |
-| **BR-SER-03** | Mehanizam ne vodi vlastiti zapis aktivnosti; podaci o kvaru putuju u samoj grešci. |
-| **BR-SER-04** | Mehanizam ne ovisi o vanjskim bibliotekama ([`NFRQ-SEC-03`](../03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md)). |
-| **BR-SER-05** | Strategija se uvijek sastoji od jednog parsera i jednog formatera. |
-| **BR-SER-06** | Parser i formater međusobno su neovisni i mogu se zamijeniti zasebno. |
+| **BR-SRL-01** | Neočekivani kvar prijavljuje se kao greška uloge u kojoj je nastao, uz sačuvan uzrok. Pozivatelj konvertera uvijek prima grešku konvertera, a uzrok pokazuje ulogu u kojoj je kvar nastao. |
+| **BR-SRL-02** | Kodiranje znakova u tekstu može zadati pozivatelj; inače vrijedi zadano kodiranje formata. |
+| **BR-SRL-03** | Mehanizam ne vodi vlastiti zapis aktivnosti; podaci o kvaru putuju u samoj grešci. |
+| **BR-SRL-04** | Mehanizam ne ovisi o vanjskim bibliotekama ([`NFRQ-SCR-03`](../03-NFRQ/NFRQ-SCR-03-supply-chain-locality.md)). |
+| **BR-SRL-05** | Strategija se uvijek sastoji od jednog parsera i jednog formatera. |
+| **BR-SRL-06** | Parser i formater međusobno su neovisni i mogu se zamijeniti zasebno. |
 
 ## 4. Nefunkcionalni zahtjevi
 
 | zahtjev | što znači za ovaj mehanizam |
 |---|---|
-| [`NFRQ-SEC-03`](../03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md) | mehanizam koristi samo vlastiti kod frameworka i standardnu biblioteku (`BR-SER-04`) |
+| [`NFRQ-SCR-03`](../03-NFRQ/NFRQ-SCR-03-supply-chain-locality.md) | mehanizam koristi samo vlastiti kod frameworka i standardnu biblioteku (`BR-SRL-04`) |
 | [`NFRQ-ORG-04`](../03-NFRQ/NFRQ-ORG-04-crosscutting-capability.md) | tri uloge pripadaju zatvorenom popisu uloga frameworka; konverter nije nova vrsta elementa |
 | [`NFRQ-ORG-08`](../03-NFRQ/NFRQ-ORG-08-deduplication.md) | zajednička pravila (provjera izvora, prijava grešaka) definirana su na jednom mjestu |
 | [`NFRQ-ORG-13`](../03-NFRQ/NFRQ-ORG-13-public-surface-is-the-interface.md) | ono što je javno dostupno čini sučelje mehanizma |
-| [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md) | mehanizam radi bez detaljnog zapisa aktivnosti (`BR-SER-03`) |
+| [`NFRQ-OBS-01`](../03-NFRQ/NFRQ-OBS-01-audit-levels.md) | mehanizam radi bez detaljnog zapisa aktivnosti (`BR-SRL-03`) |
 
 ## 5. Verifikacija
 
@@ -257,18 +257,18 @@ Ovaj zapis nema vlastite kriterije provjere. Poslovna pravila provjeravaju se kr
 | UC1 | ✔ | ✔ | ✔ |
 | UC2 | | | ✔ |
 | UC3 | ✔ | ✔ | |
-| BR-PAR-01, BR-PAR-02 | ✔ | | |
-| BR-FMT-01, BR-FMT-02, BR-FMT-03 | | ✔ | |
-| BR-CNV-01, BR-CNV-02, BR-SER-05 | | | ✔ |
-| BR-SER-01, BR-SER-03, BR-SER-04 | ✔ | ✔ | ✔ |
-| BR-SER-02, BR-SER-06 | ✔ | ✔ | |
+| BR-PRS-01, BR-PRS-02 | ✔ | | |
+| BR-FRM-01, BR-FRM-02, BR-FRM-03 | | ✔ | |
+| BR-CNV-01, BR-CNV-02, BR-SRL-05 | | | ✔ |
+| BR-SRL-01, BR-SRL-03, BR-SRL-04 | ✔ | ✔ | ✔ |
+| BR-SRL-02, BR-SRL-06 | ✔ | ✔ | |
 
 ## 6. Otvoreno
 
 1. Narativ jamči zadanu brzinu i ponovljive rezultate, a nijedan nefunkcionalni zahtjev (§4) to još ne pokriva.
 2. **Taksonomija formata.** Narativ kaže da svi parovi koriste zajedničku taksonomiju formata, a generički sloj je ne sadrži. Treba odlučiti gdje se taksonomija vodi (generički sloj ili [`SyRS-CNV-01…07`](../02-SyRS/SyRS-000-INDEX.md)).
-3. **Provjera vrste podataka u formateru ne radi.** Formater kojem je propisana vrsta podataka (BR-FMT-02) trenutačno uvijek javlja grešku, jer provjeru ne može pokrenuti. Kod treba ispraviti (SyRS).
-4. **Pravilo BR-SER-05** generički sloj ne nameće: strategija ne mora sadržavati par parser–formater, nego samo izvesti pretvorbu. Treba potvrditi je li pravilo obveza za sve strategije ili preporuka.
+3. **Provjera vrste podataka u formateru ne radi.** Formater kojem je propisana vrsta podataka (BR-FRM-02) trenutačno uvijek javlja grešku, jer provjeru ne može pokrenuti. Kod treba ispraviti (SyRS).
+4. **Pravilo BR-SRL-05** generički sloj ne nameće: strategija ne mora sadržavati par parser–formater, nego samo izvesti pretvorbu. Treba potvrditi je li pravilo obveza za sve strategije ili preporuka.
 5. Naziv sloja u naslovima dijagrama („Data conversion") je prijedlog.
 
 ## 7. Reference
@@ -284,10 +284,9 @@ Ovaj zapis nema vlastite kriterije provjere. Poslovna pravila provjeravaju se kr
 
 | Verzija | Datum | Promjena |
 |---|---|---|
-| v0.0.9 | 2026-10-11 | Oznaka bez broja (`StRS-SERIALISATION`). Usklađeno s kodom: pozivatelj uvijek prima grešku konvertera, a greške parsera, formatera i strategije stižu kao uzrok (UC1, BR-SER-01, tok, tablica grešaka); dodana greška strategije; izvor mora biti upotrebljiv (BR-PAR-01). Dijagrami: naslov „Serialisation: Data conversion", alias granice sustava. Uklonjene poveznice na obrisani HLRQ-01. *Otvoreno*: taksonomija formata, provjera vrste podataka u formateru, obveznost BR-SER-05, novi nadređeni zapis. |
-| v0.0.8 | 2026-10-10 | Oznake usklađene s ISO/IEC/IEEE 29148: zapis `HLRQ-10` postaje `StRS-10` (specifikacija zahtjeva dionika), a djeca  `SyRS-SER-*` su zahtjevi sustava (SyRS). Sadržaj nepromijenjen. |
+| v0.0.9 | 2026-10-11 | Oznaka bez broja (`StRS-SERIALISATION`). Usklađeno s kodom: pozivatelj uvijek prima grešku konvertera, a greške parsera, formatera i strategije stižu kao uzrok (UC1, BR-SRL-01, tok, tablica grešaka); dodana greška strategije; izvor mora biti upotrebljiv (BR-PRS-01). Dijagrami: naslov „Serialisation: Data conversion", alias granice sustava. *Otvoreno*: taksonomija formata, provjera vrste podataka u formateru, obveznost BR-SRL-05, novi nadređeni zapis. |
 | v0.0.7 | 2026-10-10 | Zapis pročišćen za široku publiku: tehnički detalji (nazivi iz koda, komponentni dijagram, tablice formata, stanje testova i odstupanja koda od dizajna) premješteni u zahtjeve sustava; poslovna pravila preformulirana jednostavnim jezikom; dodani okidači i alternativni tokovi korisničkih slučajeva te tablica praćenja grešaka. |
-| v0.0.6 | 2026-10-10 | Struktura usklađena s ISO/IEC/IEEE 29148; dodana pravila `BR-SER-05`, `BR-SER-06`, `BR-FMT-03`; ispravljeni dijagrami. |
+| v0.0.6 | 2026-10-10 | Struktura usklađena s ISO/IEC/IEEE 29148; dodana pravila `BR-SRL-05`, `BR-SRL-06`, `BR-FRM-03`; ispravljeni dijagrami. |
 | v0.0.5 | 2026-10-10 | Zapis prepisan: narativ kao Problem · Rješenje · Smjer, dekompozicija s dijagramima konteksta, slučajeva korištenja, komponenti i toka (`wattleflow-docs` §3h). |
 | v0.0.5 | 2026-10-06 | Kuka parsera je zaštićena `_deserialise` (`NFRQ-ORG-13` k.2). |
 | v0.0.5 | 2026-10-02 | `Verzija` zamjenjuje `Status`; prijašnji status: Provedeno u kodu — lagana razina |

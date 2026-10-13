@@ -46,7 +46,7 @@ role**. A sub-system name is not `msg`; a phase is not `scope`; a sentence is no
 5. No audit call unpacks the caller's dictionary (`**kwargs`) into its arguments — a caller's key
    (`msg`, `exc_info`, `extra`, `stacklevel`) would otherwise become a control signal or break
    the call. The criterion is **shared** with
-   [`NFRQ-SEC-06`](NFRQ-SEC-06-audit-confidentiality.md) c.1 and is **cited here, not
+   [`NFRQ-SCR-06`](NFRQ-SCR-06-audit-confidentiality.md) c.1 and is **cited here, not
    duplicated**.
 6. Keys come from a controlled vocabulary (`tools/dictionary.json → audit.fields`, which records
    the question each one answers); **a new key enters with a documented change**.
@@ -69,7 +69,7 @@ Two exceptions to c.1, both in the foundation layer:
 
 The `step` axis is **not consolidated**: alongside phase members, `.value` forms and free
 literals also occur (`step="completed"`, `step="jar-resolved"`). That is a **worklist, not a
-state**; the measured state is read from the conformance snapshot (D-13), not from this text.
+state**; the measured state is read from the conformance snapshot ([D-13](../../DOCTRINE.md#d-13)), not from this text.
 
 `Event` is a large register; a minority of members have a `value` differing from their `name`,
 and those are **multi-word labels, not errors** — `.name` is the stable identifier, `.value` is
@@ -79,9 +79,9 @@ the **rendering** and may change (D-13).
 
 | Principle | Implication |
 |---|---|
-| Faceted classification (Ranganathan; same anchor as [`NFRQ-APX-01`](NFRQ-APX-01-facet-order.md)) | the record is searched **by facet** (operation × phase × sub-system), not by full text |
+| Faceted classification (Ranganathan; same anchor as [`NFRQ-APN-01`](NFRQ-APN-01-facet-order.md)) | the record is searched **by facet** (operation × phase × sub-system), not by full text |
 | Structured logging (Chen–Jiang) | a machine-readable field survives as far as the SIEM; a sentence does not |
-| Controlled vocabulary (D-12) | `Event` is the event register; a literal in `msg` bypasses it |
+| Controlled vocabulary ([D-12](../../DOCTRINE.md#d-12)) | `Event` is the event register; a literal in `msg` bypasses it |
 | Identifier stability (D-13) | `.name` is the member name; `.value` is the rendering |
 | Least Astonishment | the same key name means the same thing in every class — otherwise a `component=` filter returns an incomplete result |
 

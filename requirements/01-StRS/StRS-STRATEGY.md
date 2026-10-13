@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/strategy.py`: `Strategy`, `StrategyGenerate`, `StrategyCreate`, `StrategyRead`, `StrategyWrite` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md) — izvodi strategiju stvaranja · [`StRS-REPOSITORY`](StRS-REPOSITORY.md) — izvodi strategije čitanja i pisanja · [`StRS-DOCUMENT`](StRS-DOCUMENT.md) — dokument koji strategije stvaraju, čitaju i zapisuju · [`StRS-DRIVER`](StRS-DRIVER.md) — driver koji strategije koriste · [`SyRS-STR`](../02-SyRS/SyRS-STR-strategy.md) — prethodni zapis iste komponente · [`StRS-FACTORY`](StRS-FACTORY.md) — Workflow Factory koja sastavlja strategije |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 
@@ -241,7 +241,7 @@ Matrica se popunjava kad se odrede djeca (§6).
 | [`StRS-REPOSITORY`](StRS-REPOSITORY.md) | repozitorij koji izvodi strategije čitanja i pisanja |
 | [`StRS-DOCUMENT`](StRS-DOCUMENT.md) | dokument koji strategije stvaraju, čitaju i zapisuju |
 | [`StRS-DRIVER`](StRS-DRIVER.md) | driver koji strategije koriste |
-| [`FRQ-STR`](../02-SyRS/SyRS-STR-strategy.md) | prethodni zapis iste komponente |
+| [`SyRS-STR-strategy`](../02-SyRS/SyRS-STR-strategy.md) | zahtjevi sustava iste komponente |
 | [`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md) | opseg bilježenja |
 | `concrete/strategy.py` | modul, predmet zapisa |
 

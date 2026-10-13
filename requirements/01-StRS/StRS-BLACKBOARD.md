@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/blackboard.py`: `GenericBlackboard`, `BlackboardState`, `BlackboardAction` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-PROCESSOR`](StRS-PROCESSOR.md) — procesor je vlasnik Blackboarda · [`StRS-PIPELINE`](StRS-PIPELINE.md) — pipelineovi čitaju i pišu dokumente · [`StRS-FACTORY`](StRS-FACTORY.md) — sastavlja Blackboard · [`StRS-STATE-MACHINE`](StRS-STATE-MACHINE.md) — stroj stanja · [`StRS-DOCUMENT`](StRS-DOCUMENT.md) — dokument koji Blackboard drži · [`StRS-DRIVER`](StRS-DRIVER.md) — driver koji koriste strategije repozitorija · [`StRS-REPOSITORY`](StRS-REPOSITORY.md) — repozitoriji kojima Blackboard predaje dokumente · [`StRS-STRATEGY`](StRS-STRATEGY.md) — strategija stvaranja koju Blackboard izvodi |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5, §2.6) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5, §2.6) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 
@@ -107,7 +107,7 @@ Blackboard --> Processor : flush outcome
 | **Okidač** | Pokretanje toka |
 | **Preduvjet** | Konfiguracija navodi zadani procesor i njegov Blackboard |
 | **Glavni tijek** | 1. Workflow Factory iz konfiguracije čita Blackboard. 2. Blackboard se stvara s konfiguriranom strategijom stvaranja (stanje IDLE). 3. Nakon registracije kod procesora (UC2) Workflow Factory Blackboardu registrira repozitorije (stanje READY). |
-| **Alternativni tok** | Strategija stvaranja ili repozitorij nisu ispravni: greška, Blackboard se ne sastavlja ili repozitorij nije dodan. Repozitorij je već registriran: upozorenje, ponovna registracija se zanemaruje. Konfiguracija ne navodi repozitorije: Blackboard ostaje u stanju IDLE i ne prihvaća pisanje (BR-BB-04). |
+| **Alternativni tok** | Strategija stvaranja ili repozitorij nisu ispravni: greška, Blackboard se ne sastavlja ili repozitorij nije dodan. Repozitorij je već registriran: upozorenje, ponovna registracija se zanemaruje. Konfiguracija ne navodi repozitorije: Blackboard ostaje u stanju IDLE i ne prihvaća pisanje (BR-BLC-04). |
 | **Ishod** | Blackboard s repozitorijima, registriran kod procesora, spreman za obradu (stanje READY) |
 
 #### UC2 — Registriraj Blackboard
@@ -326,20 +326,20 @@ Svaka greška nosi uzrok. Blackboard bilježi svoje događaje: sastavljanje, reg
 
 | oznaka | pravilo |
 |---|---|
-| **BR-BB-01** | Blackboard čuva dokumente samo za trajanja sesije; trajnu pohranu obavljaju repozitoriji. |
-| **BR-BB-02** | Blackboard ima točno jednu strategiju stvaranja dokumenata i ne zna kako ona radi. Stvaranje pokreće procesor; Blackboard ga sam ne pokreće. |
-| **BR-BB-03** | Blackboard ima jedan ili više repozitorija. Isti repozitorij ne registrira se dvaput. |
-| **BR-BB-04** | Dokumenti se ne mogu pisati dok nije registriran barem jedan repozitorij. |
-| **BR-BB-05** | Predaja šalje sve dokumente s platna svim repozitorijima i prazni platno. |
-| **BR-BB-06** | Predaja je potvrđena samo ako je platno imalo barem jedan dokument i ako je svaki repozitorij potvrdio svaki dokument. Ishod se javlja procesoru. |
-| **BR-BB-07** | Kada se predaja obavlja, tijekom ili nakon obrade, određuje konfiguracija. Ako konfiguracija ništa ne kaže, predaja se odgađa. |
-| **BR-BB-08** | Blackboard izvodi samo radnje dopuštene u trenutnom stanju. Nedopuštena radnja odbija se prije nego što promijeni sadržaj. |
-| **BR-BB-09** | Očišćen Blackboard ne prihvaća nove radnje. |
-| **BR-BB-10** | Prijelaz u stanje neuspjeha i čišćenje nikad ne javljaju grešku i smiju se ponoviti. |
-| **BR-BB-11** | Izvana se sadržaj platna može samo čitati; mijenja se isključivo radnjama Blackboarda. |
-| **BR-BB-12** | Pravila pohrane koja objavi procesor Blackboard prosljeđuje repozitorijima pri predaji. |
-| **BR-BB-13** | Kad Blackboard prestane postojati, čisti svoj sadržaj. |
-| **BR-BB-14** | Blackboard kod procesora registrira Workflow Factory. Procesor ima jedan Blackboard; nova registracija zamjenjuje prethodni. |
+| **BR-BLC-01** | Blackboard čuva dokumente samo za trajanja sesije; trajnu pohranu obavljaju repozitoriji. |
+| **BR-BLC-02** | Blackboard ima točno jednu strategiju stvaranja dokumenata i ne zna kako ona radi. Stvaranje pokreće procesor; Blackboard ga sam ne pokreće. |
+| **BR-BLC-03** | Blackboard ima jedan ili više repozitorija. Isti repozitorij ne registrira se dvaput. |
+| **BR-BLC-04** | Dokumenti se ne mogu pisati dok nije registriran barem jedan repozitorij. |
+| **BR-BLC-05** | Predaja šalje sve dokumente s platna svim repozitorijima i prazni platno. |
+| **BR-BLC-06** | Predaja je potvrđena samo ako je platno imalo barem jedan dokument i ako je svaki repozitorij potvrdio svaki dokument. Ishod se javlja procesoru. |
+| **BR-BLC-07** | Kada se predaja obavlja, tijekom ili nakon obrade, određuje konfiguracija. Ako konfiguracija ništa ne kaže, predaja se odgađa. |
+| **BR-BLC-08** | Blackboard izvodi samo radnje dopuštene u trenutnom stanju. Nedopuštena radnja odbija se prije nego što promijeni sadržaj. |
+| **BR-BLC-09** | Očišćen Blackboard ne prihvaća nove radnje. |
+| **BR-BLC-10** | Prijelaz u stanje neuspjeha i čišćenje nikad ne javljaju grešku i smiju se ponoviti. |
+| **BR-BLC-11** | Izvana se sadržaj platna može samo čitati; mijenja se isključivo radnjama Blackboarda. |
+| **BR-BLC-12** | Pravila pohrane koja objavi procesor Blackboard prosljeđuje repozitorijima pri predaji. |
+| **BR-BLC-13** | Kad Blackboard prestane postojati, čisti svoj sadržaj. |
+| **BR-BLC-14** | Blackboard kod procesora registrira Workflow Factory. Procesor ima jedan Blackboard; nova registracija zamjenjuje prethodni. |
 
 ## 4. Nefunkcionalni zahtjevi
 
@@ -347,8 +347,8 @@ Povezivanje s NFRQ zapisima je otvoreno (§6). Iz narativa i koda proizlaze ove 
 
 | kakvoća | što znači za Blackboard |
 |---|---|
-| dosljednost | nedopuštena radnja ne mijenja sadržaj (BR-BB-08) |
-| sigurnost gašenja | čišćenje i prijelaz u neuspjeh smiju se ponavljati bez greške (BR-BB-10) |
+| dosljednost | nedopuštena radnja ne mijenja sadržaj (BR-BLC-08) |
+| sigurnost gašenja | čišćenje i prijelaz u neuspjeh smiju se ponavljati bez greške (BR-BLC-10) |
 | praćenje | Blackboard bilježi sastavljanje, registraciju, greške i gašenje |
 | modularnost | Blackboard može registrirati jedan ili više različitih repozitorija |
 | proširivost | programer može pisati nove ili proširivati postojeće Blackboarde za specifične potrebe tokova podataka |
@@ -385,7 +385,7 @@ Matrica se popunjava kad se odrede djeca (§6).
 | Verzija | Datum | Promjena |
 |---|---|---|
 | v0.0.5 | 2026-10-11 | Redoslijed sastavljanja usklađen s kodom Workflow Factoryja: Blackboard se stvara sa strategijom stvaranja (IDLE), registrira kod procesora, pa dobiva repozitorije (READY); bez repozitorija ostaje u IDLE (UC1, UC2, tok). Poveznice na StRS-FACTORY i StRS-STATE-MACHINE. |
-| v0.0.4 | 2026-10-11 | Oznaka bez broja (`StRS-BLACKBOARD`). Blackboard sastavlja i registrira Workflow Factory (UC1, UC2, BR-BB-14, dijagrami). Granice sustava u dijagramima dobile alias (sukob naziva s komponentom). Dodane poveznice na StRS-PIPELINE. |
-| v0.0.3 | 2026-10-10 | Registracija Blackboarda izdvojena u zaseban korisnički slučaj UC2 (Workflow primarni, Procesor podupirući akter); dodano pravilo BR-BB-14; ostali slučajevi prenumerirani (UC2–UC6 → UC3–UC7). |
+| v0.0.4 | 2026-10-11 | Oznaka bez broja (`StRS-BLACKBOARD`). Blackboard sastavlja i registrira Workflow Factory (UC1, UC2, BR-BLC-14, dijagrami). Granice sustava u dijagramima dobile alias (sukob naziva s komponentom). Dodane poveznice na StRS-PIPELINE. |
+| v0.0.3 | 2026-10-10 | Registracija Blackboarda izdvojena u zaseban korisnički slučaj UC2 (Workflow primarni, Procesor podupirući akter); dodano pravilo BR-BLC-14; ostali slučajevi prenumerirani (UC2–UC6 → UC3–UC7). |
 | v0.0.2 | 2026-10-10 | Workflow sastavlja Blackboard iz konfiguracije i registrira ga kod procesora (UC1, kontekst, tok); programer razvija i održava Blackboarde (novi UC6). |
 | v0.0.1 | 2026-10-10 | Prvi zapis, izveden iz narativa autora i koda `concrete/blackboard.py`. |

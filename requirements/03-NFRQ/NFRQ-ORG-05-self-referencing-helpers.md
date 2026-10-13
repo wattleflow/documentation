@@ -48,7 +48,7 @@ renamed (`cls` → `kind`/`expected`). That is a separate API decision; until th
 
 Static AST check (c.1, c.2) plus `prohibited_standalone` (c.3, shared with ORG-02).
 **Criteria 1 and 2 are not in `wem_lint` today** — a candidate for extension; until then a
-declared blind spot (D-11). The build fails only once the criterion is automated.
+declared blind spot ([D-11](../../DOCTRINE.md#d-11)). The build fails only once the criterion is automated.
 
 ## 4. Reference pattern and migration
 
@@ -56,7 +56,7 @@ Pattern: `MailAttachmentLayout` in `strategies/documents/mail.py` — `resolve`/
 `@classmethod` (`cls.FLAT`, `cls.label`) alongside a pure `label` as `@staticmethod`.
 
 Enforcement is a piecewise legacy migration. **The candidate list is derived by AST search, not
-transcribed into this text** (D-13, `CONFORMANCE.md` §9); its state is tracked in
+transcribed into this text** ([D-13](../../DOCTRINE.md#d-13), `CONFORMANCE.md` §9); its state is tracked in
 `workflow/TODO.md`. A separate form of the same rule — **private module
 functions with their module constants** — is closed in `wattleflow-workflow` and
 `blackwattle`; the remainder is `wattleflow-cad`.
@@ -70,7 +70,7 @@ they would become enum members.
 |---|---|
 | Information Hiding (Parnas) | constants and sibling methods sit behind the class's qualified namespace, not scattered across the module |
 | GRASP — High Cohesion, Pure Fabrication | related stateless helpers plus their constants form one cohesive unit |
-| Open–Closed [69] / Liskov [67][68] | `cls` resolves the member through a subclass; a hard-coded name breaks overriding |
+| Open–Closed [[69](../../LITERATURE.md#ref-69)] / Liskov [67][68] | `cls` resolves the member through a subclass; a hard-coded name breaks overriding |
 | Least Astonishment | the decorator choice **expresses intent**: `static` = pure, `classmethod` = uses class state |
 | DRY / Once and Only Once | the class name is not repeated in the body → renaming happens in one place |
 

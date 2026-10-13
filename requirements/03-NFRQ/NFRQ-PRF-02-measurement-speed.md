@@ -7,12 +7,12 @@
 | **Version** | v0.0.5 |
 | **Quality (25010)** | Performance efficiency — time behaviour |
 | **Enforcement** | **benchmark**, rerun when a measurement mechanism changes — `2026-09-24-measurement-explicit-vs-audit` |
-| **`[M]` charter** | [`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md) |
+| **`[M]` charter** | [`NFRQ-DFN-02`](NFRQ-DFN-02-measurement-charter.md) |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
 
 > **Demarcation.** [`NFRQ-OBS-04`](NFRQ-OBS-04-metric-admissibility.md) governs the **shape** of a
 > metric; [`NFRQ-OBS-03`](NFRQ-OBS-03-audit-ownership-volume.md) the volume of audit records;
-> `HLRQ-18` BR-07 that a measurement fault never stops
+> `StRS-RESOURCE` BR-07 that a measurement fault never stops
 > work. This entry governs the **speed** of measuring: what it may cost.
 
 ## 1. Statement
@@ -36,7 +36,7 @@ in aggregate, not one by one.
    operation, a batch or the pass is measured instead (per-row measurement is excluded, as in
    [`NFRQ-OBS-03`](NFRQ-OBS-03-audit-ownership-volume.md)).
 3. **Declared cost.** Every measurement mechanism declares `c` and `c_off`, measured by the method
-   of §4, on a stated platform (D-10).
+   of §4, on a stated platform ([D-10](../../DOCTRINE.md#d-10)).
 4. **Off is nearly free.** A capability present on every framework object costs nothing where it
    is not called, and `c_off ≤ 200 ns` where it is.
 5. **Independent of the logger.** Measuring does not require an open log level. The cost of an

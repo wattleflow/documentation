@@ -43,6 +43,7 @@ blind_spot: >
 
 ## Članci doktrine
 
+<a id="d-02"></a>
 ### D-02 — Kaskada slojeva
 
 - Sloj: filozofija
@@ -56,7 +57,7 @@ tog sloja.
 
 **Opravdanje**
 
-- Postulati: P-14
+- Postulati: [P-14](POSTULATE.md#p-14)
 - Literatura: 44, 45
 
 **Provedba**
@@ -70,6 +71,7 @@ Metoda koja propisuje neodlučeno = nalaz. Presedan: akronimsko lint pravilo sto
 na `WARNING` s deklariranim waiverom dok je otvoren, umjesto da
 provede jednu stranu.
 
+<a id="d-03"></a>
 ### D-03 — Promjena uz dokumentirane izmjene
 
 - Sloj: filozofija
@@ -97,6 +99,7 @@ Izmjena registra bez dokumentirane izmjene = nalaz. **Nije automatizirano** — 
 nalazi se vode u `workflow/TODO.md` (npr. razlamanje registara
 2026-08-24 provedeno je bez zapisa).
 
+<a id="d-05"></a>
 ### D-05 — Tvrdnja bez svjedočanstva je aspiracija
 
 - Sloj: filozofija
@@ -111,7 +114,7 @@ opravdanje.
 
 **Opravdanje**
 
-- Postulati: P-02
+- Postulati: [P-02](POSTULATE.md#p-02)
 
 **Provedba**
 
@@ -122,6 +125,7 @@ Polje *Svjedočanstvo* u zapisu zahtjeva; oznaka „aspiracija" u policyju i reg
 
 Tvrdnja navedena kao stanje, bez svjedočanstva = nalaz.
 
+<a id="d-07"></a>
 ### D-07 — Povjerenje se dokazuje
 
 - Sloj: filozofija
@@ -135,12 +139,12 @@ svaka politika.
 
 **Opravdanje**
 
-- Postulati: P-17
+- Postulati: [P-17](POSTULATE.md#p-17)
 - Literatura: 23
 
 **Provedba**
 
-[`NFRQ-SEC-01/02/03`](requirements/03-NFRQ/NFRQ-000-INDEX.md) (nasljednici povučenog `NFRQ-ORG-06`);
+[`NFRQ-SCR-01/02/03`](requirements/03-NFRQ/NFRQ-000-INDEX.md) (nasljednici povučenog `NFRQ-ORG-06`);
 `ARCHITECTURE.md` §7; lint pravila `clean_core_imports` (**ERROR**) i
 `distribution_manifest` (`WARNING`).
 
@@ -148,6 +152,7 @@ svaka politika.
 
 Modul čiji import-closure izlazi iz tiera vlastite distribucije ruši build.
 
+<a id="d-09"></a>
 ### D-09 — Vektorska konformnost
 
 - Sloj: metoda
@@ -162,7 +167,7 @@ indeksi su isključivo dijagnostički.
 
 **Opravdanje**
 
-- Postulati: P-09, P-10
+- Postulati: [P-09](POSTULATE.md#p-09), [P-10](POSTULATE.md#p-10)
 - Literatura: 16, 22, 35
 
 **Provedba**
@@ -174,6 +179,7 @@ ukupnu ocjenu.
 
 Pokušaj uvođenja skalara ili gatea na indeksu = nalaz.
 
+<a id="d-10"></a>
 ### D-10 — Reproducibilnost nalaza
 
 - Sloj: metoda
@@ -203,6 +209,7 @@ kao C-snimka; run s greškama kao finding-vektor, nikad kao C-snimka.
 
 Nalaz bez trojke se ne prihvaća kao nalaz.
 
+<a id="d-11"></a>
 ### D-11 — Deklariranje slijepe pjege
 
 - Sloj: metoda
@@ -216,7 +223,7 @@ smije čitati kao čisto.
 
 **Opravdanje**
 
-- Postulati: P-18
+- Postulati: [P-18](POSTULATE.md#p-18)
 - Literatura: 31, 32
 
 **Provedba**
@@ -229,6 +236,7 @@ registrima zahtjeva i u `workflow/TODO.md`.
 Deklaracija koja nestane bez zapisa = nalaz. Usporedba deklaracija između dviju
 snimki **nije automatizirana** — i to je deklarirana slijepa pjega.
 
+<a id="d-12"></a>
 ### D-12 — Kontrolirani vokabulari
 
 - Sloj: metoda
@@ -243,7 +251,7 @@ Sukob značenja razrješava autor, ne prešutan izbor u tekstu.
 
 **Opravdanje**
 
-- Postulati: P-08
+- Postulati: [P-08](POSTULATE.md#p-08)
 - Literatura: 38, 51
 
 **Provedba**
@@ -257,6 +265,7 @@ Dva primjerka istog registra = nalaz. Presedan: `workflow/hr/LITERATURA.md` je
 ključevima 56/57 dodjeljivao druge radove nego korijenski registar i povučen je
 2026-08-24, zajedno s `workflow/hr/POSTULATI.md`.
 
+<a id="d-13"></a>
 ### D-13 — Prikaz nije izvor istine
 
 - Sloj: metoda
@@ -270,7 +279,7 @@ publikom. Brojevi nalaza se ne navode u prozi nego se referira snimka.
 
 **Opravdanje**
 
-- Postulati: P-20, P-08
+- Postulati: [P-20](POSTULATE.md#p-20), P-08
 - Bilješka: ISO/IEC/IEEE 42010 (pogled/gledište) kao pod-metoda
 
 **Provedba**
@@ -296,7 +305,7 @@ sadržaj i dalje živi, naveden je nositelj.
 | `D-01` | Model odlučivanja | Provedba je bila polje *Temelji*, kojeg u zapisima nema; evaluacija („udio odluka s popunjenim Temeljima") stoga nemjerljiva. Iskaz je uz to opis stanja, ne norma. | — |
 | `D-04` | Iteracija pod kaskadom | Iskaz je konjunkcija `D-02` i `D-03`; vlastitog mehanizma nema. | `D-02`, `D-03` |
 | `D-06` | Opovrgljivost tvrdnje | Provedba je bila sekcija *Hipoteze* u `PHILOSOPHY.md`; `H4-DQI` u nju nikad nije upisan, pa mehanizam ne stoji. | `PHILOSOPHY.md` §Hypotheses (praksa, ne norma) |
-| `D-08` | Mjera i valjanost | Protokol `V1–V6` je metoda, ne norma; evaluacija se pozivala na `H4-DQI`, kandidata izvan registra. | `METHODOLOGY.md` §5.1, `NFRQ-DEF-02` |
+| `D-08` | Mjera i valjanost | Protokol `V1–V6` je metoda, ne norma; evaluacija se pozivala na `H4-DQI`, kandidata izvan registra. | `METHODOLOGY.md` §5.1, `NFRQ-DFN-02` |
 | `D-14` | Evidencija odluka | Ista norma već stoji na metodološkom i policy sloju; ovdje je bila treći primjerak (kršenje `D-13`). Revizija forme evidencije odluka je odgođena. | `METHODOLOGY.md` §7.1, `DECISIONS.md` §8 |
 | `D-15` | Politika na snazi | Nosivi dio („bez mehanizma i signala = aspiracija") sada je klauzula u `D-05`; ostatak je duplikat. | `D-05` |
 | `D-16` | Dokumentacija kao sustav publika | Provedba je bila „matrica publika × artefakt (kandidat)" — artefakt ne postoji. | `PHILOSOPHY.md` (kao teza) |

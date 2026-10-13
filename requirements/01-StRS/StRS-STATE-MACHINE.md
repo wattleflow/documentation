@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/state_machine.py`: `StateMachine`, `GuardedStateMachine` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md), [`StRS-CONNECTION`](StRS-CONNECTION.md), [`StRS-DRIVER`](StRS-DRIVER.md), [`StRS-PROCESSOR`](StRS-PROCESSOR.md) — vlasnici stroja; svaki opisuje vlastita stanja i prijelaze |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 

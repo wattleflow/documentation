@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/memento_store.py`: `MementoStore`, `MemoryMementoStore`, `FileMementoStore`, `MementoStoreException` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-MEMENTO`](StRS-MEMENTO.md) — snimka koju pohrana čuva · [`StRS-PROCESSOR`](StRS-PROCESSOR.md) — zapisuje, čita i briše kontrolnu točku · [`StRS-FACTORY`](StRS-FACTORY.md) — sastavlja pohranu iz konfiguracije |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 

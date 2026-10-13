@@ -6,11 +6,11 @@
 |---|---|
 | **Version** | v0.0.5 |
 | **Quality (25010)** | Performance efficiency — time behaviour, resource utilisation |
-| **Enforcement** | **not measured** by `wem_lint` — unit test per component; declared blind spot (D-11) |
+| **Enforcement** | **not measured** by `wem_lint` — unit test per component; declared blind spot ([D-11](../../DOCTRINE.md#d-11)) |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
-| **Raised by** | `HLRQ-19` |
+| **Raised by** | `StRS-WORD` |
 
-> **Demarcation.** `HLRQ-18` observes load **at run
+> **Demarcation.** `StRS-RESOURCE` observes load **at run
 > time**; [`NFRQ-OBS-04`](NFRQ-OBS-04-metric-admissibility.md) governs metrics. This entry is a
 > **design property of code**: how work grows with one item's size.
 
@@ -26,7 +26,7 @@ size of that item, unless a super-linear cost is declared with its reason and bo
 2. **Measured by work, not by clock.** The test counts a deterministic unit of work (objects built,
    elements visited) for an input of size *n*; the count stays within a constant multiple of *n*.
 3. **`[M]`** Ratio of work at *k·n* to work at *n* — **diagnostic, not a gate**. Charter:
-   [`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md).
+   [`NFRQ-DFN-02`](NFRQ-DFN-02-measurement-charter.md).
 4. **Declared exception.** A super-linear step names why it is needed and the largest input it is
    meant for.
 
@@ -34,7 +34,7 @@ size of that item, unless a super-linear cost is declared with its reason and bo
 
 Unit test with a work counter; confirmed by a mutation reintroducing the super-linear step.
 
-**Witness (D-05):** the Word reader — 40 000 paragraph objects for 200 paragraphs before
+**Witness ([D-05](../../DOCTRINE.md#d-05)):** the Word reader — 40 000 paragraph objects for 200 paragraphs before
  within 2 × *n* after.
 
 ## 4. Rationale

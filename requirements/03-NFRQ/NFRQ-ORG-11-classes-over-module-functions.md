@@ -6,7 +6,7 @@
 |---|---|
 | **Version** | v0.0.5 |
 | **Quality (25010)** | Maintainability — modularity, analysability, modifiability |
-| **Enforcement** | AST; **not in `wem_lint` yet** — declared blind spot (D-11). Candidate rule: `module_function_declaration` |
+| **Enforcement** | AST; **not in `wem_lint` yet** — declared blind spot ([D-11](../../DOCTRINE.md#d-11)). Candidate rule: `module_function_declaration` |
 | **Policy** | `STANDARDS.md` §2.9 · extends [`NFRQ-ORG-05`](NFRQ-ORG-05-self-referencing-helpers.md) |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
 
@@ -36,7 +36,7 @@ stays behind when the class is renamed.
 | `entry-point` | a signature a runtime, build tool or standard fixes as a function | `main()` of a script, `PyInit_<module>`, a `setup.py` hook |
 | `standard-signature` | an external API contracts a callable with a fixed signature that a method cannot satisfy without a bound instance | a `logging` filter function, a `signal` handler, a `key=` callable published for reuse |
 
-Any other reason enters this table **with a documented change** (D-12). "Shorter to write" is not a reason.
+Any other reason enters this table **with a documented change** ([D-12](../../DOCTRINE.md#d-12)). "Shorter to write" is not a reason.
 
 **Out of scope:** `tests/`, `tools/`, `examples/` and constants modules (`Enum` bodies and plain
 module constants — [`NFRQ-ORG-05`](NFRQ-ORG-05-self-referencing-helpers.md) §4).
@@ -51,7 +51,7 @@ module constants — [`NFRQ-ORG-05`](NFRQ-ORG-05-self-referencing-helpers.md) §
    category. *(machine-checkable)*
 4. A helper read by exactly one class is a method of that class; a helper read by several is a
    method of a qualified class. *(by review; the candidate list is derived by AST — one reader
-   or many — never transcribed into text, D-13)*
+   or many — never transcribed into text, [D-13](../../DOCTRINE.md#d-13))*
 
 ## 4. Verification
 
@@ -66,8 +66,8 @@ the check is run on demand and the result is a finding-vector, never a claim of 
 | Principle | Implication |
 |---|---|
 | Information hiding (Parnas) | a function without an owning class hides *whose* decision it implements; the class is the unit that names the secret |
-| Open/closed [69] & substitution [67][68] | a method can be overridden and reached through `cls`; a free function cannot — [`NFRQ-ORG-05`](NFRQ-ORG-05-self-referencing-helpers.md) c.1 already forbids the hard-coded class name for that reason |
-| Attack surface ([`NFRQ-SEC-02`](NFRQ-SEC-02-attack-surface.md)) | an importable function outside `__all__` is surface without a contract; `__all__` is the declared surface (`STANDARDS.md` §2.7) |
+| Open/closed [[69](../../LITERATURE.md#ref-69)] & substitution [67][68] | a method can be overridden and reached through `cls`; a free function cannot — [`NFRQ-ORG-05`](NFRQ-ORG-05-self-referencing-helpers.md) c.1 already forbids the hard-coded class name for that reason |
+| Attack surface ([`NFRQ-SCR-02`](NFRQ-SCR-02-attack-surface.md)) | an importable function outside `__all__` is surface without a contract; `__all__` is the declared surface (`STANDARDS.md` §2.7) |
 | Analysability | one rule for where a helper lives ([`NFRQ-ORG-01`](NFRQ-ORG-01-helper-locality.md) for the package, this entry for the class) removes a per-case judgement |
 | Reference standard: ISO/IEC 25010 — Maintainability (modularity, analysability, modifiability) | |
 
@@ -82,4 +82,4 @@ language.
 
 | Version | Date | Change |
 |---|---|---|
-| v0.0.5 | 2026-10-02 | `Version` replaces `Status`; previous status: Proposal (Draft, 2026-09-19) — introduced by  **the identifier is provisional** until a documented change admits it it (D-03) |
+| v0.0.5 | 2026-10-02 | `Version` replaces `Status`; previous status: Proposal (Draft, 2026-09-19) — introduced by  **the identifier is provisional** until a documented change admits it it ([D-03](../../DOCTRINE.md#d-03)) |

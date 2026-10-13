@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Version** | v0.0.5 |
-| **Quality (25010)** | Maintainability — analysability; Security — confidentiality (attack surface, [`NFRQ-SEC-02`](NFRQ-SEC-02-attack-surface.md)) |
+| **Quality (25010)** | Maintainability — analysability; Security — confidentiality (attack surface, [`NFRQ-SCR-02`](NFRQ-SCR-02-attack-surface.md)) |
 | **Enforcement** | `wem_lint` — `preset_allowed_declaration` (`error`; the forwarding finding is a `warning`) |
 | **Criterion** | `tools/dictionary.json` → `preset_allowed` (declaration name, scope, synonyms, forwarding) |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
@@ -40,7 +40,7 @@ lint raises it as `error`.
    The list is closed: a legacy spelling is not added to it.
 6. **Dependency key `driver`.** A component that declares `driver` in `ALLOWED` takes a driver, and
    takes it as **required**: the workflow factory resolves `configuration.driver` (a name) to the
-   driver object and fails when it is missing ([`FRQ-WFL`](../02-SyRS/SyRS-WRK-workflow.md) §5). A
+   driver object and fails when it is missing ([`SyRS-WRK-workflow`](../02-SyRS/SyRS-WRK-workflow.md) §5). A
    component that can run without a driver does not declare it. This is the only reading of
    `ALLOWED` outside the decorator that is not input validation (`_driver_context`).
 
@@ -63,7 +63,7 @@ by the lint only (criterion 6 by review).
 |---|---|
 | Single source of truth | the permitted keys are stated once, on the type, not once per call |
 | Fail visibly | a declaration that cannot be resolved is a build error, not a configuration that quietly does not apply |
-| Least privilege | the input surface is the declared list; the recording surface of the audit record is a different set ([`NFRQ-SEC-06`](NFRQ-SEC-06-audit-confidentiality.md) c.1) |
+| Least privilege | the input surface is the declared list; the recording surface of the audit record is a different set ([`NFRQ-SCR-06`](NFRQ-SCR-06-audit-confidentiality.md) c.1) |
 
 ## 5. Open
 

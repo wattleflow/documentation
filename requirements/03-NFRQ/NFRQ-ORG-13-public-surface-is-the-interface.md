@@ -6,9 +6,9 @@
 |---|---|
 | **Version** | v0.0.5 |
 | **Quality (25010)** | Maintainability — modularity, modifiability |
-| **Enforcement** | **not measured** — `wem_lint` has no rule for it; declared blind spot (D-11). Baseline: `2026-09-29-converter-contract-verification` |
-| **Reference frame** | Parnas, information hiding [P-11]; ISO/IEC 25010 modularity |
-| **Raised by** | `HLRQ-CNV` `BR-CNV-03` — documented rule of 2026-09-29 |
+| **Enforcement** | **not measured** — `wem_lint` has no rule for it; declared blind spot ([D-11](../../DOCTRINE.md#d-11)). Baseline: `2026-09-29-converter-contract-verification` |
+| **Reference frame** | Parnas, information hiding [[P-11](../../POSTULATE.md#p-11)]; ISO/IEC 25010 modularity |
+| **Raised by** | `StRS-CONVERTER` `BR-CNV-03` — documented rule of 2026-09-29 |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
 
 ## 1. Statement
@@ -28,8 +28,8 @@ as API.
    *(machine-checkable — AST)*
 3. **Class-level declarations** (`CONFIG`, `PARSER`, `FORMATTERS`, …) are constants of the
    contract, not methods, and are not counted. *(by definition)*
-4. **The interface is written down** in the requirement of the contract (`FRQ-CNV`,
-   `FRQ-CNV-24.2`), not derived from the code. *(by review)*
+4. **The interface is written down** in the requirement of the contract (`StRS-CONVERTER`,
+   `SyRS-CONVERTER-STRATEGY`), not derived from the code. *(by review)*
 
 ## 3. Verification
 
@@ -56,4 +56,4 @@ attributes, and callers outside `src/`.
 
 | Version | Date | Change |
 |---|---|---|
-| v0.0.5 | 2026-10-02 | `Version` replaces `Status`; previous status: Proposal (Draft, 2026-09-29) — **the identifier is provisional**; entry into the register requires a documented change (D-03) |
+| v0.0.5 | 2026-10-02 | `Version` replaces `Status`; previous status: Proposal (Draft, 2026-09-29) — **the identifier is provisional**; entry into the register requires a documented change ([D-03](../../DOCTRINE.md#d-03)) |

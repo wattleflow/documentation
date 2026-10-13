@@ -7,9 +7,9 @@
 | **Version** | v0.0.5 |
 | **Quality (25010)** | Performance efficiency (time behaviour, resource utilisation) · Maintainability (analysability) |
 | **Enforcement** | **by review**; c.1 and c.6 are AST-checkable and are candidates for `wem_lint` |
-| **`[M]` charter** | [`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md) — every criterion here inherits it |
-| **Operating point** | [`NFRQ-SEC-04`](NFRQ-SEC-04-detection-operating-point.md) — a threshold is a point on a ROC, not a preference |
-| **Category** | `OBS` was introduced for **audit-record** observability. A metric is not an audit record, so this entry **widens the category**. Provisional pending a documented change (D-12) — §6 |
+| **`[M]` charter** | [`NFRQ-DFN-02`](NFRQ-DFN-02-measurement-charter.md) — every criterion here inherits it |
+| **Operating point** | [`NFRQ-SCR-04`](NFRQ-SCR-04-detection-operating-point.md) — a threshold is a point on a ROC, not a preference |
+| **Category** | `OBS` was introduced for **audit-record** observability. A metric is not an audit record, so this entry **widens the category**. Provisional pending a documented change ([D-12](../../DOCTRINE.md#d-12)) — §6 |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
 
 ## 1. Statement
@@ -31,7 +31,7 @@ entitled to act on it.
    the dispersion that makes it meaningful.
 2. **`[M]` Every metric declares its scale, unit and subject.** Ratio scale, SI unit (`seconds`,
    `bytes`), and the subject the count is *per*. Only operations valid for the scale are
-   permitted ([`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md) c.1).
+   permitted ([`NFRQ-DFN-02`](NFRQ-DFN-02-measurement-charter.md) c.1).
 3. **Labels are rational subgroups, and are justified as such.** Populations that differ in kind
    are not pooled: a 3 kB text PDF read by a local library and a 40 MB scan read by OCR are
    different processes, and limits computed over their union describe neither. A label exists to
@@ -48,7 +48,7 @@ entitled to act on it.
    are not comparable between observers.
 7. **No threshold without limits.** An alert derives its limits from the process's own history,
    not from a chosen round number. Until validated out-of-sample the metric is **diagnostic**;
-   promotion to anything that stops work requires a documented change ([`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md) c.5).
+   promotion to anything that stops work requires a documented change ([`NFRQ-DFN-02`](NFRQ-DFN-02-measurement-charter.md) c.5).
 8. **The measurement reports its own health.** A collector publishes what it could not measure —
    unclosed spans, dropped records, expired pairs. A metric that cannot say how complete it is
    invites the reader to mistake a gap for a zero.
@@ -64,7 +64,7 @@ entitled to act on it.
 | 7 | no gate exists today; the criterion is preventive | vacuously true, by design |
 | 8 | the collector's own series are present in the published set | not implemented |
 
-**Reproducibility triple (D-10):** tool — review, plus AST for c.6; criterion — §2 above;
+**Reproducibility triple ([D-10](../../DOCTRINE.md#d-10)):** tool — review, plus AST for c.6; criterion — §2 above;
 platform — declared by the holder. **Declared blind spot:** nothing here is measured by
 `wem_lint` yet; c.6 is the only rule whose shape the existing `audit_*` rules could carry.
 
@@ -83,9 +83,9 @@ already trusted.
 
 * `NFRQ-OBS-01/02/03` govern the **audit record**: its level, fields and volume. A metric is not
   an audit record and does not inherit the INFO-placement rule; it is not addressed to a reader.
-* [`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md) governs **whether a measure may be used at all**. This entry governs **what shape
+* [`NFRQ-DFN-02`](NFRQ-DFN-02-measurement-charter.md) governs **whether a measure may be used at all**. This entry governs **what shape
   it must take** once it may.
-* [`NFRQ-SEC-04`](NFRQ-SEC-04-detection-operating-point.md) governs **where the threshold sits** once one is justified.
+* [`NFRQ-SCR-04`](NFRQ-SCR-04-detection-operating-point.md) governs **where the threshold sits** once one is justified.
 
 ## 6. Open
 
@@ -105,9 +105,9 @@ already trusted.
 | Shewhart — rational subgrouping | limits over pooled populations describe none of them (c.3) |
 | Deming — tampering (funnel experiment) | acting on common-cause variation increases it; hence c.7 |
 | Deming — operational definitions | a name without a stated procedure is not measurable by two people alike (c.6) |
-| Goodhart / Campbell (via [`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md)) | a measure that becomes a target stops measuring — hence diagnostic before gate |
-| D-09 (vector, not scalar) | no single "throughput" figure aggregates across layers or units |
-| D-11 (declared blind spots) | a gap in measurement is published, not left to look like zero (c.8) |
+| Goodhart / Campbell (via [`NFRQ-DFN-02`](NFRQ-DFN-02-measurement-charter.md)) | a measure that becomes a target stops measuring — hence diagnostic before gate |
+| [D-09](../../DOCTRINE.md#d-09) (vector, not scalar) | no single "throughput" figure aggregates across layers or units |
+| [D-11](../../DOCTRINE.md#d-11) (declared blind spots) | a gap in measurement is published, not left to look like zero (c.8) |
 
 ## Change history
 

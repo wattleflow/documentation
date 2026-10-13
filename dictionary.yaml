@@ -16,7 +16,7 @@
 # Upravljanje: natuknica se dodaje/mijenja/deprecira iskljucivo uz dokumentiranu izmjenu.
 
 registry: wattleflow-rjecnik
-registry_version: "0.9.0"   # 0.2.0: apsorbiran vokabular koda (blok `code:`)
+registry_version: "0.11.0"   # 0.2.0: apsorbiran vokabular koda (blok `code:`)
                             # 0.2.1: kategorija OSCAL
                             # 0.3.0: blok `code:` uklonjen — kriterij koda je
                             # tools/dictionary.json
@@ -25,13 +25,16 @@ registry_version: "0.9.0"   # 0.2.0: apsorbiran vokabular koda (blok `code:`)
                             # 0.5.0: natuknica `postulat`; `hipoteza` kao
                             # opovrgljiv oblik postulata
                             # 0.6.0: kategorije zahtjeva CNV, FMT, PAR
-                            # 0.6.1: HLRQ-15 postaje HLRQ-01; registar zahtjeva razdvojen po paketu
+                            # 0.6.1: registar zahtjeva razdvojen po paketu
                             # 0.7.0: kategorije generickog sloja ORC, SCH, MGR, OBS, SMC, ITR, SGT,
-                            # HLP, SER; oznake FRQ generickih klasa bez numeracije; isti akronim
+                            # HLP, SER; oznake generickih klasa bez numeracije; isti akronim
                             # smije imati vise znacenja
                             # 0.8.0: natuknica `modeli-procesa-organizacije`; kratice SSP, POAM
-                            # 0.9.0: blackwattle: 01-HLRQ -> 01-StRS i 02-FRQ -> 02-SyRS (2026-10-12);
-                            # kratice StRS, SyRS, UC, QR, NVML; HLRQ, FRQ, BR, FR usmjerene na nove registre
+                            # 0.9.0: blackwattle: registri 01-StRS i 02-SyRS (2026-10-12);
+                            # kratice StRS, SyRS, UC, QR, NVML; BR, FR usmjerene na nove registre
+                            # 0.10.0: kratice iz KRATICE.md (21 troslovna oznaka); KRATICE.md ukinut, oznake usklađene (2026-10-12),
+                            # pravilo u DOCUMENTATION.md §3.6
+                            # 0.11.0: uklonjene natuknice kratica starih registara; ostaju StRS i SyRS
 languages: [hr, en]
 source_of_truth: true
 generated_views:
@@ -1029,10 +1032,10 @@ acronyms:
   - {id: ABS,  expansion: "abstractness (wem_lint dimenzija)", note: "vektor konformnosti", definition_en: "A dimension of the conformance vector reported by [wem_lint](#wem-lint): how much of a package is abstract rather than concrete."}
   - {id: ARI,  expansion: "adjusted Rand index", references: [21], definition_en: "A measure of agreement between two partitions of the same set, corrected for chance; used when comparing module partitions."}
   - {id: AST,  expansion: "abstract syntax tree", definition_en: "The parsed form of source code that the linters read, so a finding follows the structure of the code rather than its text."}
-  - {id: CIA,  expansion: "confidentiality, integrity, availability", note: "tri razlicita grafa prijetnje", definition_en: "The three properties a security requirement may protect; each has its own threat graph, so a claim names which one it means ([NFRQ-SEC-09…14](requirements/03-NFRQ/NFRQ-000-INDEX.md))."}
+  - {id: CIA,  expansion: "confidentiality, integrity, availability", note: "tri razlicita grafa prijetnje", definition_en: "The three properties a security requirement may protect; each has its own threat graph, so a claim names which one it means ([NFRQ-SCR-09…14](requirements/03-NFRQ/NFRQ-000-INDEX.md))."}
   - {id: DQI,  expansion: "data quality index", definition_en: "See the term entry [data quality index](#dqi): a declared aggregate over a vector of quality dimensions."}
   - {id: EOL, expansion: "end of life", note: "politika verzija", definition_en: "The point at which a Python version stops receiving support, which the version policy takes as the floor for the oldest supported release."}
-  - {id: FR,   expansion: "functional requirement", definition_en: "A requirement stating what the system does, under ISO/IEC/IEEE 29148; in this tree the identifier is written FRQ. See [functional / non-functional requirement](#fr-nfr)."}
+  - {id: FR,   expansion: "functional requirement", definition_en: "A requirement stating what the system does, under ISO/IEC/IEEE 29148; the identifier is written FR-<KAT>-NN. See [functional / non-functional requirement](#fr-nfr)."}
   - {id: HDR,  expansion: "header (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: whether a module carries the declared header block."}
   - {id: IMP,  expansion: "imports (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: what a module imports, which is what decides its home distribution ([zero trust](#zero-trust))."}
   - {id: LSP,  expansion: "Liskov substitution principle", references: [67, 68], definition_en: "A subtype must be usable wherever its base type is expected, without the caller knowing the difference."}
@@ -1040,59 +1043,79 @@ acronyms:
   - {id: MRO,  expansion: "method resolution order (Python C3)", definition_en: "The order in which Python resolves an attribute across base classes (the C3 linearisation) — what decides which implementation a class actually inherits."}
   - {id: NCD,  expansion: "normalized compression distance", references: [14], definition_en: "A similarity measure derived from how much two artefacts compress together compared with separately."}
   - {id: NFRQ, expansion: "non-functional requirement", note: "registar requirements/03-NFRQ/; oznaka NFRQ-<KAT>-NN (preimenovano iz NFR 2026-08-27, bez zapisane odluke)", definition_en: "A requirement stating how well the system works, under ISO/IEC 25010, carried in the register requirements/03-NFRQ/. See [functional / non-functional requirement](#fr-nfr)."}
-  - {id: FRQ,  expansion: "functional requirement", note: "stariji oblik; registar requirements/02-FRQ/ (generički sloj); u stablu blackwattle zamijenjen registrom 02-SyRS/ 2026-10-12, oznaka FR-<KAT>-NN", definition_en: "A requirement stating what the system does, carried in the register requirements/02-FRQ/ of the generic layer and, in the blackwattle tree, replaced by the system requirements specification (SyRS) in 02-SyRS/. See [functional / non-functional requirement](#fr-nfr)."}
   - {id: NMI,  expansion: "normalized mutual information", references: [20], definition_en: "The mutual information between two partitions, normalised to [0, 1]; one of the few quantities here with the properties of a true percentage."}
   - {id: ORG,  expansion: "kategorija organizacijskih NFR-ova (NFRQ-ORG-NN)", definition_en: "The organisational category of non-functional requirements — module layout, naming, locality of dependencies (NFRQ-ORG-NN)."}
-  - {id: OSCAL, expansion: "Open Security Controls Assessment Language (NIST)", note: "ujedno kategorija zahtjeva za OSCAL sloj u blackwattle (FRQ-OSCAL-NN.M)", definition_en: "NIST's machine-readable format for security controls, and here also the requirement category for the compliance layer in blackwattle (FRQ-OSCAL-NN.M)."}
+  - {id: OSCAL, expansion: "Open Security Controls Assessment Language (NIST)", note: "ujedno kategorija zahtjeva za OSCAL sloj u blackwattle (SyRS-OSCAL-*)", definition_en: "NIST's machine-readable format for security controls, and here also the requirement category for the compliance layer in blackwattle (SyRS-OSCAL-*)."}
   - {id: PDSA, expansion: "plan-do-study-act (Shewhart/Deming)", references: [47, 48], definition_en: "Shewhart's cycle as Deming restated it: plan, do, study, act — the ancestor of the iteration this methodology uses under the [cascade](#kaskada)."}
-  - {id: SBOM, expansion: "software bill of materials", note: "SPDX/CycloneDX; NFRQ-SEC-03", definition_en: "The machine-readable inventory of what a build contains, in SPDX or CycloneDX form; third-party integrity rests on it rather than on a mechanism of our own ([NFRQ-SEC-03](requirements/03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md))."}
+  - {id: SBOM, expansion: "software bill of materials", note: "SPDX/CycloneDX; NFRQ-SCR-03", definition_en: "The machine-readable inventory of what a build contains, in SPDX or CycloneDX form; third-party integrity rests on it rather than on a mechanism of our own ([NFRQ-SCR-03](requirements/03-NFRQ/NFRQ-SCR-03-supply-chain-locality.md))."}
   - {id: SBVR, expansion: "Semantics of Business Vocabulary and Rules (OMG)", definition_en: "An OMG standard for stating business vocabulary and rules in a form both people and machines can read."}
   - {id: SFX,  expansion: "side effects (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: side effects observed at import time."}
   - {id: STA,  expansion: "state (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: declared state and its transitions."}
   - {id: TYP,  expansion: "type variables (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: type variables and whether they are named by role (NFRQ-ORG-03)."}
   - {id: WEM,  expansion: "Wattleflow Engineering Methodology", definition_en: "See [Wattleflow Engineering Methodology](#wem)."}
-  - {id: BBD, expansion: "Blackboard", note: "kategorija zahtjeva po ulozi (FRQ-BBD; specijalizacije FRQ-BBD-NN.M)", definition_en: "The Blackboard role in the domain ontology, and the requirement category on the role axis (FRQ-BBD for the generic class; FRQ-BBD-NN.M for specialisations)."}
-  - {id: CON, expansion: "Connection", note: "kategorija zahtjeva po ulozi (FRQ-CON; specijalizacije FRQ-CON-NN.M)", definition_en: "The Connection role in the domain ontology, and the requirement category on the role axis (FRQ-CON for the generic class; FRQ-CON-NN.M for specialisations)."}
-  - {id: DOC, expansion: "Document", note: "kategorija zahtjeva po ulozi (FRQ-DOC; specijalizacije FRQ-DOC-NN.M)", definition_en: "The Document role in the domain ontology, and the requirement category on the role axis (FRQ-DOC for the generic class; FRQ-DOC-NN.M for specialisations)."}
-  - {id: DRV, expansion: "Driver", note: "kategorija zahtjeva po ulozi (FRQ-DRV; specijalizacije FRQ-DRV-NN.M)", definition_en: "The Driver role in the domain ontology, and the requirement category on the role axis (FRQ-DRV for the generic class; FRQ-DRV-NN.M for specialisations)."}
-  - {id: MEM, expansion: "Memento", note: "kategorija zahtjeva po ulozi (FRQ-MEM; specijalizacije FRQ-MEM-NN.M)", definition_en: "The Memento role in the domain ontology, and the requirement category on the role axis (FRQ-MEM for the generic class; FRQ-MEM-NN.M for specialisations)."}
-  - {id: MEM, expansion: "memory", note: "kategorija NFRQ-MEM-NN (privremena)", definition_en: "The memory category of non-functional requirements, provisional (NFRQ-MEM-NN); on the FRQ axis MEM names the Memento role."}
-  - {id: PIP, expansion: "Pipeline", note: "kategorija zahtjeva po ulozi (FRQ-PIP; specijalizacije FRQ-PIP-NN.M)", definition_en: "The Pipeline role in the domain ontology, and the requirement category on the role axis (FRQ-PIP for the generic class; FRQ-PIP-NN.M for specialisations)."}
-  - {id: PRC, expansion: "Processor", note: "kategorija zahtjeva po ulozi (FRQ-PRC; specijalizacije FRQ-PRC-NN.M)", definition_en: "The Processor role in the domain ontology, and the requirement category on the role axis (FRQ-PRC for the generic class; FRQ-PRC-NN.M for specialisations). It is also the historical prefix of the blackwattle decision series, from the days the distribution was called processors."}
-  - {id: PTN, expansion: "Pattern", note: "kategorija zahtjeva za korijensku bazu Wattleflow (FRQ-PTN)", definition_en: "The requirement category of the root base of the generic layer (FRQ-PTN); the other pattern-infrastructure categories are ORC, SCH, MGR, OBS, SMC, ITR, SGT and HLP."}
-  - {id: REP, expansion: "Repository", note: "kategorija zahtjeva po ulozi (FRQ-REP; specijalizacije FRQ-REP-NN.M)", definition_en: "The Repository role in the domain ontology, and the requirement category on the role axis (FRQ-REP for the generic class; FRQ-REP-NN.M for specialisations)."}
-  - {id: STR, expansion: "Strategy", note: "kategorija zahtjeva po ulozi (FRQ-STR; specijalizacije FRQ-STR-NN.M)", definition_en: "The Strategy role in the domain ontology, and the requirement category on the role axis (FRQ-STR for the generic class; FRQ-STR-NN.M for specialisations)."}
-  - {id: WFL, expansion: "Workflow", note: "kategorija zahtjeva po ulozi (FRQ-WFL; specijalizacije FRQ-WFL-NN.M)", definition_en: "The Workflow role in the domain ontology, and the requirement category on the role axis (FRQ-WFL for the generic class; FRQ-WFL-NN.M for specialisations). It is also the prefix of the workflow decision series."}
-  - {id: CNV, expansion: "Converter", note: "uloga unutar skupine SER (FRQ-SER-CNV)", definition_en: "The Converter role in the domain ontology, carried by the SER group (FRQ-SER-CNV); FRQ-CNV-NN.M is used by specialisations in blackwattle."}
-  - {id: FMT, expansion: "Formatter", note: "uloga unutar skupine SER (FRQ-SER-FMT)", definition_en: "The Formatter role in the domain ontology, carried by the SER group (FRQ-SER-FMT)."}
-  - {id: PAR, expansion: "Parser", note: "uloga unutar skupine SER (FRQ-SER-PAR)", definition_en: "The Parser role in the domain ontology, carried by the SER group (FRQ-SER-PAR)."}
-  - {id: SER, expansion: "Serialisation (granica formata)", note: "skupina zahtjeva za Converter, Parser i Formatter (FRQ-SER-CNV, FRQ-SER-PAR, FRQ-SER-FMT)", definition_en: "The requirement group for the three roles on the format boundary of the generic layer: Converter (CNV), Parser (PAR) and Formatter (FMT)."}
-  - {id: HLP, expansion: "Helpers", note: "kategorija zahtjeva za pomocne klase Attribute i NameHelper (FRQ-HLP)", definition_en: "The requirement category of the stateless helper classes `Attribute` and `NameHelper` of the generic layer (FRQ-HLP)."}
-  - {id: SCH, expansion: "Scheduler", note: "kategorija zahtjeva za Scheduler (FRQ-SCH)", definition_en: "The requirement category of the scheduler, an event source that drives one orchestrator (FRQ-SCH)."}
-  - {id: MGR, expansion: "Manager", note: "kategorija zahtjeva za upravitelje konekcija, drivera i procesora (FRQ-MGR)", definition_en: "The requirement category of the managers of connections, drivers and processors (FRQ-MGR)."}
-  - {id: SMC, expansion: "State machine", note: "kategorija zahtjeva za automat stanja (FRQ-SMC)", definition_en: "The requirement category of the state machine and its one-shot guard (FRQ-SMC)."}
-  - {id: ITR, expansion: "Iterator", note: "kategorija zahtjeva za lijene iteratore (FRQ-ITR)", definition_en: "The requirement category of the lazy synchronous and asynchronous iterators (FRQ-ITR)."}
-  - {id: SGT, expansion: "Singleton", note: "kategorija zahtjeva za Singleton (FRQ-SGT)", definition_en: "The requirement category of the singleton base, one instance per concrete subclass (FRQ-SGT)."}
-  - {id: OBS, expansion: "Observable", note: "kategorija zahtjeva za nit-siguran promatrani objekt (FRQ-OBS)", definition_en: "The requirement category of the thread-safe observable (FRQ-OBS). On the quality axis OBS means observability (NFRQ-OBS-NN); the prefix FRQ- or NFRQ- tells them apart."}
+  - {id: BBD, expansion: "Blackboard", note: "zamijenjeno oznakom BLC (2026-10-12)", status: zastarjelo, definition_en: "The Blackboard role in the domain ontology."}
+  - {id: CON, expansion: "Connection", note: "zamijenjeno oznakom CNC (2026-10-12)", status: zastarjelo, definition_en: "The Connection role in the domain ontology."}
+  - {id: DOC, expansion: "Document", note: "zamijenjeno oznakom DCM (2026-10-12)", status: zastarjelo, definition_en: "The Document role in the domain ontology."}
+  - {id: DRV, expansion: "Driver", definition_en: "The Driver role in the domain ontology."}
+  - {id: MEM, expansion: "Memento", note: "zamijenjeno oznakom MMT (2026-10-12)", status: zastarjelo, definition_en: "The Memento role in the domain ontology."}
+  - {id: MEM, expansion: "memory", note: "zamijenjeno oznakom MMR (2026-10-12); kategorija NFRQ-MMR-NN", status: zastarjelo, definition_en: "The memory category of non-functional requirements, provisional (NFRQ-MMR-NN); on the role axis MEM names the Memento role."}
+  - {id: PIP, expansion: "Pipeline", note: "zamijenjeno oznakom PPL (2026-10-12)", status: zastarjelo, definition_en: "The Pipeline role in the domain ontology."}
+  - {id: PRC, expansion: "Processor", definition_en: "The Processor role in the domain ontology. It is also the historical prefix of the blackwattle decision series, from the days the distribution was called processors."}
+  - {id: PTN, expansion: "Pattern", note: "zamijenjeno oznakom PTR (2026-10-12)", status: zastarjelo, definition_en: "The requirement category of the root base of the generic layer; the other pattern-infrastructure categories are ORC, SCH, MGR, OBS, SMC, ITR, SGT and HLP."}
+  - {id: REP, expansion: "Repository", note: "zamijenjeno oznakom RPS (2026-10-12)", status: zastarjelo, definition_en: "The Repository role in the domain ontology."}
+  - {id: STR, expansion: "Strategy", definition_en: "The Strategy role in the domain ontology."}
+  - {id: WFL, expansion: "Workflow", note: "zamijenjeno oznakom WRK (2026-10-12)", status: zastarjelo, definition_en: "The Workflow role in the domain ontology. It is also the prefix of the workflow decision series."}
+  - {id: CNV, expansion: "Converter", definition_en: "The Converter role in the domain ontology, carried by the SER group."}
+  - {id: FMT, expansion: "Formatter", note: "zamijenjeno oznakom FRM (2026-10-12); uloga unutar skupine SER", status: zastarjelo, definition_en: "The Formatter role in the domain ontology, carried by the SER group."}
+  - {id: PAR, expansion: "Parser", note: "zamijenjeno oznakom PRS (2026-10-12); uloga unutar skupine SER", status: zastarjelo, definition_en: "The Parser role in the domain ontology, carried by the SER group."}
+  - {id: SER, expansion: "Serialisation (granica formata)", note: "skupina zahtjeva za Converter, Parser i Formatter", definition_en: "The requirement group for the three roles on the format boundary of the generic layer: Converter (CNV), Parser (PAR) and Formatter (FMT)."}
+  - {id: HLP, expansion: "Helpers", note: "kategorija zahtjeva za pomocne klase Attribute i NameHelper", definition_en: "The requirement category of the stateless helper classes `Attribute` and `NameHelper` of the generic layer."}
+  - {id: SCH, expansion: "Scheduler", note: "kategorija zahtjeva za Scheduler", definition_en: "The requirement category of the scheduler, an event source that drives one orchestrator."}
+  - {id: MGR, expansion: "Manager", note: "zamijenjeno oznakom MNG (2026-10-12); kategorija zahtjeva za upravitelje konekcija, drivera i procesora", status: zastarjelo, definition_en: "The requirement category of the managers of connections, drivers and processors."}
+  - {id: SMC, expansion: "State machine", note: "kategorija zahtjeva za automat stanja", definition_en: "The requirement category of the state machine and its one-shot guard."}
+  - {id: ITR, expansion: "Iterator", note: "kategorija zahtjeva za lijene iteratore", definition_en: "The requirement category of the lazy synchronous and asynchronous iterators."}
+  - {id: SGT, expansion: "Singleton", note: "kategorija zahtjeva za Singleton", definition_en: "The requirement category of the singleton base, one instance per concrete subclass."}
+  - {id: OBS, expansion: "Observable", note: "kategorija zahtjeva za nit-siguran promatrani objekt", definition_en: "The requirement category of the thread-safe observable. On the quality axis OBS means observability (NFRQ-OBS-NN); the prefix SyRS- or NFRQ- tells them apart."}
   - {id: OBS, expansion: "observability", note: "kategorija NFRQ-OBS-NN", definition_en: "The observability category of non-functional requirements: audit levels, fields, ownership and volume of records, admissibility of metrics (NFRQ-OBS-NN)."}
-  - {id: ORC, expansion: "Orchestrator", note: "kategorija zahtjeva za Orchestrator (FRQ-ORC)", definition_en: "The requirement category of the orchestrator that runs a set of processors and tells listeners (FRQ-ORC). The same abbreviation also names a storage format, Optimized Row Columnar."}
+  - {id: ORC, expansion: "Orchestrator", note: "kategorija zahtjeva za Orchestrator", definition_en: "The requirement category of the orchestrator that runs a set of processors and tells listeners. The same abbreviation also names a storage format, Optimized Row Columnar."}
   - {id: FAC,  expansion: "facade (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: the public surface a package presents (its `__all__`)."}
   - {id: EXC,  expansion: "exclusions (wem_lint dimenzija)", definition_en: "A dimension of the conformance vector: declared exclusions, so what the tool did not measure stays visible ([blind spot](#slijepa-pjega))."}
 
   # kratice iz zapisa zahtjeva i dizajna; definition_en u en-AU
-  - {id: BR,    expansion: "business rule", note: "oznaka BR-<PREFIKS>-NN u StRS (u starim HLRQ zapisima BR-NN)", definition_en: "A rule of a capability stated in a stakeholder requirements specification and cited by the system requirements that implement it."}
+  - {id: BR,    expansion: "business rule", note: "oznaka BR-<PREFIKS>-NN u StRS", definition_en: "A rule of a capability stated in a stakeholder requirements specification and cited by the system requirements that implement it."}
   - {id: SSP,   expansion: "System Security Plan (OSCAL)", note: "OSCAL model; spada u modele procesa organizacije", definition_en: "The OSCAL model describing a concrete system: its boundary, roles and how each control is implemented in it."}
   - {id: POAM,  expansion: "Plan of Action and Milestones (OSCAL)", note: "OSCAL model POA&M; spada u modele procesa organizacije", definition_en: "The OSCAL model recording deficiencies and the plan, owners and dates for remediating them."}
-  - {id: EV,    expansion: "event", note: "oznaka EVnn okidaca u FRQ", definition_en: "A trigger that starts a flow in a functional requirement."}
-  - {id: HLRQ,  expansion: "high-level requirement", note: "stariji oblik; HLRQ-01 generičkog sloja; u stablu blackwattle zamijenjen registrom 01-StRS/ 2026-10-12", definition_en: "A requirement that carries the narrative, business rules and scope of one capability."}
+  - {id: EV,    expansion: "event", note: "oznaka EVnn okidaca u SyRS", definition_en: "A trigger that starts a flow in a functional requirement."}
   - {id: StRS,  expansion: "stakeholder requirements specification", note: "ISO/IEC/IEEE 29148; registar 01-StRS/ (generički sloj i blackwattle); piše se vještinom wattleflow-strs", definition_en: "A specification that states why a component exists, who uses it, which rules bind it and how its failures are traced, in terms a business reader can follow."}
-  - {id: SyRS,  expansion: "system requirements specification", note: "ISO/IEC/IEEE 29148; registar 02-SyRS/ (generički sloj i blackwattle); piše se vještinom wattleflow-syrs; zamjenjuje FRQ", definition_en: "A specification, child of a stakeholder requirements specification, that states what the system must do and how each criterion is verified."}
+  - {id: SyRS,  expansion: "system requirements specification", note: "ISO/IEC/IEEE 29148; registar 02-SyRS/ (generički sloj i blackwattle); piše se vještinom wattleflow-syrs", definition_en: "A specification, child of a stakeholder requirements specification, that states what the system must do and how each criterion is verified."}
   - {id: UC,    expansion: "use case", note: "oznaka UCn u StRS", definition_en: "A scenario of use with a trigger, a precondition, a main and alternative flow and an outcome, written in a stakeholder requirements specification."}
   - {id: QR,    expansion: "quality requirement", note: "oznaka QR-<PREFIKS>-NN u SyRS; veza na NFRQ zapis", definition_en: "A measurable non-functional requirement of one system component, written in a system requirements specification and linked to its NFRQ record."}
   - {id: NVML,  expansion: "NVIDIA Management Library", note: "vlastito ime; izvor mjerenja GPU-a u SyRS-RESOURCE-NVML-GPU", definition_en: "The NVIDIA library that reports utilisation and memory of a graphics processor, used for GPU measurement."}
+  - {id: BLC, expansion: "Blackboard", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka BB (StRS), BBD (SyRS)", definition_en: "The three-letter code of Blackboard in requirement identifiers."}
+  - {id: CNC, expansion: "Connection", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka CON", definition_en: "The three-letter code of Connection in requirement identifiers."}
+  - {id: DCM, expansion: "Document", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka DOC", definition_en: "The three-letter code of Document in requirement identifiers."}
+  - {id: FCT, expansion: "Factory (Workflow Factory)", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka FAC", definition_en: "The three-letter code of Factory (Workflow Factory) in requirement identifiers."}
+  - {id: FRM, expansion: "Formatter", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka FMT", definition_en: "The three-letter code of Formatter in requirement identifiers."}
+  - {id: MMN, expansion: "Moment", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka MMN (starija oznaka)", definition_en: "The three-letter code of Moment in requirement identifiers."}
+  - {id: MMT, expansion: "Memento", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka MEM", definition_en: "The three-letter code of Memento in requirement identifiers."}
+  - {id: MNG, expansion: "Manager", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka MGR", definition_en: "The three-letter code of Manager in requirement identifiers."}
+  - {id: MNT, expansion: "Monitor", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka —", definition_en: "The three-letter code of Monitor in requirement identifiers."}
+  - {id: MST, expansion: "Memento store", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka MST", definition_en: "The three-letter code of Memento store in requirement identifiers."}
+  - {id: PPL, expansion: "Pipeline", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka PIP", definition_en: "The three-letter code of Pipeline in requirement identifiers."}
+  - {id: PRS, expansion: "Parser", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka PAR", definition_en: "The three-letter code of Parser in requirement identifiers."}
+  - {id: PTR, expansion: "Pattern (bazna razina)", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka PTN", definition_en: "The three-letter code of Pattern (bazna razina) in requirement identifiers."}
+  - {id: RPS, expansion: "Repository", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka REP", definition_en: "The three-letter code of Repository in requirement identifiers."}
+  - {id: SRL, expansion: "Serialisation", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka SER", definition_en: "The three-letter code of Serialisation in requirement identifiers."}
+  - {id: WRK, expansion: "Workflow", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka WFL", definition_en: "The three-letter code of Workflow in requirement identifiers."}
+  - {id: APN, expansion: "Appendix (NFRQ)", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka APX", definition_en: "The three-letter code of Appendix (NFRQ) in requirement identifiers."}
+  - {id: DFN, expansion: "Definitions (NFRQ)", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka DEF", definition_en: "The three-letter code of Definitions (NFRQ) in requirement identifiers."}
+  - {id: FNC, expansion: "Functional suitability (NFRQ)", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka FUN", definition_en: "The three-letter code of Functional suitability (NFRQ) in requirement identifiers."}
+  - {id: MMR, expansion: "Memory (NFRQ)", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka MEM", definition_en: "The three-letter code of Memory (NFRQ) in requirement identifiers."}
+  - {id: SCR, expansion: "Security (NFRQ)", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6; dosadašnja oznaka SEC", definition_en: "The three-letter code of Security (NFRQ) in requirement identifiers."}
+  - {id: FTL, expansion: "Fault tolerance", note: "troslovna oznaka po pravilu iz DOCUMENTATION.md §3.6 (F, T + prvo suglasničko slovo zadnje riječi); dosadašnja pogrešna oznaka FLT", definition_en: "The three-letter code of Fault tolerance in requirement identifiers (SyRS-FTL, FR-FTL, BR-FTL, QR-FTL)."}
   - {id: NFR,   expansion: "non-functional requirement", note: "stariji oblik; oznaka je NFRQ", status: zastarjelo, definition_en: "The older spelling of the non-functional requirement identifier; the register writes NFRQ. See [functional / non-functional requirement](#fr-nfr)."}
-  - {id: SEC, expansion: "security", note: "kategorija NFRQ-SEC-NN", definition_en: "The security category of non-functional requirements (NFRQ-SEC-NN)."}
-  - {id: FUN,   expansion: "functional suitability", note: "provizorna kategorija NFRQ-FUN-NN; ceka dokumentiranu izmjenu", status: privremeno, definition_en: "The functional-suitability quality category of ISO/IEC 25010, used provisionally for NFRQ-FUN-NN while its admission awaits a documented change."}
+  - {id: SEC, expansion: "security", note: "zamijenjeno oznakom SCR (2026-10-12); kategorija NFRQ-SCR-NN", status: zastarjelo, definition_en: "The security category of non-functional requirements (NFRQ-SCR-NN)."}
+  - {id: FUN,   expansion: "functional suitability", note: "zamijenjeno oznakom FNC (2026-10-12)", status: zastarjelo, definition_en: "The functional-suitability quality category of ISO/IEC 25010, used provisionally for NFRQ-FNC-NN while its admission awaits a documented change."}
   - {id: PRF,   expansion: "performance efficiency", note: "provizorna kategorija NFRQ-PRF-NN; ceka dokumentiranu izmjenu", status: privremeno, definition_en: "The performance-efficiency quality category of ISO/IEC 25010, used provisionally for NFRQ-PRF-NN while its admission awaits a documented change."}
   - {id: GFM,   expansion: "GitHub Flavored Markdown", note: "vlastito ime, americki pravopis", definition_en: "The Markdown dialect GitHub renders, which is the target when a converted document has to survive review in a repository."}
   - {id: OOXML, expansion: "Office Open XML", note: "ECMA-376 / ISO/IEC 29500", definition_en: "The document format standardised as ECMA-376 and ISO/IEC 29500; the container behind .docx."}
@@ -1103,12 +1126,12 @@ acronyms:
   - {id: DLM,   expansion: "dissemination limiting marker", note: "PSPF", definition_en: "A PSPF marking that limits how far a document may be passed on; it has to survive conversion, not merely be recorded."}
   - {id: APP, expansion: "Australian Privacy Principles", note: "Privacy Act 1988 (Cth)", references: [64], definition_en: "The privacy principles of the Privacy Act 1988 (Cth); APP 3 and APP 11 bound what a pipeline may collect and how it must hold it."}
   - {id: PII,   expansion: "personally identifiable information", definition_en: "Information that identifies a person, whose handling is what the privacy principles constrain."}
-  - {id: SDR,   expansion: "software-defined radio", note: "HLRQ-16", definition_en: "A radio whose signal processing is done in software, exchanging sample streams with the host (HLRQ-16)."}
+  - {id: SDR,   expansion: "software-defined radio", definition_en: "A radio whose signal processing is done in software, exchanging sample streams with the host."}
   - {id: IQ,    expansion: "in-phase and quadrature", note: "uzorci SDR signala", definition_en: "The two components of a complex signal sample an SDR exchanges — in-phase and quadrature."}
   - {id: NLP,   expansion: "natural language processing", definition_en: "Processing of human language, which in this framework lives in blackwattle because its libraries are third-party."}
   - {id: UTF,   expansion: "Unicode Transformation Format", note: "UTF-8", definition_en: "The Unicode encoding family; UTF-8 is the encoding every text artefact here is read and written in."}
   - {id: ORC,   expansion: "Optimized Row Columnar", note: "Apache ORC; vlastito ime", definition_en: "Apache's columnar storage format, one of the record formats a pipeline may write."}
-  - {id: DOCX,  expansion: "Office Open XML word-processing document", note: "sufiks .docx", definition_en: "The word-processing document of the OOXML family, carried by the suffix .docx (HLRQ-19)."}
+  - {id: DOCX,  expansion: "Office Open XML word-processing document", note: "sufiks .docx", definition_en: "The word-processing document of the OOXML family, carried by the suffix .docx."}
   - {id: JPEG,  expansion: "Joint Photographic Experts Group", definition_en: "The lossy image format the interface diagrams are rasterised into, flattened onto white because JPEG has no alpha channel."}
   - {id: TIFF,  expansion: "Tag Image File Format", definition_en: "A tagged image format that may carry multiple pages, which is why a document processor treats it as a container."}
   - {id: GIF,   expansion: "Graphics Interchange Format", definition_en: "An indexed-colour image format encountered as input to document extraction."}

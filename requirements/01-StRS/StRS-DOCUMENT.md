@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/document.py`: `Document`, `DocumentAdapter`, `DocumentFacade` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md) — drži dokumente na platnu · [`StRS-PROCESSOR`](StRS-PROCESSOR.md) — provodi dokumente kroz pipelineove · [`StRS-PIPELINE`](StRS-PIPELINE.md) — prima dokument kroz fasadu |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 
@@ -282,20 +282,20 @@ Kad dokument traženo svojstvo nema, greška imenuje fasadu, sloj na kojem je po
 
 | oznaka | pravilo |
 |---|---|
-| **BR-DOC-01** | Svaki dokument ima jedinstveni identitet, određen pri stvaranju i nepromjenjiv. |
-| **BR-DOC-02** | Dokument ne može biti bez sadržaja: sadržaj koji nije zadan odbija se pri stvaranju i pri izmjeni. Prazan tekst ili prazna tablica jesu sadržaj. |
-| **BR-DOC-03** | Vrsta sadržaja određena je prvim sadržajem; svaka kasnija izmjena sadržaja mora biti iste vrste. |
-| **BR-DOC-04** | Podaci žive u sadržaju, a metapodaci ih samo opisuju (izvor, ime datoteke, shema, trag obrade). |
-| **BR-DOC-05** | Dokument pri stvaranju bilježi vrijeme stvaranja, a pri svakoj izmjeni sadržaja ili metapodatka bilježi što je promijenjeno i kada; vrijeme dolazi iz jednog zajedničkog izvora. |
-| **BR-DOC-06** | Zapis o zadnjoj izmjeni piše samo dokument; izvana se ne može postaviti, kako se povijest izmjena ne bi krivotvorila. |
-| **BR-DOC-07** | Ključ metapodatka ne smije biti prazan. |
-| **BR-DOC-08** | Metapodaci se izvana mogu samo čitati; mijenjaju se isključivo propisanom radnjom. |
-| **BR-DOC-09** | Čišćenje briše sadržaj i metapodatke, a identitet ostaje. Nakon čišćenja sadržaj se ne može čitati dok se ne zada novi, iste vrste. |
-| **BR-DOC-10** | Metapodaci se brišu samo izričitim čišćenjem: tko ih još čita kad dokument prestane postojati, i dalje ih vidi. |
-| **BR-DOC-11** | Dva dokumenta smatraju se istim samo ako imaju isti identitet i istu vrstu. |
-| **BR-DOC-12** | Tok drži fasadu, ne dokument; fasada propušta pozivatelju javna svojstva dokumenta. |
-| **BR-DOC-13** | Fasada se ne stvara bez dokumenta i nikad ne vraća prazan rezultat umjesto dokumenta. |
-| **BR-DOC-14** | Veličinu dokumenta određuje njegova vrsta. |
+| **BR-DCM-01** | Svaki dokument ima jedinstveni identitet, određen pri stvaranju i nepromjenjiv. |
+| **BR-DCM-02** | Dokument ne može biti bez sadržaja: sadržaj koji nije zadan odbija se pri stvaranju i pri izmjeni. Prazan tekst ili prazna tablica jesu sadržaj. |
+| **BR-DCM-03** | Vrsta sadržaja određena je prvim sadržajem; svaka kasnija izmjena sadržaja mora biti iste vrste. |
+| **BR-DCM-04** | Podaci žive u sadržaju, a metapodaci ih samo opisuju (izvor, ime datoteke, shema, trag obrade). |
+| **BR-DCM-05** | Dokument pri stvaranju bilježi vrijeme stvaranja, a pri svakoj izmjeni sadržaja ili metapodatka bilježi što je promijenjeno i kada; vrijeme dolazi iz jednog zajedničkog izvora. |
+| **BR-DCM-06** | Zapis o zadnjoj izmjeni piše samo dokument; izvana se ne može postaviti, kako se povijest izmjena ne bi krivotvorila. |
+| **BR-DCM-07** | Ključ metapodatka ne smije biti prazan. |
+| **BR-DCM-08** | Metapodaci se izvana mogu samo čitati; mijenjaju se isključivo propisanom radnjom. |
+| **BR-DCM-09** | Čišćenje briše sadržaj i metapodatke, a identitet ostaje. Nakon čišćenja sadržaj se ne može čitati dok se ne zada novi, iste vrste. |
+| **BR-DCM-10** | Metapodaci se brišu samo izričitim čišćenjem: tko ih još čita kad dokument prestane postojati, i dalje ih vidi. |
+| **BR-DCM-11** | Dva dokumenta smatraju se istim samo ako imaju isti identitet i istu vrstu. |
+| **BR-DCM-12** | Tok drži fasadu, ne dokument; fasada propušta pozivatelju javna svojstva dokumenta. |
+| **BR-DCM-13** | Fasada se ne stvara bez dokumenta i nikad ne vraća prazan rezultat umjesto dokumenta. |
+| **BR-DCM-14** | Veličinu dokumenta određuje njegova vrsta. |
 
 ## 4. Nefunkcionalni zahtjevi
 
@@ -303,12 +303,12 @@ Kakvoće proizlaze iz narativa i koda; gdje postoji zapis zahtjeva na kakvoću (
 
 | kakvoća | što znači za dokument |
 |---|---|
-| sljedivost | svaki dokument ima identitet i zapis o zadnjoj izmjeni (BR-DOC-01, BR-DOC-05); vrijeme se zapisuje jednim zajedničkim izvorom ([`NFRQ-DEF-04`](../03-NFRQ/NFRQ-DEF-04-moment-aware-helper.md)) |
-| integritet | vrsta sadržaja ne mijenja se usput, a zapis o zadnjoj izmjeni ne može se krivotvoriti (BR-DOC-03, BR-DOC-06) |
+| sljedivost | svaki dokument ima identitet i zapis o zadnjoj izmjeni (BR-DCM-01, BR-DCM-05); vrijeme se zapisuje jednim zajedničkim izvorom ([`NFRQ-DFN-04`](../03-NFRQ/NFRQ-DFN-04-moment-aware-helper.md)) |
+| integritet | vrsta sadržaja ne mijenja se usput, a zapis o zadnjoj izmjeni ne može se krivotvoriti (BR-DCM-03, BR-DCM-06) |
 | razmjerno bilježenje | izmjena pojedinog ključa nije zasebna jedinica rada i ne bilježi se zasebno; izmjena je vidljiva u zapisu o zadnjoj izmjeni ([`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md)) |
 | razumljivost grešaka | kad dokument traženo svojstvo nema, greška imenuje fasadu, sloj na kojem je poziv nastao |
 | proširivost | programer može izraditi nove vrste dokumenata (UC6) |
-| preglednost | tok za sve vrste dokumenata koristi isti način pristupa (BR-DOC-12) |
+| preglednost | tok za sve vrste dokumenata koristi isti način pristupa (BR-DCM-12) |
 
 ## 5. Verifikacija
 
@@ -324,7 +324,7 @@ Matrica se popunjava kad se odrede djeca (§6).
 
 1. Djeca ovog zapisa (SyRS) nisu određena. Oznake `BR-DOC-*` su prijedlog.
 2. Odlomak *Problem* u §2.1 je prijedlog autora zapisa i treba ga potvrditi.
-3. **Vrijeme stvaranja nije zaštićeno.** Zapis o zadnjoj izmjeni izvana se ne može postaviti (BR-DOC-06), ali vrijeme stvaranja može se prepisati kao običan metapodatak. Treba odlučiti treba li i ono biti zaštićeno.
+3. **Vrijeme stvaranja nije zaštićeno.** Zapis o zadnjoj izmjeni izvana se ne može postaviti (BR-DCM-06), ali vrijeme stvaranja može se prepisati kao običan metapodatak. Treba odlučiti treba li i ono biti zaštićeno.
 4. **Ponovno punjenje nakon čišćenja.** Očišćenom dokumentu može se ponovno zadati sadržaj iste vrste, a vrijeme stvaranja pritom se ne obnavlja. Treba potvrditi je li to željeno ili je čišćenje konačno.
 5. **Tko čisti dokumente.** Zapis pretpostavlja da se dokumenti čiste kad se čisti platno Blackboarda; generički Blackboard ([`StRS-BLACKBOARD`](StRS-BLACKBOARD.md), UC6) to ne propisuje. Treba potvrditi tko traži čišćenje dokumenta.
 6. **Vrste grešaka.** Dokument javlja uobičajene greške jezika (`ValueError`, `TypeError`, `AttributeError`), a ne vlastitu grešku komponente kao procesor, pipeline ili upravitelji. Treba potvrditi je li to željeno.
@@ -338,7 +338,7 @@ Matrica se popunjava kad se odrede djeca (§6).
 | [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md) | Blackboard koji drži dokumente |
 | [`StRS-PROCESSOR`](StRS-PROCESSOR.md) | procesor koji provodi dokumente kroz pipelineove |
 | [`StRS-PIPELINE`](StRS-PIPELINE.md) | pipeline koji prima dokument kroz fasadu |
-| [`NFRQ-DEF-04`](../03-NFRQ/NFRQ-DEF-04-moment-aware-helper.md) | jedinstveni izvor vremena |
+| [`NFRQ-DFN-04`](../03-NFRQ/NFRQ-DFN-04-moment-aware-helper.md) | jedinstveni izvor vremena |
 | [`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md) | opseg bilježenja izmjena |
 | `concrete/document.py` | modul, predmet zapisa |
 
@@ -347,5 +347,5 @@ Matrica se popunjava kad se odrede djeca (§6).
 | Verzija | Datum | Promjena |
 |---|---|---|
 | v0.0.3 | 2026-10-11 | Uklonjene poveznice na prethodni zapis iste komponente i pripadna stavka iz *Otvoreno*: zapis ga zamjenjuje, pa upućuje samo na važeće dokumente. |
-| v0.0.2 | 2026-10-11 | Usklađeno s kodom: odbija se sadržaj koji nije zadan, a prazan tekst ili tablica jesu sadržaj (BR-DOC-02, UC1, UC3, tok); nakon čišćenja identitet ostaje i može se zadati novi sadržaj iste vrste (BR-DOC-09, UC5, §2.6); kroz fasadu se preimenuje samo greška nepostojećeg svojstva, ostale stižu nepromijenjene (UC2, §2.5); razdvojeni uzroci grešaka `ValueError` i `TypeError` za fasadu. Dodana poveznica na StRS-PIPELINE. *Otvoreno*: uklonjena zastarjela stavka o oznaci i stavka o `DummyReadDocument` (razina SyRS-a); dodana pitanja o zaštiti vremena stvaranja, ponovnom punjenju nakon čišćenja i o tome tko čisti dokumente. |
+| v0.0.2 | 2026-10-11 | Usklađeno s kodom: odbija se sadržaj koji nije zadan, a prazan tekst ili tablica jesu sadržaj (BR-DCM-02, UC1, UC3, tok); nakon čišćenja identitet ostaje i može se zadati novi sadržaj iste vrste (BR-DCM-09, UC5, §2.6); kroz fasadu se preimenuje samo greška nepostojećeg svojstva, ostale stižu nepromijenjene (UC2, §2.5); razdvojeni uzroci grešaka `ValueError` i `TypeError` za fasadu. Dodana poveznica na StRS-PIPELINE. *Otvoreno*: uklonjena zastarjela stavka o oznaci i stavka o `DummyReadDocument` (razina SyRS-a); dodana pitanja o zaštiti vremena stvaranja, ponovnom punjenju nakon čišćenja i o tome tko čisti dokumente. |
 | v0.0.1 | 2026-10-10 | Prvi zapis, izveden iz koda `concrete/document.py`. |

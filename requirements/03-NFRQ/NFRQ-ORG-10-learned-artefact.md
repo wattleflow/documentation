@@ -7,9 +7,9 @@
 | **Version** | v0.0.5 |
 | **Quality (25010)** | Maintainability (analysability, modifiability); Reliability (maturity) |
 | **Enforcement** | **by review** plus the artefact manifest; **not a CI gate** — there is no CI (`ARCHITECTURE.md` §4) |
-| **`[M]` charter** | [`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md) |
-| **Operating point** | [`NFRQ-SEC-04`](NFRQ-SEC-04-detection-operating-point.md) — threshold, FP/FN cost ratio; not restated here (D-13) |
-| **Category** | `ORG` chosen for want of a better axis; the register has no measurement/model axis. **Provisional** (D-12) — see §6 |
+| **`[M]` charter** | [`NFRQ-DFN-02`](NFRQ-DFN-02-measurement-charter.md) |
+| **Operating point** | [`NFRQ-SCR-04`](NFRQ-SCR-04-detection-operating-point.md) — threshold, FP/FN cost ratio; not restated here ([D-13](../../DOCTRINE.md#d-13)) |
+| **Category** | `ORG` chosen for want of a better axis; the register has no measurement/model axis. **Provisional** ([D-12](../../DOCTRINE.md#d-12)) — see §6 |
 | **Language** | EN only — no HR edition ([`0-NFRQ` §Language](NFRQ-000-INDEX.md#language)) |
 
 ## 1. Statement
@@ -31,19 +31,19 @@ deterministic rule demonstrably cannot, and only while it carries its provenance
    declares. A model that merely ties **loses**: it buys nothing and costs analysability.
 3. **`[M]` Accuracy is measured out-of-sample on a REAL held-out set** — never on the synthetic
    corpus used during development. Scale: ratio; reported per class (precision, recall), never as
-   one number (D-09). Diagnostic only; promotion to a gate needs a documented change ([`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md) c.5).
+   one number ([D-09](../../DOCTRINE.md#d-09)). Diagnostic only; promotion to a gate needs a documented change ([`NFRQ-DFN-02`](NFRQ-DFN-02-measurement-charter.md) c.5).
 4. **The artefact carries a manifest**: training-corpus digest, feature specification, library and
    version, split and seed, the metrics of c.3, and a date. The manifest is **versioned separately
-   from the tool that runs it** (D-10) — a retrained model is a criterion change, not a code
+   from the tool that runs it** ([D-10](../../DOCTRINE.md#d-10)) — a retrained model is a criterion change, not a code
    upgrade, and must not pass as one.
 5. **Retraining from the recorded inputs reproduces the metrics** within a declared tolerance.
    A model whose training cannot be repeated is a finding, not an artefact.
-6. **Opacity is declared, not hidden** (D-11). Every verdict a model produces is recorded together
+6. **Opacity is declared, not hidden** ([D-11](../../DOCTRINE.md#d-11)). Every verdict a model produces is recorded together
    with the model identifier **and the deterministic evidence that was available** at the time, so
    a disputed verdict can be re-examined without the model.
 7. **Locality.** The artefact and its libraries belong to `blackwattle`, which is
    already outside the zero-trust scope by declaration (`ARCHITECTURE.md` §7.4) — so `scikit-learn`,
-   `numpy` and `scipy` there are **not** a violation of [`NFRQ-SEC-03`](NFRQ-SEC-03-supply-chain-locality.md). No clean-core distribution
+   `numpy` and `scipy` there are **not** a violation of [`NFRQ-SCR-03`](NFRQ-SCR-03-supply-chain-locality.md). No clean-core distribution
    may depend on them, directly or lazily.
 8. **The model file is data, not code.** Wheel `RECORD` integrity covers shipped modules; a model
    loaded from a configured path is outside it. Its digest is verified at load, or its absence is
@@ -57,7 +57,7 @@ deterministic rule demonstrably cannot, and only while it carries its provenance
 | criterion | method | status |
 |---|---|---|
 | 1, 9 | code review of the call site — is the model reachable on non-degraded input? | reviewable today |
-| 2, 3 | held-out evaluation against the deterministic baseline, both on the same set | **no real corpus exists** — aspiration (D-05) |
+| 2, 3 | held-out evaluation against the deterministic baseline, both on the same set | **no real corpus exists** — aspiration ([D-05](../../DOCTRINE.md#d-05)) |
 | 4, 5 | inspection of the manifest; a repeat run from the recorded inputs | no artefact exists yet |
 | 6 | inspection of the audit record for `model id` + evidence fields | reviewable once holders exist |
 | 7 | `wem_lint` `clean_core_imports` already refuses such an import in a clean-core tree | automated |
@@ -74,13 +74,13 @@ here is measured by `wem_lint` except c.7.
 | D-10 (criterion separate from tool) | a retrained model changes the criterion; versioning it with the code hides that |
 | D-11 (declared blind spots) | a verdict that cannot be reproduced by reading is a blind spot, and must be named as one |
 | D-09 (vector, not scalar) | one accuracy number is not a verdict; per-class rates are |
-| Goodhart / Campbell ([`NFRQ-DEF-02`](NFRQ-DEF-02-measurement-charter.md)) | a metric that becomes a target stops measuring — hence c.3's ban on gating before validation |
+| Goodhart / Campbell ([`NFRQ-DFN-02`](NFRQ-DFN-02-measurement-charter.md)) | a metric that becomes a target stops measuring — hence c.3's ban on gating before validation |
 | Occam / cost of abstraction | c.2: an opaque mechanism that does not outperform a readable one is a net loss |
-| P-19 (conformance ≠ quality) | a model passing its own metric proves conformance to a declared criterion, nothing more |
+| [P-19](../../POSTULATE.md#p-19) (conformance ≠ quality) | a model passing its own metric proves conformance to a declared criterion, nothing more |
 
 ## 5. Where this rule already applies
 
-* [`NFRQ-SEC-04`](NFRQ-SEC-04-detection-operating-point.md) — every classifier chooses a point
+* [`NFRQ-SCR-04`](NFRQ-SCR-04-detection-operating-point.md) — every classifier chooses a point
   on the ROC; a model is a classifier and inherits that obligation whole.
 * [`NFRQ-ORG-09`](NFRQ-ORG-09-external-standard.md) — a specialisation over an external
   mechanism exposes that mechanism's model rather than re-deriving it; a learned artefact is such

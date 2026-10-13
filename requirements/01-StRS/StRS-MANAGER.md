@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/manager.py`: `ConnectionManager`, `DriverManager`, `ProcessorManager` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-CONNECTION`](StRS-CONNECTION.md) — upravljane konekcije · [`StRS-DRIVER`](StRS-DRIVER.md) — upravljani driveri · [`StRS-PROCESSOR`](StRS-PROCESSOR.md) — upravljani procesori · [`StRS-FACTORY`](StRS-FACTORY.md) — puni upravitelje |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 
@@ -296,20 +296,20 @@ Greške koje javi sam upravljani objekt (konekcija, driver, procesor) prosljeđu
 
 | oznaka | pravilo |
 |---|---|
-| **BR-MGR-01** | Upravitelj drži objekte jedne vrste (konekcije, drivere ili procesore) po imenu; ime je jedinstveno unutar upravitelja. |
-| **BR-MGR-02** | Ponovna registracija već upisanog imena ne zamjenjuje stari objekt: novi se zanemaruje uz upozorenje. |
-| **BR-MGR-03** | Konekcija se ne registrira bez imena. |
-| **BR-MGR-04** | Objekt se dohvaća i na njemu se izvodi operacija samo po upisanom imenu; nepoznato ime je greška. |
-| **BR-MGR-05** | Upravitelj prosljeđuje operaciju objektu i ne zna što ona za njega znači. |
-| **BR-MGR-06** | Procesoru se preko upravitelja može zatražiti samo pokretanje; svaka druga radnja odbija se upozorenjem i odgovorom „ne". |
-| **BR-MGR-07** | Pri uklanjanju upravitelj konekciju zatvara, bez obzira na to je li sesija otvorena ([`BR-CON-17`](StRS-CONNECTION.md#3-poslovna-pravila)), a driver odspaja; unos nestaje i kad oslobađanje ne uspije, a kvar se bilježi. |
-| **BR-MGR-08** | Uklanjanje nepoznatog imena nije greška: za konekcije i drivere bilježi se upozorenje, a za procesore se zahtjev tiho preskače. |
-| **BR-MGR-09** | Kad upravitelj prestane postojati, oslobađa sve upravljane objekte (konekcije zatvara kao u BR-MGR-07); kvar jednog ne sprječava oslobađanje ostalih. |
-| **BR-MGR-10** | Pri zamjeni konekcije nova se najprije povezuje; ako ne uspije, stara ostaje registrirana i aktivna. |
-| **BR-MGR-11** | Pri zamjeni nova konekcija preuzima promatrače stare i šalje obavijest o zamjeni; stara se odspaja tek posljednja. |
-| **BR-MGR-12** | Kvar odspajanja stare konekcije ne poništava zamjenu: bilježi se upozorenje. |
-| **BR-MGR-13** | Povezivanje i odspajanje po imenu ne skrivaju grešku: greška objekta ili nepoznato ime stižu pozivatelju. Samo oslobađanje pri uklanjanju i gašenju (BR-MGR-07, BR-MGR-09) bilježi grešku umjesto da je javi pozivatelju. |
-| **BR-MGR-14** | Upravitelj prima obavijesti, ali na njih ne reagira. |
+| **BR-MNG-01** | Upravitelj drži objekte jedne vrste (konekcije, drivere ili procesore) po imenu; ime je jedinstveno unutar upravitelja. |
+| **BR-MNG-02** | Ponovna registracija već upisanog imena ne zamjenjuje stari objekt: novi se zanemaruje uz upozorenje. |
+| **BR-MNG-03** | Konekcija se ne registrira bez imena. |
+| **BR-MNG-04** | Objekt se dohvaća i na njemu se izvodi operacija samo po upisanom imenu; nepoznato ime je greška. |
+| **BR-MNG-05** | Upravitelj prosljeđuje operaciju objektu i ne zna što ona za njega znači. |
+| **BR-MNG-06** | Procesoru se preko upravitelja može zatražiti samo pokretanje; svaka druga radnja odbija se upozorenjem i odgovorom „ne". |
+| **BR-MNG-07** | Pri uklanjanju upravitelj konekciju zatvara, bez obzira na to je li sesija otvorena ([`BR-CNC-17`](StRS-CONNECTION.md#3-poslovna-pravila)), a driver odspaja; unos nestaje i kad oslobađanje ne uspije, a kvar se bilježi. |
+| **BR-MNG-08** | Uklanjanje nepoznatog imena nije greška: za konekcije i drivere bilježi se upozorenje, a za procesore se zahtjev tiho preskače. |
+| **BR-MNG-09** | Kad upravitelj prestane postojati, oslobađa sve upravljane objekte (konekcije zatvara kao u BR-MNG-07); kvar jednog ne sprječava oslobađanje ostalih. |
+| **BR-MNG-10** | Pri zamjeni konekcije nova se najprije povezuje; ako ne uspije, stara ostaje registrirana i aktivna. |
+| **BR-MNG-11** | Pri zamjeni nova konekcija preuzima promatrače stare i šalje obavijest o zamjeni; stara se odspaja tek posljednja. |
+| **BR-MNG-12** | Kvar odspajanja stare konekcije ne poništava zamjenu: bilježi se upozorenje. |
+| **BR-MNG-13** | Povezivanje i odspajanje po imenu ne skrivaju grešku: greška objekta ili nepoznato ime stižu pozivatelju. Samo oslobađanje pri uklanjanju i gašenju (BR-MNG-07, BR-MNG-09) bilježi grešku umjesto da je javi pozivatelju. |
+| **BR-MNG-14** | Upravitelj prima obavijesti, ali na njih ne reagira. |
 
 ## 4. Nefunkcionalni zahtjevi
 
@@ -317,8 +317,8 @@ Kakvoće proizlaze iz narativa i koda; za njih još nema poveznice na zapise zah
 
 | kakvoća | što znači za upravitelje |
 |---|---|
-| urednost | resursi se oslobađaju pri uklanjanju i gašenju, pa nema zaboravljenih konekcija i drivera (BR-MGR-07, BR-MGR-09) |
-| otpornost | kvar oslobađanja jednog objekta ne zaustavlja ostale (BR-MGR-09); neuspjela zamjena ne ruši staru konekciju (BR-MGR-10) |
+| urednost | resursi se oslobađaju pri uklanjanju i gašenju, pa nema zaboravljenih konekcija i drivera (BR-MNG-07, BR-MNG-09) |
+| otpornost | kvar oslobađanja jednog objekta ne zaustavlja ostale (BR-MNG-09); neuspjela zamjena ne ruši staru konekciju (BR-MNG-10) |
 | praćenje | upravitelji bilježe registraciju, uklanjanje, operacije, zamjenu i greške |
 | odvojenost | tok ne drži objekte sam: traži ih po imenu, a o njihovu oslobađanju brine upravitelj |
 | ujednačenost | sva tri upravitelja registriraju, dohvaćaju, izvode operacije i uklanjaju objekte po imenu na isti način; razlike su navedene u §6 |
@@ -341,10 +341,10 @@ Matrica se popunjava kad se odrede djeca (§6).
 4. Sloj: nije odlučeno kojem sloju pripadaju upravitelji. Isto pitanje otvoreno je za konekciju ([`StRS-CONNECTION`](StRS-CONNECTION.md)).
 5. Procesor se pri uklanjanju ne zaustavlja, dok se konekcija i driver oslobađaju. Treba potvrditi da je ta razlika željena.
 6. U kodu postoji orkestrator, dio sustava koji drži upravitelja konekcija, ali ga u pregledanom kodu ne koristi. Treba odlučiti pripada li to ovom zapisu.
-7. **Razlike među upraviteljima.** Narativ kaže da tri upravitelja dijele isti oblik, a razlikuju se u ovome: upravitelj konekcija nema popis svih objekata koji druga dva imaju; upravitelj drivera nema prečace za spajanje i odspajanje po imenu; upravitelj procesora ne bilježi upozorenje pri uklanjanju nepoznatog imena (BR-MGR-08). Treba odlučiti jesu li razlike namjerne.
+7. **Razlike među upraviteljima.** Narativ kaže da tri upravitelja dijele isti oblik, a razlikuju se u ovome: upravitelj konekcija nema popis svih objekata koji druga dva imaju; upravitelj drivera nema prečace za spajanje i odspajanje po imenu; upravitelj procesora ne bilježi upozorenje pri uklanjanju nepoznatog imena (BR-MNG-08). Treba odlučiti jesu li razlike namjerne.
 8. **Tko traži operacije i uklanjanje.** Workflow Factory upravitelje samo puni i iz njih dohvaća drivere; spajanje i odspajanje konekcija i drivera te uklanjanje objekata ne poziva. Nije određeno tko to radi (UC3, UC4), pa ni tko spaja drivere prije rada toka.
 9. Kakvoće treba povezati s postojećim NFRQ zapisima ili otvoriti nove.
-10. **Zatvaranje konekcija.** BR-MGR-07 i BR-MGR-09 traže da upravitelj zatvori svaku konekciju, a kod trenutačno zatvara samo konekcije s otvorenom sesijom. Kod treba uskladiti s pravilom (SyRS).
+10. **Zatvaranje konekcija.** BR-MNG-07 i BR-MNG-09 traže da upravitelj zatvori svaku konekciju, a kod trenutačno zatvara samo konekcije s otvorenom sesijom. Kod treba uskladiti s pravilom (SyRS).
 
 ## 7. Reference
 
@@ -362,7 +362,7 @@ Matrica se popunjava kad se odrede djeca (§6).
 |---|---|---|
 | v0.0.6 | 2026-10-11 | Uklonjene poveznice na prethodni zapis iste komponente i pripadna stavka iz *Otvoreno*: zapis ga zamjenjuje, pa upućuje samo na važeće dokumente. |
 | v0.0.5 | 2026-10-11 | Prema kodu Workflow Factoryja: driver od upravitelja drivera dohvaća Workflow Factory, ne strategije čitanja i pisanja (pojmovi, kontekst, dionici, UC2). Workflow Factory ne izvodi operacije ni uklanjanje, pa je akter UC3 (konekcije i driveri) i UC4 neodređen, a UC6 nastaje gašenjem upravitelja bez aktera. *Otvoreno*: tko traži operacije i uklanjanje. |
-| v0.0.4 | 2026-10-11 | Upravitelj pri uklanjanju i gašenju zatvara svaku konekciju, bez obzira na to je li sesija otvorena (BR-MGR-07, BR-MGR-09, UC4, UC6; usklađeno s BR-CON-17). Razlika prema trenutačnom kodu zabilježena u *Otvoreno*. |
+| v0.0.4 | 2026-10-11 | Upravitelj pri uklanjanju i gašenju zatvara svaku konekciju, bez obzira na to je li sesija otvorena (BR-MNG-07, BR-MNG-09, UC4, UC6; usklađeno s BR-CNC-17). Razlika prema trenutačnom kodu zabilježena u *Otvoreno*. |
 | v0.0.3 | 2026-10-11 | Nazivi aktera usklađeni s ostalim StRS-ovima: objekte sastavlja, upisuje, uklanja i njima upravlja Workflow Factory, a procesore dohvaća i pokreće Workflow (pojmovi, dionici, UC1–UC4, UC6, dijagrami). Uklonjena stavka o usklađivanju sa StRS-DRIVER, koji je ispravljen. |
-| v0.0.2 | 2026-10-10 | Usklađeno s kodom i povezanim StRS-ovima: uklanjanje nepoznatog procesora tiho se preskače (BR-MGR-08, UC4); procesor svoj Blackboard čisti sam; driver nije akter operacija nad konekcijom (UC3); strategije čitanja i pisanja dodane kao korisnici upravitelja drivera; driver se *odspaja*, ne *prazni*; kontekstni dijagram s jednim driverom; otvorena pitanja dopunjena (razlike među upraviteljima, usklađivanje sa StRS-DRIVER, stara oznaka FRQ-MGR). |
+| v0.0.2 | 2026-10-10 | Usklađeno s kodom i povezanim StRS-ovima: uklanjanje nepoznatog procesora tiho se preskače (BR-MNG-08, UC4); procesor svoj Blackboard čisti sam; driver nije akter operacija nad konekcijom (UC3); strategije čitanja i pisanja dodane kao korisnici upravitelja drivera; driver se *odspaja*, ne *prazni*; kontekstni dijagram s jednim driverom; otvorena pitanja dopunjena (razlike među upraviteljima, usklađivanje sa StRS-DRIVER). |
 | v0.0.1 | 2026-10-10 | Prvi zapis, izveden iz koda `concrete/manager.py`. |

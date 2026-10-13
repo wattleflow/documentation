@@ -10,7 +10,7 @@
 | **Predmet** | `concrete/pipeline.py`: `GenericPipeline`, `PipelineError` |
 | **Djeca (SyRS)** | odrediti (§6) |
 | **Povezano** | [`StRS-PROCESSOR`](StRS-PROCESSOR.md) — procesor pokreće pipeline nad svakim dokumentom · [`StRS-BLACKBOARD`](StRS-BLACKBOARD.md) — pipeline čita i piše dokumente na Blackboardu · [`StRS-DOCUMENT`](StRS-DOCUMENT.md) — dokument koji pipeline prima kroz fasadu · [`StRS-FACTORY`](StRS-FACTORY.md) — sastavlja pipeline |
-| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine (D-13) |
+| **Dijagrami** | inline (§2.2, §2.4, §2.5) — pogled izveden iz koda, ne izvor istine ([D-13](../../DOCTRINE.md#d-13)) |
 
 ## 1. Uvod
 
@@ -178,13 +178,13 @@ Svaka greška nosi izvorni uzrok i ne omata se dvaput. Pipeline za grešku ostav
 
 | oznaka | pravilo |
 |---|---|
-| **BR-PIP-01** | Pipeline obavlja jednu transformaciju nad jednim dokumentom po pozivu. |
-| **BR-PIP-02** | Pipeline prije transformacije provjerava da je dobio procesor i fasadu; inače se transformacija ne izvodi. |
-| **BR-PIP-03** | Svaki neuspjeh pipelinea javlja se kao greška pipelinea; izvorna greška ostaje kao uzrok. |
-| **BR-PIP-04** | Greška koju je transformacija već javila kao greška pipelinea prosljeđuje se nepromijenjena. |
-| **BR-PIP-05** | Pipeline ne zna koliko dokumenata ima, odakle dolaze ni kamo se pohranjuju. |
-| **BR-PIP-06** | Pipeline ne stvara zaseban zapis u dnevniku za svaki korak; dnevnik bilježi obradu cijelog dokumenta. |
-| **BR-PIP-07** | Pipeline se podešava prema konfiguraciji toka. |
+| **BR-PPL-01** | Pipeline obavlja jednu transformaciju nad jednim dokumentom po pozivu. |
+| **BR-PPL-02** | Pipeline prije transformacije provjerava da je dobio procesor i fasadu; inače se transformacija ne izvodi. |
+| **BR-PPL-03** | Svaki neuspjeh pipelinea javlja se kao greška pipelinea; izvorna greška ostaje kao uzrok. |
+| **BR-PPL-04** | Greška koju je transformacija već javila kao greška pipelinea prosljeđuje se nepromijenjena. |
+| **BR-PPL-05** | Pipeline ne zna koliko dokumenata ima, odakle dolaze ni kamo se pohranjuju. |
+| **BR-PPL-06** | Pipeline ne stvara zaseban zapis u dnevniku za svaki korak; dnevnik bilježi obradu cijelog dokumenta. |
+| **BR-PPL-07** | Pipeline se podešava prema konfiguraciji toka. |
 
 ## 4. Nefunkcionalni zahtjevi
 
@@ -193,7 +193,7 @@ Kakvoće proizlaze iz narativa i koda; osim ondje gdje je poveznica navedena, jo
 | kakvoća | što znači za pipeline |
 |---|---|
 | razmjerno bilježenje | dnevnik ne raste s brojem koraka: po jedan zapis po dokumentu daje procesor ([`NFRQ-OBS-03`](../03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md)) |
-| jednoobrazno javljanje grešaka | svaki neuspjeh pipelinea ima isti oblik i uzrok (BR-PIP-03) |
+| jednoobrazno javljanje grešaka | svaki neuspjeh pipelinea ima isti oblik i uzrok (BR-PPL-03) |
 | zamjenjivost | koraci su zamjenjivi jer dijele isti način pozivanja i javljanja grešaka |
 | proširivost | programer može izraditi nove vrste pipelinea (UC3) |
 
@@ -211,7 +211,7 @@ Matrica se popunjava kad se odrede djeca (§6).
 
 1. Djeca ovog zapisa (SyRS) nisu određena. Oznake `BR-PIP-*` i naziv sloja u naslovima dijagrama („Data processing", kao u [`StRS-PROCESSOR`](StRS-PROCESSOR.md)) su prijedlog.
 2. Odlomak *Problem* u §2.1 je prijedlog autora zapisa i treba ga potvrditi.
-3. Registraciju pipelinea kod procesora provodi Workflow Factory (UC1, korak 3; potvrđeno u [`BR-FAC-10`](StRS-FACTORY.md#3-poslovna-pravila)). Treba odlučiti je li to zaseban korisnički slučaj; isto pitanje otvoreno je u [`StRS-PROCESSOR`](StRS-PROCESSOR.md).
+3. Registraciju pipelinea kod procesora provodi Workflow Factory (UC1, korak 3; potvrđeno u [`BR-FCT-10`](StRS-FACTORY.md#3-poslovna-pravila)). Treba odlučiti je li to zaseban korisnički slučaj; isto pitanje otvoreno je u [`StRS-PROCESSOR`](StRS-PROCESSOR.md).
 4. Kakvoće iz §4 (osim bilježenja) treba povezati s postojećim NFRQ zapisima ili otvoriti nove.
 
 ## 7. Reference
@@ -231,6 +231,6 @@ Matrica se popunjava kad se odrede djeca (§6).
 | Verzija | Datum | Promjena |
 |---|---|---|
 | v0.0.4 | 2026-10-11 | Uklonjene poveznice na prethodni zapis iste komponente i pripadna stavka iz *Otvoreno*: zapis ga zamjenjuje, pa upućuje samo na važeće dokumente. |
-| v0.0.3 | 2026-10-11 | Registracija pipelinea kod procesora potvrđena kodom Workflow Factoryja (BR-FAC-10). Poveznica na StRS-FACTORY. |
-| v0.0.2 | 2026-10-11 | Akter koji sastavlja i registrira pipeline je Workflow Factory. Usklađeno s povezanim StRS-ovima: rad s Blackboardom potvrđen StRS-BLACKBOARD UC4; posljedica greške povezana s BR-PRC-04; uklonjena netočna tvrdnja o Blackboardu i napomena o nazivu *zapis*. Odlomak o vrstama iznimki i razinama bilježenja zamijenjen opisom za široku publiku; BR-PIP-06 i BR-PIP-07 pojednostavljeni; BR-PIP-08 (oslobađanje postavki pri gašenju) prenesen u SyRS. |
+| v0.0.3 | 2026-10-11 | Registracija pipelinea kod procesora potvrđena kodom Workflow Factoryja (BR-FCT-10). Poveznica na StRS-FACTORY. |
+| v0.0.2 | 2026-10-11 | Akter koji sastavlja i registrira pipeline je Workflow Factory. Usklađeno s povezanim StRS-ovima: rad s Blackboardom potvrđen StRS-BLACKBOARD UC4; posljedica greške povezana s BR-PRC-04; uklonjena netočna tvrdnja o Blackboardu i napomena o nazivu *zapis*. Odlomak o vrstama iznimki i razinama bilježenja zamijenjen opisom za široku publiku; BR-PPL-06 i BR-PPL-07 pojednostavljeni; BR-PPL-08 (oslobađanje postavki pri gašenju) prenesen u SyRS. |
 | v0.0.1 | 2026-10-11 | Prvi zapis, izveden iz koda `concrete/pipeline.py`. |

@@ -18,12 +18,13 @@ i svaki `.puml` koji nijedan zapis ne prisvaja.
 
 ## `01-StRS` — StRS
 
-16 zapisa, 16 s barem jednim dijagramom.
+17 zapisa, 17 s barem jednim dijagramom.
 
 | Zapis | Naslov | Imamo | Nedostaje |
 |---|---|---|---|
 | [StRS-BLACKBOARD](01-StRS/StRS-BLACKBOARD.md) | Blackboard: privremena pohrana dokumenata tijekom obrade | [context (inline)](01-StRS/StRS-BLACKBOARD.md) · [usecase (inline)](01-StRS/StRS-BLACKBOARD.md) · [state (inline)](01-StRS/StRS-BLACKBOARD.md) · [activity (inline)](01-StRS/StRS-BLACKBOARD.md) | — |
 | [StRS-CONNECTION](01-StRS/StRS-CONNECTION.md) | Generička konekcija: jedina granica prema vanjskom sustavu | [context (inline)](01-StRS/StRS-CONNECTION.md) · [usecase (inline)](01-StRS/StRS-CONNECTION.md) · [state (inline)](01-StRS/StRS-CONNECTION.md) · [activity (inline)](01-StRS/StRS-CONNECTION.md) | — |
+| [StRS-DOCKER](01-StRS/StRS-DOCKER.md) | Docker uz workflow: okruženje u kojem se workflow izvodi i s kojim surađuje | [context (inline)](01-StRS/StRS-DOCKER.md) · [usecase (inline)](01-StRS/StRS-DOCKER.md) · [activity (inline)](01-StRS/StRS-DOCKER.md) | — |
 | [StRS-DOCUMENT](01-StRS/StRS-DOCUMENT.md) | Dokument: jedinica podataka koja putuje tokom | [context (inline)](01-StRS/StRS-DOCUMENT.md) · [usecase (inline)](01-StRS/StRS-DOCUMENT.md) · [activity (inline)](01-StRS/StRS-DOCUMENT.md) | — |
 | [StRS-DRIVER](01-StRS/StRS-DRIVER.md) | Driver: jedinstven pristup vanjskim resursima | [context (inline)](01-StRS/StRS-DRIVER.md) · [usecase (inline)](01-StRS/StRS-DRIVER.md) · [state (inline)](01-StRS/StRS-DRIVER.md) · [activity (inline)](01-StRS/StRS-DRIVER.md) | — |
 | [StRS-FACTORY](01-StRS/StRS-FACTORY.md) | Workflow Factory: sastavljanje toka iz konfiguracije | [context (inline)](01-StRS/StRS-FACTORY.md) · [usecase (inline)](01-StRS/StRS-FACTORY.md) · [activity (inline)](01-StRS/StRS-FACTORY.md) | — |
@@ -45,23 +46,23 @@ i svaki `.puml` koji nijedan zapis ne prisvaja.
 
 | Zapis | Naslov | Imamo | Nedostaje |
 |---|---|---|---|
-| [SyRS-BBD](02-SyRS/SyRS-BBD-blackboard.md) | Blackboard: što sustav mora raditi da dokumenti privremeno žive na zajedničkom platnu | [class (inline)](02-SyRS/SyRS-BBD-blackboard.md) · [state (inline)](02-SyRS/SyRS-BBD-blackboard.md) · [sequence (inline)](02-SyRS/SyRS-BBD-blackboard.md) | — |
+| [SyRS-BLC](02-SyRS/SyRS-BLC-blackboard.md) | Blackboard: što sustav mora raditi da dokumenti privremeno žive na zajedničkom platnu | [class (inline)](02-SyRS/SyRS-BLC-blackboard.md) · [state (inline)](02-SyRS/SyRS-BLC-blackboard.md) · [sequence (inline)](02-SyRS/SyRS-BLC-blackboard.md) | — |
 | [SyRS-CNC](02-SyRS/SyRS-CNC-connection.md) | Konekcija: što sustav mora raditi na jedinoj granici prema vanjskom sustavu | [class (inline)](02-SyRS/SyRS-CNC-connection.md) · [state (inline)](02-SyRS/SyRS-CNC-connection.md) · [sequence (inline)](02-SyRS/SyRS-CNC-connection.md) | — |
 | [SyRS-DCM](02-SyRS/SyRS-DCM-document.md) | Dokument: što sustav mora raditi s jedinicom podataka koja putuje tokom | [class (inline)](02-SyRS/SyRS-DCM-document.md) · [sequence (inline)](02-SyRS/SyRS-DCM-document.md) | — |
 | [SyRS-DRV](02-SyRS/SyRS-DRV-driver.md) | Driver: što sustav mora raditi za jedinstven pristup vanjskim resursima | [class (inline)](02-SyRS/SyRS-DRV-driver.md) · [state (inline)](02-SyRS/SyRS-DRV-driver.md) · [sequence (inline)](02-SyRS/SyRS-DRV-driver.md) | — |
 | [SyRS-EXC](02-SyRS/SyRS-EXC-exception.md) | Iznimke frameworka: što sustav mora jamčiti o greškama koje komponente dižu | [class (inline)](02-SyRS/SyRS-EXC-exception.md) | `SyRS-EXC-sequence.puml` |
 | [SyRS-FCT](02-SyRS/SyRS-FCT-factory.md) | Workflow Factory: što sustav mora raditi da iz konfiguracije sastavi tok | [class (inline)](02-SyRS/SyRS-FCT-factory.md) · [sequence (inline)](02-SyRS/SyRS-FCT-factory.md) | — |
-| [SyRS-FLT](02-SyRS/SyRS-FLT-fault-tolerance.md) | Otpornost na greške: što sustav mora raditi da nijedno izvođenje ni neuspjeli dokument ne nestanu bez zapisa | [class (inline)](02-SyRS/SyRS-FLT-fault-tolerance.md) · [state (inline)](02-SyRS/SyRS-FLT-fault-tolerance.md) · [sequence (inline)](02-SyRS/SyRS-FLT-fault-tolerance.md) | — |
+| [SyRS-FTL](02-SyRS/SyRS-FTL-fault-tolerance.md) | Otpornost na greške: što sustav mora raditi da nijedno izvođenje ni neuspjeli dokument ne nestanu bez zapisa | [class (inline)](02-SyRS/SyRS-FTL-fault-tolerance.md) · [state (inline)](02-SyRS/SyRS-FTL-fault-tolerance.md) · [sequence (inline)](02-SyRS/SyRS-FTL-fault-tolerance.md) | — |
 | [SyRS-HLP](02-SyRS/SyRS-HLP-helpers.md) | Pomoćnici Attribute i NameHelper: što sustav mora raditi pri provjeri postavki i imenovanju | [class (inline)](02-SyRS/SyRS-HLP-helpers.md) · [sequence (inline)](02-SyRS/SyRS-HLP-helpers.md) | — |
 | [SyRS-ITR](02-SyRS/SyRS-ITR-lazy-iterators.md) | Lijeni iteratori: što sustav mora raditi da izvor izgradi tek pri prvom dohvatu | [class (inline)](02-SyRS/SyRS-ITR-lazy-iterators.md) · [sequence (inline)](02-SyRS/SyRS-ITR-lazy-iterators.md) | — |
-| [SyRS-MGR](02-SyRS/SyRS-MGR-managers.md) | Upravitelji: što sustav mora raditi da konekcije, driveri i procesori budu dostupni po imenu | [class (inline)](02-SyRS/SyRS-MGR-managers.md) · [sequence (inline)](02-SyRS/SyRS-MGR-managers.md) | — |
-| [SyRS-MMN](02-SyRS/SyRS-MMN-memento.md) | Snimka stanja: što sustav mora raditi s nepromjenjivim zapisom stanja | [class (inline)](02-SyRS/SyRS-MMN-memento.md) | `SyRS-MMN-sequence.puml` |
-| [SyRS-MMS](02-SyRS/SyRS-MMS-memento-store.md) | Pohrana snimki: što sustav mora raditi da snimka preživi između pokretanja | [class (inline)](02-SyRS/SyRS-MMS-memento-store.md) · [sequence (inline)](02-SyRS/SyRS-MMS-memento-store.md) | — |
+| [SyRS-MMT](02-SyRS/SyRS-MMT-memento.md) | Snimka stanja: što sustav mora raditi s nepromjenjivim zapisom stanja | [class (inline)](02-SyRS/SyRS-MMT-memento.md) | `SyRS-MMT-sequence.puml` |
+| [SyRS-MNG](02-SyRS/SyRS-MNG-managers.md) | Upravitelji: što sustav mora raditi da konekcije, driveri i procesori budu dostupni po imenu | [class (inline)](02-SyRS/SyRS-MNG-managers.md) · [sequence (inline)](02-SyRS/SyRS-MNG-managers.md) | — |
+| [SyRS-MST](02-SyRS/SyRS-MST-memento-store.md) | Pohrana snimki: što sustav mora raditi da snimka preživi između pokretanja | [class (inline)](02-SyRS/SyRS-MST-memento-store.md) · [sequence (inline)](02-SyRS/SyRS-MST-memento-store.md) | — |
 | [SyRS-OBS](02-SyRS/SyRS-OBS-observable.md) | Promatrani objekt: što sustav mora raditi da promatrače obavijesti sigurno među nitima | [class (inline)](02-SyRS/SyRS-OBS-observable.md) · [sequence (inline)](02-SyRS/SyRS-OBS-observable.md) | — |
 | [SyRS-ORC](02-SyRS/SyRS-ORC-orchestrator.md) | Orkestrator: što sustav mora raditi da pokrene procesore redom ili paralelno i javi događaje | [class (inline)](02-SyRS/SyRS-ORC-orchestrator.md) · [sequence (inline)](02-SyRS/SyRS-ORC-orchestrator.md) | — |
 | [SyRS-PPL](02-SyRS/SyRS-PPL-pipeline.md) | Pipeline: što sustav mora raditi da jedan dokument prođe jednu transformaciju | [class (inline)](02-SyRS/SyRS-PPL-pipeline.md) · [sequence (inline)](02-SyRS/SyRS-PPL-pipeline.md) | — |
 | [SyRS-PRC](02-SyRS/SyRS-PRC-processor.md) | Procesor: što sustav mora raditi da dokumente obradi jedan po jedan kroz pipelineove | [class (inline)](02-SyRS/SyRS-PRC-processor.md) · [state (inline)](02-SyRS/SyRS-PRC-processor.md) · [sequence (inline)](02-SyRS/SyRS-PRC-processor.md) | — |
-| [SyRS-PTN](02-SyRS/SyRS-PTN-root-base.md) | Korijenska baza Wattleflow: što sustav mora jamčiti svakom objektu frameworka | [class (inline)](02-SyRS/SyRS-PTN-root-base.md) | `SyRS-PTN-sequence.puml` |
+| [SyRS-PTR](02-SyRS/SyRS-PTR-root-base.md) | Korijenska baza Wattleflow: što sustav mora jamčiti svakom objektu frameworka | [class (inline)](02-SyRS/SyRS-PTR-root-base.md) | `SyRS-PTR-sequence.puml` |
 | [SyRS-RPS](02-SyRS/SyRS-RPS-repository.md) | Repozitorij: što sustav mora raditi da dokument zapiše i pročita kroz strategije | [class (inline)](02-SyRS/SyRS-RPS-repository.md) · [sequence (inline)](02-SyRS/SyRS-RPS-repository.md) | — |
 | [SyRS-SCH](02-SyRS/SyRS-SCH-scheduler.md) | Raspoređivač: što sustav mora raditi da pokrene orkestraciju i javi događaje | [class (inline)](02-SyRS/SyRS-SCH-scheduler.md) · [sequence (inline)](02-SyRS/SyRS-SCH-scheduler.md) | — |
 | [SyRS-SGT](02-SyRS/SyRS-SGT-singleton.md) | Singleton: što sustav mora raditi da podklasa ima jednu instancu | [class (inline)](02-SyRS/SyRS-SGT-singleton.md) · [sequence (inline)](02-SyRS/SyRS-SGT-singleton.md) | — |
@@ -74,21 +75,21 @@ i svaki `.puml` koji nijedan zapis ne prisvaja.
 
 ## `03-NFRQ` — NFRQ
 
-48 zapisa, 0 s barem jednim dijagramom.
+49 zapisa, 0 s barem jednim dijagramom.
 
 | Zapis | Naslov | Imamo | Nedostaje |
 |---|---|---|---|
 | [NFRQ-000](03-NFRQ/NFRQ-000-PREGLED.md) | NFRQ pregled — radni popis nalaza | — | — |
-| [NFRQ-APX-01](03-NFRQ/NFRQ-APX-01-facet-order.md) | Appendix A: facet order in class nomenclature | — | — |
-| [NFRQ-DEF-01](03-NFRQ/NFRQ-DEF-01-common-definitions.md) | Common definitions | — | — |
-| [NFRQ-DEF-02](03-NFRQ/NFRQ-DEF-02-measurement-charter.md) | Charter for measurable [M] criteria | — | — |
-| [NFRQ-DEF-03](03-NFRQ/NFRQ-DEF-03-comparison-and-boundary-values.md) | Comparison and boundary-value definitions | — | — |
-| [NFRQ-DEF-04](03-NFRQ/NFRQ-DEF-04-moment-aware-helper.md) | MomentAwareHelper | — | — |
-| [NFRQ-DEF-05](03-NFRQ/NFRQ-DEF-05-moment-naive-helper.md) | MomentNaiveHelper | — | — |
+| [NFRQ-APN-01](03-NFRQ/NFRQ-APN-01-facet-order.md) | Appendix A: facet order in class nomenclature | — | — |
+| [NFRQ-DFN-01](03-NFRQ/NFRQ-DFN-01-common-definitions.md) | Common definitions | — | — |
+| [NFRQ-DFN-02](03-NFRQ/NFRQ-DFN-02-measurement-charter.md) | Charter for measurable [M] criteria | — | — |
+| [NFRQ-DFN-03](03-NFRQ/NFRQ-DFN-03-comparison-and-boundary-values.md) | Comparison and boundary-value definitions | — | — |
+| [NFRQ-DFN-04](03-NFRQ/NFRQ-DFN-04-moment-aware-helper.md) | MomentAwareHelper | — | — |
+| [NFRQ-DFN-05](03-NFRQ/NFRQ-DFN-05-moment-naive-helper.md) | MomentNaiveHelper | — | — |
 | [NFRQ-DFN-06](03-NFRQ/NFRQ-DFN-06-error-handling-policy.md) | Error-handling policy: the facets every component declares | — | — |
-| [NFRQ-FUN-01](03-NFRQ/NFRQ-FUN-01-conversion-fidelity.md) | Conversion fidelity: nothing lost silently, the round trip is a fixed point | — | — |
-| [NFRQ-FUN-02](03-NFRQ/NFRQ-FUN-02-recognition-accuracy.md) | Recognition accuracy is measured per engine on a declared reference set | — | — |
-| [NFRQ-MEM-01](03-NFRQ/NFRQ-MEM-01-memory.md) | Instance memory: classes that inherit Wattleflow declare __slots__ | — | — |
+| [NFRQ-FNC-01](03-NFRQ/NFRQ-FNC-01-conversion-fidelity.md) | Conversion fidelity: nothing lost silently, the round trip is a fixed point | — | — |
+| [NFRQ-FNC-02](03-NFRQ/NFRQ-FNC-02-recognition-accuracy.md) | Recognition accuracy is measured per engine on a declared reference set | — | — |
+| [NFRQ-MMR-01](03-NFRQ/NFRQ-MMR-01-memory.md) | Instance memory: classes that inherit Wattleflow declare __slots__ | — | — |
 | [NFRQ-OBS-01](03-NFRQ/NFRQ-OBS-01-audit-levels.md) | Audit levels: meaning, audience and placement | — | — |
 | [NFRQ-OBS-02](03-NFRQ/NFRQ-OBS-02-audit-fields.md) | Audit-record fields | — | — |
 | [NFRQ-OBS-03](03-NFRQ/NFRQ-OBS-03-audit-ownership-volume.md) | Ownership, order and volume of audit [M] | — | — |
@@ -107,22 +108,23 @@ i svaki `.puml` koji nijedan zapis ne prisvaja.
 | [NFRQ-ORG-13](03-NFRQ/NFRQ-ORG-13-public-surface-is-the-interface.md) | The public surface of a contract class is its interface | — | — |
 | [NFRQ-ORG-14](03-NFRQ/NFRQ-ORG-14-consumer-reaches-the-interface.md) | A consumer reaches a converter only through its interface | — | — |
 | [NFRQ-ORG-15](03-NFRQ/NFRQ-ORG-15-separation-of-concerns.md) | Separation of concerns: each component owns its rules | — | — |
+| [NFRQ-ORG-16](03-NFRQ/NFRQ-ORG-16-external-access-via-driver.md) | External access goes through a driver | — | — |
 | [NFRQ-PRF-01](03-NFRQ/NFRQ-PRF-01-work-proportional-to-input.md) | Work proportional to input | — | — |
 | [NFRQ-PRF-02](03-NFRQ/NFRQ-PRF-02-measurement-speed.md) | Measurement speed: the cost of measuring is bounded by the work measured | — | — |
-| [NFRQ-SEC-01](03-NFRQ/NFRQ-SEC-01-blast-radius.md) | Blast-radius containment | — | — |
-| [NFRQ-SEC-02](03-NFRQ/NFRQ-SEC-02-attack-surface.md) | Attack-surface minimality | — | — |
-| [NFRQ-SEC-03](03-NFRQ/NFRQ-SEC-03-supply-chain-locality.md) | Supply-chain trust and distribution locality | — | — |
-| [NFRQ-SEC-04](03-NFRQ/NFRQ-SEC-04-detection-operating-point.md) | Detection operating point and psychological acceptability | — | — |
-| [NFRQ-SEC-05](03-NFRQ/NFRQ-SEC-05-adversary-model.md) | Adversary model and investment discipline | — | — |
-| [NFRQ-SEC-06](03-NFRQ/NFRQ-SEC-06-audit-confidentiality.md) | Audit-record confidentiality | — | — |
-| [NFRQ-SEC-07](03-NFRQ/NFRQ-SEC-07-emission-authorisation.md) | Emission is an authorised act, not a configuration key | — | — |
-| [NFRQ-SEC-08](03-NFRQ/NFRQ-SEC-08-emitted-document-confidentiality.md) | Emitted-document confidentiality: a declared marking, no residue | — | — |
-| [NFRQ-SEC-09](03-NFRQ/NFRQ-SEC-09-no-secret-in-version-control.md) | No secret in version control | — | — |
-| [NFRQ-SEC-10](03-NFRQ/NFRQ-SEC-10-secrets-enter-at-the-process-boundary.md) | A secret enters at the process boundary and never leaves through a record | — | — |
-| [NFRQ-SEC-11](03-NFRQ/NFRQ-SEC-11-instance-integrity.md) | Integrity of a deployed instance | — | — |
-| [NFRQ-SEC-12](03-NFRQ/NFRQ-SEC-12-instance-availability.md) | Availability of a supporting instance | — | — |
-| [NFRQ-SEC-13](03-NFRQ/NFRQ-SEC-13-network-exposure-and-least-privilege.md) | Network exposure and least privilege of an instance | — | — |
-| [NFRQ-SEC-14](03-NFRQ/NFRQ-SEC-14-telemetry-confidentiality.md) | Telemetry confidentiality at the export boundary | — | — |
-| [NFRQ-SEC-15](03-NFRQ/NFRQ-SEC-15-operation-authorisation.md) | Data-plane operation authorisation is declared configuration, not a call-time flag | — | — |
-| [NFRQ-SEC-16](03-NFRQ/NFRQ-SEC-16-no-runtime-installation.md) | Nothing is installed or acquired from code at run time | — | — |
-| [NFRQ-SEC-17](03-NFRQ/NFRQ-SEC-17-deferred-third-party-loading.md) | Third-party code is loaded at use, never at import | — | — |
+| [NFRQ-SCR-01](03-NFRQ/NFRQ-SCR-01-blast-radius.md) | Blast-radius containment | — | — |
+| [NFRQ-SCR-02](03-NFRQ/NFRQ-SCR-02-attack-surface.md) | Attack-surface minimality | — | — |
+| [NFRQ-SCR-03](03-NFRQ/NFRQ-SCR-03-supply-chain-locality.md) | Supply-chain trust and distribution locality | — | — |
+| [NFRQ-SCR-04](03-NFRQ/NFRQ-SCR-04-detection-operating-point.md) | Detection operating point and psychological acceptability | — | — |
+| [NFRQ-SCR-05](03-NFRQ/NFRQ-SCR-05-adversary-model.md) | Adversary model and investment discipline | — | — |
+| [NFRQ-SCR-06](03-NFRQ/NFRQ-SCR-06-audit-confidentiality.md) | Audit-record confidentiality | — | — |
+| [NFRQ-SCR-07](03-NFRQ/NFRQ-SCR-07-emission-authorisation.md) | Emission is an authorised act, not a configuration key | — | — |
+| [NFRQ-SCR-08](03-NFRQ/NFRQ-SCR-08-emitted-document-confidentiality.md) | Emitted-document confidentiality: a declared marking, no residue | — | — |
+| [NFRQ-SCR-09](03-NFRQ/NFRQ-SCR-09-no-secret-in-version-control.md) | No secret in version control | — | — |
+| [NFRQ-SCR-10](03-NFRQ/NFRQ-SCR-10-secrets-enter-at-the-process-boundary.md) | A secret enters at the process boundary and never leaves through a record | — | — |
+| [NFRQ-SCR-11](03-NFRQ/NFRQ-SCR-11-instance-integrity.md) | Integrity of a deployed instance | — | — |
+| [NFRQ-SCR-12](03-NFRQ/NFRQ-SCR-12-instance-availability.md) | Availability of a supporting instance | — | — |
+| [NFRQ-SCR-13](03-NFRQ/NFRQ-SCR-13-network-exposure-and-least-privilege.md) | Network exposure and least privilege of an instance | — | — |
+| [NFRQ-SCR-14](03-NFRQ/NFRQ-SCR-14-telemetry-confidentiality.md) | Telemetry confidentiality at the export boundary | — | — |
+| [NFRQ-SCR-15](03-NFRQ/NFRQ-SCR-15-operation-authorisation.md) | Data-plane operation authorisation is declared configuration, not a call-time flag | — | — |
+| [NFRQ-SCR-16](03-NFRQ/NFRQ-SCR-16-no-runtime-installation.md) | Nothing is installed or acquired from code at run time | — | — |
+| [NFRQ-SCR-17](03-NFRQ/NFRQ-SCR-17-deferred-third-party-loading.md) | Third-party code is loaded at use, never at import | — | — |
